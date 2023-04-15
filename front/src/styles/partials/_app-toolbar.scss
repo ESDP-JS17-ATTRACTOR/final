@@ -1,0 +1,50 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.header {
+  background: $orange;
+  color: $blue-text;
+  padding-top: 24px;
+  padding-bottom: 35px;
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .logo {
+      display: inline-block;
+      margin-right: 80px;
+      .logo-image {
+        width: 43px;
+        height: 43px;
+        border-radius: 50%;
+      }
+    }
+    .main-nav {
+      &_list {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      &_item {
+        text-align: center;
+        margin-right: 25px;
+      }
+      &_link {
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: $blue-text;
+        &:hover {
+          @include hover {
+            border-bottom: 3px solid $dark-orange;
+          }
+        }
+      }
+    }
+  }
+}

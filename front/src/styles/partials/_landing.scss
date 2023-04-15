@@ -1,0 +1,47 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.invitation-block {
+  height: 500px;
+  background: linear-gradient(180deg, #EDA652 0%, rgba(217, 218, 146, 0.29) 100%);
+  border-radius: 0 0 40% 40%;
+  .invitation-block-container {
+    display: flex;
+    .invitation-info {
+      &_text {
+        h1 {
+          font-weight: 700;
+          font-size: 40px;
+          line-height: 48px;
+          text-transform: uppercase;
+          color: $blue-text;
+        }
+        span {
+          font-weight: 700;
+          font-size: 40px;
+          line-height: 48px;
+          text-transform: uppercase;
+          color: transparent;
+          -webkit-text-stroke: 1px $blue-text;
+          text-stroke: 1px $blue-text;
+        }
+        p {
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 29px;
+          color: $blue-text;
+        }
+      }
+      &_buttons {
+        width: 100%;
+        margin-top: 85px;
+      }
+    }
+    .invitation-contacts {
+      margin-left: auto;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

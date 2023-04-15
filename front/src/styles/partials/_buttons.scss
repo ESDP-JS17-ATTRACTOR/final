@@ -1,0 +1,26 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.button {
+  background: $dark-orange;
+  border: none;
+  border-radius: 34px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.start_btn, .contact_btn {
+  padding: 22px 42px;
+}
+
+.start_btn {
+  color: #ffffff;
+  margin: 0 46px 0 100px;
+}
+
+.contact_btn {
+  color: $blue-text;
+  background: transparent;
+  border: 2px solid $dark-orange;
+}

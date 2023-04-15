@@ -1,0 +1,12 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.language-switcher {
+  background: transparent;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: $blue-text;
+  border: none;
+  margin-left: 26px;
+}

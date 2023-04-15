@@ -1,0 +1,30 @@
+@mixin lg {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media screen and (min-width: 860px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media screen and (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin xsm {
+  @media screen and (min-width: 480px) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+

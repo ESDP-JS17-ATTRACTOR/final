@@ -2,9 +2,12 @@ import React, {useState} from 'react';
 import {Box, Button, Menu, MenuItem} from '@mui/material';
 import {Avatar} from "@mui/material";
 import {useRouter} from "next/router";
+import {useAppSelector} from "@/app/hooks";
+import {selectUser} from "@/features/users/usersSlice";
 
 const UsersMenu = () => {
     const router = useRouter();
+    const user = useAppSelector(selectUser);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -25,7 +28,7 @@ const UsersMenu = () => {
                     onClick={handleClick}
                     color="inherit"
                 >
-                    Hello, user
+                    Hello, {user?.firstName}
                 </Button>
                 <Avatar alt={"Avatar"} src={""}/>
             </Box>

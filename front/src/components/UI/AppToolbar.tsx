@@ -5,8 +5,12 @@ import LanguageSwitcher from "@/components/UI/LanguageSwitcher";
 import Search from "@/components/UI/Search";
 import AnonymousMenu from "@/components/UI/AnonymousMenu";
 import UsersMenu from "@/components/UI/UsersMenu";
+import {useAppSelector} from "@/app/hooks";
+import {selectUser} from "@/features/users/usersSlice";
 
 const AppToolbar = () => {
+    const user = useAppSelector(selectUser);
+
     return (
         <>
             <header className="header">
@@ -42,8 +46,7 @@ const AppToolbar = () => {
                     </nav>
                     <LanguageSwitcher/>
                     <Search/>
-                    <AnonymousMenu/>
-                    {/*<UsersMenu/>*/}
+                    {user ? <UsersMenu/> : <AnonymousMenu/>}
                 </div>
             </header>
         </>

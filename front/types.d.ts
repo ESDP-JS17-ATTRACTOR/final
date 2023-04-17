@@ -7,6 +7,11 @@ export interface RegisterMutation {
   password: string;
 }
 
+export interface LoginMutation {
+  email: string;
+  password: string;
+}
+
 export interface ValidationError {
   errors: {
     [key: string]: {
@@ -17,6 +22,10 @@ export interface ValidationError {
   message: string;
   name: string;
   _name: string;
+}
+
+export interface GlobalError {
+  error: string;
 }
 
 export interface User {

@@ -28,6 +28,12 @@ export interface GlobalError {
   error: string;
 }
 
+export interface LoginError {
+  error: string;
+  message: string;
+  statusCode: number;
+}
+
 export interface User {
   _id: string;
   firstName: string;

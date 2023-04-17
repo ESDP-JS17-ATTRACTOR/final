@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Modal} from "@mui/material";
 import Home from "@/pages/index";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
-import {selectModalWindowStatus, switchModalWindow} from "@/features/users/usersSlice";
+import {selectLoginError, selectModalWindowStatus, switchModalWindow} from "@/features/users/usersSlice";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {LoginMutation} from "../../types";
@@ -12,6 +12,7 @@ const Authorization = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const modalWindowStatus = useAppSelector(selectModalWindowStatus);
+    const loginError = useAppSelector(selectLoginError);
     const [state, setState] = useState<LoginMutation>({
         email: "",
         password: "",
@@ -29,12 +30,8 @@ const Authorization = () => {
 
     const submitFormHandler = async (event: React.FormEvent) => {
         event.preventDefault();
-        try {
-            await dispatch(login(state)).unwrap();
-            await router.push('/');
-        } catch (e) {
-            throw new Error();
-        }
+        await dispatch(login(state)).unwrap();
+        await router.push('/');
     };
 
     return (
@@ -52,7 +49,9 @@ const Authorization = () => {
                         onSubmit={submitFormHandler}
                     >
                         <div className="authorization-form_box">
-                            <label htmlFor="authEmail">E-mail</label>
+                            <label htmlFor="authEmail">
+                                {loginError ? (<b>{loginError.message}</b>) : "E-mail"}
+                            </label>
                             <input
                                 type="email"
                                 id="authEmail"
@@ -64,7 +63,9 @@ const Authorization = () => {
                             />
                         </div>
                         <div className="authorization-form_box">
-                            <label htmlFor="authPassword">Password</label>
+                            <label htmlFor="authPassword">
+                                {loginError ? (<b>{loginError.message}</b>) : "Password"}
+                            </label>
                             <input
                                 type="password"
                                 id="authPassword"

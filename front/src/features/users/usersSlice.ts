@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {GlobalError, User, ValidationError} from "../../../types";
+import {LoginError, User, ValidationError} from "../../../types";
 import {login, register} from "./usersThunks";
 import {RootState} from "@/app/store";
 
@@ -8,7 +8,7 @@ interface UserState {
   registerLoading: boolean,
   registerError: ValidationError | null,
   loginLoading: boolean,
-  loginError: GlobalError | null,
+  loginError: LoginError | null,
   modalWindowStatus: boolean,
 }
 
@@ -27,7 +27,8 @@ const usersSlice = createSlice({
   reducers: {
     switchModalWindow: (state) => {
       state.modalWindowStatus = !state.modalWindowStatus;
-    }
+      state.loginError = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(register.pending, (state) => {
@@ -65,4 +66,5 @@ export const selectUser = (state: RootState) => state.users.user;
 export const selectRegisterLoading = (state: RootState) => state.users.registerLoading;
 export const selectRegisterError = (state: RootState) => state.users.registerError;
 export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
+export const selectLoginError = (state: RootState) => state.users.loginError;
 export const selectModalWindowStatus = (state: RootState) => state.users.modalWindowStatus;

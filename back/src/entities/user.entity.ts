@@ -53,6 +53,10 @@ export class User {
     this.token = crypto.randomUUID();
   }
 
+  async checkPassword(password) {
+    return bcrypt.compare(password, this.password);
+  }
+
   @BeforeInsert()
   async hashPassword() {
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);

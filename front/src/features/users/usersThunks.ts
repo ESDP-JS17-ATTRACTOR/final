@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {GlobalError, LoginError, LoginMutation, RegisterMutation, User, ValidationError} from "../../../types";
+import {LoginError, LoginMutation, RegisterMutation, User, ValidationError} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 import {unsetUser} from "@/features/users/usersSlice";

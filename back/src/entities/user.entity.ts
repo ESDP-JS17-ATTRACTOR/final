@@ -19,10 +19,10 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   lastName: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   phoneNumber: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   country: string;
 
   @Exclude()

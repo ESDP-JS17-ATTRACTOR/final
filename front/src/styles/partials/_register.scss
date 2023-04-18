@@ -1,0 +1,126 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 489px;
+  height: 554px;
+  background: $gray;
+  border-radius: 23px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.registration-header {
+  border-bottom: 1px solid #C4C4C4;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &_title {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #383838;
+    text-transform: uppercase;
+    margin: 21px 0;
+  }
+
+  &_title:before {
+    content: url("/authorization-icon.png");
+    margin-right: 20px;
+    height: 30px;
+  }
+}
+
+.registration-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0;
+  border-bottom: 1px solid #C4C4C4;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &_box {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding-left: 12px;
+
+    input {
+      width: 273px;
+      height: 38px;
+      background: transparent;
+      border: 1px solid #C4C4C4;
+      margin-bottom: 12px;
+      padding: 0 5px;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 12px;
+      color: #383838;
+      margin-bottom: 10px;
+      display: inline;
+      b {
+        color: red;
+      }
+    }
+
+    &_links {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 12px;
+      color: #383838;
+      margin-top: 25px;
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+  }
+
+  .remember_box {
+    display: flex;
+    align-items: center;
+    margin: 13px auto 0;
+
+    label {
+      margin-left: 12px;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 12px;
+      color: #383838;
+    }
+  }
+}
+
+.registration-footer {
+  text-align: center;
+  width: 100%;
+  padding: 25px 0;
+  h5 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #273443;
+    margin: 5px 0 15px;
+  }
+  &_buttons {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

@@ -17,7 +17,12 @@ const AnonymousMenu = () => {
                 </button>
             </Link>
             <Link href="/register">
-                <button className="sign-up_btn">Sign up</button>
+                <button
+                    className="sign-up_btn"
+                    onClick={() => dispatch(switchModalWindow())}
+                >
+                    Sign up
+                </button>
             </Link>
         </div>
     );

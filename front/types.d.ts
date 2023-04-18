@@ -2,8 +2,6 @@ export interface RegisterMutation {
   email: string;
   firstName: string;
   lastName: string;
-  country: string;
-  phoneNumber: string;
   password: string;
 }
 

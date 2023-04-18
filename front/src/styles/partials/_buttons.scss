@@ -33,6 +33,7 @@
   font-size: 12px;
   line-height: 15px;
   margin: 30px auto 0;
+  text-transform: uppercase;
   &:hover {
     background: transparent;
     border: 2px solid $dark-orange;
@@ -42,6 +43,29 @@
     background: $dark-orange;
     border: 2px solid #ffffff;
     color: #ffffff;
+  }
+}
+
+.register_signup_btn {
+  color: #ffffff;
+  width: 90px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 10px;
+  margin: 30px auto;
+  text-transform: uppercase;
+  padding: 15px 0;
+  &:hover {
+    background: transparent;
+    border: 2px solid $dark-orange;
+    color: $dark-orange;
+    padding: 15px 0;
+  }
+  &:active {
+    background: $dark-orange;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 15px 0;
   }
 }
 

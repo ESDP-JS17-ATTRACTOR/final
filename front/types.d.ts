@@ -42,3 +42,8 @@ export interface User {
   country: string;
   googleId?: string;
 }
+
+export interface Category {
+  id: number;
+  title: string;
+}

@@ -8,6 +8,8 @@ import { User } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { Category } from './entities/category.entity';
 import { CategoriesController } from './categories/categories.controller';
+import { AuthService } from './auth/auth.service';
+import { LocalStrategy } from './auth/local.strategy';
 
 @Module({
   imports: [
@@ -17,6 +19,6 @@ import { CategoriesController } from './categories/categories.controller';
     PassportModule,
   ],
   controllers: [UsersController, CategoriesController],
-  providers: [AppService],
+  providers: [AppService, AuthService, LocalStrategy],
 })
 export class AppModule {}

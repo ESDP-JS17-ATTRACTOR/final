@@ -7,6 +7,7 @@ import {
   Get,
   Param,
   Post,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -15,6 +16,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../entities/category.entity';
 import { Repository } from 'typeorm';
 import { AddCategoryDto } from './dto/addCategoryDto';
+import { TokenAuthGuard } from '../auth/token-auth.guard';
+import { AdminGuard } from '../auth/admin.guard';
 
 @Controller('categories')
 export class CategoriesController {
@@ -44,6 +47,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
+  @UseGuards(TokenAuthGuard, AdminGuard)
   async removeOneCategory(@Param('id') id: string) {
     const category = await this.categoryRepository.findOne({
       where: { id: parseInt(id) },

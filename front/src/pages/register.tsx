@@ -1,26 +1,34 @@
 import React, {useState} from 'react';
-import {Avatar, Box, Button, CircularProgress, Container, Grid, TextField, Typography} from "@mui/material";
+import {Modal} from "@mui/material";
 import {RegisterMutation} from "../../types";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {register} from "@/features/users/usersThunks";
 import {useRouter} from "next/router";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Link from "next/link";
-import {selectRegisterError, selectRegisterLoading} from "@/features/users/usersSlice";
+import {selectModalWindowStatus, switchModalWindow} from "@/features/users/usersSlice";
+import Home from "@/pages/index";
 
 const Register = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const error = useAppSelector(selectRegisterError);
-    const registrating = useAppSelector(selectRegisterLoading);
+    const modalWindowStatus = useAppSelector(selectModalWindowStatus);
     const [state, setState] = useState<RegisterMutation>({
         email: "",
         firstName: "",
         lastName: "",
-        country: "",
-        phoneNumber: "",
-        password: ""
+        password: "",
     });
+    const [confirmedPassword, setConfirmedPassword] = useState("");
+    const [validationError, setValidationError] = useState<string | null>(null);
+
+    const closeRegistrationModalWindow = async () => {
+        await dispatch(switchModalWindow());
+        await router.push('/');
+    };
+
+    const confirmPasswordInputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmedPassword(event.target.value);
+    };
 
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -30,6 +38,11 @@ const Register = () => {
     const submitFormHandler = async (event: React.FormEvent) => {
         event.preventDefault();
 
+        if (state.password !== confirmedPassword) {
+            setValidationError("Passwords do not match");
+            return;
+        }
+
         try {
             await dispatch(register(state)).unwrap();
             await router.push('/');
@@ -38,123 +51,118 @@ const Register = () => {
         }
     }
 
-    const getFieldError = (fieldName: string) => {
-        try {
-            return error?.errors[fieldName].message;
-        } catch {
-            return undefined;
-        }
-    };
-
     return (
-      <Container component="main" maxWidth="xs">
-          <Box
-            style={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-          >
-              <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                  <LockOutlinedIcon/>
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                  Sign up
-              </Typography>
-              <Box component="form" noValidate sx={{mt: 3}} onSubmit={submitFormHandler}>
-                  <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                          <TextField
-                            name="email"
-                            label="E-mail"
-                            fullWidth
-                            value={state.email}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('email'))}
-                            helperText={getFieldError('email')}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                            name="firstName"
-                            label="First Name"
-                            fullWidth
-                            value={state.firstName}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('firstName'))}
-                            helperText={getFieldError('firstName')}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                            name="lastName"
-                            label="Last name"
-                            fullWidth
-                            value={state.lastName}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('lastName'))}
-                            helperText={getFieldError('lastName')}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                            name="country"
-                            label="Country"
-                            fullWidth
-                            value={state.country}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('country'))}
-                            helperText={getFieldError('country')}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                            name="password"
-                            label="Password"
-                            fullWidth
-                            value={state.password}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('password'))}
-                            helperText={getFieldError('password')}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                          <TextField
-                            name="phoneNumber"
-                            label="Phone number"
-                            fullWidth
-                            value={state.phoneNumber}
-                            onChange={inputChangeHandler}
-                            error={Boolean(getFieldError('phoneNumber'))}
-                            helperText={getFieldError('phoneNumber')}
-                          />
-                      </Grid>
-                      <Grid item xs={12}>
-                      <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{mt: 3, mb: 2}}
-                      >
-                          {registrating ?
-                            (<Box sx={{display: 'flex'}}>
-                                <CircularProgress/>
-                            </Box>) :
-                            "Sign Up" }
-                      </Button>
-                      </Grid>
-                      <Grid container justifyContent="flex-end">
-                          <Grid item>
-                              <Link href="/login">
-                                  Already have an account? Sign in
-                              </Link>
-                          </Grid>
-                      </Grid>
-                  </Grid>
-              </Box>
-          </Box>
-      </Container>
+        <Home>
+            <Modal
+                open={modalWindowStatus}
+                onClose={closeRegistrationModalWindow}
+            >
+                <div className="registration">
+                    <div className="registration-header">
+                        <h4 className="registration-header_title">Registration</h4>
+                    </div>
+                    <form
+                        className="registration-form"
+                        onSubmit={submitFormHandler}
+                    >
+                        <div className="registration-form_box">
+                            <label htmlFor="registerEmail">
+                                E-mail
+                            </label>
+                            <input
+                                type="email"
+                                id="registerEmail"
+                                name="email"
+                                placeholder="Enter your e-mail"
+                                required={true}
+                                value={state.email}
+                                onChange={inputChangeHandler}
+                            />
+                        </div>
+                        <div className="registration-form_box">
+                            <label htmlFor="registerFirstName">
+                                First name
+                            </label>
+                            <input
+                                type="text"
+                                id="registerFirstName"
+                                name="firstName"
+                                placeholder="Enter your first name"
+                                required={true}
+                                value={state.firstName}
+                                onChange={inputChangeHandler}
+                            />
+                        </div>
+                        <div className="registration-form_box">
+                            <label htmlFor="registerLastName">
+                                Last name
+                            </label>
+                            <input
+                                type="text"
+                                id="registerLastName"
+                                name="lastName"
+                                placeholder="Enter your last name"
+                                required={true}
+                                value={state.lastName}
+                                onChange={inputChangeHandler}
+                            />
+                        </div>
+                        <div className="registration-form_box">
+                            <label htmlFor="registerPassword">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                id="registerPassword"
+                                name="password"
+                                placeholder="Enter your password"
+                                required={true}
+                                value={state.password}
+                                onChange={inputChangeHandler}
+                            />
+                        </div>
+                        <div className="registration-form_box">
+                            <label htmlFor="confirmingPassword">
+                                {validationError ? <b>{validationError}</b> : "Confirm your password"}
+                            </label>
+                            <input
+                                type="password"
+                                id="confirmingPassword"
+                                name="confirmedPassword"
+                                placeholder="Confirm your password"
+                                required={true}
+                                value={confirmedPassword}
+                                onChange={confirmPasswordInputChangeHandler}
+                            />
+                        </div>
+                        <div className="remember_box">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            />
+                            <label htmlFor="rememberMe">Remember me</label>
+                        </div>
+                        <div className="registration-form_box_links">
+                            <Link href="/authorization">Already have an account? Log in</Link>
+                        </div>
+                        <button
+                            type="submit"
+                            className="button register_signup_btn"
+                        >
+                            Sign Up
+                        </button>
+                    </form>
+                    <div className="registration-footer">
+                        <h5>Sign up with</h5>
+                        <div className="registration-footer_buttons">
+                            <button className="social_auth_btn auth_facebook">Facebook</button>
+                            <button className="social_auth_btn auth_linkedin">Linkedin</button>
+                            <button className="social_auth_btn auth_google">Google+</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        </Home>
     );
 };
 

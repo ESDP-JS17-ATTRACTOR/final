@@ -5,6 +5,8 @@
 @use "partials/users-menu";
 @use "partials/landing";
 @use "partials/buttons";
+@use "partials/authorization";
+@use "partials/register";
 
 body {
   margin: 0;

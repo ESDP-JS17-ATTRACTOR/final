@@ -1,8 +1,9 @@
 import {Inter} from 'next/font/google'
+import React, {PropsWithChildren} from "react";
 
 const inter = Inter({subsets: ['latin']})
 
-export default function Home() {
+const Home: React.FC<PropsWithChildren> = ({children}) => {
     return (
         <>
             <main>
@@ -34,6 +35,9 @@ export default function Home() {
                     </div>
                 </div>
             </main>
+            {children}
         </>
     )
 }
+
+export default Home;

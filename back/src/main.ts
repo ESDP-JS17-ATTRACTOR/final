@@ -1,27 +1,34 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
+
+interface ValidationErrors {
+  [key: string]: string[];
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(
     new ValidationPipe({
-      exceptionFactory: (validationErrors = []) => {
-        // TODO: "need types"
-        const errors = {}; // TODO: "need types"
+      exceptionFactory: (errors: ValidationError[]) => {
+        const validationErrors: ValidationErrors = {};
 
-        validationErrors.forEach((error) => {
+        errors.forEach((error) => {
           const constraints = error.constraints;
 
           if (constraints) {
-            errors[error.property] = Object.keys(constraints).map(
+            validationErrors[error.property] = Object.keys(constraints).map(
               (key) => constraints[key],
             );
           }
         });
 
-        return new BadRequestException(errors);
+        return new BadRequestException(validationErrors);
       },
     }),
   );

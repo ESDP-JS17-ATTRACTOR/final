@@ -24,3 +24,81 @@
   background: transparent;
   border: 2px solid $dark-orange;
 }
+
+.auth_login_btn {
+  color: #ffffff;
+  width: 90px;
+  height: 38px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 30px auto 0;
+  text-transform: uppercase;
+  &:hover {
+    background: transparent;
+    border: 2px solid $dark-orange;
+    color: $dark-orange;
+  }
+  &:active {
+    background: $dark-orange;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+}
+
+.register_signup_btn {
+  color: #ffffff;
+  width: 90px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 10px;
+  margin: 30px auto;
+  text-transform: uppercase;
+  padding: 15px 0;
+  &:hover {
+    background: transparent;
+    border: 2px solid $dark-orange;
+    color: $dark-orange;
+    padding: 15px 0;
+  }
+  &:active {
+    background: $dark-orange;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 15px 0;
+  }
+}
+
+.social_auth_btn {
+  width: 50px;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: -999px;
+  border-radius: 30px;
+  border: none;
+  &:hover {
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+  }
+}
+
+.auth_facebook {
+  background-color: #405D9B;
+  background-image: url("/facebook-icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.auth_linkedin {
+  background-color: #0073B2;
+  background-image: url("/linkedin-icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.auth_google {
+  background-color: #DC4E41;
+  background-image: url("/googleplus-icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}

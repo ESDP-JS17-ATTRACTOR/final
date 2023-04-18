@@ -3,6 +3,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Post,
   Req,
   UseGuards,
@@ -16,10 +17,7 @@ import { User } from '../entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
-
-interface UserRequest extends Request {
-  user?: User;
-}
+import { TokenAuthGuard } from '../auth/token-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -45,8 +43,18 @@ export class UsersController {
   }
 
   @Post('login')
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard('local'))
-  async login(@Req() req: UserRequest) {
+  async login(@Req() req: Request) {
     return req.user as User;
+  }
+
+  @Delete('sessions')
+  @UseGuards(TokenAuthGuard)
+  async logout(@Req() req: Request) {
+    const user = req.user as User;
+    await user.generateToken();
+    await this.userRepository.save(user);
+    return { message: 'Logout success' };
   }
 }

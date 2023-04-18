@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { Category } from './entities/category.entity';
+import { CategoriesController } from './categories/categories.controller';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { Category } from './entities/category.entity';
     TypeOrmModule.forFeature([User, Category]),
     PassportModule,
   ],
-  controllers: [UsersController],
+  controllers: [UsersController, CategoriesController],
   providers: [AppService],
 })
 export class AppModule {}

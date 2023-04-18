@@ -3,6 +3,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   Post,
   UseInterceptors,
   UsePipes,
@@ -33,5 +34,10 @@ export class CategoriesController {
 
     const category = this.categoryRepository.create(body);
     return this.categoryRepository.save(category);
+  }
+
+  @Get()
+  async getAll() {
+    return this.categoryRepository.find();
   }
 }

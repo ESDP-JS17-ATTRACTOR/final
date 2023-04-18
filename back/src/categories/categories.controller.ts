@@ -3,7 +3,9 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   UseInterceptors,
   UsePipes,
@@ -39,5 +41,13 @@ export class CategoriesController {
   @Get()
   async getAll() {
     return this.categoryRepository.find();
+  }
+
+  @Delete(':id')
+  async removeOneCategory(@Param('id') id: string) {
+    const category = await this.categoryRepository.findOne({
+      where: { id: parseInt(id) },
+    });
+    return this.categoryRepository.delete(category);
   }
 }

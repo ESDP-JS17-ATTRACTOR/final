@@ -15,3 +15,14 @@ Feature: Users
       | confirmedPassword | Test Password           |
     And I click "Sign Up" button
     Then I should see "HELLO, TEST FIRST NAME" in App Tool Bar
+
+
+  @userAuthentication
+  Scenario: Existing User Authentication
+    Given I am on the main page
+    When I click "Login" button
+    When I enter form fields:
+      | email    | testingUser5@gmail.test |
+      | password | Test Password           |
+    And I click button with className "button auth_login_btn"
+    Then I should see "HELLO, TEST FIRST NAME" in App Tool Bar

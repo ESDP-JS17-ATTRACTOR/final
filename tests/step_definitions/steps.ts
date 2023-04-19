@@ -75,3 +75,18 @@ Then('I click {string} menu item', (menuItemText) => {
 Then('I see in App Tool Bar {string} button', (buttonText) => {
     I.see(buttonText);
 });
+
+Given('the user is on the landing page', () => {
+  I.amOnPage('/');
+  I.wait(1);
+});
+
+When('the user select option {string}', (optionValue) => {
+    I.selectOption('#languageSwitcher', optionValue);
+    I.wait(1);
+});
+
+Then('the user should see the main headline {string}', (headlineText) => {
+    I.see(headlineText);
+    I.wait(1);
+});

@@ -26,3 +26,15 @@ Feature: Users
       | password | Test Password           |
     And I click button with className "button auth_login_btn"
     Then I should see "HELLO, TEST FIRST NAME" in App Tool Bar
+
+  @userLogout
+  Scenario: User Logout From App
+    Given I am on the main page
+    When I click "Login" button
+    When I enter form fields:
+      | email    | testingUser5@gmail.test |
+      | password | Test Password           |
+    And I click button with className "button auth_login_btn"
+    Then I click "Hello, Test First Name" button in App Tool Bar
+    Then I click "Logout" menu item
+    Then I see in App Tool Bar "LOGIN" button

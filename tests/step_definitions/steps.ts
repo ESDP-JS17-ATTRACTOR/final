@@ -63,3 +63,15 @@ When('I click button with className {string}', (buttonClass: string) => {
 Then('I should see {string} in App Tool Bar', () => {
     I.see("HELLO, TEST FIRST NAME");
 });
+
+Then('I click {string} button in App Tool Bar', (buttonText) => {
+    I.click(locate('button').withText(buttonText));
+});
+
+Then('I click {string} menu item', (menuItemText) => {
+    I.click(locate('li').withText(menuItemText));
+});
+
+Then('I see in App Tool Bar {string} button', (buttonText) => {
+    I.see(buttonText);
+});

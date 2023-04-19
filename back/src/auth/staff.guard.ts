@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { User } from '../entities/user.entity';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class StaffGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest() as Request;
     const user = request.user as User | undefined;

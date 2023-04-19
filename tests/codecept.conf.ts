@@ -3,15 +3,17 @@ export const config: CodeceptJS.MainConfig = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost:3000/',
+      url: 'http://localhost:3000',
       show: true,
       windowSize: '1200x900'
     }
   },
-  include: {},
-  "gherkin": {
-    "features": "./features/*.feature",
-    "steps": [
+  include: {
+    I: './steps_file.ts'
+  },
+  gherkin: {
+    features: "./features/*.feature",
+    steps: [
       "./step_definitions/steps.ts"
     ]
   },

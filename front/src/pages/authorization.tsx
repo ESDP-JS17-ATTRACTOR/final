@@ -6,9 +6,10 @@ import {selectLoginError, selectModalWindowStatus, switchModalWindow} from "@/fe
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {LoginMutation} from "../../types";
-import {login} from "@/features/users/usersThunks";
+import {googleLogin, login} from "@/features/users/usersThunks";
 import {en} from "../../public/locales/en/auth";
 import {ru} from "../../public/locales/ru/auth";
+import {useGoogleLogin} from "@react-oauth/google";
 
 const Authorization = () => {
     const dispatch = useAppDispatch();
@@ -36,6 +37,13 @@ const Authorization = () => {
         await dispatch(login(state)).unwrap();
         await router.push('/');
     };
+
+    const googleLoginHandler = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            await dispatch(googleLogin(tokenResponse.access_token)).unwrap()
+            await router.push('/');
+        }
+    });
 
     return (
         <Home>
@@ -102,7 +110,12 @@ const Authorization = () => {
                         <div className="authorization-footer_buttons">
                             <button className="social_auth_btn auth_facebook">Facebook</button>
                             <button className="social_auth_btn auth_linkedin">Linkedin</button>
-                            <button className="social_auth_btn auth_google">Google+</button>
+                            <button
+                                className="social_auth_btn auth_google"
+                                onClick={() => googleLoginHandler()}
+                            >
+                                Google+
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -18,7 +18,22 @@ export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: 
             throw e;
         }
     },
-)
+);
+
+export const googleLogin = createAsyncThunk<User, string, {rejectValue: LoginError}>(
+    'users/googleLogin',
+    async (credential, {rejectWithValue}) => {
+        try {
+            const response = await axiosApi.post('/users/google-authentication', {credential});
+            return response.data;
+        } catch (e) {
+            if (isAxiosError(e) && e.response && e.response.status === 400) {
+                return rejectWithValue(e.response.data as LoginError);
+            }
+            throw e;
+        }
+    }
+);
 
 export const login = createAsyncThunk<User, LoginMutation, { rejectValue: LoginError }>(
     'users/login',

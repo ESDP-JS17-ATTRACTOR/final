@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {Modal} from "@mui/material";
 import {RegisterMutation} from "../../types";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
-import {register} from "@/features/users/usersThunks";
+import {googleLogin, register} from "@/features/users/usersThunks";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {selectModalWindowStatus, switchModalWindow} from "@/features/users/usersSlice";
 import Home from "@/pages/index";
-import { en } from '../../public/locales/en/auth';
-import { ru } from '../../public/locales/ru/auth';
+import {en} from '../../public/locales/en/auth';
+import {ru} from '../../public/locales/ru/auth';
+import {useGoogleLogin} from "@react-oauth/google";
 
 const Register = () => {
     const router = useRouter();
@@ -52,7 +53,14 @@ const Register = () => {
         } catch (e) {
             throw new Error();
         }
-    }
+    };
+
+    const googleLoginHandler = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            await dispatch(googleLogin(tokenResponse.access_token)).unwrap()
+            await router.push('/');
+        }
+    });
 
     return (
         <Home>
@@ -160,7 +168,11 @@ const Register = () => {
                         <div className="registration-footer_buttons">
                             <button className="social_auth_btn auth_facebook">Facebook</button>
                             <button className="social_auth_btn auth_linkedin">Linkedin</button>
-                            <button className="social_auth_btn auth_google">Google+</button>
+                            <button
+                                className="social_auth_btn auth_google"
+                                onClick={() => googleLoginHandler()}
+                            >
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -66,7 +66,6 @@ const usersSlice = createSlice({
       state.loginLoading = false;
       state.loginError = error || null;
     });
-
   }
 });
 

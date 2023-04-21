@@ -4,7 +4,8 @@ import {useRouter} from "next/router";
 const LanguageSwitcher = () => {
   const router = useRouter();
   const { pathname, asPath, query } = router
-  const [locale, setLocale] = useState<string>('');
+  const [locale, setLocale] = useState<string>(router.locale as string);
+  const isTrue = locale === 'en';
 
   const handleLanguageChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
@@ -22,8 +23,8 @@ const LanguageSwitcher = () => {
         id="languageSwitcher"
         onChange={handleLanguageChange}
       >
-        <option value="en">EN</option>
-        <option value="ru">RU</option>
+        <option value='en' selected={isTrue} disabled={isTrue}>EN</option>
+        <option value="ru" selected={!isTrue} disabled={!isTrue}>RU</option>
       </select>
     </div>
   );

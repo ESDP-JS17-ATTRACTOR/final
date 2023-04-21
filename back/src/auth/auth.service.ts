@@ -2,15 +2,13 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
-import { google } from 'googleapis';
 import * as crypto from 'crypto';
-import { ConfigService } from '@nestjs/config';
+import axios from 'axios';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly configService: ConfigService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -29,27 +27,17 @@ export class AuthService {
     return null;
   }
 
-  async registerUserWithGoogle(credential: string) {
-    const { clientId } = this.configService.get('GOOGLE_CLIENT_ID');
-    const client = new google.auth.OAuth2(clientId, '', '');
-
+  async registerUserWithGoogle(accessToken: string) {
     try {
-      const ticket = await client.verifyIdToken({
-        idToken: credential,
-        audience: clientId,
-      });
+      const response = await axios.get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`,
+      );
 
-      const payload = ticket.getPayload();
-
-      if (!payload) {
-        return new BadRequestException('Google login error!');
-      }
-
-      const email = payload.email;
-      const googleId = payload.sub;
-      const firstName = payload.given_name;
-      const lastName = payload.family_name;
-      const avatar = payload.picture;
+      const email = response.data.email;
+      const googleId = response.data.sub;
+      const firstName = response.data.given_name;
+      const lastName = response.data.family_name;
+      const avatar = response.data.picture;
 
       if (!email) {
         return new BadRequestException('Not enough user data to continue.');
@@ -71,7 +59,6 @@ export class AuthService {
 
         await user.generateToken();
         await this.userRepository.save(user);
-
         return user;
       }
       return user;

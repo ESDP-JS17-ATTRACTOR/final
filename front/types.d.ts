@@ -24,6 +24,7 @@ export interface ValidationError {
 
 export interface GlobalError {
   error: string;
+  message: string;
 }
 
 export interface LoginError {
@@ -45,5 +46,9 @@ export interface User {
 
 export interface Category {
   id: number;
+  title: string;
+}
+
+export interface CategoryMutation {
   title: string;
 }

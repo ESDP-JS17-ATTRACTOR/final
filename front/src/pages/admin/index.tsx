@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import SideBar from "@/components/UI/SideBar";
+import SideBar from "@/components/UI/Admin/SideBar";
 import { Box, Container, Grid, Paper } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 

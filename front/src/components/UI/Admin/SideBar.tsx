@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AdminList from "@/components/UI/AdminList";
+import AdminList from "@/components/UI/Admin/AdminList";
 import {
   AppBar,
   CssBaseline,

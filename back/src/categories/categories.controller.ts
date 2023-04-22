@@ -15,7 +15,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../entities/category.entity';
 import { Repository } from 'typeorm';
-import { AddCategoryDto } from './dto/addCategoryDto';
+import { AddCategoryDto } from './dto/addCategory.dto';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { StaffGuard } from '../auth/staff.guard';
 

@@ -10,15 +10,17 @@ import { Category } from './entities/category.entity';
 import { CategoriesController } from './categories/categories.controller';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
+import { CoursesController } from './courses/courses.controller';
+import { Course } from './entities/course.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
-    TypeOrmModule.forFeature([User, Category]),
+    TypeOrmModule.forFeature([User, Category, Course]),
     PassportModule,
   ],
-  controllers: [UsersController, CategoriesController],
+  controllers: [UsersController, CategoriesController, CoursesController],
   providers: [AppService, AuthService, LocalStrategy],
 })
 export class AppModule {}

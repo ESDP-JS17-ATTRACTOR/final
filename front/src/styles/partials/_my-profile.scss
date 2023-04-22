@@ -1,0 +1,77 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+h1 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+h2 {
+  color: $blue-text;
+  text-align: center;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 34px;
+  margin-bottom: 70px;
+}
+
+h5 {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.profile-block {
+  margin-top: 40px;
+  color: $blue-text;
+}
+
+.profile-main-info-block {
+  display: flex;
+}
+
+.profile-info-block {
+  margin-left: 30px;
+}
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+
+.profile-btn {
+
+}
+
+.homework-headlines-block {
+  padding: 0 250px 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #4688C1;
+  p {
+    color: $blue-text;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 0;
+  }
+}
+
+.card-for-homework-block {
+  padding: 0 30px;
+  background-color: $light-orange;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #4688C1;
+}
+
+.homework-btn {
+  padding: 10px 20px;
+  background-color: #ffffff;
+}

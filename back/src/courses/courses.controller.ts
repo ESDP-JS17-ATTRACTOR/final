@@ -32,8 +32,19 @@ export class CoursesController {
   ) {}
 
   @Get()
-  getAll() {
-    return this.courseRepository.find();
+  async getAll(): Promise<Course[]> {
+    return this.courseRepository
+      .createQueryBuilder('course')
+      .leftJoinAndSelect('course.category', 'category')
+      .leftJoinAndSelect('course.tutor', 'tutor')
+      .select([
+        'course',
+        'tutor.id',
+        'tutor.firstName',
+        'tutor.lastName',
+        'category',
+      ])
+      .getMany();
   }
 
   @Post()
@@ -48,11 +59,18 @@ export class CoursesController {
     const category = await this.categoryRepository.findOne({
       where: { id: courseData.category },
     });
-    if (existCourse || !user || !category) {
-      throw new BadRequestException(
-        'This course is already registered or no or no category',
-      );
+    if (existCourse) {
+      throw new BadRequestException('This course is already registered');
     }
+
+    if (!user) {
+      throw new BadRequestException('Tutor not found');
+    }
+
+    if (!category) {
+      throw new BadRequestException('Category not found');
+    }
+
     const course = this.courseRepository.create({
       tutor: user,
       category: category,
@@ -78,6 +96,7 @@ export class CoursesController {
   }
 
   @Patch(':id')
+  @UseGuards(TokenAuthGuard, StaffGuard)
   async updateCourse(
     @Param('id') id: number,
     @Body() updateCourseDto: UpdateCourseDto,
@@ -92,8 +111,11 @@ export class CoursesController {
     const category = await this.categoryRepository.findOne({
       where: { id: updateCourseDto.category },
     });
-    if (!course || !user || !category) {
-      throw new BadRequestException('Course or user or category not found');
+    if (!user) {
+      throw new BadRequestException('Tutor not found');
+    }
+    if (!category) {
+      throw new BadRequestException('Category not found');
     }
     if (course) {
       course.tutor = user;

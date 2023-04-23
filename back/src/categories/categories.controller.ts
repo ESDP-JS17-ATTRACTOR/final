@@ -5,7 +5,9 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
+  Patch,
   Post,
   UseGuards,
   UseInterceptors,
@@ -18,6 +20,7 @@ import { Repository } from 'typeorm';
 import { AddCategoryDto } from './dto/addCategory.dto';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { StaffGuard } from '../auth/staff.guard';
+import { UpdateCategoryDto } from './dto/updateCategory.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -26,7 +29,7 @@ export class CategoriesController {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  @Post('add')
+  @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UsePipes(ValidationPipe)
   async addCourse(@Body() body: AddCategoryDto) {
@@ -53,5 +56,22 @@ export class CategoriesController {
       where: { id: parseInt(id) },
     });
     return this.categoryRepository.delete(category);
+  }
+
+  @Patch(':id')
+  @UseGuards(TokenAuthGuard, StaffGuard)
+  async updateCategory(
+    @Param('id') id: number,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
+    const category = await this.categoryRepository.findOne({
+      where: { id: id },
+    });
+    if (category) {
+      category.title = updateCategoryDto.title;
+      return this.categoryRepository.save(category);
+    } else {
+      throw new NotFoundException(`Category with id ${id} not found`);
+    }
   }
 }

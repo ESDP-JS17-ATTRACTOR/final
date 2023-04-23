@@ -4,6 +4,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Delete,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -65,5 +66,12 @@ export class UsersController {
     await user.generateToken();
     await this.userRepository.save(user);
     return { message: 'Logout success' };
+  }
+
+  @Patch('edit-profile')
+  @UseGuards(TokenAuthGuard)
+  async edit(@Req() req: Request, @Body() updateData: Partial<User>) {
+    const user = req.user as User;
+    await this.userRepository.update(user.id, updateData);
   }
 }

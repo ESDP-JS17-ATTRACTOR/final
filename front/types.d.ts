@@ -42,3 +42,9 @@ export interface User {
   country: string;
   googleId?: string;
 }
+
+export interface ProfileMutation {
+  email: string;
+  firstName: string;
+  country: string;
+}

@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {LoginError, LoginMutation, RegisterMutation, User, ValidationError} from "../../../types";
+import {LoginError, LoginMutation, ProfileMutation, RegisterMutation, User, ValidationError} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 import {unsetUser} from "@/features/users/usersSlice";
@@ -57,4 +57,18 @@ export const logout = createAsyncThunk<void, void, {state: RootState}>(
         await axiosApi.delete('users/sessions', {headers: {"Authorization": user?.token}});
         dispatch(unsetUser());
     }
+);
+
+export const editUserProfile = createAsyncThunk<void, ProfileMutation, { rejectValue: ValidationError }>(
+    'users/edit',
+    async (profileMutation, {rejectWithValue}) => {
+        try {
+            await axiosApi.patch('users/edit-profile', profileMutation);
+        } catch (e) {
+            if (isAxiosError(e) && e.response && e.response.status === 400) {
+                return rejectWithValue(e.response.data as ValidationError);
+            }
+            throw e;
+        }
+    },
 );

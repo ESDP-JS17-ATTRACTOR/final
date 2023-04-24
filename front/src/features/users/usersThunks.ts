@@ -1,5 +1,12 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {GlobalError, LoginError, LoginMutation, RegisterMutation, User, ValidationError} from "../../../types";
+import {
+    LoginError,
+    LoginMutation,
+    RegisterMutation,
+    Tutor,
+    User,
+    ValidationError
+} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 
@@ -30,6 +37,14 @@ export const login = createAsyncThunk<User, LoginMutation, { rejectValue: LoginE
             }
             throw e;
         }
+    }
+);
+
+export const fetchTutors = createAsyncThunk<Tutor[]>(
+    'users/fetchTutors',
+    async () => {
+        const response = await axiosApi.get<Tutor[]>('/users/tutors');
+        return response.data;
     }
 );
 

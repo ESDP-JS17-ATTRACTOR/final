@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import SideBar from "@/components/UI/Admin/SideBar";
-import { Box, Container, Grid, Paper } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const Admin: React.FC<PropsWithChildren> = ({ children }) => {
@@ -10,7 +10,7 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
 
-        {children && (
+        {children ? (
           <>
             <SideBar />
             <Box
@@ -30,15 +30,13 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
               <Container maxWidth="lg" sx={{ mt: 4, mb: 4, pt: 6 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={8} lg={9}>
-                    <Paper>
-                      {children}
-                    </Paper>
+                    {children}
                   </Grid>
                 </Grid>
               </Container>
             </Box>
           </>
-        )}
+        ) : <Typography>Добро пожаловать в меню администратора!</Typography>}
       </Box>
     </ThemeProvider>
   );

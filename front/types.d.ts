@@ -52,3 +52,28 @@ export interface Category {
 export interface CategoryMutation {
   title: string;
 }
+
+export interface Course {
+  id: number;
+  tutor: User;
+  category: Category;
+  title: string;
+  price: string;
+  duration: string;
+  isGroup: boolean;
+}
+
+export interface CourseMutation {
+  tutor: string;
+  category: string;
+  title: string;
+  price: string;
+  duration: string;
+  isGroup: boolean;
+}
+
+export interface Tutor {
+  id: number;
+  firstName: string;
+  lastName: string;
+}

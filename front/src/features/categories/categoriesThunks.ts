@@ -15,7 +15,7 @@ export const addCategory = createAsyncThunk<void, CategoryMutation, { rejectValu
   'categories/add',
   async (category, {rejectWithValue}) => {
     try {
-      const response = await axiosApi.post('/categories/add', category);
+      const response = await axiosApi.post('/categories', category);
       return response.data;
     }  catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
@@ -25,3 +25,4 @@ export const addCategory = createAsyncThunk<void, CategoryMutation, { rejectValu
     }
   }
 );
+

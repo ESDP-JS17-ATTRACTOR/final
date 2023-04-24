@@ -1,84 +1,99 @@
-import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import React, {useEffect} from "react";
+import Link from "next/link";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import {fetchCategories} from "@/features/categories/categoriesThunks";
+import {deleteCourse, fetchCourses} from "@/features/courses/coursesThunks";
+import {selectCourseDeleting, selectCourses, selectCoursesLoading} from "@/features/courses/coursesSlice";
 import {
-  selectCategories,
-} from "@/features/categories/categoriesSlice";
-import { fetchCategories } from "@/features/categories/categoriesThunks";
-import { Dialog, DialogContent, useMediaQuery, useTheme } from "@mui/material";
-import CategoryForm from "@/components/UI/Admin/CategoryForm";
+    Box, Button, CircularProgress,
+    Paper,
+    Table, TableBody, TableCell,
+    TableContainer,
+    TableHead,
+    TableRow, Typography,
+} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const Courses = () => {
-  const categories = useAppSelector(selectCategories);
-  const dispatch = useAppDispatch();
-  const [isDialogueOpen, setIsDialogOpen] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const dispatch = useAppDispatch();
+    const courses = useAppSelector(selectCourses);
+    const loading = useAppSelector(selectCoursesLoading);
+    const deleting = useAppSelector(selectCourseDeleting);
 
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchCategories());
+        dispatch(fetchCourses());
+    }, [dispatch]);
 
-  const openDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-  };
+    const handleDelete = async (courseId: string) => {
+        await dispatch(deleteCourse(courseId));
+        await dispatch(fetchCourses());
+    };
 
 
-  return (
-    <div style={{ padding: 5 }}>
-      <div>
-        <label
-          htmlFor="category"
-          className="mb-2"
-          style={{
-            display: "block",
-            marginBottom: 5
-          }}
-        >
-          Категории курсов
-        </label>
-        <select
-          id="category"
-          name="category"
-          className="form-control"
-        >
-          <option disabled value="">Выберите категорию</option>
+    return (
+        <>
+            <Box display="flex" alignItems="center" justifyContent="space-between">
+                <Typography>Ниже список всех курсов</Typography>
+                <Button> <Link href="/admin/courseForm">Добавить курс</Link></Button>
+            </Box>
 
-          {categories.map(category => (
-            <option
-              key={category.id}
-              id={category.id.toString()}
-              value={category.id}>{category.title}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        {/*уйдет в форму добавления курса*/}
-        <button
-        onClick={openDialog}
-        >Open Dialog for category form</button>
-        <Dialog
-          fullScreen={fullScreen}
-          open={isDialogueOpen}
-          onClose={closeDialog}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogContent>
-            <CategoryForm
-              onClose={closeDialog}
-            />
-          </DialogContent>
-        </Dialog>
-      {/*  уйдет в форму добавления курса */}
-      </div>
-    </div>
-  );
+            {loading ?
+                <Box sx={{display: "flex"}}>
+                    <CircularProgress/>
+                </Box> :
+
+                <TableContainer component={Paper}>
+                    <Table sx={{minWidth: 650}} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Название курса</TableCell>
+                                <TableCell align="right">Преподаватель</TableCell>
+                                <TableCell align="right">Длительность курса</TableCell>
+                                <TableCell align="right">Цена</TableCell>
+                                <TableCell align="right">Тип</TableCell>
+                                <TableCell align="right">Удалить</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {courses.map((course) => (
+                                <TableRow
+                                    key={course.id}
+                                    sx={{"&:last-child td, &:last-child th": {border: 0}}}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {course.title}
+                                    </TableCell>
+                                    <TableCell
+                                        align="right">{course.tutor.firstName} {course.tutor.lastName}</TableCell>
+                                    <TableCell align="right">{course.duration}</TableCell>
+                                    <TableCell align="right">{course.price} KGS</TableCell>
+                                    <TableCell
+                                        align="right">{course.isGroup ? "Групповой курс" : "Индивидуальный курс"}</TableCell>
+                                    <TableCell align="center">
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => handleDelete(course.id.toString())}
+                                            disabled={deleting}
+                                        >
+
+                                            {deleting ?
+                                                <Box sx={{display: 'flex'}}>
+                                                    <CircularProgress/>
+                                                </Box> : <DeleteIcon/>
+                                            }
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            }
+        </>
+    );
 };
 
 export default Courses;
-

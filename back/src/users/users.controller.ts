@@ -4,6 +4,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Delete,
+  Get,
   Post,
   Req,
   UseGuards,
@@ -18,6 +19,7 @@ import { RegisterDto } from './dto/register.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
+import { StaffGuard } from '../auth/staff.guard';
 
 @Controller('users')
 export class UsersController {
@@ -56,5 +58,14 @@ export class UsersController {
     await user.generateToken();
     await this.userRepository.save(user);
     return { message: 'Logout success' };
+  }
+
+  @Get('tutors')
+  @UseGuards(TokenAuthGuard, StaffGuard)
+  async getTutors() {
+    return await this.userRepository.find({
+      where: { role: 'tutor' },
+      select: ['id', 'firstName', 'lastName', 'role'],
+    });
   }
 }

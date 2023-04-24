@@ -74,4 +74,11 @@ export class CategoriesController {
       throw new NotFoundException(`Category with id ${id} not found`);
     }
   }
+
+  @Get(':id')
+  async getOneCategory(@Param('id') id: number) {
+    return this.categoryRepository.findOne({
+      where: { id: id },
+    });
+  }
 }

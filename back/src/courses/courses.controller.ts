@@ -130,4 +130,11 @@ export class CoursesController {
       throw new NotFoundException(`Course with id ${id} not found`);
     }
   }
+
+  @Get(':id')
+  async getOneCourse(@Param('id') id: number) {
+    return this.courseRepository.findOne({
+      where: { id: id },
+    });
+  }
 }

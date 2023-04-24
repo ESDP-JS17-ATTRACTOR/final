@@ -59,11 +59,12 @@ export const logout = createAsyncThunk<void, void, {state: RootState}>(
     }
 );
 
-export const editUserProfile = createAsyncThunk<void, ProfileMutation, { rejectValue: ValidationError }>(
+export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectValue: ValidationError }>(
     'users/edit',
     async (profileMutation, {rejectWithValue}) => {
         try {
-            await axiosApi.patch('users/edit-profile', profileMutation);
+            const response = await axiosApi.patch<User>('users/edit-profile', profileMutation);
+            return response.data;
         } catch (e) {
             if (isAxiosError(e) && e.response && e.response.status === 400) {
                 return rejectWithValue(e.response.data as ValidationError);

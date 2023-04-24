@@ -6,6 +6,9 @@ import {Provider} from "react-redux";
 import {store} from "@/app/store";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import {GOOGLE_CLIENT_ID} from "../../constants";
+import {addInterceptors} from "../../axiosApi";
+
+addInterceptors(store);
 
 export default function App({Component, pageProps}: AppProps) {
     return (

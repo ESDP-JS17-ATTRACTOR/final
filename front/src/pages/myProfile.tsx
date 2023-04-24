@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import CardForHomework from "@/components/UI/CardForHomework";
 import {editUserProfile} from "@/features/users/usersThunks";
-import {ProfileMutation} from "../../../types";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";
 import {selectUser} from "@/features/users/usersSlice";
+import {ProfileMutation} from "../../types";
 
 const MyProfile = () => {
     const dispatch = useAppDispatch();
@@ -21,9 +21,9 @@ const MyProfile = () => {
 
     const submitFormHandler = async (event: React.FormEvent) => {
         event.preventDefault();
-        await dispatch(editUserProfile(initialState));
+        await dispatch(editUserProfile(state));
         setShowForm(false);
-        // await router.push('/');
+        await router.push('/myProfile');
     };
 
     const onEditClick = () => {
@@ -38,22 +38,22 @@ const MyProfile = () => {
                     <div><img className="profile-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU0VGHL3JrJAD7mgw9FP77qpKv0IuIv_p2hg&usqp=CAU" alt=""/></div>
                     { !showForm &&<div className="profile-info-block">
                         <div>
-                        <h5>Email:</h5><span> {user?.email}</span>
+                            <h5>Email:</h5><span> {user?.email}</span>
                         </div>
                         <div>
-                        <h5>Full name:</h5><span> {user?.firstName}</span>
+                            <h5>Full name:</h5><span> {user?.firstName}</span>
                         </div>
                         <div>
-                        <h5>Country:</h5><span> {user?.country}</span>
+                            <h5>Country:</h5><span> {user?.country}</span>
                         </div>
                         <button className="button profile-btn-edit" onClick={onEditClick}>Edit</button>
                     </div>}
-                    { showForm && <form onSubmit={submitFormHandler}>
+                    { showForm && <form id="form-id" onSubmit={submitFormHandler}>
                         <div className="profile-edit-form_box">
                             <label>Email</label>
                             <input
                                 type="email"
-                                id="authEmail"
+                                id="Email"
                                 name="email"
                                 placeholder="Введите почтовый адрес"
                                 required={true}
@@ -62,7 +62,7 @@ const MyProfile = () => {
                             />
                         </div>
                         <div className="profile-edit-form_box">
-                            <label>Full name</label>
+                            <label>First name</label>
                             <input
                                 type="text"
                                 id="firstName"

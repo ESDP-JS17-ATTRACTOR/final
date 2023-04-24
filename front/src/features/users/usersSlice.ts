@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {LoginError, User, ValidationError} from "../../../types";
-import {googleLogin, login, register} from "./usersThunks";
+import {editUserProfile, googleLogin, login, register} from "./usersThunks";
 import {RootState} from "@/app/store";
 
 interface UserState {
@@ -10,6 +10,7 @@ interface UserState {
   loginLoading: boolean,
   loginError: LoginError | null,
   modalWindowStatus: boolean,
+  editLoading: boolean,
 }
 
 const initialState: UserState = {
@@ -19,6 +20,7 @@ const initialState: UserState = {
   loginLoading: false,
   loginError: null,
   modalWindowStatus: false,
+  editLoading: false,
 }
 
 const usersSlice = createSlice({
@@ -66,6 +68,15 @@ const usersSlice = createSlice({
       state.loginLoading = false;
       state.loginError = error || null;
     });
+
+    builder.addCase(editUserProfile.pending, (state) => {
+      state.editLoading = true;
+    }).addCase(editUserProfile.fulfilled, (state, {payload: user}) => {
+      state.editLoading = false;
+      state.user = user;
+    }).addCase(editUserProfile.rejected, (state, {payload: error}) => {
+      state.editLoading = false;
+    });
   }
 });
 
@@ -79,3 +90,4 @@ export const selectRegisterError = (state: RootState) => state.users.registerErr
 export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
 export const selectLoginError = (state: RootState) => state.users.loginError;
 export const selectModalWindowStatus = (state: RootState) => state.users.modalWindowStatus;
+export const selectEditLoading = (state: RootState) => state.users.editLoading;

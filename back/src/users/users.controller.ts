@@ -73,5 +73,9 @@ export class UsersController {
   async edit(@Req() req: Request, @Body() updateData: Partial<User>) {
     const user = req.user as User;
     await this.userRepository.update(user.id, updateData);
+    const updatedUser = await this.userRepository.findOne({
+      where: { id: user.id },
+    });
+    return updatedUser;
   }
 }

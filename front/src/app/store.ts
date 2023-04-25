@@ -11,9 +11,13 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { usersReducer } from '@/features/users/usersSlice';
+import { categoriesReducer } from "@/features/categories/categoriesSlice";
+import { coursesReducer } from "@/features/courses/coursesSlice";
 
 const rootReducer = combineReducers({
   users: usersReducer,
+  categories: categoriesReducer,
+  courses: coursesReducer,
 });
 
 const persistConfig = {

@@ -38,3 +38,15 @@ Feature: Users
     Then I click "Hello, Test First Name" button in App Tool Bar
     Then I click "Logout" menu item
     Then I see in App Tool Bar "LOGIN" button
+
+    @savingUserInformationInLocalStorage
+    Scenario: Existing User Authentication
+      Given I am on the main page
+      When I click "Login" button
+      When I enter form fields:
+        | email    | testingUser5@gmail.test |
+        | password | Test Password           |
+      And I click button with className "button auth_login_btn"
+      Then I should see Avatar box with classname ".MuiBox-root.css-1ivg2jf" in App Tool Bar
+      Then I refresh page
+      Then I should see Avatar box with classname ".MuiBox-root.css-1ivg2jf" in App Tool Bar

@@ -19,11 +19,13 @@ import { RegisterDto } from './dto/register.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('users')
 export class UsersController {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly authService: AuthService,
   ) {}
 
   @Post('register')
@@ -41,6 +43,13 @@ export class UsersController {
     const user = this.userRepository.create(body);
     await user.generateToken();
     return this.userRepository.save(user);
+  }
+
+  @Post('google-authentication')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UsePipes(ValidationPipe)
+  async registerUserWithGoogle(@Body() body: { credential: string }) {
+    return this.authService.registerUserWithGoogle(body.credential);
   }
 
   @Post('login')

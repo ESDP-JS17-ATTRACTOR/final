@@ -6,11 +6,15 @@ import {selectLoginError, selectModalWindowStatus, switchModalWindow} from "@/fe
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {LoginMutation} from "../../types";
-import {login} from "@/features/users/usersThunks";
+import {googleLogin, login} from "@/features/users/usersThunks";
+import {en} from "../../public/locales/en/auth";
+import {ru} from "../../public/locales/ru/auth";
+import {useGoogleLogin} from "@react-oauth/google";
 
 const Authorization = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const t = router.locale === 'en' ? en : ru;
     const modalWindowStatus = useAppSelector(selectModalWindowStatus);
     const loginError = useAppSelector(selectLoginError);
     const [state, setState] = useState<LoginMutation>({
@@ -34,6 +38,13 @@ const Authorization = () => {
         await router.push('/');
     };
 
+    const googleLoginHandler = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            await dispatch(googleLogin(tokenResponse.access_token)).unwrap()
+            await router.push('/');
+        }
+    });
+
     return (
         <Home>
             <Modal
@@ -42,7 +53,7 @@ const Authorization = () => {
             >
                 <div className="authorization">
                     <div className="authorization-header">
-                        <h4 className="authorization-header_title">Authorization</h4>
+                        <h4 className="authorization-header_title">{t.authorization}</h4>
                     </div>
                     <form
                         className="authorization-form"
@@ -50,13 +61,13 @@ const Authorization = () => {
                     >
                         <div className="authorization-form_box">
                             <label htmlFor="authEmail">
-                                {loginError ? (<b>{loginError.message}</b>) : "E-mail"}
+                                {loginError ? (<b>{loginError.message}</b>) : t.email}
                             </label>
                             <input
                                 type="email"
                                 id="authEmail"
                                 name="email"
-                                placeholder="Enter your e-mail"
+                                placeholder={t.enterEmail}
                                 required={true}
                                 value={state.email}
                                 onChange={inputChangeHandler}
@@ -64,13 +75,13 @@ const Authorization = () => {
                         </div>
                         <div className="authorization-form_box">
                             <label htmlFor="authPassword">
-                                {loginError ? (<b>{loginError.message}</b>) : "Password"}
+                                {loginError ? (<b>{loginError.message}</b>) : t.password}
                             </label>
                             <input
                                 type="password"
                                 id="authPassword"
                                 name="password"
-                                placeholder="Enter your password"
+                                placeholder={t.enterPassword}
                                 required={true}
                                 value={state.password}
                                 onChange={inputChangeHandler}
@@ -81,25 +92,30 @@ const Authorization = () => {
                                 type="checkbox"
                                 id="rememberMe"
                             />
-                            <label htmlFor="rememberMe">Remember me</label>
+                            <label htmlFor="rememberMe">{t.rememberMe}</label>
                         </div>
                         <div className="authorization-form_box_links">
-                            <Link href="#">Forgot password</Link>
-                            <Link href="/register">Create an account</Link>
+                            <Link href="#">{t.forgotPassword}</Link>
+                            <Link href="/register">{t.createAcc}</Link>
                         </div>
                         <button
                             type="submit"
                             className="button auth_login_btn"
                         >
-                            Login
+                            {t.login}
                         </button>
                     </form>
                     <div className="authorization-footer">
-                        <h5>Sign in now</h5>
+                        <h5>{t.signInNow}</h5>
                         <div className="authorization-footer_buttons">
                             <button className="social_auth_btn auth_facebook">Facebook</button>
                             <button className="social_auth_btn auth_linkedin">Linkedin</button>
-                            <button className="social_auth_btn auth_google">Google+</button>
+                            <button
+                                className="social_auth_btn auth_google"
+                                onClick={() => googleLoginHandler()}
+                            >
+                                Google+
+                            </button>
                         </div>
                     </div>
                 </div>

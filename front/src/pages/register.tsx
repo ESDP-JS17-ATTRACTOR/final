@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import {Modal} from "@mui/material";
 import {RegisterMutation} from "../../types";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
-import {register} from "@/features/users/usersThunks";
+import {googleLogin, register} from "@/features/users/usersThunks";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {selectModalWindowStatus, switchModalWindow} from "@/features/users/usersSlice";
 import Home from "@/pages/index";
+import {en} from '../../public/locales/en/auth';
+import {ru} from '../../public/locales/ru/auth';
+import {useGoogleLogin} from "@react-oauth/google";
 
 const Register = () => {
-    const dispatch = useAppDispatch();
     const router = useRouter();
+    const t = router.locale === 'ru' ? ru : en;
+    const dispatch = useAppDispatch();
     const modalWindowStatus = useAppSelector(selectModalWindowStatus);
     const [state, setState] = useState<RegisterMutation>({
         email: "",
@@ -49,7 +53,14 @@ const Register = () => {
         } catch (e) {
             throw new Error();
         }
-    }
+    };
+
+    const googleLoginHandler = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            await dispatch(googleLogin(tokenResponse.access_token)).unwrap()
+            await router.push('/');
+        }
+    });
 
     return (
         <Home>
@@ -59,7 +70,7 @@ const Register = () => {
             >
                 <div className="registration">
                     <div className="registration-header">
-                        <h4 className="registration-header_title">Registration</h4>
+                        <h4 className="registration-header_title">{t.registration}</h4>
                     </div>
                     <form
                         className="registration-form"
@@ -67,13 +78,13 @@ const Register = () => {
                     >
                         <div className="registration-form_box">
                             <label htmlFor="registerEmail">
-                                E-mail
+                                {t.email}
                             </label>
                             <input
                                 type="email"
                                 id="registerEmail"
                                 name="email"
-                                placeholder="Enter your e-mail"
+                                placeholder={t.enterEmail}
                                 required={true}
                                 value={state.email}
                                 onChange={inputChangeHandler}
@@ -81,13 +92,13 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="registerFirstName">
-                                First name
+                                {t.firstName}
                             </label>
                             <input
                                 type="text"
                                 id="registerFirstName"
                                 name="firstName"
-                                placeholder="Enter your first name"
+                                placeholder={t.enterFirstName}
                                 required={true}
                                 value={state.firstName}
                                 onChange={inputChangeHandler}
@@ -95,13 +106,13 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="registerLastName">
-                                Last name
+                                {t.lastName}
                             </label>
                             <input
                                 type="text"
                                 id="registerLastName"
                                 name="lastName"
-                                placeholder="Enter your last name"
+                                placeholder={t.enterLastName}
                                 required={true}
                                 value={state.lastName}
                                 onChange={inputChangeHandler}
@@ -109,13 +120,13 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="registerPassword">
-                                Password
+                                {t.password}
                             </label>
                             <input
                                 type="password"
                                 id="registerPassword"
                                 name="password"
-                                placeholder="Enter your password"
+                                placeholder={t.enterPassword}
                                 required={true}
                                 value={state.password}
                                 onChange={inputChangeHandler}
@@ -123,13 +134,13 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="confirmingPassword">
-                                {validationError ? <b>{validationError}</b> : "Confirm your password"}
+                                {validationError ? <b>{validationError}</b> : t.passConfirm}
                             </label>
                             <input
                                 type="password"
                                 id="confirmingPassword"
                                 name="confirmedPassword"
-                                placeholder="Confirm your password"
+                                placeholder={t.passConfirm}
                                 required={true}
                                 value={confirmedPassword}
                                 onChange={confirmPasswordInputChangeHandler}
@@ -140,24 +151,28 @@ const Register = () => {
                                 type="checkbox"
                                 id="rememberMe"
                             />
-                            <label htmlFor="rememberMe">Remember me</label>
+                            <label htmlFor="rememberMe">{t.rememberMe}</label>
                         </div>
                         <div className="registration-form_box_links">
-                            <Link href="/authorization">Already have an account? Log in</Link>
+                            <Link href="/authorization">{t.alreadyLogin}</Link>
                         </div>
                         <button
                             type="submit"
                             className="button register_signup_btn"
                         >
-                            Sign Up
+                            {t.signUp}
                         </button>
                     </form>
                     <div className="registration-footer">
-                        <h5>Sign up with</h5>
+                        <h5>{t.signUpWith}</h5>
                         <div className="registration-footer_buttons">
                             <button className="social_auth_btn auth_facebook">Facebook</button>
                             <button className="social_auth_btn auth_linkedin">Linkedin</button>
-                            <button className="social_auth_btn auth_google">Google+</button>
+                            <button
+                                className="social_auth_btn auth_google"
+                                onClick={() => googleLoginHandler()}
+                            >
+                            </button>
                         </div>
                     </div>
                 </div>

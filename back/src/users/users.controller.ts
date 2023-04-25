@@ -23,7 +23,8 @@ import { AuthService } from '../auth/auth.service';
 @Controller('users')
 export class UsersController {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
   ) {}
 

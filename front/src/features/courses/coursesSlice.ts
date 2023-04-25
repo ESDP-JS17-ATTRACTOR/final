@@ -1,6 +1,6 @@
-import {Course, ValidationError} from "../../../types";
+import {Course, CourseMutation, ValidationError} from "../../../types";
 import { createSlice } from "@reduxjs/toolkit";
-import {addCourse, deleteCourse, fetchCourses} from "@/features/courses/coursesThunks";
+import {addCourse, deleteCourse, editCourse, fetchCourses, fetchOneCourse} from "@/features/courses/coursesThunks";
 import { RootState } from "@/app/store";
 
 interface CourseState {
@@ -9,6 +9,9 @@ interface CourseState {
   courseAdding: boolean;
   courseAddError: ValidationError | null;
   courseDeleting: boolean;
+  oneCourse: CourseMutation | null;
+  oneCourseLoading: boolean;
+  oneCourseEditing: boolean
 }
 
 
@@ -18,6 +21,9 @@ const initialState: CourseState = {
   courseAdding: false,
   courseAddError: null,
   courseDeleting: false,
+  oneCourse: null,
+  oneCourseLoading: false,
+  oneCourseEditing: false,
 };
 
 const coursesSlice = createSlice({
@@ -57,6 +63,28 @@ const coursesSlice = createSlice({
     builder.addCase(deleteCourse.rejected, (state) => {
       state.courseDeleting = false;
     });
+
+    builder.addCase(fetchOneCourse.pending, (state) => {
+      state.oneCourse = null;
+      state.oneCourseLoading = true;
+    });
+    builder.addCase(fetchOneCourse.fulfilled, (state, {payload: course}) => {
+      state.oneCourseLoading = false;
+      state.oneCourse = course;
+    });
+    builder.addCase(fetchOneCourse.rejected, (state) => {
+      state.oneCourseLoading = false;
+    });
+
+    builder.addCase(editCourse.pending, (state) => {
+      state.oneCourseEditing = true;
+    });
+    builder.addCase(editCourse.fulfilled, (state) => {
+      state.oneCourseEditing = false;
+    });builder.addCase(editCourse.rejected, (state) => {
+      state.oneCourseEditing = false;
+    });
+
   }
 });
 
@@ -67,3 +95,6 @@ export const selectCoursesLoading = (state: RootState) => state.courses.coursesL
 export const selectCourseAdding = (state: RootState) => state.courses.courseAdding;
 export const selectCourseError = (state: RootState) => state.courses.courseAddError;
 export const selectCourseDeleting = (state: RootState) => state.courses.courseDeleting;
+export const selectOneCourse = (state: RootState) => state.courses.oneCourse;
+export const selectOneCourseLoading = (state: RootState) => state.courses.oneCourseLoading;
+export const selectOneCourseEditing = (state: RootState) => state.courses.oneCourseEditing;

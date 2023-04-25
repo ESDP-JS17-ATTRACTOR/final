@@ -48,6 +48,7 @@ export class CoursesController {
   }
 
   @Post()
+  @UseGuards(TokenAuthGuard, StaffGuard)
   async createCourse(@Body() courseData: AddCourseDto) {
     const existCourse = await this.courseRepository.findOne({
       where: { title: courseData.title },
@@ -133,8 +134,25 @@ export class CoursesController {
 
   @Get(':id')
   async getOneCourse(@Param('id') id: number) {
-    return this.courseRepository.findOne({
-      where: { id: id },
-    });
+    const { category, tutor, ...result } = await this.courseRepository
+      .createQueryBuilder('course')
+      .leftJoinAndSelect('course.category', 'category')
+      .leftJoinAndSelect('course.tutor', 'tutor')
+      .select([
+        'course.title',
+        'course.duration',
+        'course.price',
+        'course.isGroup',
+        'tutor.id',
+        'category.id',
+      ])
+      .where('course.id = :id', { id })
+      .getOne();
+
+    return {
+      ...result,
+      category: category.id.toString(),
+      tutor: tutor.id.toString(),
+    };
   }
 }

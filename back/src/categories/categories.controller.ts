@@ -30,6 +30,7 @@ export class CategoriesController {
   ) {}
 
   @Post()
+  @UseGuards(TokenAuthGuard, StaffGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @UsePipes(ValidationPipe)
   async addCourse(@Body() body: AddCategoryDto) {
@@ -79,6 +80,7 @@ export class CategoriesController {
   async getOneCategory(@Param('id') id: number) {
     return this.categoryRepository.findOne({
       where: { id: id },
+      select: ['title'],
     });
   }
 }

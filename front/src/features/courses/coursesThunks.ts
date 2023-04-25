@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {Course, CourseMutation, GlobalError, ValidationError} from "../../../types";
+import {Course, ApiCourse, CourseMutation, GlobalError, ValidationError} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 
@@ -11,7 +11,7 @@ export const fetchCourses = createAsyncThunk<Course[]>(
   }
 );
 
-export const addCourse = createAsyncThunk<void, CourseMutation, { rejectValue: ValidationError }>(
+export const addCourse = createAsyncThunk<void, ApiCourse, { rejectValue: ValidationError }>(
     'courses/add',
     async (course, {rejectWithValue}) => {
         try {
@@ -37,6 +37,31 @@ export const deleteCourse = createAsyncThunk<void, string>(
             }
             throw (e);
         }
+    }
+);
+
+export const fetchOneCourse = createAsyncThunk<CourseMutation, string>(
+    'courses/fetchOneCourse',
+    async (id) => {
+        const response = await axiosApi.get('/courses/' + id);
+        const course = response.data;
+
+        if (course === null) {
+            throw new Error('Course was not found');
+        }
+        return course;
+    }
+);
+
+interface EditParams {
+    id: string,
+    course: ApiCourse
+}
+
+export const editCourse = createAsyncThunk<void, EditParams>(
+    'courses/editCourse',
+    async (params) => {
+        await axiosApi.patch('/courses/' + params.id, params.course);
     }
 );
 

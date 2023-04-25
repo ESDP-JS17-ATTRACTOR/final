@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Category, CategoryMutation, GlobalError } from "../../../types";
+import { Category, CategoryMutation, GlobalError} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import { isAxiosError } from "axios";
 
@@ -24,5 +24,44 @@ export const addCategory = createAsyncThunk<void, CategoryMutation, { rejectValu
       throw e;
     }
   }
+);
+
+export const deleteCategory = createAsyncThunk<void, string>(
+    'categories/delete',
+    async (id) => {
+        try {
+            await axiosApi.delete('/categories/' + id);
+        } catch (e) {
+            if (isAxiosError(e) && e.response && e.response.status === 403) {
+                return alert(e.response.data.error as GlobalError);
+            }
+            throw (e);
+        }
+    }
+);
+
+export const fetchOneCategory = createAsyncThunk<CategoryMutation, string>(
+    'categories/fetchOneCategory',
+    async (id) => {
+        const response = await axiosApi.get('/categories/' + id);
+        const category = response.data;
+
+        if (category === null) {
+            throw new Error('Category was not found');
+        }
+        return category;
+    }
+);
+
+interface EditParams {
+    id: string,
+    category: CategoryMutation
+}
+
+export const editCategory = createAsyncThunk<void, EditParams>(
+    'categories/editCategory',
+    async (params) => {
+        await axiosApi.patch('/categories/' + params.id, params.category);
+    }
 );
 

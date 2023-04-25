@@ -2,56 +2,47 @@ import React, {useEffect, useState} from "react";
 import {
     Button,
     CircularProgress,
-    Dialog,
-    DialogContent,
-    Grid,
+    FormControlLabel,
+    Grid, Radio, RadioGroup,
     TextField,
     Typography,
-    useMediaQuery,
-    useTheme
 } from "@mui/material";
-import CategoryForm from "@/components/UI/Admin/CategoryForm";
-import {CourseMutation} from "../../../types";
+import {ApiCourse, CourseMutation} from "../../../../types";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {selectCategories} from "@/features/categories/categoriesSlice";
-import {fetchCategories} from "@/features/categories/categoriesThunks";
+import { fetchCategories} from "@/features/categories/categoriesThunks";
 import {selectTutors} from "@/features/users/usersSlice";
 import {fetchTutors} from "@/features/users/usersThunks";
-import {addCourse} from "@/features/courses/coursesThunks";
-import {useRouter} from "next/router";
 import {selectCoursesLoading} from "@/features/courses/coursesSlice";
 
-const CourseForm = () => {
+
+interface Props {
+    onSubmit: (course: ApiCourse) => void,
+    exist?: CourseMutation;
+    isEdit?: boolean
+}
+
+const initialState: CourseMutation = {
+    tutor: '',
+    category: '',
+    title: '',
+    price: '',
+    duration: '',
+    isGroup: false,
+}
+
+const CourseForm: React.FC<Props> = ({onSubmit, exist= initialState, isEdit= false}) => {
     const dispatch = useAppDispatch();
-    const router = useRouter();
-    const [isDialogueOpen, setIsDialogOpen] = useState(false);
     const categories = useAppSelector(selectCategories);
     const tutors = useAppSelector(selectTutors);
     const adding = useAppSelector(selectCoursesLoading);
-    const [state, setState] = useState<CourseMutation>({
-        tutor: '',
-        category: '',
-        title: '',
-        price: '',
-        duration: '',
-        isGroup: false,
-    });
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+    const [state, setState] = useState<CourseMutation>(exist)
 
     useEffect(() => {
         dispatch(fetchCategories());
         dispatch(fetchTutors());
     }, [dispatch]);
 
-
-    const openDialog = () => {
-        setIsDialogOpen(true);
-    };
-
-    const closeDialog = () => {
-        setIsDialogOpen(false);
-    };
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
@@ -60,16 +51,26 @@ const CourseForm = () => {
         });
     };
 
+    const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setState({
+            ...state,
+            isGroup: e.target.value === "true"
+        });
+    };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await dispatch(addCourse(state));
-        await router.push("/admin/courses");
+        onSubmit({
+            ...state,
+            tutor: parseFloat(state.tutor),
+            category: parseFloat(state.category),
+        });
     };
 
 
     return (
         <>
-            <Typography>Добавьте новый курс</Typography>
+            <Typography>{isEdit ? 'Обновите курс' : 'Добавьте новый курс'}</Typography>
             <form onSubmit={handleSubmit}>
                 <Grid container direction="column" spacing={2}>
                     <Grid item xs>
@@ -87,6 +88,7 @@ const CourseForm = () => {
                             id="category"
                             name="category"
                             className="form-control"
+                            required
                             value={state.category}
                             onChange={inputChangeHandler}
                         >
@@ -117,6 +119,7 @@ const CourseForm = () => {
                             id="tutor"
                             name="tutor"
                             className="form-control"
+                            required
                             value={state.tutor}
                             onChange={inputChangeHandler}
                         >
@@ -135,63 +138,55 @@ const CourseForm = () => {
                     <Grid item xs>
                         <TextField
                             id="title" label="Title"
-                            value={state.title}
-                            onChange={inputChangeHandler}
                             name="title"
                             required
+                            value={state.title}
+                            onChange={inputChangeHandler}
                         />
                     </Grid>
                     <Grid item xs>
                         <TextField
                             id="price" label="Price"
-                            value={state.price}
-                            onChange={inputChangeHandler}
                             name="price"
                             required
+                            value={state.price}
+                            onChange={inputChangeHandler}
                         />
                     </Grid>
                     <Grid item xs>
                         <TextField
                             id="duration" label="Duration"
-                            value={state.duration}
-                            onChange={inputChangeHandler}
                             name="duration"
                             required
+                            value={state.duration}
+                            onChange={inputChangeHandler}
                         />
                     </Grid>
 
                     <Grid item xs>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                            value={state.isGroup}
+                            onChange={handleRadioChange}
+                        >
+                            <FormControlLabel value={true} control={<Radio/>} label="Групповой"/>
+                            <FormControlLabel value={false} control={<Radio/>} label="Индивидуальный"/>
+                        </RadioGroup>
+                    </Grid>
+
+                    <Grid item xs>
                         <Button
-                            disabled={adding}
+                            disabled={adding || !state.tutor || !state.category || !state.title || !state.duration || !state.price}
                             type="submit"
                         >
-                            {adding ? <CircularProgress/> : 'Добавить курс'}
+                            {adding && <CircularProgress/> }
+                            {isEdit ? 'Обновить курс' : 'Добавить курс'}
                         </Button>
                     </Grid>
                 </Grid>
             </form>
-
-            <Grid container direction="column" spacing={2}>
-                <Grid item xs>
-                    <Button
-                        onClick={openDialog}
-                        type="button">Open Dialog for category form
-                    </Button>
-                </Grid>
-            </Grid>
-
-            <Grid container direction="column" spacing={2}>
-                <Dialog
-                    fullScreen={fullScreen}
-                    open={isDialogueOpen}
-                    onClose={closeDialog}
-                    aria-labelledby="responsive-dialog-title"
-                >
-                    <DialogContent>
-                        <CategoryForm onClose={closeDialog}/>
-                    </DialogContent>
-                </Dialog>
-            </Grid>
         </>
     );
 };

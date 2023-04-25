@@ -69,7 +69,16 @@ export interface CourseMutation {
   title: string;
   price: string;
   duration: string;
-  isGroup: boolean;
+  isGroup: boolean | null;
+}
+
+export interface ApiCourse {
+  tutor: number;
+  category: number;
+  title: string;
+  price: string;
+  duration: string;
+  isGroup: boolean | null;
 }
 
 export interface Tutor {

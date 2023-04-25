@@ -96,3 +96,12 @@ When('I click img with className {string}', () => {
     I.click(locate('img').withAttr({class: 'profile-avatar'}));
     I.wait(5)
 });
+
+Then('I should see Avatar box with classname {string} in App Tool Bar', (className: string) => {
+    I.seeElement(className);
+    I.wait(1);
+});
+
+Then('I refresh page', () => {
+    I.refreshPage();
+});

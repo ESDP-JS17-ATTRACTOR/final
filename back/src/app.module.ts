@@ -10,6 +10,8 @@ import { Category } from './entities/category.entity';
 import { CategoriesController } from './categories/categories.controller';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
+import { FixturesService } from './fixtures/fixtures.service';
+import { SeedCommand } from './fixtures/seed.command';
 import { CoursesController } from './courses/courses.controller';
 import { Course } from './entities/course.entity';
 
@@ -19,6 +21,14 @@ import { Course } from './entities/course.entity';
     DatabaseModule,
     TypeOrmModule.forFeature([User, Category, Course]),
     PassportModule,
+  ],
+  controllers: [UsersController],
+  providers: [
+    AppService,
+    AuthService,
+    LocalStrategy,
+    FixturesService,
+    SeedCommand,
   ],
   controllers: [UsersController, CategoriesController, CoursesController],
   providers: [AppService, AuthService, LocalStrategy],

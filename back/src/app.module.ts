@@ -8,6 +8,8 @@ import { User } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
+import { FixturesService } from './fixtures/fixtures.service';
+import { SeedCommand } from './fixtures/seed.command';
 
 @Module({
   imports: [
@@ -17,6 +19,12 @@ import { LocalStrategy } from './auth/local.strategy';
     PassportModule,
   ],
   controllers: [UsersController],
-  providers: [AppService, AuthService, LocalStrategy],
+  providers: [
+    AppService,
+    AuthService,
+    LocalStrategy,
+    FixturesService,
+    SeedCommand,
+  ],
 })
 export class AppModule {}

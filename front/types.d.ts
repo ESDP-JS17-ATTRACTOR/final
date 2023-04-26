@@ -44,6 +44,11 @@ export interface User {
   googleId?: string;
 }
 
+export interface ProfileMutation {
+  email: string;
+  firstName: string;
+  country: string;
+  
 export interface Category {
   id: number;
   title: string;

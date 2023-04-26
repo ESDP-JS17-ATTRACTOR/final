@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {LoginError, Tutor, User, ValidationError} from "../../../types";
-import {fetchTutors, googleLogin, login, register} from "./usersThunks";
+import {fetchTutors, editUserProfile, googleLogin, login, register} from "./usersThunks";
 import {RootState} from "@/app/store";
 
 interface UserState {
@@ -10,6 +10,7 @@ interface UserState {
   loginLoading: boolean,
   loginError: LoginError | null,
   modalWindowStatus: boolean,
+  editLoading: boolean,
   tutors: Tutor[],
   tutorsLoading: boolean
 }
@@ -21,6 +22,7 @@ const initialState: UserState = {
   loginLoading: false,
   loginError: null,
   modalWindowStatus: false,
+  editLoading: false,
   tutors: [],
   tutorsLoading: false
 }
@@ -71,6 +73,13 @@ const usersSlice = createSlice({
       state.loginError = error || null;
     });
 
+    builder.addCase(editUserProfile.pending, (state) => {
+      state.editLoading = true;
+    }).addCase(editUserProfile.fulfilled, (state, {payload: user}) => {
+      state.editLoading = false;
+      state.user = user;
+    }).addCase(editUserProfile.rejected, (state, {payload: error}) => {
+      state.editLoading = false;
     builder.addCase(fetchTutors.pending, (state) => {
       state.tutorsLoading = true;
     });
@@ -94,5 +103,6 @@ export const selectRegisterError = (state: RootState) => state.users.registerErr
 export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
 export const selectLoginError = (state: RootState) => state.users.loginError;
 export const selectModalWindowStatus = (state: RootState) => state.users.modalWindowStatus;
+export const selectEditLoading = (state: RootState) => state.users.editLoading;
 export const selectTutors = (state: RootState) => state.users.tutors;
 export const selectTutorsLoading = (state: RootState) => state.users.tutorsLoading;

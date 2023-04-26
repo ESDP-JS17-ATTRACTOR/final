@@ -24,6 +24,7 @@ export interface ValidationError {
 
 export interface GlobalError {
   error: string;
+  message: string;
 }
 
 export interface LoginError {
@@ -47,4 +48,46 @@ export interface ProfileMutation {
   email: string;
   firstName: string;
   country: string;
+  
+export interface Category {
+  id: number;
+  title: string;
+}
+
+export interface CategoryMutation {
+  title: string;
+}
+
+export interface Course {
+  id: number;
+  tutor: User;
+  category: Category;
+  title: string;
+  price: string;
+  duration: string;
+  isGroup: boolean;
+}
+
+export interface CourseMutation {
+  tutor: string;
+  category: string;
+  title: string;
+  price: string;
+  duration: string;
+  isGroup: boolean | null;
+}
+
+export interface ApiCourse {
+  tutor: number;
+  category: number;
+  title: string;
+  price: string;
+  duration: string;
+  isGroup: boolean | null;
+}
+
+export interface Tutor {
+  id: number;
+  firstName: string;
+  lastName: string;
 }

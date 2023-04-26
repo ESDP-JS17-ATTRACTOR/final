@@ -5,6 +5,7 @@ import {
   Controller,
   Delete,
   Patch,
+  Get,
   Post,
   Req,
   UseGuards,
@@ -67,7 +68,7 @@ export class UsersController {
     await this.userRepository.save(user);
     return { message: 'Logout success' };
   }
-
+  
   @Patch('edit-profile')
   @UseGuards(TokenAuthGuard)
   async edit(@Req() req: Request, @Body() updateData: Partial<User>) {
@@ -77,5 +78,12 @@ export class UsersController {
       where: { id: user.id },
     });
     return updatedUser;
+    
+  @Get('tutors')
+  async getTutors() {
+    return await this.userRepository.find({
+      where: { role: 'tutor' },
+      select: ['id', 'firstName', 'lastName', 'role'],
+    });
   }
 }

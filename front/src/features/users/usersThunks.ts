@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {LoginError, LoginMutation, ProfileMutation, RegisterMutation, User, ValidationError} from "../../../types";
+import {LoginError, LoginMutation, ProfileMutation, RegisterMutation, Tutor, User, ValidationError} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 import {unsetUser} from "@/features/users/usersSlice";
@@ -72,4 +72,11 @@ export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectV
             throw e;
         }
     },
+    
+export const fetchTutors = createAsyncThunk<Tutor[]>(
+    'users/fetchTutors',
+    async () => {
+        const response = await axiosApi.get<Tutor[]>('/users/tutors');
+        return response.data;
+    }
 );

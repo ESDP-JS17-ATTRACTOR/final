@@ -4,6 +4,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Delete,
+  Get,
   Post,
   Req,
   UseGuards,
@@ -66,5 +67,13 @@ export class UsersController {
     await user.generateToken();
     await this.userRepository.save(user);
     return { message: 'Logout success' };
+  }
+
+  @Get('tutors')
+  async getTutors() {
+    return await this.userRepository.find({
+      where: { role: 'tutor' },
+      select: ['id', 'firstName', 'lastName', 'role'],
+    });
   }
 }

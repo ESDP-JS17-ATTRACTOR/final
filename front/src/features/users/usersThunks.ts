@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {LoginError, LoginMutation, RegisterMutation, User, ValidationError} from "../../../types";
+import {LoginError, LoginMutation, RegisterMutation, Tutor, User, ValidationError} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 import {unsetUser} from "@/features/users/usersSlice";
@@ -56,5 +56,13 @@ export const logout = createAsyncThunk<void, void, {state: RootState}>(
         const user = getState().users.user;
         await axiosApi.delete('users/sessions', {headers: {"Authorization": user?.token}});
         dispatch(unsetUser());
+    }
+);
+
+export const fetchTutors = createAsyncThunk<Tutor[]>(
+    'users/fetchTutors',
+    async () => {
+        const response = await axiosApi.get<Tutor[]>('/users/tutors');
+        return response.data;
     }
 );

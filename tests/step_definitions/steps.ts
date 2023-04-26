@@ -76,3 +76,12 @@ Then('I see the main headline {string}', (headlineText: string) => {
     I.see(headlineText);
     I.wait(1);
 });
+
+Then('I should see Avatar box with classname {string} in App Tool Bar', (className: string) => {
+    I.seeElement(className);
+    I.wait(1);
+});
+
+Then('I refresh page', () => {
+    I.refreshPage();
+});

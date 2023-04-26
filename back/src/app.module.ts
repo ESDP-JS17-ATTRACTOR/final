@@ -22,7 +22,6 @@ import { Course } from './entities/course.entity';
     TypeOrmModule.forFeature([User, Category, Course]),
     PassportModule,
   ],
-  controllers: [UsersController],
   providers: [
     AppService,
     AuthService,
@@ -31,6 +30,5 @@ import { Course } from './entities/course.entity';
     SeedCommand,
   ],
   controllers: [UsersController, CategoriesController, CoursesController],
-  providers: [AppService, AuthService, LocalStrategy],
 })
 export class AppModule {}

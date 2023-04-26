@@ -25,7 +25,8 @@ import { AuthService } from '../auth/auth.service';
 @Controller('users')
 export class UsersController {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
   ) {}
 
@@ -68,17 +69,17 @@ export class UsersController {
     await this.userRepository.save(user);
     return { message: 'Logout success' };
   }
-  
+
   @Patch('edit-profile')
   @UseGuards(TokenAuthGuard)
   async edit(@Req() req: Request, @Body() updateData: Partial<User>) {
     const user = req.user as User;
     await this.userRepository.update(user.id, updateData);
-    const updatedUser = await this.userRepository.findOne({
+    return this.userRepository.findOne({
       where: { id: user.id },
     });
-    return updatedUser;
-    
+  }
+
   @Get('tutors')
   async getTutors() {
     return await this.userRepository.find({

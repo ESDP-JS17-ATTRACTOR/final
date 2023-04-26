@@ -6,16 +6,20 @@ import { UsersController } from './users/users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
+import { Category } from './entities/category.entity';
+import { CategoriesController } from './categories/categories.controller';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
 import { FixturesService } from './fixtures/fixtures.service';
 import { SeedCommand } from './fixtures/seed.command';
+import { CoursesController } from './courses/courses.controller';
+import { Course } from './entities/course.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Category, Course]),
     PassportModule,
   ],
   controllers: [UsersController],
@@ -26,5 +30,7 @@ import { SeedCommand } from './fixtures/seed.command';
     FixturesService,
     SeedCommand,
   ],
+  controllers: [UsersController, CategoriesController, CoursesController],
+  providers: [AppService, AuthService, LocalStrategy],
 })
 export class AppModule {}

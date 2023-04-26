@@ -6,20 +6,15 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Course } from './course.entity';
-import { Module } from './module.entity';
 
 @Entity()
-export class Lesson {
+export class Module {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Course)
   @JoinColumn({ name: 'courseId' })
-  course: Course;
-
-  @ManyToOne(() => Module)
-  @JoinColumn({ name: 'moduleId' })
-  module: Module;
+  course: number;
 
   @Column()
   number: number;
@@ -28,11 +23,5 @@ export class Lesson {
   title: string;
 
   @Column()
-  video: string;
-
-  @Column()
   description: string;
-
-  @Column({ type: 'boolean', default: 'false' })
-  isStopLesson: boolean;
 }

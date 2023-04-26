@@ -77,6 +77,26 @@ Then('I see the main headline {string}', (headlineText: string) => {
     I.wait(1);
 });
 
+When('I click on the MUI Avatar component with the alt text {string}', () => {
+    I.click(locate('div').withAttr({class: 'MuiBox-root css-1ivg2jf'}));
+    I.wait(2);
+});
+
+When('I click link {string}', () => {
+    I.click(locate('li').withText('My Profile'));
+    I.wait(2);
+});
+
+Then('I should see {string}', () => {
+    I.see("My Profile")
+    I.wait(2);
+});
+
+When('I click img with className {string}', () => {
+    I.click(locate('img').withAttr({class: 'profile-avatar'}));
+    I.wait(5)
+});
+
 Then('I should see Avatar box with classname {string} in App Tool Bar', (className: string) => {
     I.seeElement(className);
     I.wait(1);

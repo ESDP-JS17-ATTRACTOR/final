@@ -4,6 +4,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Delete,
+  Patch,
   Get,
   Post,
   Req,
@@ -67,7 +68,17 @@ export class UsersController {
     await this.userRepository.save(user);
     return { message: 'Logout success' };
   }
-
+  
+  @Patch('edit-profile')
+  @UseGuards(TokenAuthGuard)
+  async edit(@Req() req: Request, @Body() updateData: Partial<User>) {
+    const user = req.user as User;
+    await this.userRepository.update(user.id, updateData);
+    const updatedUser = await this.userRepository.findOne({
+      where: { id: user.id },
+    });
+    return updatedUser;
+    
   @Get('tutors')
   async getTutors() {
     return await this.userRepository.find({

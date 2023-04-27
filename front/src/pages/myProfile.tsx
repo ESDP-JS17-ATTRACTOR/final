@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import CardForHomework from "@/components/UI/CardForHomework";
+import CardForHomework from "@/components/Cards/CardForHomework";
 import {editUserProfile} from "@/features/users/usersThunks";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";

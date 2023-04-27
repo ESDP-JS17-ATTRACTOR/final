@@ -5,8 +5,12 @@
   height: 500px;
   background: linear-gradient(180deg, #EDA652 0%, rgba(217, 218, 146, 0.29) 100%);
   border-radius: 0 0 40% 40%;
+  margin-bottom: 50px;
   .invitation-block-container {
     display: flex;
+    background-image: url("/header_circles.png"), url("/header_shapes.png"), url("/header_shapes_2.png");
+    background-position: 70% 5%, 56% 86%, 96% 80%;
+    background-repeat: no-repeat, no-repeat, no-repeat;
     .invitation-info {
       &_text {
         h1 {
@@ -39,9 +43,84 @@
     }
     .invitation-contacts {
       margin-left: auto;
+      position: relative;
       img {
         width: 100%;
       }
+      &_box {
+        position: absolute;
+        top: 25%;
+        right: 0;
+      }
+      .contact-link {
+        display: block;
+        overflow: hidden;
+        text-indent: -150px;
+        background: #ffffff;
+        box-shadow: 1px 3px 9px 2px rgba(0, 0, 0, 0.19);
+        border-radius: 50%;
+        width: 47px;
+        height: 47px;
+        margin-bottom: 30px;
+        &_facebook {
+          background-image: url("/facebook_ic.png");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        &_whatsapp {
+          background-image: url("/whatsapp_ic.png");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        &_instagram {
+          background-image: url("/instagram_ic.png");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
     }
   }
+}
+
+.info-block {
+  display: flex;
+  &_image {
+    width: 50%;
+    display: flex;
+    margin-bottom: 50px;
+    img {
+      align-self: center;
+    }
+  }
+  &_content {
+    width: 50%;
+    h4 {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 48px;
+      text-transform: uppercase;
+      color: $orange;
+      margin: 0 0 10px;
+    }
+    span {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 48px;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px $blue-text;
+      text-stroke: 1px $blue-text;
+    }
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      color: #444444;
+      margin: 0 0 20px;
+    }
+  }
+}
+
+.courses-block {
+  background: linear-gradient(0deg, rgba(238, 233, 122, 0.29) 0%, #E7B4A5 59.17%, rgba(238, 233, 122, 0.29) 100%);
 }

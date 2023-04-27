@@ -60,23 +60,24 @@ export const logout = createAsyncThunk<void, void, {state: RootState}>(
 );
 
 export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectValue: ValidationError }>(
-    'users/edit',
-    async (profileMutation, {rejectWithValue}) => {
-        try {
-            const response = await axiosApi.patch<User>('users/edit-profile', profileMutation);
-            return response.data;
-        } catch (e) {
-            if (isAxiosError(e) && e.response && e.response.status === 400) {
-                return rejectWithValue(e.response.data as ValidationError);
-            }
-            throw e;
-        }
-    },
-    
-export const fetchTutors = createAsyncThunk<Tutor[]>(
-    'users/fetchTutors',
-    async () => {
-        const response = await axiosApi.get<Tutor[]>('/users/tutors');
-        return response.data;
+  'users/edit',
+  async (profileMutation, {rejectWithValue}) => {
+    try {
+      const response = await axiosApi.patch<User>('users/edit-profile', profileMutation);
+      return response.data;
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data as ValidationError);
+      }
+      throw e;
     }
+  },
+);
+
+export const fetchTutors = createAsyncThunk<Tutor[]>(
+  'users/fetchTutors',
+  async () => {
+    const response = await axiosApi.get<Tutor[]>('/users/tutors');
+    return response.data;
+  }
 );

@@ -8,7 +8,7 @@ const AnonymousMenu = () => {
 
   return (
     <div>
-      <Link href="/authorization">
+      <Link href="/front/src/pages/authorization">
         <button
           className="login_btn"
           onClick={() => dispatch(switchModalWindow())}
@@ -16,7 +16,7 @@ const AnonymousMenu = () => {
           Login
         </button>
       </Link>
-      <Link href="/register">
+      <Link href="/front/src/pages/register">
         <button
           className="sign-up_btn"
           onClick={() => dispatch(switchModalWindow())}

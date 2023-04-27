@@ -24,6 +24,12 @@ export class Course {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
+  @Column({ type: 'varchar', length: 255 })
+  description: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  startedAt: string;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   duration: string;
 

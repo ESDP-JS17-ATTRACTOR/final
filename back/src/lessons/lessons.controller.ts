@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -92,13 +91,6 @@ export class LessonsController {
   @Delete(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
   async removeOneLesson(@Param('id') id: number) {
-    const lesson: Lesson = await this.lessonRepository.findOne({
-      where: { id: id },
-    });
-    if (lesson) {
-      return this.lessonRepository.delete(id);
-    } else {
-      throw new NotFoundException(`Lesson with id ${id} not found`);
-    }
+    return this.lessonsService.removeLesson(id);
   }
 }

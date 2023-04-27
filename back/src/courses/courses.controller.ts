@@ -79,6 +79,7 @@ export class CoursesController {
       duration: courseData.duration,
       price: courseData.price,
       isGroup: courseData.isGroup,
+      startedAt: courseData.startedAt,
     });
     return this.courseRepository.save(course);
   }
@@ -125,6 +126,7 @@ export class CoursesController {
       course.duration = updateCourseDto.duration;
       course.price = updateCourseDto.price;
       course.isGroup = updateCourseDto.isGroup;
+      course.startedAt = updateCourseDto.startedAt;
 
       return this.courseRepository.save(course);
     } else {
@@ -143,6 +145,7 @@ export class CoursesController {
         'course.duration',
         'course.price',
         'course.isGroup',
+        'course.startedAt',
         'tutor.id',
         'category.id',
       ])

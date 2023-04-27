@@ -71,6 +71,18 @@ export class LessonsService {
     return this.lessonRepository.save(lesson);
   }
 
+  async removeLesson(id: number) {
+    const lesson: Lesson = await this.lessonRepository.findOne({
+      where: { id },
+    });
+    if (lesson) {
+      await this.lessonRepository.delete(id);
+      return { message: `Lesson with id ${id} deleted` };
+    } else {
+      throw new NotFoundException(`Lesson with id ${id} not found`);
+    }
+  }
+
   private async ifExistReturnsLesson(id: number): Promise<Lesson> {
     const lesson = await this.lessonRepository.findOne({ where: { id } });
     if (!lesson) {

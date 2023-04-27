@@ -14,12 +14,14 @@ import { FixturesService } from './fixtures/fixtures.service';
 import { SeedCommand } from './fixtures/seed.command';
 import { CoursesController } from './courses/courses.controller';
 import { Course } from './entities/course.entity';
+import { HomeworksController } from './homeworks/homeworks.controller';
+import { Homework } from './entities/homework.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
-    TypeOrmModule.forFeature([User, Category, Course]),
+    TypeOrmModule.forFeature([User, Category, Course, Homework]),
     PassportModule,
   ],
   providers: [
@@ -29,6 +31,11 @@ import { Course } from './entities/course.entity';
     FixturesService,
     SeedCommand,
   ],
-  controllers: [UsersController, CategoriesController, CoursesController],
+  controllers: [
+    UsersController,
+    CategoriesController,
+    CoursesController,
+    HomeworksController,
+  ],
 })
 export class AppModule {}

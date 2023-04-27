@@ -1,0 +1,100 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.started {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  margin: 0 30px;
+
+  &-titles {
+    display: flex;
+    justify-content: center;
+
+    &-orange {
+      margin: auto 40px;
+      color: $dark-orange;
+      font-size: 40px;
+      line-height: 48px;
+      text-transform: uppercase;
+    }
+
+    &-white {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 48px;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px $blue-text;
+      text-stroke: 1px $blue-text;
+      margin: auto -20px;
+    }
+  }
+
+  &-description {
+    color: $dark-grey;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  &-cards {
+    display: flex;
+    justify-content: center;
+    background-image: url("/started-circle-1.png"), url("/started-circle-2.png"), url("/started-circle-3.png");
+    background-position: 10% 90%, 52% 90%, 90% 90%;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    padding: 20px 0 30px;
+
+    &-box {
+      box-shadow: 1px 4px 8px 7px rgba(0, 0, 0, 0.18);
+      border-radius: 50%;
+      height: 303px;
+      width: 303px;
+      margin: 50px 54px 0;
+
+      &-step {
+        color: $orange-btn;
+        font-family: 'Craftwork Grotesk', sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        text-transform: lowercase;
+        padding: 60px 0 0;
+        background-image: url("/css_sprites-started.png");
+        background-position: 52% 56%;
+        background-repeat: no-repeat;
+      }
+
+      &-consultation {
+        color: $dark-blue;
+        font-family: 'Craftwork Grotesk', sans-serif;
+        font-weight: 500;
+        line-height: 22px;
+      }
+
+      &-description {
+        color: $light-grey;
+        font-family: 'Craftwork Grotesk', sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        padding: 0px 50px;
+        opacity: 0.9;
+      }
+    }
+  }
+
+  &-btn {
+    align-self: center;
+    color: $dark-grey-btn;
+    background: $orange-btn;
+    width: 311px;
+    height: 75px;
+    border: none;
+    border-radius: 32px;
+    text-transform: uppercase;
+    margin: 70px auto;
+  }
+}

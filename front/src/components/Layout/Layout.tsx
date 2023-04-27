@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import AppToolbar from "@/components/UI/AppToolbar";
+import AppToolbar from "@/components/UI/header/AppToolbar";
 import { useRouter } from "next/router";
 import Admin from "@/pages/admin";
 

@@ -1,0 +1,46 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.feedback{
+  display: flex;
+  flex-direction: column;
+
+  &_input {
+    display: block;
+    width: 373px;
+    height: 59px;
+    margin-bottom: 1rem;
+    border-radius: 34px;
+    border: none;
+    background-size: 22px;
+    background-repeat: no-repeat;
+    background-position: 10px 4px;
+    padding-left: 36px;
+    ::placeholder {
+      color: rgba(51, 65, 105, 0.55);
+    }
+  }
+  &_textarea {
+    width: 343px;
+    height: 92px;
+    border-radius: 32px;
+    padding: 33px;
+    border: none;
+    margin-bottom: 10px;
+    resize: none;
+  }
+  &_button {
+    width: 224px;
+    height: 59px;
+    background: $orange-btn;
+    border-radius: 32px;
+    border: none;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: uppercase;
+    color: #565858;
+  }
+}

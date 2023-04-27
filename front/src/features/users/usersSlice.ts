@@ -80,6 +80,7 @@ const usersSlice = createSlice({
       state.user = user;
     }).addCase(editUserProfile.rejected, (state, {payload: error}) => {
       state.editLoading = false;
+    })
     builder.addCase(fetchTutors.pending, (state) => {
       state.tutorsLoading = true;
     });

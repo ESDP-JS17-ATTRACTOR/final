@@ -36,4 +36,9 @@ export class UpdateCourseDto {
   @IsBoolean()
   @IsNotEmpty()
   isGroup: boolean;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  startedAt: string;
 }

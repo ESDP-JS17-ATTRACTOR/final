@@ -18,4 +18,7 @@ export class AddCourseDto {
 
   @IsNotEmpty()
   isGroup: boolean;
+
+  @IsNotEmpty()
+  startedAt: string;
 }

@@ -22,8 +22,8 @@ export class Purchase {
   course: Course;
 
   @Column()
-  purchasedAt: string;
+  purchasedAt: Date;
 
   @Column()
-  expiredDate: string;
+  expiredDate: Date;
 }

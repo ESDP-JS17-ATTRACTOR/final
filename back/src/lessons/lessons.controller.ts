@@ -1,14 +1,14 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from '../entities/lesson.entity';
@@ -19,6 +19,8 @@ import { CreateLessonDto } from './dto/createLesson.dto';
 import { Course } from '../entities/course.entity';
 import { Module } from '../entities/module.entity';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
+import { LessonsService } from './lessons.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('lessons')
 export class LessonsController {
@@ -29,6 +31,7 @@ export class LessonsController {
     private readonly courseRepository: Repository<Course>,
     @InjectRepository(Module)
     private readonly moduleRepository: Repository<Module>,
+    private readonly lessonsService: LessonsService,
   ) {}
 
   @Get()
@@ -38,82 +41,27 @@ export class LessonsController {
 
   @Post()
   @UseGuards(TokenAuthGuard, StaffGuard)
-  async createLesson(@Body() lessonData: CreateLessonDto) {
-    const existLesson = await this.lessonRepository.findOne({
-      where: { title: lessonData.title },
-    });
-
-    const course = await this.courseRepository.findOne({
-      where: { id: lessonData.course },
-    });
-
-    const module = await this.moduleRepository.findOne({
-      where: { id: lessonData.module },
-    });
-
-    if (existLesson) {
-      throw new BadRequestException('This lesson is already registered');
-    }
-
-    if (!course) {
-      throw new BadRequestException('Course not found');
-    }
-
-    if (!module) {
-      throw new BadRequestException('Module not found');
-    }
-
-    const lesson = await this.lessonRepository.create({
-      course: course,
-      module: module,
-      number: lessonData.number,
-      title: lessonData.title,
-      video: lessonData.video,
-      description: lessonData.description,
-      isStopLesson: lessonData.isStopLesson,
-    });
-    return this.lessonRepository.save(lesson);
+  @UseInterceptors(
+    FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }),
+  )
+  async createLesson(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() lessonData: CreateLessonDto,
+  ) {
+    return this.lessonsService.createLesson(lessonData, file);
   }
 
-  @Patch()
+  @Patch(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
+  @UseInterceptors(
+    FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }),
+  )
   async updateLesson(
     @Param('id') id: number,
+    @UploadedFile() file: Express.Multer.File,
     @Body() updateLessonDto: UpdateLessonDto,
   ) {
-    const lesson = await this.lessonRepository.findOne({
-      where: { id: id },
-    });
-
-    const course = await this.courseRepository.findOne({
-      where: { id: updateLessonDto.course },
-    });
-
-    const module = await this.moduleRepository.findOne({
-      where: { id: updateLessonDto.module },
-    });
-
-    if (!course) {
-      throw new BadRequestException('Course not found');
-    }
-
-    if (!module) {
-      throw new BadRequestException('Module not found');
-    }
-
-    if (lesson) {
-      lesson.course = course;
-      lesson.module = module;
-      lesson.number = updateLessonDto.number;
-      lesson.title = updateLessonDto.title;
-      lesson.video = updateLessonDto.video;
-      lesson.description = updateLessonDto.description;
-      lesson.isStopLesson = updateLessonDto.isStopLesson;
-
-      return this.lessonRepository.save(lesson);
-    } else {
-      throw new NotFoundException(`Lesson with id ${id} not found`);
-    }
+    return this.lessonsService.updateLesson(id, file, updateLessonDto);
   }
 
   @Get(':id')
@@ -143,13 +91,6 @@ export class LessonsController {
   @Delete(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
   async removeOneLesson(@Param('id') id: number) {
-    const lesson: Lesson = await this.lessonRepository.findOne({
-      where: { id: id },
-    });
-    if (lesson) {
-      return this.lessonRepository.delete(id);
-    } else {
-      throw new NotFoundException(`Lesson with id ${id} not found`);
-    }
+    return this.lessonsService.removeLesson(id);
   }
 }

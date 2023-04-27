@@ -2,6 +2,12 @@ import React, {PropsWithChildren} from "react";
 import {en} from '../../public/locales/en/mainBlock';
 import {ru} from '../../public/locales/ru/mainBlock';
 import {useRouter} from "next/router";
+import Article from "@/components/UI/article/Article";
+import Profits from "@/components/UI/profits/Profits";
+import Started from "@/components/UI/started/Started";
+import StudentWorks from "@/components/UI/student-works/StudentWorks";
+import Team from "@/components/UI/team/Team";
+import Footer from "@/components/UI/footer/Footer";
 
 const Home: React.FC<PropsWithChildren> = ({children}) => {
   const router = useRouter();
@@ -30,19 +36,20 @@ const Home: React.FC<PropsWithChildren> = ({children}) => {
             </div>
             <div className="invitation-contacts">
               <img src="/main-pic.png" alt="Main Pic"/>
-              {/*<div>*/}
-              {/*    <button>Facebook</button>*/}
-              {/*    <button>WhatsApp</button>*/}
-              {/*    <button>Instagram</button>*/}
-              {/*</div>*/}
+              <div className="invitation-contacts_box">
+                <a href="#" className="contact-link contact-link_facebook">Facebook</a>
+                <a href="#" className="contact-link contact-link_whatsapp">WhatsApp</a>
+                <a href="#" className="contact-link contact-link_instagram">Instagram</a>
+              </div>
             </div>
           </div>
         </div>
-        <div className="info-block">
-          <div className="container">
-
-          </div>
-        </div>
+        <Article/>
+        <Profits/>
+        <Started/>
+        <StudentWorks/>
+        <Team/>
+        <Footer/>
       </main>
       {children}
     </>

@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 export class AddCourseDto {
   @IsNotEmpty()
@@ -20,5 +20,6 @@ export class AddCourseDto {
   isGroup: boolean;
 
   @IsNotEmpty()
-  startedAt: string;
+  @IsDate()
+  startedAt: Date;
 }

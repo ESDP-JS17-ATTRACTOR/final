@@ -1,5 +1,6 @@
 import {
   IsBoolean,
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -38,7 +39,7 @@ export class UpdateCourseDto {
   isGroup: boolean;
 
   @IsOptional()
-  @IsString()
+  @IsDate()
   @IsNotEmpty()
-  startedAt: string;
+  startedAt: Date;
 }

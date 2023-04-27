@@ -28,7 +28,7 @@ export class Lesson {
   title: string;
 
   @Column()
-  video: string;
+  video: string | null;
 
   @Column()
   description: string;

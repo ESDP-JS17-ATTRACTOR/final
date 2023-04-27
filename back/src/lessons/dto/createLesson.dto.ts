@@ -19,9 +19,6 @@ export class CreateLessonDto {
   title: string;
 
   @IsNotEmpty()
-  video: string;
-
-  @IsNotEmpty()
   description: string;
 
   @Column({ type: 'boolean', default: 'false' })

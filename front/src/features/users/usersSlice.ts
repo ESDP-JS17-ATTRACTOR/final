@@ -37,7 +37,7 @@ const usersSlice = createSlice({
     },
     unsetUser: (state) => {
       state.user = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(register.pending, (state) => {

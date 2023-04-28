@@ -1,0 +1,67 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.course-preview-card {
+  width: 310px;
+  height: 365px;
+  background: #ffffff;
+  border-radius: 16px;
+  text-align: center;
+  &-header {
+    &_title {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 29px;
+      text-transform: uppercase;
+      color: $blue-text;
+      position: relative;
+      &::after {
+        display: block;
+        content: '';
+        width: 79px;
+        height: 5px;
+        background: $orange;
+        position: absolute;
+        border-radius: 12px;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  &-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &_price {
+      font-weight: 600;
+      font-size: 28px;
+      line-height: 34px;
+      text-transform: uppercase;
+      color: $blue-text;
+      display: flex;
+      margin: 0;
+      span {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        text-transform: lowercase;
+        color: $light-blue;
+        padding-top: 5px;
+        padding-left: 7px;
+      }
+    }
+    &_details {
+      text-align: left;
+      list-style: none;
+      &_item {
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        text-transform: capitalize;
+        color: $blue-text;
+      }
+    }
+  }
+}

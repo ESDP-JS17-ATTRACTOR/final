@@ -30,11 +30,6 @@ export class UpdateLessonDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  video: string;
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
   description: string;
 
   @IsOptional()

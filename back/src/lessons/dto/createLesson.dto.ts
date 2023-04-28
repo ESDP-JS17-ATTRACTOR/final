@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Entity } from 'typeorm';
 import { IsBoolean, IsNotEmpty, IsNumber } from 'class-validator';
 
 @Entity()
@@ -21,7 +21,6 @@ export class CreateLessonDto {
   @IsNotEmpty()
   description: string;
 
-  @Column({ type: 'boolean', default: 'false' })
   @IsBoolean()
   isStopLesson: boolean;
 }

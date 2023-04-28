@@ -1,0 +1,64 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.user-courses-block {
+  &-header {
+    text-align: center;
+    &_title {
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+      text-transform: capitalize;
+      color: $blue-text;
+    }
+  }
+  &-main {
+    .user-courses-list {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      thead {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #334169;
+        tr {
+          margin-bottom: 10px;
+        }
+      }
+      tbody {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #444444;
+        tr {
+          height: 70px;
+          border-top: 1px solid #4688C1;
+          border-bottom: 1px solid #4688C1;
+          background: $beige;
+          position: relative;
+        }
+      }
+      &_modules {
+        position: absolute;
+        bottom: -45px;
+        left: 0;
+        display: none;
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        text-align: center;
+        tbody {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 19px;
+          color: #444444;
+          tr {
+            height: 40px;
+            background: $gray;
+          }
+        }
+      }
+    }
+  }
+}

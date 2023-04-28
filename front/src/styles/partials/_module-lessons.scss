@@ -1,0 +1,19 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.module-lessons-block {
+  &-header {
+    text-align: center;
+    &_title {
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+      text-transform: capitalize;
+      color: $blue-text;
+    }
+  }
+  &-main {
+    display: flex;
+    flex-direction: column;
+  }
+}

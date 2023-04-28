@@ -288,5 +288,38 @@ export class FixturesService {
       isStopLesson: false,
     });
     await this.lessonsRepository.save(lesson4);
+
+    const lesson5 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 5,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #5',
+      isStopLesson: false,
+    });
+    await this.lessonsRepository.save(lesson5);
+
+    const lesson6 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 6,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #6',
+      isStopLesson: true,
+    });
+    await this.lessonsRepository.save(lesson6);
+
+    const lesson7 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 7,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #7',
+      isStopLesson: false,
+    });
+    await this.lessonsRepository.save(lesson7);
   }
 }

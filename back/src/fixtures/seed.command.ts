@@ -14,5 +14,14 @@ export class SeedCommand extends CommandRunner {
     console.log('======= Creating users! =======');
     await this.fixturesService.createUsers();
     console.log('======= Done! =================');
+    console.log('======= Creating categories! =======');
+    await this.fixturesService.createCategories();
+    console.log('======= Done! =================');
+    console.log('======= Creating courses! =======');
+    await this.fixturesService.createCourses();
+    console.log('======= Done! =================');
+    console.log('======= Creating modules! =======');
+    await this.fixturesService.createModules();
+    console.log('======= Done! =================');
   }
 }

@@ -4,6 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import { Category } from './entities/category.entity';
 import { Course } from './entities/course.entity';
+import { CourseModule } from './entities/courseModule.entity';
+import { Purchase } from './entities/purchase.entity';
+import { Lesson } from './entities/lesson.entity';
+import { UsersLesson } from './entities/usersLesson.entity';
 
 @Module({
   imports: [
@@ -17,7 +21,15 @@ import { Course } from './entities/course.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Category, Course],
+        entities: [
+          User,
+          Category,
+          Course,
+          CourseModule,
+          Purchase,
+          Lesson,
+          UsersLesson,
+        ],
         synchronize: true,
       }),
     }),

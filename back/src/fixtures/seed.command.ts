@@ -25,6 +25,6 @@ export class SeedCommand extends CommandRunner {
     console.log('======= Done! =================');
     console.log('======= Creating lessons! =======');
     await this.fixturesService.createLessons();
-    console.log('======= Done! =================');
+    console.log('======= Done! Ready to work! =================');
   }
 }

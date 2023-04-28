@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Course } from './course.entity';
-import { Module } from './module.entity';
+import { CourseModule } from './courseModule.entity';
 
 @Entity()
 export class Lesson {
@@ -17,9 +17,9 @@ export class Lesson {
   @JoinColumn({ name: 'courseId' })
   course: Course;
 
-  @ManyToOne(() => Module)
+  @ManyToOne(() => CourseModule)
   @JoinColumn({ name: 'moduleId' })
-  module: Module;
+  module: CourseModule;
 
   @Column()
   number: number;

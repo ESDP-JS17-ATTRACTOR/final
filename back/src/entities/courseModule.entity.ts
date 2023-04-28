@@ -8,13 +8,13 @@ import {
 import { Course } from './course.entity';
 
 @Entity()
-export class Module {
+export class CourseModule {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Course)
   @JoinColumn({ name: 'courseId' })
-  course: number;
+  course: Course;
 
   @Column()
   number: number;

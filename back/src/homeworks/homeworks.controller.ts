@@ -15,7 +15,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from '../entities/lesson.entity';
 import { Repository } from 'typeorm';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { StaffGuard } from '../auth/staff.guard';
 import { TutorGuard } from '../auth/tutor.guard';
 import { AddHomeworkDto } from './dto/addHomework.dto';
 import { Homework } from '../entities/homework.entity';
@@ -33,7 +32,7 @@ export class HomeworksController {
 
   @Get()
   async getAll() {
-    return this.lessonRepository.find();
+    return this.homeworkRepository.find();
   }
 
   @Post()
@@ -41,6 +40,7 @@ export class HomeworksController {
   async createLesson(
     @Req() req: Request,
     @Body() homeworkData: AddHomeworkDto,
+    file: Express.Multer.File,
   ) {
     const user = req.user as User;
     const lesson = await this.lessonRepository.findOne({
@@ -52,90 +52,47 @@ export class HomeworksController {
     }
 
     const homework = await this.homeworkRepository.create({
-      lesson: lesson,
+      lesson: req.body.lesson,
       title: homeworkData.title,
       description: homeworkData.description,
       tutorName: user.firstName,
-      file: homeworkData.file,
+      file: file ? '/uploads/homeworks/pdf/' + file.filename : null,
     });
     return this.homeworkRepository.save(homework);
   }
 
   // @Patch()
-  // @UseGuards(TokenAuthGuard, StaffGuard)
-  // async updateLesson(
+  // @UseGuards(TokenAuthGuard, TutorGuard)
+  // async updateHomework(
   //   @Param('id') id: number,
-  //   @Body() updateLessonDto: UpdateLessonDto,
+  //   @Body() updateHomeworkDto: UpdateHomeworkDto,
   // ) {
-  //   const lesson = await this.lessonRepository.findOne({
+  //   const homework = await this.homeworkRepository.findOne({
   //     where: { id: id },
   //   });
-  //
-  //   const course = await this.courseRepository.findOne({
-  //     where: { id: updateLessonDto.course },
+  //   await this.homeworkRepository.update(homework.id, updateHomeworkDto);
+  //   return this.homeworkRepository.findOne({
+  //     where: { id: homework.id },
   //   });
-  //
-  //   const module = await this.moduleRepository.findOne({
-  //     where: { id: updateLessonDto.module },
-  //   });
-  //
-  //   if (!course) {
-  //     throw new BadRequestException('Course not found');
-  //   }
-  //
-  //   if (!module) {
-  //     throw new BadRequestException('Module not found');
-  //   }
-  //
-  //   if (lesson) {
-  //     lesson.course = course;
-  //     lesson.module = module;
-  //     lesson.number = updateLessonDto.number;
-  //     lesson.title = updateLessonDto.title;
-  //     lesson.video = updateLessonDto.video;
-  //     lesson.description = updateLessonDto.description;
-  //     lesson.isStopLesson = updateLessonDto.isStopLesson;
-  //
-  //     return this.lessonRepository.save(lesson);
-  //   } else {
-  //     throw new NotFoundException(`Lesson with id ${id} not found`);
-  //   }
   // }
-  //
-  // @Get(':id')
-  // async getOneLesson(@Param('id') id: number) {
-  //   const { course, module, ...result } = await this.lessonRepository
-  //     .createQueryBuilder('lesson')
-  //     .leftJoinAndSelect('lesson.course', 'course')
-  //     .leftJoinAndSelect('lesson.module', 'module')
-  //     .select([
-  //       'lesson.title',
-  //       'lesson.duration',
-  //       'lesson.price',
-  //       'lesson.isGroup',
-  //       'module.id',
-  //       'course.id',
-  //     ])
-  //     .where('lesson.id = :id', { id })
-  //     .getOne();
-  //
-  //   return {
-  //     ...result,
-  //     course: course.id.toString(),
-  //     module: module.id.toString(),
-  //   };
-  // }
-  //
-  // @Delete(':id')
-  // @UseGuards(TokenAuthGuard, StaffGuard)
-  // async removeOneLesson(@Param('id') id: number) {
-  //   const lesson: Lesson = await this.lessonRepository.findOne({
-  //     where: { id: id },
-  //   });
-  //   if (lesson) {
-  //     return this.lessonRepository.delete(id);
-  //   } else {
-  //     throw new NotFoundException(`Lesson with id ${id} not found`);
-  //   }
-  // }
+
+  @Get(':id')
+  async getOneHomework(@Param('id') id: number) {
+    return this.homeworkRepository.findOne({
+      where: { id: id },
+    });
+  }
+
+  @Delete(':id')
+  @UseGuards(TokenAuthGuard, TutorGuard)
+  async removeOneHomework(@Param('id') id: number) {
+    const homework: Homework = await this.homeworkRepository.findOne({
+      where: { id: id },
+    });
+    if (homework) {
+      return this.homeworkRepository.delete(id);
+    } else {
+      throw new NotFoundException(`Homework with id ${id} not found`);
+    }
+  }
 }

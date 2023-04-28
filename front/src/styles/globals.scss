@@ -16,6 +16,10 @@
 @use "partials/register";
 @use "partials/course-preview-card";
 @use "partials/my-profile";
+@use "partials/my-courses";
+@use "partials/module-lessons";
+@use "partials/lesson-preview-card";
+
 body {
   margin: 0;
 }

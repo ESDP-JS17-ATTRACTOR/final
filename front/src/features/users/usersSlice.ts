@@ -1,7 +1,7 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {LoginError, Tutor, User, ValidationError} from "../../../types";
-import {fetchTutors, editUserProfile, googleLogin, login, register} from "./usersThunks";
-import {RootState} from "@/app/store";
+import { createSlice } from "@reduxjs/toolkit";
+import { LoginError, Tutor, User, ValidationError } from "../../../types";
+import { fetchTutors, editUserProfile, googleLogin, login, register } from "./usersThunks";
+import { RootState } from "@/app/store";
 
 interface UserState {
   user: User | null,
@@ -25,10 +25,10 @@ const initialState: UserState = {
   editLoading: false,
   tutors: [],
   tutorsLoading: false
-}
+};
 
 const usersSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState,
   reducers: {
     switchModalWindow: (state) => {
@@ -55,36 +55,36 @@ const usersSlice = createSlice({
 
     builder.addCase(login.pending, (state) => {
       state.loginLoading = true;
-    }).addCase(login.fulfilled, (state, {payload: user}) => {
+    }).addCase(login.fulfilled, (state, { payload: user }) => {
       state.loginLoading = false;
       state.user = user;
-    }).addCase(login.rejected, (state, {payload: error}) => {
+    }).addCase(login.rejected, (state, { payload: error }) => {
       state.loginLoading = false;
       state.loginError = error || null;
     });
 
     builder.addCase(googleLogin.pending, (state) => {
       state.loginLoading = true;
-    }).addCase(googleLogin.fulfilled, (state, {payload: user}) => {
+    }).addCase(googleLogin.fulfilled, (state, { payload: user }) => {
       state.loginLoading = false;
       state.user = user;
-    }).addCase(googleLogin.rejected, (state, {payload: error}) => {
+    }).addCase(googleLogin.rejected, (state, { payload: error }) => {
       state.loginLoading = false;
       state.loginError = error || null;
     });
 
     builder.addCase(editUserProfile.pending, (state) => {
       state.editLoading = true;
-    }).addCase(editUserProfile.fulfilled, (state, {payload: user}) => {
+    }).addCase(editUserProfile.fulfilled, (state, { payload: user }) => {
       state.editLoading = false;
       state.user = user;
-    }).addCase(editUserProfile.rejected, (state, {payload: error}) => {
+    }).addCase(editUserProfile.rejected, (state, { payload: error }) => {
       state.editLoading = false;
-    })
+    });
     builder.addCase(fetchTutors.pending, (state) => {
       state.tutorsLoading = true;
     });
-    builder.addCase(fetchTutors.fulfilled, (state, {payload: tutors}) => {
+    builder.addCase(fetchTutors.fulfilled, (state, { payload: tutors }) => {
       state.tutorsLoading = false;
       state.tutors = tutors;
     });
@@ -96,7 +96,7 @@ const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 
-export const {switchModalWindow, unsetUser} = usersSlice.actions;
+export const { switchModalWindow, unsetUser } = usersSlice.actions;
 
 export const selectUser = (state: RootState) => state.users.user;
 export const selectRegisterLoading = (state: RootState) => state.users.registerLoading;

@@ -48,6 +48,7 @@ export interface ProfileMutation {
   email: string;
   firstName: string;
   country: string;
+}
   
 export interface Category {
   id: number;
@@ -90,4 +91,19 @@ export interface Tutor {
   id: number;
   firstName: string;
   lastName: string;
+}
+
+export interface UsersCourse {
+  id: number;
+  category: string;
+  title: string;
+  tutor: string;
+  modules: UsersModule[];
+}
+
+export interface UsersModule {
+  id: number;
+  number: number;
+  title: string;
+  lessons: number;
 }

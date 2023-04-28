@@ -156,3 +156,30 @@
     color: #ffffff;
   }
 }
+
+.module_show_btn {
+  width: 29px;
+  height: 29px;
+  text-align: center;
+  background-image: url("/keyboard-arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  &:hover {
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+  }
+}
+
+.lesson_view_btn {
+  width: 138px;
+  height: 46px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: $blue-text;
+  background-image: url("/plus-ic.png");
+  background-position: 90% 50%;
+  background-repeat: no-repeat;
+  &:hover {
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+  }
+}

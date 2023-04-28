@@ -5,6 +5,9 @@ import { Repository } from 'typeorm';
 import { Category } from '../entities/category.entity';
 import { Course } from '../entities/course.entity';
 import { CourseModule } from '../entities/courseModule.entity';
+import { Lesson } from '../entities/lesson.entity';
+import { Purchase } from '../entities/purchase.entity';
+import { UsersLesson } from '../entities/usersLesson.entity';
 
 @Injectable()
 export class FixturesService {
@@ -16,11 +19,35 @@ export class FixturesService {
     private readonly coursesRepository: Repository<Course>,
     @InjectRepository(CourseModule)
     private readonly modulesRepository: Repository<CourseModule>,
+    @InjectRepository(Lesson)
+    private readonly lessonsRepository: Repository<Lesson>,
+    @InjectRepository(Purchase)
+    private readonly purchasesRepository: Repository<Purchase>,
+    @InjectRepository(UsersLesson)
+    private readonly usersLessonsRepository: Repository<UsersLesson>,
   ) {}
 
   async dropTables(): Promise<void> {
+    await this.categoriesRepository.query(
+      'TRUNCATE TABLE "category" RESTART IDENTITY CASCADE',
+    );
     await this.usersRepository.query(
       'TRUNCATE TABLE "user" RESTART IDENTITY CASCADE',
+    );
+    await this.coursesRepository.query(
+      'TRUNCATE TABLE "course" RESTART IDENTITY CASCADE',
+    );
+    await this.modulesRepository.query(
+      'TRUNCATE TABLE "course_module" RESTART IDENTITY CASCADE',
+    );
+    await this.lessonsRepository.query(
+      'TRUNCATE TABLE "lesson" RESTART IDENTITY CASCADE',
+    );
+    await this.purchasesRepository.query(
+      'TRUNCATE TABLE "purchase" RESTART IDENTITY CASCADE',
+    );
+    await this.usersLessonsRepository.query(
+      'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
     );
   }
 
@@ -207,5 +234,59 @@ export class FixturesService {
       description: 'test',
     });
     await this.modulesRepository.save(contentCreator);
+  }
+
+  async createLessons() {
+    const smmCourse = await this.coursesRepository.findOne({
+      where: { title: 'SMM ZA 30 DNEI' },
+    });
+
+    const smmModuleFirst = await this.modulesRepository.findOne({
+      where: { course: { id: smmCourse.id }, number: 1 },
+    });
+
+    const lesson1 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 1,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #1',
+      isStopLesson: false,
+    });
+    await this.lessonsRepository.save(lesson1);
+
+    const lesson2 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 2,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #2',
+      isStopLesson: false,
+    });
+    await this.lessonsRepository.save(lesson2);
+
+    const lesson3 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 3,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #3',
+      isStopLesson: true,
+    });
+    await this.lessonsRepository.save(lesson3);
+
+    const lesson4 = await this.lessonsRepository.create({
+      course: smmCourse,
+      module: smmModuleFirst,
+      number: 4,
+      video: 'fixtures/lessons/video/test-video.mp4',
+      description: 'test',
+      title: 'Lesson #4',
+      isStopLesson: false,
+    });
+    await this.lessonsRepository.save(lesson4);
   }
 }

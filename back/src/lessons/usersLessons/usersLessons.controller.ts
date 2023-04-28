@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from '../../entities/lesson.entity';
 import { Repository } from 'typeorm';
@@ -13,7 +13,7 @@ export class UsersLessonsController {
     @InjectRepository(Lesson)
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(User)
-    private readonly userRepositoty: Repository<User>,
+    private readonly userRepository: Repository<User>,
     @InjectRepository(UsersLesson)
     private readonly usersLessonRepository: Repository<UsersLesson>,
     private readonly usersLessonsService: UsersLessonsService,
@@ -24,8 +24,8 @@ export class UsersLessonsController {
     return this.usersLessonRepository.find(); // need to check for dependencies in lessonRepo
   }
 
-  @Post() // Guard ???
-  async createUsersLesson(@CurrentUser() user: User, courseId: number) {
-    return this.usersLessonsService.createUsersLesson(user, courseId);
+  @Post(':id') // Guard ???
+  async createUsersLesson(@CurrentUser() user: User, @Param('id') id: number) {
+    return this.usersLessonsService.createUsersLesson(user, id);
   }
 }

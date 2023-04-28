@@ -17,7 +17,7 @@ import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { StaffGuard } from '../auth/staff.guard';
 import { CreateLessonDto } from './dto/createLesson.dto';
 import { Course } from '../entities/course.entity';
-import { Module } from '../entities/module.entity';
+import { CourseModule } from '../entities/courseModule.entity';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
 import { LessonsService } from './lessons.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -29,8 +29,8 @@ export class LessonsController {
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Course)
     private readonly courseRepository: Repository<Course>,
-    @InjectRepository(Module)
-    private readonly moduleRepository: Repository<Module>,
+    @InjectRepository(CourseModule)
+    private readonly moduleRepository: Repository<CourseModule>,
     private readonly lessonsService: LessonsService,
   ) {}
 

@@ -12,53 +12,51 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../entities/lesson.entity';
 import { Repository } from 'typeorm';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { TutorGuard } from '../auth/tutor.guard';
-import { AddHomeworkDto } from './dto/addHomework.dto';
 import { Homework } from '../entities/homework.entity';
 import { User } from '../entities/user.entity';
 import { Request } from 'express';
+import { StudentHomework } from '../entities/studentHomework.entity';
+import { AddStudentHomeworkDto } from './dto/addStudentHomework.dto';
 
-@Controller('homeworks')
-export class HomeworksController {
+@Controller('student-homeworks')
+export class StudentHomeworksController {
   constructor(
-    @InjectRepository(Lesson)
-    private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Homework)
     private readonly homeworkRepository: Repository<Homework>,
+    @InjectRepository(StudentHomework)
+    private readonly studentHomeworkRepository: Repository<StudentHomework>,
   ) {}
 
   @Get()
   async getAll() {
-    return this.homeworkRepository.find();
+    return this.studentHomeworkRepository.find();
   }
 
   @Post()
-  @UseGuards(TokenAuthGuard, TutorGuard)
+  @UseGuards(TokenAuthGuard)
   async createLesson(
     @Req() req: Request,
-    @Body() homeworkData: AddHomeworkDto,
+    @Body() studentHomeworkData: AddStudentHomeworkDto,
     file: Express.Multer.File,
   ) {
     const user = req.user as User;
-    const lesson = await this.lessonRepository.findOne({
-      where: { id: homeworkData.lesson },
+    const homework = await this.homeworkRepository.findOne({
+      where: { id: studentHomeworkData.homework },
     });
 
-    if (!lesson) {
-      throw new BadRequestException('Lesson not found');
+    if (!homework) {
+      throw new BadRequestException('Homework not found');
     }
 
-    const homework = await this.homeworkRepository.create({
-      lesson: lesson,
-      title: homeworkData.title,
-      description: homeworkData.description,
-      tutorName: user.firstName,
-      file: file ? '/uploads/homeworks/pdf/' + file.filename : null,
+    const studentHomework = await this.studentHomeworkRepository.create({
+      homework: homework,
+      studentName: user.firstName,
+      file: file ? '/uploads/studentsHomeworks/' + file.filename : null,
     });
-    return this.homeworkRepository.save(homework);
+    return this.studentHomeworkRepository.save(studentHomework);
   }
 
   // @Patch()
@@ -77,22 +75,23 @@ export class HomeworksController {
   // }
 
   @Get(':id')
-  async getOneHomework(@Param('id') id: number) {
-    return this.homeworkRepository.findOne({
+  async getOneStudentHomework(@Param('id') id: number) {
+    return this.studentHomeworkRepository.findOne({
       where: { id: id },
     });
   }
 
   @Delete(':id')
   @UseGuards(TokenAuthGuard, TutorGuard)
-  async removeOneHomework(@Param('id') id: number) {
-    const homework: Homework = await this.homeworkRepository.findOne({
-      where: { id: id },
-    });
-    if (homework) {
-      return this.homeworkRepository.delete(id);
+  async removeOneStudentHomework(@Param('id') id: number) {
+    const studentHomework: StudentHomework =
+      await this.studentHomeworkRepository.findOne({
+        where: { id: id },
+      });
+    if (studentHomework) {
+      return this.studentHomeworkRepository.delete(id);
     } else {
-      throw new NotFoundException(`Homework with id ${id} not found`);
+      throw new NotFoundException(`Student Homework with id ${id} not found`);
     }
   }
 }

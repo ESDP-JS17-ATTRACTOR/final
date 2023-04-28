@@ -101,6 +101,7 @@ const MyProfile = () => {
                 <CardForHomework/>
                 <CardForHomework/>
             </div>
+            <button className="button profile-btn-add">Add Homework</button>
         </div>
     );
 };

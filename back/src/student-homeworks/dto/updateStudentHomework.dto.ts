@@ -9,22 +9,22 @@ export class UpdateHomeworkDto {
   @IsOptional()
   @IsNumber()
   @IsNotEmpty()
-  lesson: number;
+  homework: number;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  title: string;
+  status: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  description: string;
+  studentName: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  tutorName: string;
+  isChecked: string;
 
   @IsOptional()
   @IsNotEmpty()

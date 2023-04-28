@@ -13,20 +13,11 @@ export class AddHomeworkDto {
   @IsNotEmpty()
   date: Date;
 
-  // @IsNotEmpty()
-  // status: string;
-
   @IsNotEmpty()
   description: string;
 
   @IsNotEmpty()
   tutorName: string;
-
-  // @IsNotEmpty()
-  // studentName: string;
-  //
-  // @IsNotEmpty()
-  // isChecked: string;
 
   @IsNotEmpty()
   file: string;

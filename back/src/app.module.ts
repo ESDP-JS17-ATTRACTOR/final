@@ -16,12 +16,20 @@ import { CoursesController } from './courses/courses.controller';
 import { Course } from './entities/course.entity';
 import { HomeworksController } from './homeworks/homeworks.controller';
 import { Homework } from './entities/homework.entity';
+import { StudentHomeworksController } from './student-homeworks/student-homeworks.controller';
+import { StudentHomework } from './entities/studentHomework.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
-    TypeOrmModule.forFeature([User, Category, Course, Homework]),
+    TypeOrmModule.forFeature([
+      User,
+      Category,
+      Course,
+      Homework,
+      StudentHomework,
+    ]),
     PassportModule,
   ],
   providers: [
@@ -36,6 +44,7 @@ import { Homework } from './entities/homework.entity';
     CategoriesController,
     CoursesController,
     HomeworksController,
+    StudentHomeworksController,
   ],
 })
 export class AppModule {}

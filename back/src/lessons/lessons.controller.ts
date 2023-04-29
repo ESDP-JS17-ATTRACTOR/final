@@ -30,7 +30,7 @@ export class LessonsController {
     @InjectRepository(Course)
     private readonly courseRepository: Repository<Course>,
     @InjectRepository(CourseModule)
-    private readonly moduleRepository: Repository<CourseModule>,
+    private readonly courseModulesRepository: Repository<CourseModule>,
     private readonly lessonsService: LessonsService,
   ) {}
 

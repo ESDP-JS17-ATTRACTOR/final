@@ -31,11 +31,13 @@ export class UsersLessonsController {
   ) {}
 
   @Get()
-  async getAll() {
-    return await this.usersLessonsService.getAll();
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(TokenAuthGuard)
+  async getAll(@CurrentUser() user: User) {
+    return await this.usersLessonsService.getAll(user.id);
   }
 
-  @Post() // Guard ???
+  @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
   async createUsersLesson(

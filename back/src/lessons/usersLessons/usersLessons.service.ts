@@ -20,9 +20,10 @@ export class UsersLessonsService {
     private readonly usersLessonRepository: Repository<UsersLesson>,
   ) {}
 
-  async getAll() {
+  async getAll(userId) {
     const usersLessons = await this.usersLessonRepository
       .createQueryBuilder('users_lesson')
+      .where('users_lesson.userId = :userId', { userId })
       .leftJoinAndSelect('users_lesson.student', 'userId')
       .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
       .select(['users_lesson', 'userId.id', 'lessonId'])
@@ -30,7 +31,7 @@ export class UsersLessonsService {
       .getMany();
 
     if (!usersLessons.length) {
-      throw new BadRequestException('No lessons at all!');
+      throw new NotFoundException('No lessons at all!');
     }
 
     const index = usersLessons.findIndex(
@@ -47,8 +48,6 @@ export class UsersLessonsService {
     const lessons = await this.lessonRepository.find({
       where: { course: { id: courseId } },
     });
-
-    console.log(user);
 
     if (!lessons || !user) {
       throw new NotFoundException('Lessons not found');

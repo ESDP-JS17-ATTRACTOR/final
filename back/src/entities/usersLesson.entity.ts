@@ -1,5 +1,4 @@
 import {
-  BeforeInsert,
   Column,
   Entity,
   JoinColumn,
@@ -33,14 +32,4 @@ export class UsersLesson {
 
   @Column({ type: 'boolean', default: false })
   available: boolean;
-
-  @Column({ type: 'boolean', default: false })
-  isStopLesson: boolean;
-
-  @BeforeInsert()
-  async changeIsStop() {
-    if (this.lesson && this.lesson.isStopLesson) {
-      this.isStopLesson = this.lesson.isStopLesson;
-    }
-  }
 }

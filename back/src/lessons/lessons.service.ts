@@ -53,13 +53,8 @@ export class LessonsService {
   ): Promise<Lesson> {
     const lesson = await this.ifExistReturnsLesson(id);
 
-    const [course, module] = await Promise.all([
-      this.findCourseById(lessonData.course),
-      this.findModuleById(lessonData.module),
-    ]);
-
-    lesson.course = course;
-    lesson.module = module;
+    lesson.course = await this.findCourseById(lessonData.course);
+    lesson.module = await this.findModuleById(lessonData.module);
     lesson.number = lessonData.number;
     lesson.title = lessonData.title;
     lesson.video = file
@@ -75,12 +70,11 @@ export class LessonsService {
     const lesson: Lesson = await this.lessonRepository.findOne({
       where: { id },
     });
-    if (lesson) {
-      await this.lessonRepository.delete(id);
-      return { message: `Lesson with id ${id} deleted` };
-    } else {
+    if (!lesson) {
       throw new NotFoundException(`Lesson with id ${id} not found`);
     }
+    await this.lessonRepository.delete(id);
+    return { message: `Lesson with id ${id} deleted` };
   }
 
   private async ifExistReturnsLesson(id: number): Promise<Lesson> {

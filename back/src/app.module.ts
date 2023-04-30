@@ -28,6 +28,8 @@ import { PurchasesController } from './purchases/purchases.controller';
 import { UsersLessonsService } from './lessons/usersLessons/usersLessons.service';
 import { LessonsService } from './lessons/lessons.service';
 import { PurchasesService } from './purchases/purchases.service';
+import { CourseModulesService } from './courseModules/courseModules.service';
+import { CourseModulesController } from './courseModules/courseModules.controller';
 
 @Module({
   imports: [
@@ -55,6 +57,7 @@ import { PurchasesService } from './purchases/purchases.service';
     LessonsService,
     UsersLessonsService,
     PurchasesService,
+    CourseModulesService,
   ],
   controllers: [
     UsersController,
@@ -65,6 +68,7 @@ import { PurchasesService } from './purchases/purchases.service';
     PurchasesController,
     HomeworksController,
     StudentHomeworksController,
+    CourseModulesController,
   ],
 })
 export class AppModule {}

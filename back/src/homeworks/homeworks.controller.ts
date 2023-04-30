@@ -10,6 +10,7 @@ import {
   Post,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from '../entities/lesson.entity';
@@ -20,6 +21,7 @@ import { AddHomeworkDto } from './dto/addHomework.dto';
 import { Homework } from '../entities/homework.entity';
 import { User } from '../entities/user.entity';
 import { Request } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('homeworks')
 export class HomeworksController {
@@ -37,6 +39,9 @@ export class HomeworksController {
 
   @Post()
   @UseGuards(TokenAuthGuard, TutorGuard)
+  @UseInterceptors(
+    FileInterceptor('image', { dest: './public/uploads/homeworks/pdf' }),
+  )
   async createLesson(
     @Req() req: Request,
     @Body() homeworkData: AddHomeworkDto,
@@ -51,12 +56,15 @@ export class HomeworksController {
       throw new BadRequestException('Lesson not found');
     }
 
+    console.log(file);
+
     const homework = await this.homeworkRepository.create({
       lesson: lesson,
       title: homeworkData.title,
+      date: new Date(),
       description: homeworkData.description,
       tutorName: user.firstName,
-      file: file ? '/uploads/homeworks/pdf/' + file.filename : null,
+      // pdf: file ? '/uploads/homeworks/pdf/' + file.filename : null,
     });
     return this.homeworkRepository.save(homework);
   }

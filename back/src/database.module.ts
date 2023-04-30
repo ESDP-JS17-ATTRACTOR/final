@@ -8,6 +8,8 @@ import { CourseModule } from './entities/courseModule.entity';
 import { Purchase } from './entities/purchase.entity';
 import { Lesson } from './entities/lesson.entity';
 import { UsersLesson } from './entities/usersLesson.entity';
+import { Homework } from './entities/homework.entity';
+import { StudentHomework } from './entities/studentHomework.entity';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { UsersLesson } from './entities/usersLesson.entity';
           Purchase,
           Lesson,
           UsersLesson,
+          Homework,
+          StudentHomework,
         ],
         synchronize: true,
       }),

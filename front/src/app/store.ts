@@ -13,11 +13,17 @@ import storage from 'redux-persist/lib/storage';
 import { usersReducer } from '@/features/users/usersSlice';
 import { categoriesReducer } from "@/features/categories/categoriesSlice";
 import { coursesReducer } from "@/features/courses/coursesSlice";
+import {homeworksReducer} from "@/features/homeworks/homeworksSlice";
+import {lessonsReducer} from "@/features/lessons/lessonsSlice";
+import {studentHomeworksReducer} from "@/features/studentHomeworks/studentHomeworksSlice";
 
 const rootReducer = combineReducers({
   users: usersReducer,
   categories: categoriesReducer,
   courses: coursesReducer,
+  lessons: lessonsReducer,
+  homeworks: homeworksReducer,
+  studentHomeworks: studentHomeworksReducer,
 });
 
 const persistConfig = {

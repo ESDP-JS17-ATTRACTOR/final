@@ -7,20 +7,16 @@ export class AddStudentHomeworkDto {
   @IsNumber()
   homework: number;
 
-  @IsNotEmpty()
   date: Date;
 
-  @IsNotEmpty()
-  @Column({ default: 'in Process', enum: ['in Process', 'Done'] })
+  @Column({ default: 'Done' })
   status: string;
 
-  @IsNotEmpty()
   studentName: string;
 
-  @IsNotEmpty()
   @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
   isChecked: string;
 
-  @IsNotEmpty()
-  file: string;
+  // @IsNotEmpty()
+  // file: string;
 }

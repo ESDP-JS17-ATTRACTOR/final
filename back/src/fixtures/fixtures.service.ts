@@ -8,6 +8,7 @@ import { CourseModule } from '../entities/courseModule.entity';
 import { Lesson } from '../entities/lesson.entity';
 import { Purchase } from '../entities/purchase.entity';
 import { UsersLesson } from '../entities/usersLesson.entity';
+import { Homework } from '../entities/homework.entity';
 
 @Injectable()
 export class FixturesService {
@@ -25,6 +26,8 @@ export class FixturesService {
     private readonly purchasesRepository: Repository<Purchase>,
     @InjectRepository(UsersLesson)
     private readonly usersLessonsRepository: Repository<UsersLesson>,
+    @InjectRepository(Homework)
+    private readonly homeworksRepository: Repository<Homework>,
   ) {}
 
   async dropTables(): Promise<void> {
@@ -47,6 +50,9 @@ export class FixturesService {
       'TRUNCATE TABLE "purchase" RESTART IDENTITY CASCADE',
     );
     await this.usersLessonsRepository.query(
+      'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
+    );
+    await this.homeworksRepository.query(
       'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
     );
   }
@@ -321,5 +327,35 @@ export class FixturesService {
       isStopLesson: false,
     });
     await this.lessonsRepository.save(lesson7);
+  }
+
+  async createHomeworks() {
+    const lesson1 = await this.lessonsRepository.findOne({
+      where: { title: 'Lesson #1' },
+    });
+
+    const tutorFirst = await this.usersRepository.findOne({
+      where: { email: 'tutor-first@gmail.com' },
+    });
+
+    const homework1 = await this.homeworksRepository.create({
+      lesson: lesson1,
+      title: 'Homework1',
+      tutorName: tutorFirst.firstName,
+      date: '2023-05-18T09:00:00',
+      // pdf: 'fixtures/homeworks/pdf/example.pdf',
+      description: 'about homework1',
+    });
+    await this.homeworksRepository.save(homework1);
+
+    const homework2 = await this.homeworksRepository.create({
+      lesson: lesson1,
+      title: 'Homework2',
+      tutorName: tutorFirst.firstName,
+      date: '2023-05-18T09:00:00',
+      // pdf: 'fixtures/homeworks/pdf/example.pdf',
+      description: 'about homework2',
+    });
+    await this.homeworksRepository.save(homework2);
   }
 }

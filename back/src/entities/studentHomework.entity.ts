@@ -16,10 +16,10 @@ export class StudentHomework {
   @JoinColumn({ name: 'homeworkId' })
   homework: Homework;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'timestamp' })
   date: Date;
 
-  @Column({ default: 'in Process', enum: ['in Process', 'Done'] })
+  @Column({ default: 'Done' })
   status: string;
 
   @Column()
@@ -28,6 +28,6 @@ export class StudentHomework {
   @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
   isChecked: string;
 
-  @Column({ type: 'varchar' })
-  file: string;
+  // @Column({ type: 'varchar' })
+  // file: string;
 }

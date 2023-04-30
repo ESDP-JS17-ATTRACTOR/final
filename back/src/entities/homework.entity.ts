@@ -19,11 +19,8 @@ export class Homework {
   @Column()
   title: string;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'timestamp' })
   date: Date;
-
-  // @Column({ default: 'in Process', enum: ['in Process', 'Done'] })
-  // status: string;
 
   @Column()
   description: string;
@@ -32,11 +29,5 @@ export class Homework {
   tutorName: string;
 
   // @Column()
-  // studentName: string;
-  //
-  // @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
-  // isChecked: string;
-
-  @Column({ type: 'varchar' })
-  file: string;
+  // pdf: string | null;
 }

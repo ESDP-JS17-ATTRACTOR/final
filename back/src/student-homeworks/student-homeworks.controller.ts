@@ -32,7 +32,11 @@ export class StudentHomeworksController {
 
   @Get()
   async getAll() {
-    return this.studentHomeworkRepository.find();
+    const studentHomeworks = await this.studentHomeworkRepository.find({
+      relations: ['homework'],
+    });
+    console.log(studentHomeworks);
+    return studentHomeworks;
   }
 
   @Post()
@@ -53,8 +57,9 @@ export class StudentHomeworksController {
 
     const studentHomework = await this.studentHomeworkRepository.create({
       homework: homework,
+      date: new Date(),
       studentName: user.firstName,
-      file: file ? '/uploads/studentsHomeworks/' + file.filename : null,
+      // file: file ? '/uploads/studentsHomeworks/' + file.filename : null,
     });
     return this.studentHomeworkRepository.save(studentHomework);
   }

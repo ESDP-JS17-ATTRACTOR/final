@@ -10,15 +10,13 @@ export class AddHomeworkDto {
   @IsNotEmpty()
   title: string;
 
-  @IsNotEmpty()
   date: Date;
 
   @IsNotEmpty()
   description: string;
 
-  @IsNotEmpty()
   tutorName: string;
 
-  @IsNotEmpty()
-  file: string;
+  // @IsNotEmpty()
+  // pdf: string | null;
 }

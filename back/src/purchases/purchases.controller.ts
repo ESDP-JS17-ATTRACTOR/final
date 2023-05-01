@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { PurchasesService } from './purchases.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Purchase } from '../entities/purchase.entity';
@@ -6,6 +14,7 @@ import { Repository } from 'typeorm';
 import { CurrentUser } from '../auth/currentUser.decorator';
 import { User } from '../entities/user.entity';
 import { Course } from '../entities/course.entity';
+import { TokenAuthGuard } from '../auth/token-auth.guard';
 
 @Controller('purchases')
 export class PurchasesController {
@@ -21,6 +30,7 @@ export class PurchasesController {
   }
 
   @Post() // Guard ???
+  @UseGuards(TokenAuthGuard)
   async createPurchase(@CurrentUser() user: User, course: Course) {
     return this.purchasesService.createPurchase(user, course);
   }

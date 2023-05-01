@@ -10,6 +10,7 @@ import { Lesson } from './entities/lesson.entity';
 import { UsersLesson } from './entities/usersLesson.entity';
 import { Homework } from './entities/homework.entity';
 import { StudentHomework } from './entities/studentHomework.entity';
+import { Comment } from './entities/comment.entity';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { StudentHomework } from './entities/studentHomework.entity';
           UsersLesson,
           Homework,
           StudentHomework,
+          Comment,
         ],
         synchronize: true,
       }),

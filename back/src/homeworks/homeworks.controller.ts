@@ -34,7 +34,11 @@ export class HomeworksController {
 
   @Get()
   async getAll() {
-    return this.homeworkRepository.find();
+    return this.homeworkRepository.find({
+      order: {
+        date: 'DESC',
+      },
+    });
   }
 
   @Post()

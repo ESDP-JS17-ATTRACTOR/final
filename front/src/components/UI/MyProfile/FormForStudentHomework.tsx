@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";
-import {selectCategoryAddError, selectCategoryAdding} from "@/features/categories/categoriesSlice";
-import {ApiHomework, ApiStudentHomework, HomeworkMutation, StudentHomeworkMutation} from "../../../../types";
+import {ApiStudentHomework, StudentHomeworkMutation} from "../../../../types";
 import FileInput from "@/components/FileInput/FileInput";
-import {selectLessons} from "@/features/lessons/lessonsSlice";
-import {fetchLessons} from "@/features/lessons/lessonsThunks";
 import {fetchHomeworks} from "@/features/homeworks/homeworksThunks";
-import {selectHomework, selectHomeworks} from "@/features/homeworks/homeworksSlice";
+import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
+import {Grid, MenuItem, TextField} from "@mui/material";
 
 interface Props {
     onSubmit: (studentHomework: ApiStudentHomework) => void;
@@ -16,8 +14,6 @@ interface Props {
 const FormForStudentHomework: React.FC<Props> = ({onSubmit}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const isAdding = useAppSelector(selectCategoryAdding);
-    const error = useAppSelector(selectCategoryAddError);
     const homeworks = useAppSelector(selectHomeworks);
     const [studentHomework, setStudentHomework] = useState<StudentHomeworkMutation>({
         homework: '',
@@ -27,7 +23,7 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit}) => {
         dispatch(fetchHomeworks());
     }, [dispatch]);
 
-    const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setStudentHomework(prev => ({...prev, [name]: value}));
     };
@@ -58,26 +54,30 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit}) => {
     return (
         <form className="profile-add-homework-form" onSubmit={onFormSubmit}>
             <div className="profile-add-homework-form_box">
-                <label>
-                    Homeworks
-                </label>
-                <select
-                    id="homework"
+                <Grid container direction="column" spacing={2}>
+                    <Grid item xs>
+                    <TextField
+                    fullWidth
+                    sx={{mb: 2}}
+                    select
+                    label="Введите номер домашнего задания"
                     name="homework"
                     required
                     value={studentHomework.homework}
                     onChange={inputChangeHandler}
-                >
-                    <option disabled value="">Выберите урок</option>
+                  >
+                    <MenuItem disabled value="">Выберите урок</MenuItem>
                     {homeworks.map(homework => (
-                        <option
+                        <MenuItem
                             key={homework.id}
                             id={homework.id.toString()}
                             value={homework.id}>
                             {homework.id}
-                        </option>
+                        </MenuItem>
                     ))}
-                </select>
+                  </TextField>
+                    </Grid>
+                </Grid>
             </div>
             <FileInput onChange={fileInputChangeHandler} name="files" label="Files" />
             <button className="button profile-btn-add">Add</button>

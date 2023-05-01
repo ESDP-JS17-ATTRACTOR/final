@@ -114,28 +114,28 @@
   transform: translate(-50%, -50%);
 
   &_box {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
+    //display: flex;
+    //flex-direction: column;
+    //margin: 0 auto;
 
     input {
-      font-size: 10px;
-      width: 273px;
-      height: 38px;
-      background: transparent;
-      border: 1.3px solid #4994D0;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      padding: 0 10px;
+      //font-size: 10px;
+      //width: 303px;
+      //height: 38px;
+      //background: transparent;
+      //border: 1.3px solid #4994D0;
+      //border-radius: 12px;
+      //margin-bottom: 12px;
+      //padding: 0 10px;
     }
 
-    label {
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
-      color: $blue-text;
-      margin-bottom: 10px;
-      display: inline;
-    }
+    //label {
+    //  font-weight: 500;
+    //  font-size: 14px;
+    //  line-height: 17px;
+    //  color: $blue-text;
+    //  margin-bottom: 10px;
+    //  display: inline;
+    //}
   }
 }

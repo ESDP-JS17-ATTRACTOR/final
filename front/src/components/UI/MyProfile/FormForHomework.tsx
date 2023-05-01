@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";
-import {selectCategoryAddError, selectCategoryAdding} from "@/features/categories/categoriesSlice";
 import {ApiHomework, HomeworkMutation} from "../../../../types";
 import FileInput from "@/components/FileInput/FileInput";
 import {selectLessons} from "@/features/lessons/lessonsSlice";
 import {fetchLessons} from "@/features/lessons/lessonsThunks";
+import {Grid, MenuItem, TextField} from "@mui/material";
 
 interface Props {
     onSubmit: (homework: ApiHomework) => void;
@@ -14,8 +14,6 @@ interface Props {
 const FormForHomework: React.FC<Props> = ({onSubmit}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const isAdding = useAppSelector(selectCategoryAdding);
-    const error = useAppSelector(selectCategoryAddError);
     const lessons = useAppSelector(selectLessons);
     const [homework, setHomework] = useState<HomeworkMutation>({
         lesson: '',
@@ -28,7 +26,7 @@ const FormForHomework: React.FC<Props> = ({onSubmit}) => {
         dispatch(fetchLessons());
     }, [dispatch]);
 
-    const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setHomework(prev => ({...prev, [name]: value}));
     };
@@ -59,50 +57,61 @@ const FormForHomework: React.FC<Props> = ({onSubmit}) => {
     return (
             <form className="profile-add-homework-form" onSubmit={onFormSubmit}>
                 <div className="profile-add-homework-form_box">
-                    <label>
-                        Lessons
-                    </label>
-                    <select
-                        id="lesson"
-                        name="lesson"
-                        required
-                        value={homework.lesson}
-                        onChange={inputChangeHandler}
-                    >
-                        <option disabled value="">Выберите урок</option>
+                    <Grid container direction="column" spacing={2}>
+                        <Grid item xs>
+                        <TextField
+                            fullWidth
+                            select
+                            label="Выберите номер урока"
+                            id="lesson"
+                            name="lesson"
+                            required
+                            value={homework.lesson}
+                            onChange={inputChangeHandler}
+                        >
+                        <MenuItem disabled value="">Выберите урок</MenuItem>
                         {lessons.map(lesson => (
-                            <option
+                            <MenuItem
                                 key={lesson.id}
                                 id={lesson.id.toString()}
                                 value={lesson.id}>
                                 {lesson.title}
-                            </option>
+                            </MenuItem>
                         ))}
-                    </select>
-                    <label>Title</label>
-                    <input
-                        type="title"
-                        id="Title"
-                        name="title"
-                        placeholder="Введите заголовок"
-                        required={true}
-                        value={homework.title}
-                        onChange={inputChangeHandler}
-                    />
+                        </TextField>
+                        </Grid>
+
+                        <Grid item xs>
+                            <TextField
+                                fullWidth
+                                type="title"
+                                id="Title"
+                                name="title"
+                                label="Введите заголовок"
+                                required={true}
+                                value={homework.title}
+                                onChange={inputChangeHandler}
+                            />
+                        </Grid>
+
+                        <Grid item xs>
+                            <TextField
+                                fullWidth
+                                type="description"
+                                id="description"
+                                name="description"
+                                label="Введите описание"
+                                required={true}
+                                value={homework.description}
+                                onChange={inputChangeHandler}
+                            />
+                        </Grid>
+
+                        <Grid item xs>
+                            <FileInput onChange={fileInputChangeHandler} name="pdf" label="Выберите файл pdf" />
+                        </Grid>
+                    </Grid>
                 </div>
-                <div className="profile-add-homework-form_box">
-                    <label>Description</label>
-                    <input
-                        type="description"
-                        id="description"
-                        name="description"
-                        placeholder="Введите описание"
-                        required={true}
-                        value={homework.description}
-                        onChange={inputChangeHandler}
-                    />
-                </div>
-                <FileInput onChange={fileInputChangeHandler} name="pdf" label="Pdf" />
                 <button className="button profile-btn-add">Add</button>
             </form>
     );

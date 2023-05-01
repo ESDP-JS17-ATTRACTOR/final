@@ -22,8 +22,8 @@ export class UsersLesson {
   lesson: Lesson;
 
   @Column({ type: 'boolean', default: false })
-  viewed: boolean;
+  isViewed: boolean;
 
   @Column({ type: 'boolean', default: false })
-  available: boolean;
+  isAvailable: boolean;
 }

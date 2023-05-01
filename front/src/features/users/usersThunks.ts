@@ -83,9 +83,9 @@ export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectV
 );
 
 export const fetchTutors = createAsyncThunk<Tutor[]>(
-  'users/fetchTutors',
-  async () => {
-    const response = await axiosApi.get<Tutor[]>('/users/tutors');
-    return response.data;
-  }
+    "users/fetchTutors",
+    async () => {
+        const response = await axiosApi.get<Tutor[]>("/users/tutors");
+        return response.data;
+    }
 );

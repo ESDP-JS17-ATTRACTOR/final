@@ -1,18 +1,33 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CardForHomework from "@/components/Cards/CardForHomework";
 import {editUserProfile} from "@/features/users/usersThunks";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";
 import {selectUser} from "@/features/users/usersSlice";
-import {ProfileMutation} from "../../types";
+import {ApiHomework, ApiStudentHomework, ProfileMutation} from "../../types";
+import FormForHomework from "@/components/UI/MyProfile/FormForHomework";
+import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
+import FormForStudentHomework from "@/components/UI/MyProfile/FormForStudentHomework";
+import {addStudentHomework, fetchStudentHomeworks} from "@/features/studentHomeworks/studentHomeworksThunks";
+import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
+import {selectStudentHomeworks} from "@/features/studentHomeworks/studentHomeworksSlice";
+import CardForStudentHomework from "@/components/Cards/CardForStudentHomework";
 
 const MyProfile = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const user = useAppSelector(selectUser);
+    const homeworks = useAppSelector(selectHomeworks);
+    const studentHomeworks = useAppSelector(selectStudentHomeworks);
     const [showForm, setShowForm] = useState(false);
+    const [showHomeworkForm, setShowHomeworkForm] = useState(false);
     const initialState = user ? {email: user.email, firstName: user.firstName, country: user.country} : {email: "", firstName: "", country: ""}
     const [state, setState] = useState<ProfileMutation>(initialState);
+
+    useEffect(() => {
+        void dispatch(fetchHomeworks());
+        void dispatch(fetchStudentHomeworks());
+    }, [dispatch]);
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -29,6 +44,20 @@ const MyProfile = () => {
     const onEditClick = () => {
         setShowForm(true);
     }
+
+    const onAddHomework = () => {
+        setShowHomeworkForm(true);
+    }
+
+    const onSubmit = async (homework: ApiHomework) => {
+        await dispatch(addHomework(homework));
+        setShowHomeworkForm(false);
+    };
+
+    const onSubmitStudent = async (studentHomework: ApiStudentHomework) => {
+        await dispatch(addStudentHomework(studentHomework));
+        setShowHomeworkForm(false);
+    };
 
     return (
         <div className="container">
@@ -48,7 +77,7 @@ const MyProfile = () => {
                         </div>
                         <button className="button profile-btn-edit" onClick={onEditClick}>Edit</button>
                     </div>}
-                    { showForm && <form id="form-id" onSubmit={submitFormHandler}>
+                    { showForm && <form onSubmit={submitFormHandler}>
                         <div className="profile-edit-form_box">
                             <label>Email</label>
                             <input
@@ -98,9 +127,18 @@ const MyProfile = () => {
                     <p style={{marginLeft: "90px"}}>Status</p>
                     <p style={{marginLeft: "90px"}}>Tutor name</p>
                 </div>
-                <CardForHomework/>
-                <CardForHomework/>
+                {user?.role === "student" && homeworks.map(homework => {
+                    const studentHomework = studentHomeworks.find(studentHomework => studentHomework.homework.id === homework.id);
+                     return <CardForHomework key={homework.id} status={studentHomework ? studentHomework.status : 'In Process'} id={homework.id} description={homework.description} date={homework.date} tutorName={homework.tutorName} />
+                })}
+                {user?.role === "tutor" && studentHomeworks.map(studentHomework => {
+                    const homework = homeworks.find(homework => homework.id === studentHomework.homework.id);
+                    return <CardForStudentHomework key={studentHomework.id} status={studentHomework.status} id={homework?.id} description={homework?.description} date={homework?.date} studentName={studentHomework.studentName} />
+                })}
             </div>
+            <button onClick={onAddHomework} className="button profile-btn-add">Add Homework</button>
+            {showHomeworkForm && user?.role === "tutor" && <FormForHomework onSubmit={onSubmit}/>}
+            {showHomeworkForm && user?.role === "student" && <FormForStudentHomework onSubmit={onSubmitStudent}/>}
         </div>
     );
 };

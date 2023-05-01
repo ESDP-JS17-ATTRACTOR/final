@@ -87,8 +87,8 @@ When('I click link {string}', () => {
     I.wait(2);
 });
 
-Then('I should see {string}', () => {
-    I.see("My Profile")
+Then('I should see {string}', (text: string) => {
+    I.see(text)
     I.wait(2);
 });
 

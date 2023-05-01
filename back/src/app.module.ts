@@ -15,6 +15,10 @@ import { FixturesService } from './fixtures/fixtures.service';
 import { SeedCommand } from './fixtures/seed.command';
 import { CoursesController } from './courses/courses.controller';
 import { Course } from './entities/course.entity';
+import { HomeworksController } from './homeworks/homeworks.controller';
+import { Homework } from './entities/homework.entity';
+import { StudentHomeworksController } from './student-homeworks/student-homeworks.controller';
+import { StudentHomework } from './entities/studentHomework.entity';
 import { Purchase } from './entities/purchase.entity';
 import { Lesson } from './entities/lesson.entity';
 import { UsersLesson } from './entities/usersLesson.entity';
@@ -39,6 +43,8 @@ import { CourseModulesController } from './courseModules/courseModules.controlle
       Purchase,
       Lesson,
       UsersLesson,
+      Homework,
+      StudentHomework,
     ]),
     PassportModule,
   ],
@@ -60,6 +66,8 @@ import { CourseModulesController } from './courseModules/courseModules.controlle
     LessonsController,
     UsersLessonsController,
     PurchasesController,
+    HomeworksController,
+    StudentHomeworksController,
     CourseModulesController,
   ],
 })

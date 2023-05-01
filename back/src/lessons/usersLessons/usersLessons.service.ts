@@ -35,11 +35,11 @@ export class UsersLessonsService {
     }
 
     const index = usersLessons.findIndex(
-      (el) => el.lesson.isStopLesson === true && el.viewed === false,
+      (el) => el.lesson.isStopLesson === true && el.isViewed === false,
     );
 
     for (let i = 0; i <= index; i++) {
-      usersLessons[i].available = true;
+      usersLessons[i].isAvailable = true;
     }
     return usersLessons;
   }
@@ -78,7 +78,7 @@ export class UsersLessonsService {
     }
 
     if (isViewed) {
-      lesson.viewed = true;
+      lesson.isViewed = true;
       await this.usersLessonRepository.save(lesson);
       return { message: 'Your lessons status changed to viewed!' };
     } else {

@@ -30,6 +30,9 @@ import { LessonsService } from './lessons/lessons.service';
 import { PurchasesService } from './purchases/purchases.service';
 import { CourseModulesService } from './courseModules/courseModules.service';
 import { CourseModulesController } from './courseModules/courseModules.controller';
+import { CommentsService } from './comments/comments.service';
+import { CommentsController } from './comments/comments.controller';
+import { Comment } from './entities/comment.entity';
 
 @Module({
   imports: [
@@ -45,6 +48,7 @@ import { CourseModulesController } from './courseModules/courseModules.controlle
       UsersLesson,
       Homework,
       StudentHomework,
+      Comment,
     ]),
     PassportModule,
   ],
@@ -58,6 +62,7 @@ import { CourseModulesController } from './courseModules/courseModules.controlle
     UsersLessonsService,
     PurchasesService,
     CourseModulesService,
+    CommentsService,
   ],
   controllers: [
     UsersController,
@@ -69,6 +74,7 @@ import { CourseModulesController } from './courseModules/courseModules.controlle
     HomeworksController,
     StudentHomeworksController,
     CourseModulesController,
+    CommentsController,
   ],
 })
 export class AppModule {}

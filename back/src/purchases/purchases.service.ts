@@ -16,6 +16,25 @@ export class PurchasesService {
     private readonly purchaseRepository: Repository<Purchase>,
   ) {}
 
+  async getAll(userId) {
+    let query = this.purchaseRepository
+      .createQueryBuilder('purchase')
+      .leftJoinAndSelect('purchase.purchaser', 'userId')
+      .leftJoinAndSelect('users_lesson.course', 'courseId')
+      .select(['purchase', 'userId.id', 'courseId.id']);
+
+    if (userId) {
+      query = query.where('userId.id = :userId', { userId });
+    }
+
+    const purchases = await query.getMany();
+
+    if (!purchases.length) {
+      throw new NotFoundException('No purchases at all!');
+    }
+    return purchases;
+  }
+
   async createPurchase(user: User, course: Course) {
     await this.findCourseById(course.id);
     const today = new Date();

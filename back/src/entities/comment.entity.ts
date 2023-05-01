@@ -5,25 +5,25 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Lesson } from './lesson.entity';
 import { User } from './user.entity';
+import { Lesson } from './lesson.entity';
 
 @Entity()
-export class UsersLesson {
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
-  student: User;
+  author: User;
 
   @ManyToOne(() => Lesson)
   @JoinColumn({ name: 'lessonId' })
   lesson: Lesson;
 
-  @Column({ type: 'boolean', default: false })
-  isViewed: boolean;
+  @Column()
+  text: string;
 
-  @Column({ type: 'boolean', default: false })
-  isAvailable: boolean;
+  @Column({ type: 'timestamp' })
+  createdAt: Date;
 }

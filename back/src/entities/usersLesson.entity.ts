@@ -21,12 +21,6 @@ export class UsersLesson {
   @JoinColumn({ name: 'lessonId' })
   lesson: Lesson;
 
-  @Column({
-    default: 'not done',
-    enum: ['not done', 'done'],
-  })
-  status: string;
-
   @Column({ type: 'boolean', default: false })
   viewed: boolean;
 

@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { PurchasesService } from './purchases.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Purchase } from '../entities/purchase.entity';
@@ -16,8 +16,8 @@ export class PurchasesController {
   ) {}
 
   @Get() // Guard ???
-  async getAll() {
-    return this.purchasesRepository.find();
+  async getAll(@Query('userId') userId: number) {
+    return this.purchasesService.getAll(userId);
   }
 
   @Post() // Guard ???

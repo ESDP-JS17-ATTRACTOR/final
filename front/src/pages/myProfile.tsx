@@ -8,10 +8,15 @@ import {ApiHomework, ApiStudentHomework, ProfileMutation} from "../../types";
 import FormForHomework from "@/components/UI/MyProfile/FormForHomework";
 import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
 import FormForStudentHomework from "@/components/UI/MyProfile/FormForStudentHomework";
-import {addStudentHomework, fetchStudentHomeworks} from "@/features/studentHomeworks/studentHomeworksThunks";
+import {
+    addStudentHomework,
+    checkStudentHomework,
+    fetchStudentHomeworks
+} from "@/features/studentHomeworks/studentHomeworksThunks";
 import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
 import {selectStudentHomeworks} from "@/features/studentHomeworks/studentHomeworksSlice";
 import CardForStudentHomework from "@/components/Cards/CardForStudentHomework";
+import {Modal} from "@mui/material";
 
 const MyProfile = () => {
     const dispatch = useAppDispatch();
@@ -20,7 +25,7 @@ const MyProfile = () => {
     const homeworks = useAppSelector(selectHomeworks);
     const studentHomeworks = useAppSelector(selectStudentHomeworks);
     const [showForm, setShowForm] = useState(false);
-    const [showHomeworkForm, setShowHomeworkForm] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const initialState = user ? {email: user.email, firstName: user.firstName, country: user.country} : {email: "", firstName: "", country: ""}
     const [state, setState] = useState<ProfileMutation>(initialState);
 
@@ -46,18 +51,27 @@ const MyProfile = () => {
     }
 
     const onAddHomework = () => {
-        setShowHomeworkForm(true);
+        setShowModal(true);
     }
 
     const onSubmit = async (homework: ApiHomework) => {
         await dispatch(addHomework(homework));
-        setShowHomeworkForm(false);
+        setShowModal(false);
     };
 
     const onSubmitStudent = async (studentHomework: ApiStudentHomework) => {
         await dispatch(addStudentHomework(studentHomework));
-        setShowHomeworkForm(false);
+        setShowModal(false);
     };
+
+    const onCheckedClick = async (id: string) => {
+        await dispatch(checkStudentHomework(id));
+        await dispatch(fetchStudentHomeworks());
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
 
     return (
         <div className="container">
@@ -122,23 +136,35 @@ const MyProfile = () => {
                 <h2>Homework</h2>
                 <div className="homework-headlines-block">
                     <p>ID</p>
-                    <p style={{marginLeft: "250px"}}>Articles</p>
-                    <p style={{marginLeft: "250px"}}>Added date</p>
-                    <p style={{marginLeft: "90px"}}>Status</p>
-                    <p style={{marginLeft: "90px"}}>Tutor name</p>
+                    <p style={{width: "300px"}}>Articles</p>
+                    <p style={{width: "200px"}}>Added date</p>
+                    <p>Status</p>
+                    <p>Tutor name</p>
+                    <p>Is checked</p>
                 </div>
                 {user?.role === "student" && homeworks.map(homework => {
                     const studentHomework = studentHomeworks.find(studentHomework => studentHomework.homework.id === homework.id);
-                     return <CardForHomework key={homework.id} status={studentHomework ? studentHomework.status : 'In Process'} id={homework.id} description={homework.description} date={homework.date} tutorName={homework.tutorName} />
+                     return <CardForHomework key={homework.id} isChecked={studentHomework ? studentHomework.isChecked : 'Not Checked'} status={studentHomework ? studentHomework.status : 'In Process'} id={homework.id} description={homework.description} date={homework.date} tutorName={homework.tutorName} />
                 })}
                 {user?.role === "tutor" && studentHomeworks.map(studentHomework => {
                     const homework = homeworks.find(homework => homework.id === studentHomework.homework.id);
-                    return <CardForStudentHomework key={studentHomework.id} status={studentHomework.status} id={homework?.id} description={homework?.description} date={homework?.date} studentName={studentHomework.studentName} />
+
+                    return <CardForStudentHomework key={studentHomework.id} checked={() => onCheckedClick(studentHomework.id)} status={studentHomework.status} id={homework?.id} description={homework?.description} date={homework?.date} studentName={studentHomework.studentName} isChecked={studentHomework.isChecked}/>
                 })}
             </div>
             <button onClick={onAddHomework} className="button profile-btn-add">Add Homework</button>
-            {showHomeworkForm && user?.role === "tutor" && <FormForHomework onSubmit={onSubmit}/>}
-            {showHomeworkForm && user?.role === "student" && <FormForStudentHomework onSubmit={onSubmitStudent}/>}
+            {user?.role === "tutor" && <Modal
+                open={showModal}
+                onClose={closeModal}
+            >
+                <FormForHomework onSubmit={onSubmit}/>
+            </Modal>}
+            {user?.role === "student" && <Modal
+                open={showModal}
+                onClose={closeModal}
+            >
+                <FormForStudentHomework onSubmit={onSubmitStudent}/>
+            </Modal>}
         </div>
     );
 };

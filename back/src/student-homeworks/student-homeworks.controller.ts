@@ -34,8 +34,10 @@ export class StudentHomeworksController {
   async getAll() {
     const studentHomeworks = await this.studentHomeworkRepository.find({
       relations: ['homework'],
+      order: {
+        date: 'DESC',
+      },
     });
-    console.log(studentHomeworks);
     return studentHomeworks;
   }
 
@@ -64,20 +66,27 @@ export class StudentHomeworksController {
     return this.studentHomeworkRepository.save(studentHomework);
   }
 
-  // @Patch()
-  // @UseGuards(TokenAuthGuard, TutorGuard)
-  // async updateHomework(
-  //   @Param('id') id: number,
-  //   @Body() updateHomeworkDto: UpdateHomeworkDto,
-  // ) {
-  //   const homework = await this.homeworkRepository.findOne({
-  //     where: { id: id },
-  //   });
-  //   await this.homeworkRepository.update(homework.id, updateHomeworkDto);
-  //   return this.homeworkRepository.findOne({
-  //     where: { id: homework.id },
-  //   });
-  // }
+  @Patch(':id/toggleCheck')
+  @UseGuards(TokenAuthGuard, TutorGuard)
+  async updateHomework(@Param('id') id: number) {
+    const studentHomework = await this.studentHomeworkRepository.findOne({
+      where: { id: id },
+    });
+
+    const newStatus =
+      studentHomework.isChecked === 'Not checked' ? 'Checked' : 'Not checked';
+
+    await this.studentHomeworkRepository.update(id, { isChecked: newStatus });
+
+    return this.studentHomeworkRepository.findOne({
+      where: { id: id },
+    });
+    // return await this.studentHomeworkRepository.findOne(id);
+    // await this.studentHomeworkRepository.update(
+    //   studentHomework.isChecked,
+    //   'Checked',
+    // );
+  }
 
   @Get(':id')
   async getOneStudentHomework(@Param('id') id: number) {

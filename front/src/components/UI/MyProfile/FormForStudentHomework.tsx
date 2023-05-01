@@ -56,7 +56,7 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit}) => {
     };
 
     return (
-        <form onSubmit={onFormSubmit}>
+        <form className="profile-add-homework-form" onSubmit={onFormSubmit}>
             <div className="profile-add-homework-form_box">
                 <label>
                     Homeworks

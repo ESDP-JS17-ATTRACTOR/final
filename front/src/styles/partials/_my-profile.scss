@@ -79,6 +79,8 @@
 .homework-headlines-block {
   padding: 0 40px 0 40px;
   display: flex;
+  text-align: center;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #4688C1;
   p {
@@ -92,15 +94,24 @@
 }
 
 .card-for-homework-block {
-  padding: 0 30px;
+  //padding: 0 30px;
+  text-align: center;
   background-color: $light-orange;
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #4688C1;
 }
 
 .profile-add-homework-form {
+  width: 400px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 23px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   &_box {
     display: flex;

@@ -81,11 +81,6 @@ export class StudentHomeworksController {
     return this.studentHomeworkRepository.findOne({
       where: { id: id },
     });
-    // return await this.studentHomeworkRepository.findOne(id);
-    // await this.studentHomeworkRepository.update(
-    //   studentHomework.isChecked,
-    //   'Checked',
-    // );
   }
 
   @Get(':id')

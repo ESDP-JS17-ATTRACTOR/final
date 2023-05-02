@@ -17,6 +17,7 @@ import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
 import {selectStudentHomeworks} from "@/features/studentHomeworks/studentHomeworksSlice";
 import CardForStudentHomework from "@/components/Cards/CardForStudentHomework";
 import {Modal} from "@mui/material";
+import dayjs from "dayjs";
 
 const MyProfile = () => {
     const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ const MyProfile = () => {
 
     const onSubmitStudent = async (studentHomework: ApiStudentHomework) => {
         await dispatch(addStudentHomework(studentHomework));
+        await dispatch(fetchStudentHomeworks());
         setShowModal(false);
     };
 
@@ -144,12 +146,12 @@ const MyProfile = () => {
                 </div>
                 {user?.role === "student" && homeworks.map(homework => {
                     const studentHomework = studentHomeworks.find(studentHomework => studentHomework.homework.id === homework.id);
-                     return <CardForHomework key={homework.id} isChecked={studentHomework ? studentHomework.isChecked : 'Not Checked'} status={studentHomework ? studentHomework.status : 'In Process'} id={homework.id} description={homework.description} date={homework.date} tutorName={homework.tutorName} />
+                     return <CardForHomework key={homework.id} isChecked={studentHomework ? studentHomework.isChecked : 'Not Checked'} status={studentHomework ? studentHomework.status : 'In Process'} id={homework.id} description={homework.description} date={dayjs(homework.date).format('DD MMMM YYYY')} tutorName={homework.tutorName} />
                 })}
                 {user?.role === "tutor" && studentHomeworks.map(studentHomework => {
                     const homework = homeworks.find(homework => homework.id === studentHomework.homework.id);
 
-                    return <CardForStudentHomework key={studentHomework.id} checked={() => onCheckedClick(studentHomework.id)} status={studentHomework.status} id={homework?.id} description={homework?.description} date={homework?.date} studentName={studentHomework.studentName} isChecked={studentHomework.isChecked}/>
+                    return <CardForStudentHomework key={studentHomework.id} checked={() => onCheckedClick(studentHomework.id)} status={studentHomework.status} id={homework?.id} description={homework?.description} date={dayjs(homework?.date).format('DD MMMM YYYY')} studentName={studentHomework.studentName} isChecked={studentHomework.isChecked}/>
                 })}
             </div>
             <button onClick={onAddHomework} className="button profile-btn-add">Add Homework</button>

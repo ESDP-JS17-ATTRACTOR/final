@@ -141,7 +141,7 @@
 }
 
 .profile-btn-add {
-  margin: 20px 0;
+  margin: 20px 10px 20px 0;
   border: 2px solid $dark-orange;
   color: #ffffff;
   border-radius: 22px;
@@ -154,6 +154,26 @@
   }
   &:active {
     background: $dark-orange;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+}
+
+.profile-btn-delete {
+  background-color: red;
+  margin: 20px 10px 20px 0;
+  border: 2px solid red;
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 13px 29px;
+  font-size: 14px;
+  line-height: 17px;
+  &:hover {
+    background: transparent;
+    color: red;
+  }
+  &:active {
+    background: red;
     border: 2px solid #ffffff;
     color: #ffffff;
   }

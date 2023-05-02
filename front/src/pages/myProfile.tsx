@@ -10,7 +10,7 @@ import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks"
 import FormForStudentHomework from "@/components/UI/MyProfile/FormForStudentHomework";
 import {
     addStudentHomework,
-    checkStudentHomework,
+    checkStudentHomework, deleteStudentHomework,
     fetchStudentHomeworks
 } from "@/features/studentHomeworks/studentHomeworksThunks";
 import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
@@ -74,11 +74,11 @@ const MyProfile = () => {
     const onCheckedClick = async (id: string) => {
         await dispatch(checkStudentHomework(id));
         await dispatch(fetchStudentHomeworks());
-    }
+    };
 
     const closeModal = () => {
         setShowModal(false);
-    }
+    };
 
     return (
         <div className="container">

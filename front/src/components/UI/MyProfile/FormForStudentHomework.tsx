@@ -6,6 +6,7 @@ import FileInput from "@/components/FileInput/FileInput";
 import {fetchHomeworks} from "@/features/homeworks/homeworksThunks";
 import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
 import {Grid, MenuItem, TextField} from "@mui/material";
+import {deleteStudentHomework, fetchStudentHomework} from "@/features/studentHomeworks/studentHomeworksThunks";
 
 interface Props {
     onSubmit: (studentHomework: ApiStudentHomework) => void;
@@ -16,17 +17,23 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const homeworks = useAppSelector(selectHomeworks);
+    const [selectedHomeworkId, setSelectedHomeworkId] = useState<string>("");
     const [studentHomework, setStudentHomework] = useState<StudentHomeworkMutation>({
         homework: '',
     });
 
     useEffect(() => {
         dispatch(fetchHomeworks());
-    }, [dispatch]);
+    }, [dispatch, selectedHomeworkId]);
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setStudentHomework(prev => ({...prev, [name]: value}));
+        setSelectedHomeworkId(value);
+    };
+
+    const onDeleteClickHandler = async () => {
+        await dispatch(deleteStudentHomework(selectedHomeworkId));
     };
 
     const onFormSubmit = async (e: React.FormEvent) => {
@@ -82,7 +89,8 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
             </div>
             <FileInput onChange={fileInputChangeHandler} name="files" label="Files" />
             {error && <p style={{color: "red"}}>{error}</p>}
-            <button className="button profile-btn-add">Add</button>
+            <button type="submit" className="button profile-btn-add">Add</button>
+            <button type="button" onClick={onDeleteClickHandler} className="button profile-btn-delete">Delete</button>
         </form>
     );
 };

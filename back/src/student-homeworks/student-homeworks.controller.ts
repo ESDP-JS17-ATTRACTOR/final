@@ -100,14 +100,16 @@ export class StudentHomeworksController {
   }
 
   @Delete(':id')
-  @UseGuards(TokenAuthGuard, TutorGuard)
+  @UseGuards(TokenAuthGuard)
   async removeOneStudentHomework(@Param('id') id: number) {
     const studentHomework: StudentHomework =
       await this.studentHomeworkRepository.findOne({
-        where: { id: id },
+        relations: ['homework'],
+        where: { homework: { id: id } },
       });
+    console.log(studentHomework);
     if (studentHomework) {
-      return this.studentHomeworkRepository.delete(id);
+      return this.studentHomeworkRepository.delete(studentHomework.id);
     } else {
       throw new NotFoundException(`Student Homework with id ${id} not found`);
     }

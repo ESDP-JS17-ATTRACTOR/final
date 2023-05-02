@@ -61,22 +61,29 @@ export const addStudentHomework = createAsyncThunk<void, ApiStudentHomework, { r
 //     }
 // );
 //
-// export const fetchOneCourse = createAsyncThunk<CourseMutation, string>(
-//     'courses/fetchOneCourse',
-//     async (id) => {
-//         const response = await axiosApi.get('/courses/' + id);
-//         const course = response.data;
-//
-//         if (course === null) {
-//             throw new Error('Course was not found');
-//         }
-//         return course;
-//     }
-// );
+export const fetchStudentHomework = createAsyncThunk<StudentHomework, string>(
+    'studentHomeworks/fetchOne',
+    async (id) => {
+        const response = await axiosApi.get<StudentHomework>('/student-homeworks/' + id);
+        const studentHomework = response.data;
+
+        if (studentHomework === null) {
+            throw new Error('This student homework was not found');
+        }
+        return studentHomework;
+    }
+);
 
 export const checkStudentHomework = createAsyncThunk<void, string>(
     'studentHomeworks/check',
     async (id) => {
         await axiosApi.patch('/student-homeworks/' + id + '/toggleCheck');
+    }
+);
+
+export const deleteStudentHomework = createAsyncThunk<void, string>(
+    'studentHomeworks/delete',
+    async (id) => {
+        await axiosApi.delete('/student-homeworks/' + id);
     }
 );

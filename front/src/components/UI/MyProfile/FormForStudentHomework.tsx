@@ -6,14 +6,18 @@ import FileInput from "@/components/FileInput/FileInput";
 import {fetchHomeworks} from "@/features/homeworks/homeworksThunks";
 import {selectHomeworks} from "@/features/homeworks/homeworksSlice";
 import {Grid, MenuItem, TextField} from "@mui/material";
-import {deleteStudentHomework, fetchStudentHomework} from "@/features/studentHomeworks/studentHomeworksThunks";
+import {
+    deleteStudentHomework,
+    fetchStudentHomeworks
+} from "@/features/studentHomeworks/studentHomeworksThunks";
 
 interface Props {
     onSubmit: (studentHomework: ApiStudentHomework) => void;
     error?: string;
+    closeModal: () => void;
 }
 
-const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
+const FormForStudentHomework: React.FC<Props> = ({onSubmit, error, closeModal}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const homeworks = useAppSelector(selectHomeworks);
@@ -24,7 +28,7 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
 
     useEffect(() => {
         dispatch(fetchHomeworks());
-    }, [dispatch, selectedHomeworkId]);
+    }, [dispatch]);
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -34,6 +38,8 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
 
     const onDeleteClickHandler = async () => {
         await dispatch(deleteStudentHomework(selectedHomeworkId));
+        await dispatch(fetchStudentHomeworks());
+        closeModal();
     };
 
     const onFormSubmit = async (e: React.FormEvent) => {
@@ -64,26 +70,26 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
             <div className="profile-add-homework-form_box">
                 <Grid container direction="column" spacing={2}>
                     <Grid item xs>
-                    <TextField
-                    fullWidth
-                    sx={{mb: 2}}
-                    select
-                    label="Введите номер домашнего задания"
-                    name="homework"
-                    required
-                    value={studentHomework.homework}
-                    onChange={inputChangeHandler}
-                  >
-                    <MenuItem disabled value="">Выберите урок</MenuItem>
-                    {homeworks.map(homework => (
-                        <MenuItem
-                            key={homework.id}
-                            id={homework.id.toString()}
-                            value={homework.id}>
-                            {homework.id}
-                        </MenuItem>
-                    ))}
-                  </TextField>
+                        <TextField
+                            select
+                            fullWidth
+                            sx={{mb: 2}}
+                            label="Введите номер домашнего задания"
+                            name="homework"
+                            required
+                            value={studentHomework.homework}
+                            onChange={inputChangeHandler}
+                        >
+                            <MenuItem disabled value="">Выберите урок</MenuItem>
+                            {homeworks.map(homework => (
+                                <MenuItem
+                                    key={homework.id}
+                                    id={homework.id.toString()}
+                                    value={homework.id}>
+                                    {homework.id}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </Grid>
                 </Grid>
             </div>

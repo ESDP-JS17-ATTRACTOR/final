@@ -59,26 +59,26 @@ const FormForHomework: React.FC<Props> = ({onSubmit}) => {
                 <div className="profile-add-homework-form_box">
                     <Grid container direction="column" spacing={2}>
                         <Grid item xs>
-                        <TextField
-                            fullWidth
-                            select
-                            label="Выберите номер урока"
-                            id="lesson"
-                            name="lesson"
-                            required
-                            value={homework.lesson}
-                            onChange={inputChangeHandler}
-                        >
-                        <MenuItem disabled value="">Выберите урок</MenuItem>
-                        {lessons.map(lesson => (
-                            <MenuItem
-                                key={lesson.id}
-                                id={lesson.id.toString()}
-                                value={lesson.id}>
-                                {lesson.title}
-                            </MenuItem>
-                        ))}
-                        </TextField>
+                            <TextField
+                                select
+                                fullWidth
+                                label="Выберите номер урока"
+                                id="lesson"
+                                name="lesson"
+                                required
+                                value={homework.lesson}
+                                onChange={inputChangeHandler}
+                            >
+                                <MenuItem disabled value="">Выберите урок</MenuItem>
+                                {lessons.map(lesson => (
+                                    <MenuItem
+                                        key={lesson.id}
+                                        id={lesson.id.toString()}
+                                        value={lesson.id}>
+                                        {lesson.title}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </Grid>
 
                         <Grid item xs>

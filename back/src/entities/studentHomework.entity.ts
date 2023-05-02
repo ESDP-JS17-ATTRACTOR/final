@@ -25,6 +25,9 @@ export class StudentHomework {
   @Column()
   studentName: string;
 
+  @Column()
+  studentEmail: string;
+
   @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
   isChecked: string;
 

@@ -55,7 +55,10 @@ export class StudentHomeworksController {
 
     const existStudentHomework = await this.studentHomeworkRepository.findOne({
       relations: ['homework'],
-      where: { homework: { id: studentHomeworkData.homework } },
+      where: {
+        studentEmail: user.email,
+        homework: { id: studentHomeworkData.homework },
+      },
     });
 
     if (!homework) {
@@ -70,6 +73,7 @@ export class StudentHomeworksController {
       homework: homework,
       date: new Date(),
       studentName: user.firstName,
+      studentEmail: user.email,
       // file: file ? '/uploads/studentsHomeworks/' + file.filename : null,
     });
     return this.studentHomeworkRepository.save(studentHomework);
@@ -101,11 +105,12 @@ export class StudentHomeworksController {
 
   @Delete(':id')
   @UseGuards(TokenAuthGuard)
-  async removeOneStudentHomework(@Param('id') id: number) {
+  async removeOneStudentHomework(@Req() req: Request, @Param('id') id: number) {
+    const user = req.user as User;
     const studentHomework: StudentHomework =
       await this.studentHomeworkRepository.findOne({
         relations: ['homework'],
-        where: { homework: { id: id } },
+        where: { studentEmail: user.email, homework: { id: id } },
       });
     console.log(studentHomework);
     if (studentHomework) {

@@ -73,15 +73,7 @@ export const addStudentHomework = createAsyncThunk<void, ApiStudentHomework, { r
 //         return course;
 //     }
 // );
-//
-// interface EditParams {
-//     id: string,
-//     course: ApiCourse
-// }
-//
-export const publishAlbum = createAsyncThunk<void, string>('albums/publishAlbum', async (id) => {
-    await axiosApi.patch('/albums/' + id + '/togglePublished');
-});
+
 export const checkStudentHomework = createAsyncThunk<void, string>(
     'studentHomeworks/check',
     async (id) => {

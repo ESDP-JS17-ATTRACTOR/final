@@ -1,7 +1,6 @@
 import {StudentHomework, ValidationError} from "../../../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
 import {addStudentHomework, fetchStudentHomeworks} from "@/features/studentHomeworks/studentHomeworksThunks";
 
 interface StudentHomeworkState {
@@ -54,38 +53,6 @@ const studentHomeworksSlice = createSlice({
             state.studentHomeworkAdding = false;
             state.studentHomeworkAddError = error || null;
         });
-
-        // builder.addCase(deleteCourse.pending, (state) => {
-        //     state.courseDeleting = true;
-        // });
-        // builder.addCase(deleteCourse.fulfilled, (state) => {
-        //     state.courseDeleting = false;
-        // });
-        // builder.addCase(deleteCourse.rejected, (state) => {
-        //     state.courseDeleting = false;
-        // });
-        //
-        // builder.addCase(fetchOneCourse.pending, (state) => {
-        //     state.oneCourse = null;
-        //     state.oneCourseLoading = true;
-        // });
-        // builder.addCase(fetchOneCourse.fulfilled, (state, {payload: course}) => {
-        //     state.oneCourseLoading = false;
-        //     state.oneCourse = course;
-        // });
-        // builder.addCase(fetchOneCourse.rejected, (state) => {
-        //     state.oneCourseLoading = false;
-        // });
-        //
-        // builder.addCase(editCourse.pending, (state) => {
-        //     state.oneCourseEditing = true;
-        // });
-        // builder.addCase(editCourse.fulfilled, (state) => {
-        //     state.oneCourseEditing = false;
-        // });builder.addCase(editCourse.rejected, (state) => {
-        //     state.oneCourseEditing = false;
-        // });
-
     }
 });
 

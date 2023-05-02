@@ -4,7 +4,7 @@ import {editUserProfile} from "@/features/users/usersThunks";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";
 import {selectUser} from "@/features/users/usersSlice";
-import {ApiHomework, ApiStudentHomework, ProfileMutation} from "../../types";
+import {ApiHomework, ApiStudentHomework, ProfileMutation, ValidationError} from "../../types";
 import FormForHomework from "@/components/UI/MyProfile/FormForHomework";
 import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
 import FormForStudentHomework from "@/components/UI/MyProfile/FormForStudentHomework";
@@ -27,6 +27,7 @@ const MyProfile = () => {
     const studentHomeworks = useAppSelector(selectStudentHomeworks);
     const [showForm, setShowForm] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [validationError, setValidationError] = useState<ValidationError | null>(null);
     const initialState = user ? {email: user.email, firstName: user.firstName, country: user.country} : {email: "", firstName: "", country: ""}
     const [state, setState] = useState<ProfileMutation>(initialState);
 
@@ -61,9 +62,13 @@ const MyProfile = () => {
     };
 
     const onSubmitStudent = async (studentHomework: ApiStudentHomework) => {
-        await dispatch(addStudentHomework(studentHomework));
-        await dispatch(fetchStudentHomeworks());
-        setShowModal(false);
+        try {
+            await dispatch(addStudentHomework(studentHomework)).unwrap();
+            await dispatch(fetchStudentHomeworks());
+            setShowModal(false);
+        } catch (error) {
+            setValidationError(error as ValidationError);
+        }
     };
 
     const onCheckedClick = async (id: string) => {
@@ -141,7 +146,7 @@ const MyProfile = () => {
                     <p style={{width: "300px"}}>Articles</p>
                     <p style={{width: "200px"}}>Added date</p>
                     <p>Status</p>
-                    <p>Tutor name</p>
+                    {user?.role === "tutor" ? <p>Student name</p> : <p>Tutor name</p>}
                     <p>Is checked</p>
                 </div>
                 {user?.role === "student" && homeworks.map(homework => {
@@ -151,7 +156,7 @@ const MyProfile = () => {
                 {user?.role === "tutor" && studentHomeworks.map(studentHomework => {
                     const homework = homeworks.find(homework => homework.id === studentHomework.homework.id);
 
-                    return <CardForStudentHomework key={studentHomework.id} checked={() => onCheckedClick(studentHomework.id)} status={studentHomework.status} id={homework?.id} description={homework?.description} date={dayjs(homework?.date).format('DD MMMM YYYY')} studentName={studentHomework.studentName} isChecked={studentHomework.isChecked}/>
+                    return <CardForStudentHomework key={studentHomework.id} checked={() => onCheckedClick(studentHomework.id)} status={studentHomework.status} id={homework?.id} description={homework?.description} date={dayjs(studentHomework.date).format('DD MMMM YYYY')} studentName={studentHomework.studentName} isChecked={studentHomework.isChecked}/>
                 })}
             </div>
             <button onClick={onAddHomework} className="button profile-btn-add">Add Homework</button>
@@ -165,7 +170,7 @@ const MyProfile = () => {
                 open={showModal}
                 onClose={closeModal}
             >
-                <FormForStudentHomework onSubmit={onSubmitStudent}/>
+                <FormForStudentHomework onSubmit={onSubmitStudent} error={validationError?.message}/>
             </Modal>}
         </div>
     );

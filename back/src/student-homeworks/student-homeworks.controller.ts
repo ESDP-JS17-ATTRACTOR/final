@@ -53,8 +53,17 @@ export class StudentHomeworksController {
       where: { id: studentHomeworkData.homework },
     });
 
+    const existStudentHomework = await this.studentHomeworkRepository.findOne({
+      relations: ['homework'],
+      where: { homework: { id: studentHomeworkData.homework } },
+    });
+
     if (!homework) {
       throw new BadRequestException('Homework not found');
+    }
+
+    if (existStudentHomework) {
+      throw new BadRequestException('This homework already done');
     }
 
     const studentHomework = await this.studentHomeworkRepository.create({

@@ -9,9 +9,10 @@ import {Grid, MenuItem, TextField} from "@mui/material";
 
 interface Props {
     onSubmit: (studentHomework: ApiStudentHomework) => void;
+    error?: string;
 }
 
-const FormForStudentHomework: React.FC<Props> = ({onSubmit}) => {
+const FormForStudentHomework: React.FC<Props> = ({onSubmit, error}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const homeworks = useAppSelector(selectHomeworks);
@@ -80,6 +81,7 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit}) => {
                 </Grid>
             </div>
             <FileInput onChange={fileInputChangeHandler} name="files" label="Files" />
+            {error && <p style={{color: "red"}}>{error}</p>}
             <button className="button profile-btn-add">Add</button>
         </form>
     );

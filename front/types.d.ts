@@ -67,6 +67,7 @@ export interface Homework {
   lesson: Lesson;
   title: string;
   tutorName: string;
+  tutorEmail: string;
   date: string;
   description: string;
   pdf: string;
@@ -91,6 +92,7 @@ export interface StudentHomework {
   homework: Homework;
   status: string;
   studentName: string;
+  studentEmail: string;
   date: string;
   isChecked: string;
 }

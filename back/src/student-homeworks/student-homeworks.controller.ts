@@ -31,9 +31,15 @@ export class StudentHomeworksController {
   ) {}
 
   @Get()
-  async getAll() {
+  @UseGuards(TokenAuthGuard)
+  async getAll(@Req() req: Request) {
+    const user = req.user as User;
     const studentHomeworks = await this.studentHomeworkRepository.find({
       relations: ['homework'],
+      where: [
+        { studentEmail: user.email },
+        { homework: { tutorEmail: user.email } },
+      ],
       order: {
         date: 'DESC',
       },

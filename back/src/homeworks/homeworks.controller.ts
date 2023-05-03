@@ -68,6 +68,7 @@ export class HomeworksController {
       date: new Date(),
       description: homeworkData.description,
       tutorName: user.firstName,
+      tutorEmail: user.email,
       // pdf: file ? '/uploads/homeworks/pdf/' + file.filename : null,
     });
     return this.homeworkRepository.save(homework);

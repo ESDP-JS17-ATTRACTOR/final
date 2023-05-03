@@ -17,6 +17,8 @@ export class AddHomeworkDto {
 
   tutorName: string;
 
+  tutorEmail: string;
+
   // @IsNotEmpty()
   // pdf: string | null;
 }

@@ -28,6 +28,9 @@ export class Homework {
   @Column()
   tutorName: string;
 
+  @Column()
+  tutorEmail: string;
+
   // @Column()
   // pdf: string | null;
 }

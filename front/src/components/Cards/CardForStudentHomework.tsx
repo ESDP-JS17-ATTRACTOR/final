@@ -6,19 +6,31 @@ interface Props {
     date?: string;
     studentName: string;
     status: string;
+    isChecked: string;
+    checked: () => void;
 }
 
-const CardForStudentHomework: React.FC<Props> = ({id, description, date, studentName, status}) => {
+const CardForStudentHomework: React.FC<Props> = ({id, description, date, studentName, status, isChecked, checked}) => {
     return (
         <div className="card-for-homework-block">
-            <p>{id}</p>
-            <div style={{width: "400px", overflow: "hidden"}}>
+            <div style={{width: "90px",  overflow: "hidden"}}>
+                <p>{id}</p>
+            </div>
+            <div style={{width: "390px", overflow: "hidden"}}>
                 <p>{description}</p>
             </div>
-            <p>{date}</p>
-            <p>{status}</p>
-            <p>{studentName}</p>
-            <button className="button homework-btn">Подробнее</button>
+            <div style={{width: "280px", overflow: "hidden"}}>
+                <p>{date}</p>
+            </div>
+            <div style={{width: "130px", overflow: "hidden"}}>
+                <p>{status}</p>
+            </div>
+            <div style={{width: "150px", overflow: "hidden"}}>
+                <p>{studentName}</p>
+            </div>
+            <div style={{width: "150px", overflow: "hidden"}}>
+                <p onClick={checked}>{isChecked}</p>
+            </div>
         </div>
     );
 };

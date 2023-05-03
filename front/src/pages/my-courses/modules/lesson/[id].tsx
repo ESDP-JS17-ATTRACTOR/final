@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import ReactPlayer from "react-player";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import {createUsersLessons, fetchOneUsersLesson} from "@/features/usersLessons/usersLessonsThunks";
+import {selectOneUsersLesson} from "@/features/usersLessons/usersLessonsSlice";
+import {useRouter} from "next/router";
 
 const Lesson = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const id = router.query.id as string;
+  const usersLesson = useAppSelector(selectOneUsersLesson);
+
+  useEffect(() => {
+    dispatch(fetchOneUsersLesson(id));
+  }, [dispatch, id]);
+
+
+
   return (
     <div className="container">
       <div className="module-lesson-general-block">
@@ -43,6 +58,10 @@ const Lesson = () => {
         </div>
         <button className="button module-lesson-general-block-comment-block_button">confirm</button>
       </div>
+      <button onClick={async () => {
+        const res = await dispatch(createUsersLessons(1));
+        console.log(res);
+      }}>BUTTON</button>
     </div>
   );
 };

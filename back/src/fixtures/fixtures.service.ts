@@ -64,14 +64,14 @@ export class FixturesService {
   }
 
   async createUsers() {
-    const userFirst = await this.usersRepository.create({
-      email: 'user-first@gmail.com',
+    const user = await this.usersRepository.create({
+      email: 'user@gmail.com',
       firstName: 'John',
       lastName: 'Doe',
       password: 'password',
     });
-    await userFirst.generateToken();
-    await this.usersRepository.save(userFirst);
+    await user.generateToken();
+    await this.usersRepository.save(user);
 
     const userSecond = await this.usersRepository.create({
       email: 'user-second@gmail.com',
@@ -416,7 +416,7 @@ export class FixturesService {
     });
 
     const userFirst = await this.usersRepository.findOne({
-      where: { email: 'user-first@gmail.com' },
+      where: { email: 'user@gmail.com' },
     });
 
     const userSecond = await this.usersRepository.findOne({

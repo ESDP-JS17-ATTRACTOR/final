@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
-import {useRouter} from "next/router";
 import {ApiStudentHomework, StudentHomeworkMutation} from "../../../../types";
 import FileInput from "@/components/FileInput/FileInput";
 import {fetchHomeworks} from "@/features/homeworks/homeworksThunks";
@@ -19,7 +18,6 @@ interface Props {
 
 const FormForStudentHomework: React.FC<Props> = ({onSubmit, error, closeModal}) => {
     const dispatch = useAppDispatch();
-    const router = useRouter();
     const homeworks = useAppSelector(selectHomeworks);
     const [selectedHomeworkId, setSelectedHomeworkId] = useState<string>("");
     const [studentHomework, setStudentHomework] = useState<StudentHomeworkMutation>({

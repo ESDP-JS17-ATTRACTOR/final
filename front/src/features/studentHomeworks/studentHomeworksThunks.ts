@@ -1,13 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-    Course,
-    ApiCourse,
-    CourseMutation,
-    GlobalError,
-    ValidationError,
-    Homework,
-    HomeworkMutation, ApiHomework, StudentHomework, ApiStudentHomework
-} from "../../../types";
+import {ValidationError, StudentHomework, ApiStudentHomework} from "../../../types";
 import axiosApi from "../../../axiosApi";
 import {isAxiosError} from "axios";
 
@@ -44,20 +36,6 @@ export const addStudentHomework = createAsyncThunk<void, ApiStudentHomework, { r
     }
 );
 
-// export const deleteCourse = createAsyncThunk<void, string>(
-//     'courses/delete',
-//     async (id) => {
-//         try {
-//             await axiosApi.delete('/courses/' + id);
-//         } catch (e) {
-//             if (isAxiosError(e) && e.response && e.response.status === 403) {
-//                 return alert(e.response.data.error as GlobalError);
-//             }
-//             throw (e);
-//         }
-//     }
-// );
-//
 export const fetchStudentHomework = createAsyncThunk<StudentHomework, string>(
     'studentHomeworks/fetchOne',
     async (id) => {

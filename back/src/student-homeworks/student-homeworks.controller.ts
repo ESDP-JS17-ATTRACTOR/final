@@ -9,7 +9,7 @@ import {
   Patch,
   Post,
   Req,
-  UploadedFile, UploadedFiles,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,7 +22,7 @@ import { User } from '../entities/user.entity';
 import { Request } from 'express';
 import { StudentHomework } from '../entities/studentHomework.entity';
 import { AddStudentHomeworkDto } from './dto/addStudentHomework.dto';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('student-homeworks')
 export class StudentHomeworksController {
@@ -82,8 +82,6 @@ export class StudentHomeworksController {
     if (existStudentHomework) {
       throw new BadRequestException('This homework already done');
     }
-
-    console.log(files);
 
     const studentHomework = await this.studentHomeworkRepository.create({
       homework: homework,

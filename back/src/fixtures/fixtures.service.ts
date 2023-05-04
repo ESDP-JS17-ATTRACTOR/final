@@ -200,7 +200,7 @@ export class FixturesService {
     await this.coursesRepository.save(graphicDesignerCourse);
   }
 
-  async createModules() {
+  async createUsersModules() {
     const contentCreatorCourse = await this.coursesRepository.findOne({
       where: { title: 'contentCreator ZA 30 DNEI' },
     });
@@ -357,5 +357,51 @@ export class FixturesService {
       description: 'about homework2',
     });
     await this.homeworksRepository.save(homework2);
+  }
+
+  async createPurchases() {
+    const user = await this.usersRepository.findOne({
+      where: { email: 'user@gmail.com' },
+    });
+
+    const smmCourse = await this.coursesRepository.findOne({
+      where: { title: 'SMM ZA 30 DNEI' },
+    });
+
+    const firstPurchase = await this.purchasesRepository.create({
+      purchaser: user,
+      course: smmCourse,
+      purchasedAt: '2023-05-05T09:00:00',
+    });
+    await this.purchasesRepository.save(firstPurchase);
+  }
+
+  async createUsersLessons() {
+    const user = await this.usersRepository.findOne({
+      where: { email: 'user@gmail.com' },
+    });
+
+    const lessons = await this.lessonsRepository.find({
+      where: { course: { title: 'SMM ZA 30 DNEI' } },
+      order: { number: 'ASC' },
+    });
+
+    const firstUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[0],
+    });
+    await this.usersLessonsRepository.save(firstUsersLesson);
+
+    const secondUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[1],
+    });
+    await this.usersLessonsRepository.save(secondUsersLesson);
+
+    const thirdUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[2],
+    });
+    await this.usersLessonsRepository.save(thirdUsersLesson);
   }
 }

@@ -91,6 +91,7 @@ export class UsersLessonsService {
 
     if (isViewed) {
       lesson.isViewed = true;
+      lesson.viewedAt = new Date();
       await this.usersLessonRepository.save(lesson);
       return { message: 'Your lessons status changed to viewed!' };
     } else {

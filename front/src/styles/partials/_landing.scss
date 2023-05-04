@@ -2,56 +2,118 @@
 @use "../var/mixins" as *;
 
 .invitation-block {
-  height: 500px;
+  height: 380px;
   background: linear-gradient(180deg, #EDA652 0%, rgba(217, 218, 146, 0.29) 100%);
   border-radius: 0 0 40% 40%;
-  margin-bottom: 50px;
+  @include md {
+    height: 500px;
+    margin-bottom: 50px;
+  }
+
   .invitation-block-container {
     display: flex;
-    background-image: url("/header_circles.png"), url("/header_shapes.png"), url("/header_shapes_2.png");
-    background-position: 70% 5%, 56% 86%, 96% 80%;
-    background-repeat: no-repeat, no-repeat, no-repeat;
+    height: 100%;
+    background-image: url("/main-pic.png"), url("/header_shapes.png");
+    background-repeat: no-repeat, no-repeat;
+    background-position: calc(100% + 190px) 0, 10% 190%;
+    background-size: 320px auto, auto;
+    padding-bottom: 50px;
+    @include md {
+      background-image: url("/main-pic.png"), url("/header_circles.png"), url("/header_shapes.png"), url("/header_shapes_2.png");
+      background-position: calc(100% + 150px) 0, 70% 5%, 56% 86%, 96% 80%;
+      background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+      background-size: auto;
+    }
+    @include lg {
+      background-position: 100% 0, 70% 5%, 56% 86%, 96% 80%;
+    }
+
     .invitation-info {
+      position: relative;
+      overflow: hidden;
+
       &_text {
         h1 {
-          font-weight: 700;
-          font-size: 40px;
-          line-height: 48px;
-          text-transform: uppercase;
+          width: 80%;
           color: $blue-text;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 29px;
+          @include sm {
+            font-size: 35px;
+            line-height: 38px;
+          }
+          @include md {
+            font-size: 40px;
+            line-height: 48px;
+          }
+
         }
+
         span {
           font-weight: 700;
-          font-size: 40px;
-          line-height: 48px;
           text-transform: uppercase;
           color: transparent;
           -webkit-text-stroke: 1px $blue-text;
           text-stroke: 1px $blue-text;
         }
+
         p {
-          font-weight: 500;
-          font-size: 24px;
-          line-height: 29px;
+          width: 227px;
           color: $blue-text;
+          font-size: 14px;
+          line-height: 17px;
+          @include sm {
+            width: 100%;
+            font-size: 20px;
+            line-height: 24px;
+          }
+          @include md {
+            font-size: 24px;
+            line-height: 29px;
+          }
         }
       }
+
       &_buttons {
-        width: 100%;
-        margin-top: 85px;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        @include md {
+          flex-direction: row;
+          position: static;
+          transform: none;
+          margin-top: 100px;
+        }
       }
     }
+
     .invitation-contacts {
       margin-left: auto;
-      position: relative;
-      img {
-        width: 100%;
+      @include md {
+        position: relative;
       }
-      &_box {
-        position: absolute;
-        top: 25%;
-        right: 0;
+      width: 170px;
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      bottom: 25%;
+      left: 50%;
+      transform: translateX(-50%);
+      @include md {
+        flex-direction: column;
+        justify-content: normal;
+        top: 30%;
+        left: 0;
+        z-index: 3;
+        width: 50px;
+        transform: none;
       }
+
       .contact-link {
         display: block;
         overflow: hidden;
@@ -62,16 +124,19 @@
         width: 47px;
         height: 47px;
         margin-bottom: 30px;
+
         &_facebook {
           background-image: url("/facebook_ic.png");
           background-repeat: no-repeat;
           background-position: center;
         }
+
         &_whatsapp {
           background-image: url("/whatsapp_ic.png");
           background-repeat: no-repeat;
           background-position: center;
         }
+
         &_instagram {
           background-image: url("/instagram_ic.png");
           background-repeat: no-repeat;
@@ -84,16 +149,20 @@
 
 .info-block {
   display: flex;
+
   &_image {
     width: 50%;
     display: flex;
     margin-bottom: 50px;
+
     img {
       align-self: center;
     }
   }
+
   &_content {
     width: 50%;
+
     h4 {
       font-weight: 700;
       font-size: 40px;
@@ -102,6 +171,7 @@
       color: $orange;
       margin: 0 0 10px;
     }
+
     span {
       font-weight: 700;
       font-size: 40px;
@@ -111,6 +181,7 @@
       -webkit-text-stroke: 1px $blue-text;
       text-stroke: 1px $blue-text;
     }
+
     p {
       font-weight: 400;
       font-size: 16px;

@@ -1,0 +1,79 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+@import url('https://fonts.cdnfonts.com/css/craftwork-grotesk');
+
+.team-card_bg {
+  display: flex;
+  justify-content: center;
+}
+
+.team-card {
+  width: 271px;
+  height: 388px;
+  background-color: #FFFFFF;
+  border: 2px solid #F6A451;
+  box-shadow: 2px 4px 12px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 26px;
+  margin: 15px;
+  overflow: hidden;
+  @include md {
+    width: 220px;
+    height: 310px;
+  }
+  @include lg {
+    width: 271px;
+    height: 388px;
+  }
+  &_photo {
+    margin: 25px auto 12px;
+    width: 172px;
+    height: 167px;
+    background-color: #D9E8F0;
+    border-radius: 14px;
+    @include md {
+      width: 100px;
+      height: 105px;
+      position: relative;
+    }
+    @include lg {
+      width: 172px;
+      height: 167px;
+    }
+    img {
+      @include md {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        bottom: 0;
+      }
+      @include lg {
+        width: 172px;
+        height: 167px;
+      }
+    }
+  }
+  &_info {
+    text-align: center;
+    font-family: 'Craftwork Grotesk';
+    &_name {
+      display: block;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 22px;
+      color: #000000;
+    }
+    &_job-title {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: $orange;
+    }
+    &_description {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      padding: 0 24px;
+    }
+  }
+}

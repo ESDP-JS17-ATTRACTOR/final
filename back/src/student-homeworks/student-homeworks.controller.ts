@@ -34,8 +34,10 @@ export class StudentHomeworksController {
   async getAll() {
     const studentHomeworks = await this.studentHomeworkRepository.find({
       relations: ['homework'],
+      order: {
+        date: 'DESC',
+      },
     });
-    console.log(studentHomeworks);
     return studentHomeworks;
   }
 
@@ -51,33 +53,48 @@ export class StudentHomeworksController {
       where: { id: studentHomeworkData.homework },
     });
 
+    const existStudentHomework = await this.studentHomeworkRepository.findOne({
+      relations: ['homework'],
+      where: {
+        studentEmail: user.email,
+        homework: { id: studentHomeworkData.homework },
+      },
+    });
+
     if (!homework) {
       throw new BadRequestException('Homework not found');
+    }
+
+    if (existStudentHomework) {
+      throw new BadRequestException('This homework already done');
     }
 
     const studentHomework = await this.studentHomeworkRepository.create({
       homework: homework,
       date: new Date(),
       studentName: user.firstName,
+      studentEmail: user.email,
       // file: file ? '/uploads/studentsHomeworks/' + file.filename : null,
     });
     return this.studentHomeworkRepository.save(studentHomework);
   }
 
-  // @Patch()
-  // @UseGuards(TokenAuthGuard, TutorGuard)
-  // async updateHomework(
-  //   @Param('id') id: number,
-  //   @Body() updateHomeworkDto: UpdateHomeworkDto,
-  // ) {
-  //   const homework = await this.homeworkRepository.findOne({
-  //     where: { id: id },
-  //   });
-  //   await this.homeworkRepository.update(homework.id, updateHomeworkDto);
-  //   return this.homeworkRepository.findOne({
-  //     where: { id: homework.id },
-  //   });
-  // }
+  @Patch(':id/toggleCheck')
+  @UseGuards(TokenAuthGuard, TutorGuard)
+  async updateHomework(@Param('id') id: number) {
+    const studentHomework = await this.studentHomeworkRepository.findOne({
+      where: { id: id },
+    });
+
+    const newStatus =
+      studentHomework.isChecked === 'Not checked' ? 'Checked' : 'Not checked';
+
+    await this.studentHomeworkRepository.update(id, { isChecked: newStatus });
+
+    return this.studentHomeworkRepository.findOne({
+      where: { id: id },
+    });
+  }
 
   @Get(':id')
   async getOneStudentHomework(@Param('id') id: number) {
@@ -87,14 +104,17 @@ export class StudentHomeworksController {
   }
 
   @Delete(':id')
-  @UseGuards(TokenAuthGuard, TutorGuard)
-  async removeOneStudentHomework(@Param('id') id: number) {
+  @UseGuards(TokenAuthGuard)
+  async removeOneStudentHomework(@Req() req: Request, @Param('id') id: number) {
+    const user = req.user as User;
     const studentHomework: StudentHomework =
       await this.studentHomeworkRepository.findOne({
-        where: { id: id },
+        relations: ['homework'],
+        where: { studentEmail: user.email, homework: { id: id } },
       });
+    console.log(studentHomework);
     if (studentHomework) {
-      return this.studentHomeworkRepository.delete(id);
+      return this.studentHomeworkRepository.delete(studentHomework.id);
     } else {
       throw new NotFoundException(`Student Homework with id ${id} not found`);
     }

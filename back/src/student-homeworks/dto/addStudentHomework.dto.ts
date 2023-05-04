@@ -14,6 +14,8 @@ export class AddStudentHomeworkDto {
 
   studentName: string;
 
+  studentEmail: string;
+
   @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
   isChecked: string;
 

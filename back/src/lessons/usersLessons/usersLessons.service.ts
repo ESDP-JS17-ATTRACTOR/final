@@ -88,7 +88,7 @@ export class UsersLessonsService {
     });
 
     if (!lesson) {
-      throw new NotFoundException('Lesson not found');
+      throw new NotFoundException('Lesson not found!');
     }
 
     if (isViewed) {

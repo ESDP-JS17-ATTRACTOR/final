@@ -2,11 +2,13 @@
 @use "../var/mixins" as *;
 
 .course-preview-card {
-  width: 310px;
+  flex-basis: 310px;
   height: 365px;
   background: #ffffff;
   border-radius: 16px;
   text-align: center;
+  margin: 10px 10px 30px;
+  position: relative;
   &-header {
     &_title {
       font-weight: 600;
@@ -15,6 +17,7 @@
       text-transform: uppercase;
       color: $blue-text;
       position: relative;
+      margin-top: 30px;
       &::after {
         display: block;
         content: '';
@@ -55,13 +58,34 @@
     &_details {
       text-align: left;
       list-style: none;
+      padding: 0;
       &_item {
         font-weight: 600;
         font-size: 18px;
         line-height: 22px;
         text-transform: capitalize;
         color: $blue-text;
+        margin-bottom: 18px;
+        padding: 6px 0 6px 38px;
+        background-image: url("/mark-ic.png");
+        background-repeat: no-repeat;
+        background-size: 26px;
+        background-position: left center;
       }
+    }
+    &_button {
+      width: 252px;
+      height: 46px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 22px;
+      text-transform: capitalize;
+      border: 2px solid $blue-text;
+      border-radius: 12px;
+      background: transparent;
+      color: $blue-text;
+      position: absolute;
+      bottom: 38px;
     }
   }
 }

@@ -27,6 +27,8 @@ export class UsersLessonsService {
       .leftJoinAndSelect('users_lesson.student', 'userId')
       .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
       .select(['users_lesson', 'userId.id', 'lessonId'])
+      .leftJoinAndSelect('lessonId.course', 'courseId')
+      .leftJoinAndSelect('lessonId.module', 'moduleId')
       .orderBy('lessonId.number', 'ASC')
       .getMany();
 

@@ -9,7 +9,9 @@ import {
   Patch,
   Post,
   Req,
+  UploadedFile, UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -20,6 +22,7 @@ import { User } from '../entities/user.entity';
 import { Request } from 'express';
 import { StudentHomework } from '../entities/studentHomework.entity';
 import { AddStudentHomeworkDto } from './dto/addStudentHomework.dto';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('student-homeworks')
 export class StudentHomeworksController {
@@ -49,21 +52,26 @@ export class StudentHomeworksController {
 
   @Post()
   @UseGuards(TokenAuthGuard)
+  @UseInterceptors(
+    FilesInterceptor('studentFiles', 3, {
+      dest: './public/uploads/studentsHomeworks',
+    }),
+  )
   async createLesson(
     @Req() req: Request,
     @Body() studentHomeworkData: AddStudentHomeworkDto,
-    file: Express.Multer.File,
+    @UploadedFiles() files: Express.Multer.File[],
   ) {
     const user = req.user as User;
     const homework = await this.homeworkRepository.findOne({
-      where: { id: studentHomeworkData.homework },
+      where: { id: parseFloat(studentHomeworkData.homework) },
     });
 
     const existStudentHomework = await this.studentHomeworkRepository.findOne({
       relations: ['homework'],
       where: {
         studentEmail: user.email,
-        homework: { id: studentHomeworkData.homework },
+        homework: { id: parseFloat(studentHomeworkData.homework) },
       },
     });
 
@@ -75,12 +83,16 @@ export class StudentHomeworksController {
       throw new BadRequestException('This homework already done');
     }
 
+    console.log(files);
+
     const studentHomework = await this.studentHomeworkRepository.create({
       homework: homework,
       date: new Date(),
       studentName: user.firstName,
       studentEmail: user.email,
-      // file: file ? '/uploads/studentsHomeworks/' + file.filename : null,
+      studentFiles: files
+        ? files.map((file) => '/uploads/studentsHomeworks/' + file.filename)
+        : null,
     });
     return this.studentHomeworkRepository.save(studentHomework);
   }
@@ -118,9 +130,9 @@ export class StudentHomeworksController {
         relations: ['homework'],
         where: { studentEmail: user.email, homework: { id: id } },
       });
-    console.log(studentHomework);
     if (studentHomework) {
-      return this.studentHomeworkRepository.delete(studentHomework.id);
+      await this.studentHomeworkRepository.delete(studentHomework.id);
+      return { message: 'Student homework deleted' };
     } else {
       throw new NotFoundException(`Student Homework with id ${id} not found`);
     }

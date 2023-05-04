@@ -19,7 +19,7 @@ const FormForHomework: React.FC<Props> = ({onSubmit}) => {
         lesson: '',
         title: '',
         description: '',
-        // pdf: null
+        pdf: null
     });
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const FormForHomework: React.FC<Props> = ({onSubmit}) => {
         e.preventDefault();
         onSubmit({
             ...homework,
-            lesson: parseFloat(homework.lesson),
+            lesson: homework.lesson,
         });
     };
 

@@ -103,7 +103,6 @@ const MyProfile = () => {
                 </div>
                 {user?.role === "student" && homeworks.map(homework => {
                     const studentHomework = studentHomeworks.find(studentHomework => studentHomework.homework.id === homework.id && studentHomework.studentEmail === user.email);
-                    console.log(studentHomework);
                     return <CardForHomework key={homework.id}
                                             isChecked={studentHomework ? studentHomework.isChecked : 'Not Checked'}
                                             status={studentHomework ? studentHomework.status : 'In Process'}

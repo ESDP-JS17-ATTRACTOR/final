@@ -77,14 +77,14 @@ export interface HomeworkMutation {
   lesson: string;
   title: string;
   description: string;
-  // pdf: File | null;
+  pdf: File | null;
 }
 
 export interface ApiHomework {
-  lesson: number;
+  lesson: string;
   title: string;
   description: string;
-  // pdf: File | null;
+  pdf: File | null;
 }
 
 export interface StudentHomework {
@@ -95,14 +95,17 @@ export interface StudentHomework {
   studentEmail: string;
   date: string;
   isChecked: string;
+  studentFiles: string;
 }
 
 export interface StudentHomeworkMutation {
   homework: string;
+  studentFiles: File[] | null;
 }
 
 export interface ApiStudentHomework {
-  homework: number;
+  homework: string;
+  studentFiles: File[] | null;
 }
   
 export interface Category {

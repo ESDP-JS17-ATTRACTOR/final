@@ -1,11 +1,12 @@
 import { Column, Entity } from 'typeorm';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 @Entity()
 export class AddStudentHomeworkDto {
   @IsNotEmpty()
-  @IsNumber()
-  homework: number;
+  @Transform(({ value }) => parseFloat(value))
+  homework: string;
 
   date: Date;
 
@@ -18,7 +19,4 @@ export class AddStudentHomeworkDto {
 
   @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
   isChecked: string;
-
-  // @IsNotEmpty()
-  // file: string;
 }

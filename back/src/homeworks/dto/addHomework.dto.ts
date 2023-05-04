@@ -1,11 +1,12 @@
 import { Entity } from 'typeorm';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 @Entity()
 export class AddHomeworkDto {
   @IsNotEmpty()
-  @IsNumber()
-  lesson: number;
+  @Transform(({ value }) => parseFloat(value))
+  lesson: string;
 
   @IsNotEmpty()
   title: string;
@@ -18,7 +19,4 @@ export class AddHomeworkDto {
   tutorName: string;
 
   tutorEmail: string;
-
-  // @IsNotEmpty()
-  // pdf: string | null;
 }

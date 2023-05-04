@@ -31,6 +31,6 @@ export class Homework {
   @Column()
   tutorEmail: string;
 
-  // @Column()
-  // pdf: string | null;
+  @Column({ nullable: true })
+  pdf: string | null;
 }

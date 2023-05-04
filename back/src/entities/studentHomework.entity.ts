@@ -31,6 +31,6 @@ export class StudentHomework {
   @Column({ default: 'Not checked', enum: ['Not checked', 'Checked'] })
   isChecked: string;
 
-  // @Column({ type: 'varchar' })
-  // file: string;
+  @Column('simple-array', { nullable: true })
+  studentFiles: string[];
 }

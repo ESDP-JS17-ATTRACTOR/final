@@ -24,6 +24,7 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error, closeModal}) 
     const [selectedHomeworkId, setSelectedHomeworkId] = useState<string>("");
     const [studentHomework, setStudentHomework] = useState<StudentHomeworkMutation>({
         homework: '',
+        studentFiles: null,
     });
 
     useEffect(() => {
@@ -46,16 +47,16 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error, closeModal}) 
         e.preventDefault();
         onSubmit({
             ...studentHomework,
-            homework: parseFloat(studentHomework.homework),
+            homework: studentHomework.homework,
         });
     };
 
     const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, files } = e.target;
-        if (files && files[0]) {
+        if (files && files.length > 0) {
             setStudentHomework((prevState) => ({
                 ...prevState,
-                [name]: files[0],
+                [name]: files,
             }));
         } else {
             setStudentHomework((prevState) => ({
@@ -93,7 +94,7 @@ const FormForStudentHomework: React.FC<Props> = ({onSubmit, error, closeModal}) 
                     </Grid>
                 </Grid>
             </div>
-            <FileInput onChange={fileInputChangeHandler} name="files" label="Files" />
+            <FileInput onChange={fileInputChangeHandler} name="studentFiles" label="Files" />
             {error && <p style={{color: "red"}}>{error}</p>}
             <button type="submit" className="button profile-btn-add">Add</button>
             <button type="button" onClick={onDeleteClickHandler} className="button profile-btn-delete">Delete</button>

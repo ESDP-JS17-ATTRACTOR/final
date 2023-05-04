@@ -23,21 +23,18 @@ export const addHomework = createAsyncThunk<void, ApiHomework, { rejectValue: Va
     'homeworks/add',
     async (homework, {rejectWithValue}) => {
         try {
-            // const formData = new FormData();
-            //
-            // const keys = Object.keys(homework) as (keyof ApiHomework)[];
-            // keys.forEach((key) => {
-            //     const value = homework[key];
-            //
-            //     if (value !== null) {
-            //         formData.append(key, value);
-            //     }
-            // });
+            const formData = new FormData();
 
-            // const response = await axiosApi.post<ApiHomework>('/homeworks', formData);
-            // // return response.data;
-            const response = await axiosApi.post('/homeworks', homework);
-            return response.data;
+            const keys = Object.keys(homework) as (keyof ApiHomework)[];
+            keys.forEach((key) => {
+                const value = homework[key];
+
+                if (value !== null) {
+                    formData.append(key, value);
+                }
+            });
+
+            const response = await axiosApi.post<ApiHomework>('/homeworks', formData);
         }  catch (e) {
             if (isAxiosError(e) && e.response && e.response.status === 400) {
                 return rejectWithValue(e.response.data as ValidationError);

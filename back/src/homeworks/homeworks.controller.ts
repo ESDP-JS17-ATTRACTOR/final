@@ -8,13 +8,13 @@ import {
   Param,
   Patch,
   Post,
-  Req,
+  Req, UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from '../entities/lesson.entity';
-import { Repository } from 'typeorm';
+import {DeepPartial, Repository} from 'typeorm';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { TutorGuard } from '../auth/tutor.guard';
 import { AddHomeworkDto } from './dto/addHomework.dto';
@@ -44,16 +44,16 @@ export class HomeworksController {
   @Post()
   @UseGuards(TokenAuthGuard, TutorGuard)
   @UseInterceptors(
-    FileInterceptor('image', { dest: './public/uploads/homeworks/pdf' }),
+    FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }),
   )
   async createLesson(
     @Req() req: Request,
     @Body() homeworkData: AddHomeworkDto,
-    file: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
   ) {
     const user = req.user as User;
     const lesson = await this.lessonRepository.findOne({
-      where: { id: homeworkData.lesson },
+      where: { id: parseFloat(homeworkData.lesson) },
     });
 
     if (!lesson) {
@@ -69,7 +69,7 @@ export class HomeworksController {
       description: homeworkData.description,
       tutorName: user.firstName,
       tutorEmail: user.email,
-      // pdf: file ? '/uploads/homeworks/pdf/' + file.filename : null,
+      pdf: file ? '/uploads/homeworks/pdf/' + file.filename : null,
     });
     return this.homeworkRepository.save(homework);
   }

@@ -12,6 +12,7 @@ const CoursePreviewCard = () => {
           <li className="course-preview-card-main_details_item">Up to 5 users</li>
           <li className="course-preview-card-main_details_item">File storage - 1 GB</li>
         </ul>
+        <button className="course-preview-card-main_button">Select</button>
       </div>
     </div>
   );

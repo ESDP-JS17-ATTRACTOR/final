@@ -11,12 +11,21 @@
 }
 
 .start_btn, .contact_btn {
-  padding: 22px 42px;
+  width: 165px;
+  height: 65px;
+  padding: 20px 0 23px;
+  margin-bottom: 14px;
+  @include md {
+    padding: 22px 42px;
+    width: 251px;
+  }
 }
 
 .start_btn {
   color: #ffffff;
-  margin: 0 46px 0 100px;
+  @include md {
+    margin: 0 46px 0 100px;
+  }
 }
 
 .contact_btn {

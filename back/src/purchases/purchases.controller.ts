@@ -1,4 +1,6 @@
 import {
+  Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -6,6 +8,7 @@ import {
   Post,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PurchasesService } from './purchases.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +16,6 @@ import { Purchase } from '../entities/purchase.entity';
 import { Repository } from 'typeorm';
 import { CurrentUser } from '../auth/currentUser.decorator';
 import { User } from '../entities/user.entity';
-import { Course } from '../entities/course.entity';
 import { TokenAuthGuard } from '../auth/token-auth.guard';
 
 @Controller('purchases')
@@ -30,9 +32,13 @@ export class PurchasesController {
   }
 
   @Post() // Guard ???
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
-  async createPurchase(@CurrentUser() user: User, course: Course) {
-    return this.purchasesService.createPurchase(user, course);
+  async createPurchase(
+    @CurrentUser() user: User,
+    @Body() body: { id: number },
+  ) {
+    return this.purchasesService.createPurchase(user, body.id);
   }
 
   @Delete(':id') // Guard ???

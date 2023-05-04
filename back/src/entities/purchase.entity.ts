@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   Entity,
   JoinColumn,
@@ -26,4 +27,15 @@ export class Purchase {
 
   @Column()
   expiredDate: Date;
+
+  @BeforeInsert()
+  async calculateExpiredDate() {
+    const durationInMilliseconds =
+      Number(this.course.duration) * 24 * 60 * 60 * 1000;
+    this.expiredDate = new Date(
+      this.course.startedAt.getTime() +
+        durationInMilliseconds +
+        45 * 24 * 60 * 60 * 1000,
+    );
+  }
 }

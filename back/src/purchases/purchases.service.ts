@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from '../entities/course.entity';
@@ -35,21 +39,22 @@ export class PurchasesService {
     return purchases;
   }
 
-  async createPurchase(user: User, course: Course) {
-    await this.findCourseById(course.id);
+  async createPurchase(user: User, courseId: number) {
+    const existingPurchase = await this.purchaseRepository.findOne({
+      where: { course: { id: courseId } },
+    });
+
+    if (existingPurchase) {
+      throw new BadRequestException('You have already bought this course!');
+    }
+
+    const course = await this.findCourseById(courseId);
     const today = new Date();
-    const startedAt = new Date(course.startedAt); //should be "2022-03-15T09:00:00" alike to work
-    const durationInMilliseconds =
-      Number(course.duration) * 24 * 60 * 60 * 1000;
-    const expiredAt = new Date(
-      startedAt.getTime() + durationInMilliseconds + 45 * 24 * 60 * 60 * 1000,
-    );
 
     const purchase = this.purchaseRepository.create({
       purchaser: user,
       course: course,
       purchasedAt: today,
-      expiredDate: expiredAt.toISOString(),
     });
     return this.purchaseRepository.save(purchase);
   }

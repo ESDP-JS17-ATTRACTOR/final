@@ -26,4 +26,7 @@ export class UsersLesson {
 
   @Column({ type: 'boolean', default: false })
   isAvailable: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  viewedAt: Date;
 }

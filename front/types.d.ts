@@ -39,6 +39,7 @@ export interface User {
   lastName: string;
   token: string;
   email: string;
+  role: string;
   phoneNumber: string;
   country: string;
   googleId?: string;
@@ -48,6 +49,58 @@ export interface ProfileMutation {
   email: string;
   firstName: string;
   country: string;
+}
+
+export interface Lesson {
+  id: number;
+  courseId: number;
+  moduleId: number;
+  number: number;
+  title: string;
+  video: string;
+  description: string;
+  isStopLesson: boolean;
+}
+
+export interface Homework {
+  id: string;
+  lesson: Lesson;
+  title: string;
+  tutorName: string;
+  date: string;
+  description: string;
+  pdf: string;
+}
+
+export interface HomeworkMutation {
+  lesson: string;
+  title: string;
+  description: string;
+  // pdf: File | null;
+}
+
+export interface ApiHomework {
+  lesson: number;
+  title: string;
+  description: string;
+  // pdf: File | null;
+}
+
+export interface StudentHomework {
+  id: string;
+  homework: Homework;
+  status: string;
+  studentName: string;
+  date: string;
+  isChecked: string;
+}
+
+export interface StudentHomeworkMutation {
+  homework: string;
+}
+
+export interface ApiStudentHomework {
+  homework: number;
 }
   
 export interface Category {
@@ -106,4 +159,12 @@ export interface UsersModule {
   number: number;
   title: string;
   lessons: number;
+}
+
+export interface UsersLesson {
+  id: number;
+  student: number;
+  lesson: Lesson;
+  isViewed: boolean;
+  isAvailable: boolean;
 }

@@ -1,16 +1,35 @@
 import React from 'react';
 
-const CardForHomework = () => {
+interface Props {
+    id: string;
+    description: string;
+    date: string;
+    tutorName: string;
+    status?: string;
+    isChecked?: string;
+}
+
+const CardForHomework: React.FC<Props> = ({id, description, date, tutorName, status, isChecked}) => {
     return (
         <div className="card-for-homework-block">
-            <p>999</p>
-            <div style={{width: "400px", overflow: "hidden"}}>
-               <p>Нарисовать круг, нарисовать прямоугольник, нарисовать квадрат</p>
+            <div style={{width: "90px",  overflow: "hidden"}}>
+               <p>{id}</p>
             </div>
-            <p>12.12.2024</p>
-            <p>In process</p>
-            <p>Mark Ross</p>
-            <button className="button homework-btn">Подробнее</button>
+            <div style={{width: "390px", overflow: "hidden"}}>
+               <p>{description}</p>
+            </div>
+            <div style={{width: "280px", overflow: "hidden"}}>
+               <p>{date}</p>
+            </div>
+            <div style={{width: "130px", overflow: "hidden"}}>
+               <p>{status}</p>
+            </div>
+            <div style={{width: "150px", overflow: "hidden"}}>
+               <p>{tutorName}</p>
+            </div>
+            <div style={{width: "150px", overflow: "hidden"}}>
+               <p>{isChecked}</p>
+            </div>
         </div>
     );
 };

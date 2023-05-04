@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { CreateLessonDto } from './dto/createLesson.dto';
 import { Lesson } from '../entities/lesson.entity';
 import { Course } from '../entities/course.entity';
-import { Module } from '../entities/module.entity';
+import { CourseModule } from '../entities/courseModule.entity';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
 
 @Injectable()
@@ -18,8 +18,8 @@ export class LessonsService {
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Course)
     private readonly courseRepository: Repository<Course>,
-    @InjectRepository(Module)
-    private readonly moduleRepository: Repository<Module>,
+    @InjectRepository(CourseModule)
+    private readonly moduleRepository: Repository<CourseModule>,
   ) {}
 
   async createLesson(
@@ -53,13 +53,8 @@ export class LessonsService {
   ): Promise<Lesson> {
     const lesson = await this.ifExistReturnsLesson(id);
 
-    const [course, module] = await Promise.all([
-      this.findCourseById(lessonData.course),
-      this.findModuleById(lessonData.module),
-    ]);
-
-    lesson.course = course;
-    lesson.module = module;
+    lesson.course = await this.findCourseById(lessonData.course);
+    lesson.module = await this.findModuleById(lessonData.module);
     lesson.number = lessonData.number;
     lesson.title = lessonData.title;
     lesson.video = file
@@ -75,12 +70,11 @@ export class LessonsService {
     const lesson: Lesson = await this.lessonRepository.findOne({
       where: { id },
     });
-    if (lesson) {
-      await this.lessonRepository.delete(id);
-      return { message: `Lesson with id ${id} deleted` };
-    } else {
+    if (!lesson) {
       throw new NotFoundException(`Lesson with id ${id} not found`);
     }
+    await this.lessonRepository.delete(id);
+    return { message: `Lesson with id ${id} deleted` };
   }
 
   private async ifExistReturnsLesson(id: number): Promise<Lesson> {
@@ -98,7 +92,7 @@ export class LessonsService {
     }
   }
 
-  private async findCourseById(id: number): Promise<Course> {
+  async findCourseById(id: number): Promise<Course> {
     const course = await this.courseRepository.findOne({ where: { id: id } });
     if (!course) {
       throw new NotFoundException('Course not found');
@@ -106,7 +100,7 @@ export class LessonsService {
     return course;
   }
 
-  private async findModuleById(id: number): Promise<Module> {
+  private async findModuleById(id: number): Promise<CourseModule> {
     const module = await this.moduleRepository.findOne({ where: { id: id } });
     if (!module) {
       throw new NotFoundException('Module not found');

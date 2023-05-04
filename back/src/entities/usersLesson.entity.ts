@@ -1,5 +1,4 @@
 import {
-  BeforeInsert,
   Column,
   Entity,
   JoinColumn,
@@ -22,25 +21,9 @@ export class UsersLesson {
   @JoinColumn({ name: 'lessonId' })
   lesson: Lesson;
 
-  @Column({
-    default: 'not done',
-    enum: ['not done', 'done'],
-  })
-  status: string;
+  @Column({ type: 'boolean', default: false })
+  isViewed: boolean;
 
   @Column({ type: 'boolean', default: false })
-  viewed: boolean;
-
-  @Column({ type: 'boolean', default: false })
-  available: boolean;
-
-  @Column({ type: 'boolean', default: false })
-  isStopLesson: boolean;
-
-  @BeforeInsert()
-  async changeIsStop() {
-    if (this.lesson && this.lesson.isStopLesson) {
-      this.isStopLesson = this.lesson.isStopLesson;
-    }
-  }
+  isAvailable: boolean;
 }

@@ -49,18 +49,30 @@ export class UsersLessonsService {
       where: { course: { id: courseId } },
     });
 
-    if (!lessons || !user) {
-      throw new NotFoundException('Lessons not found');
+    if (!lessons.length || !user) {
+      throw new NotFoundException('Lessons/user not found');
     }
 
     const usersLessons = [];
 
     for (let i = 0; i < lessons.length; i++) {
-      const usersLesson = this.usersLessonRepository.create({
-        student: user,
-        lesson: lessons[i],
+      const existingRecord = await this.usersLessonRepository.findOne({
+        where: {
+          student: { id: user.id },
+          lesson: { id: lessons[i].id },
+        },
       });
-      usersLessons.push(usersLesson);
+
+      if (!existingRecord) {
+        const usersLesson = this.usersLessonRepository.create({
+          student: user,
+          lesson: lessons[i],
+        });
+        usersLessons.push(usersLesson);
+      }
+    }
+    if (!usersLessons.length) {
+      throw new BadRequestException('No lessons matched');
     }
     return this.usersLessonRepository.save(usersLessons);
   }

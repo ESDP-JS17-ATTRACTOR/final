@@ -19,6 +19,7 @@
 @use "partials/my-courses";
 @use "partials/module-lessons";
 @use "partials/lesson-preview-card";
+@use "partials/module-lesson-general";
 
 body {
   margin: 0;
@@ -45,7 +46,6 @@ a {
 
 abbr[title] {
   border-bottom: none;
-  text-decoration: underline;
   text-decoration: underline dotted;
 }
 

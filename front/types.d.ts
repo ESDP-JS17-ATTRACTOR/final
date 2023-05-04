@@ -160,3 +160,11 @@ export interface UsersModule {
   title: string;
   lessons: number;
 }
+
+export interface UsersLesson {
+  id: number;
+  student: number;
+  lesson: Lesson;
+  isViewed: boolean;
+  isAvailable: boolean;
+}

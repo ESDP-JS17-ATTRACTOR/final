@@ -20,7 +20,24 @@ export class UsersLessonsService {
     private readonly usersLessonRepository: Repository<UsersLesson>,
   ) {}
 
-  async getAll(userId) {
+  async getAll(userId: number, moduleId: number) {
+    if (moduleId) {
+      const lessons = await this.usersLessonRepository
+        .createQueryBuilder('users_lesson')
+        .where('users_lesson.userId = :userId', { userId })
+        .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
+        .select(['users_lesson', 'lessonId'])
+        .leftJoinAndSelect('lessonId.module', 'moduleId')
+        .where('moduleId.id = :moduleId', { moduleId })
+        .orderBy('lessonId.number', 'ASC')
+        .getMany();
+      if (!lessons.length) {
+        throw new NotFoundException('There is no lessons on this module');
+      }
+
+      return lessons;
+    }
+
     const usersLessons = await this.usersLessonRepository
       .createQueryBuilder('users_lesson')
       .where('users_lesson.userId = :userId', { userId })

@@ -14,11 +14,11 @@ export class Course {
   id: number;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'tutor_id' })
+  @JoinColumn({ name: 'tutorId' })
   tutor: User;
 
   @ManyToOne(() => Category)
-  @JoinColumn({ name: 'category_id' })
+  @JoinColumn({ name: 'categoryId' })
   category: Category;
 
   @Column({ type: 'varchar', length: 255 })

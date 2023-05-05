@@ -17,6 +17,7 @@ import {homeworksReducer} from "@/features/homeworks/homeworksSlice";
 import {lessonsReducer} from "@/features/lessons/lessonsSlice";
 import {studentHomeworksReducer} from "@/features/studentHomeworks/studentHomeworksSlice";
 import {usersLessonsReducer} from "@/features/usersLessons/usersLessonsSlice";
+import { purchasesReducer } from "@/features/purchases/purchasesSlice";
 
 const rootReducer = combineReducers({
   users: usersReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   homeworks: homeworksReducer,
   studentHomeworks: studentHomeworksReducer,
   usersLessons: usersLessonsReducer,
+  purchases: purchasesReducer,
 });
 
 const persistConfig = {

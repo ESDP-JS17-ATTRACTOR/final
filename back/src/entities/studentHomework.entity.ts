@@ -16,7 +16,7 @@ export class StudentHomework {
   @JoinColumn({ name: 'homeworkId' })
   homework: Homework;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'timestamp', nullable: true })
   date: Date;
 
   @Column({ default: 'Done' })

@@ -1,6 +1,9 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 const Module = () => {
+  const moduleId = useRouter().query.id;
+
   return (
     <div className="container">
       <div className="module-lesson-general-block">

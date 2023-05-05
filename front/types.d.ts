@@ -168,3 +168,23 @@ export interface UsersLesson {
   isViewed: boolean;
   isAvailable: boolean;
 }
+
+export interface UsersPurchase {
+  id: number;
+  category: string;
+  title: string;
+  tutor: TutorType;
+  modules: ModuleType[];
+}
+
+export interface TutorType {
+  firstName: string;
+  lastName: string;
+}
+
+export interface ModuleType {
+  id: number;
+  number: number;
+  numberOfLessons: number;
+  title: string;
+}

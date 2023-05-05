@@ -342,7 +342,7 @@ export class FixturesService {
       lesson: lesson1,
       title: 'Homework1',
       tutorName: tutorFirst.firstName,
-      date: '2023-05-18T09:00:00',
+      // date: '2023-05-18T09:00:00',
       // pdf: 'fixtures/homeworks/pdf/example.pdf',
       description: 'about homework1',
     });
@@ -352,7 +352,7 @@ export class FixturesService {
       lesson: lesson1,
       title: 'Homework2',
       tutorName: tutorFirst.firstName,
-      date: '2023-05-18T09:00:00',
+      // date: '2023-05-18T09:00:00',
       // pdf: 'fixtures/homeworks/pdf/example.pdf',
       description: 'about homework2',
     });

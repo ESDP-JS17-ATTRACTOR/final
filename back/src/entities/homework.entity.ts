@@ -19,7 +19,7 @@ export class Homework {
   @Column()
   title: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   date: Date;
 
   @Column()

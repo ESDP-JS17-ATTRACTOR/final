@@ -200,7 +200,7 @@ export class FixturesService {
     await this.coursesRepository.save(graphicDesignerCourse);
   }
 
-  async createUsersModules() {
+  async createCoursesModules() {
     const contentCreatorCourse = await this.coursesRepository.findOne({
       where: { title: 'contentCreator ZA 30 DNEI' },
     });

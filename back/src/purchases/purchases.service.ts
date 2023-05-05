@@ -8,6 +8,8 @@ import { Repository } from 'typeorm';
 import { Course } from '../entities/course.entity';
 import { User } from '../entities/user.entity';
 import { Purchase } from '../entities/purchase.entity';
+import { CourseModule } from '../entities/courseModule.entity';
+import { Lesson } from '../entities/lesson.entity';
 
 @Injectable()
 export class PurchasesService {
@@ -18,6 +20,10 @@ export class PurchasesService {
     private readonly courseRepository: Repository<Course>,
     @InjectRepository(Purchase)
     private readonly purchaseRepository: Repository<Purchase>,
+    @InjectRepository(CourseModule)
+    private readonly courseModulesRepository: Repository<CourseModule>,
+    @InjectRepository(Lesson)
+    private readonly lessonRepository: Repository<Lesson>,
   ) {}
 
   async getAll(userId) {
@@ -37,6 +43,71 @@ export class PurchasesService {
       throw new NotFoundException('No purchases at all!');
     }
     return purchases;
+  }
+
+  async getCoursesWithModules(userId: number) {
+    const courses = await this.purchaseRepository
+      .createQueryBuilder('purchase')
+      .where('purchase.userId = :userId', { userId })
+      .leftJoinAndSelect('purchase.purchaser', 'user')
+      .leftJoinAndSelect('purchase.course', 'course')
+      .select(['purchase', 'course'])
+      .leftJoinAndSelect('course.tutor', 'tutor')
+      .leftJoinAndSelect('course.category', 'category')
+      .select([
+        'purchase',
+        'course.id',
+        'course.title',
+        'category.title',
+        'tutor.firstName',
+        'tutor.lastName',
+      ])
+      .getMany();
+
+    if (!courses.length) {
+      throw new NotFoundException('Purchased courses not found!');
+    }
+
+    const courseModules = await this.courseModulesRepository
+      .createQueryBuilder('course_module')
+      .leftJoinAndSelect('course_module.course', 'course')
+      .select(['course_module', 'course.id'])
+      .getMany();
+
+    const responseCourses = [];
+
+    for (let i = 0; i < courses.length; i++) {
+      responseCourses.push({
+        id: courses[i].id,
+        category: courses[i].course.category.title,
+        title: courses[i].course.title,
+        tutor: {
+          firstName: courses[i].course.tutor.firstName,
+          lastName: courses[i].course.tutor.lastName,
+        },
+        modules: [],
+      });
+      for (let j = 0; j < courseModules.length; j++) {
+        if (courses[i].course.id === courseModules[j].course.id) {
+          const id = courseModules[j].id;
+          const lessons = await this.lessonRepository
+            .createQueryBuilder('lesson')
+            .leftJoinAndSelect('lesson.module', 'module')
+            .where('module.id = :id', { id })
+            .select(['lesson'])
+            .getMany();
+
+          responseCourses[i].modules.push({
+            id: courseModules[j].id,
+            number: courseModules[j].number,
+            title: courseModules[j].title,
+            numberOfLessons: lessons.length,
+          });
+        }
+      }
+    }
+
+    return responseCourses;
   }
 
   async createPurchase(user: User, courseId: number) {

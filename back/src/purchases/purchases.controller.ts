@@ -31,6 +31,12 @@ export class PurchasesController {
     return this.purchasesService.getAll(userId);
   }
 
+  @Get('/my-courses')
+  @UseGuards(TokenAuthGuard)
+  async getCoursesWithModules(@CurrentUser() user: User) {
+    return this.purchasesService.getCoursesWithModules(user.id);
+  }
+
   @Post() // Guard ???
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)

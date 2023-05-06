@@ -19,6 +19,10 @@
 @use "partials/my-courses";
 @use "partials/module-lessons";
 @use "partials/lesson-preview-card";
+@use "partials/mobile_navigation";
+@use "partials/desktop_navigation";
+@use "partials/team-card";
+@use "partials/module-lesson-general";
 
 body {
   margin: 0;

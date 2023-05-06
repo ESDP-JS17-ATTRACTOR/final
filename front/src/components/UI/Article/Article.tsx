@@ -1,14 +1,20 @@
 import React from 'react';
+import Image from "next/image";
 
 const Article = () => {
   return (
     <div className="article">
       <div className="article-left-side">
+        <Image
+          src="/workingGirl.png"
+          alt="Image"
+          width={247}
+          height={195}
+        />
       </div>
       <div className="article-right-side">
         <div className="article-right-side-titles">
-          <h1 className="article-right-side-titles-title-white">What is </h1>
-          <h1 className="article-right-side-titles-title-orange">on line course</h1>
+          <h2>What is <span>online course</span></h2>
         </div>
         <div className="article-right-side-description">
           <p>
@@ -23,7 +29,9 @@ const Article = () => {
             and find your first job within 6 months after the start of training.
           </p>
         </div>
-        <button className="article-right-side-btn">Tell me more</button>
+        <div className="article-right-side-btn">
+          <button>Tell me more</button>
+        </div>
       </div>
     </div>
   );

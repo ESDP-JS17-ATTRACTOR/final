@@ -1,0 +1,78 @@
+@use "../var/colors" as *;
+@use "../var/mixins" as *;
+
+.module-lesson-general-block {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-weight: 500;
+  color: $dark-grey;
+
+  &-header {
+    &_title {
+      margin-bottom: 16px;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+      text-transform: capitalize;
+      color: $blue-text;
+    }
+    &_subtitle {
+      margin: 0 auto 16px;
+      font-size: 24px;
+      line-height: 29px;
+      text-transform: capitalize;
+    }
+  }
+  &-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 105px 0;
+    &_link {
+      margin-top: 9px;
+      color: $blue-text;
+      text-decoration: none;
+    }
+    &_serial {
+      margin-top: 0;
+      & span {
+        color: $dark-orange;
+      }
+    }
+  }
+  &-description {
+    margin: 0 110px 0;
+    font-size: 20px;
+    line-height: 24px;
+  }
+  &-player {
+    margin: 0 auto 0;
+    width: 900px;
+    height: 560px;
+  }
+  &-comment-block {
+    & input {
+      width: 814px;
+      padding: 20px;
+      border: 0;
+      border-radius: 23px;
+      background: $gray2;
+      &:focus {
+        outline: none;
+      }
+    }
+    & Image {
+      border-radius: 50%;
+    }
+    &_button {
+      align-self: flex-end;
+      color: #FFFFFF;
+      font-size: 20px;
+      line-height: 24px;
+      padding: 15px 39px 18px 39px;
+      border-radius: 24px;
+    }
+  }
+
+}
+

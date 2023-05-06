@@ -2,6 +2,7 @@
 @use "../var/mixins" as *;
 
 .language-switcher {
+  display: none;
   background: transparent;
   font-weight: 500;
   font-size: 14px;
@@ -9,4 +10,7 @@
   color: $blue-text;
   border: none;
   margin-left: 26px;
+  @include md {
+    display: block;
+  }
 }

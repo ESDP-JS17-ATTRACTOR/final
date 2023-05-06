@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -33,8 +34,8 @@ export class UsersLessonsController {
   @Get()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
-  async getAll(@CurrentUser() user: User) {
-    return await this.usersLessonsService.getAll(user.id);
+  async getAll(@CurrentUser() user: User, @Query('id') id: number) {
+    return await this.usersLessonsService.getAll(user.id, id);
   }
 
   @Post()

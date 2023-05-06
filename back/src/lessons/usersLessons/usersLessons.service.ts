@@ -20,13 +20,32 @@ export class UsersLessonsService {
     private readonly usersLessonRepository: Repository<UsersLesson>,
   ) {}
 
-  async getAll(userId) {
+  async getAll(userId: number, moduleId: number) {
+    if (moduleId) {
+      const lessons = await this.usersLessonRepository
+        .createQueryBuilder('users_lesson')
+        .where('users_lesson.userId = :userId', { userId })
+        .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
+        .select(['users_lesson', 'lessonId'])
+        .leftJoinAndSelect('lessonId.module', 'moduleId')
+        .where('moduleId.id = :moduleId', { moduleId })
+        .orderBy('lessonId.number', 'ASC')
+        .getMany();
+      if (!lessons.length) {
+        throw new NotFoundException('There is no lessons on this module');
+      }
+
+      return lessons;
+    }
+
     const usersLessons = await this.usersLessonRepository
       .createQueryBuilder('users_lesson')
       .where('users_lesson.userId = :userId', { userId })
       .leftJoinAndSelect('users_lesson.student', 'userId')
       .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
       .select(['users_lesson', 'userId.id', 'lessonId'])
+      .leftJoinAndSelect('lessonId.course', 'courseId')
+      .leftJoinAndSelect('lessonId.module', 'moduleId')
       .orderBy('lessonId.number', 'ASC')
       .getMany();
 
@@ -49,18 +68,30 @@ export class UsersLessonsService {
       where: { course: { id: courseId } },
     });
 
-    if (!lessons || !user) {
-      throw new NotFoundException('Lessons not found');
+    if (!lessons.length || !user) {
+      throw new NotFoundException('Lessons/user not found');
     }
 
     const usersLessons = [];
 
     for (let i = 0; i < lessons.length; i++) {
-      const usersLesson = this.usersLessonRepository.create({
-        student: user,
-        lesson: lessons[i],
+      const existingRecord = await this.usersLessonRepository.findOne({
+        where: {
+          student: { id: user.id },
+          lesson: { id: lessons[i].id },
+        },
       });
-      usersLessons.push(usersLesson);
+
+      if (!existingRecord) {
+        const usersLesson = this.usersLessonRepository.create({
+          student: user,
+          lesson: lessons[i],
+        });
+        usersLessons.push(usersLesson);
+      }
+    }
+    if (!usersLessons.length) {
+      throw new BadRequestException('No lessons matched');
     }
     return this.usersLessonRepository.save(usersLessons);
   }
@@ -74,11 +105,12 @@ export class UsersLessonsService {
     });
 
     if (!lesson) {
-      throw new NotFoundException('Lesson not found');
+      throw new NotFoundException('Lesson not found!');
     }
 
     if (isViewed) {
       lesson.isViewed = true;
+      lesson.viewedAt = new Date();
       await this.usersLessonRepository.save(lesson);
       return { message: 'Your lessons status changed to viewed!' };
     } else {

@@ -2,21 +2,21 @@ import React from 'react';
 
 interface Props {
     id: string;
-    description: string;
+    title: string;
     date: string;
     tutorName: string;
     status?: string;
     isChecked?: string;
 }
 
-const CardForHomework: React.FC<Props> = ({id, description, date, tutorName, status, isChecked}) => {
+const CardForHomework: React.FC<Props> = ({id, title, date, tutorName, status, isChecked}) => {
     return (
         <div className="card-for-homework-block">
             <div style={{width: "90px",  overflow: "hidden"}}>
                <p>{id}</p>
             </div>
             <div style={{width: "390px", overflow: "hidden"}}>
-               <p>{description}</p>
+               <p>{title}</p>
             </div>
             <div style={{width: "280px", overflow: "hidden"}}>
                <p>{date}</p>

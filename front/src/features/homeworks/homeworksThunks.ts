@@ -11,6 +11,14 @@ export const fetchHomeworks = createAsyncThunk<Homework[]>(
     }
 );
 
+export const fetchHomeworksByTutor = createAsyncThunk<Homework[]>(
+    'homeworks/fetchAllByTutor',
+    async () => {
+        const response = await axiosApi.get<Homework[]>('/homeworks/byTutor');
+        return response.data;
+    }
+);
+
 export const addHomework = createAsyncThunk<void, ApiHomework, { rejectValue: ValidationError }>(
     'homeworks/add',
     async (homework, {rejectWithValue}) => {

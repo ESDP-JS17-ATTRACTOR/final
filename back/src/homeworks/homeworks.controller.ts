@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -20,6 +21,7 @@ import { User } from '../entities/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HomeworksService } from './homeworks.service';
 import { CurrentUser } from '../auth/currentUser.decorator';
+import { Request } from 'express';
 
 @Controller('homeworks')
 export class HomeworksController {
@@ -32,8 +34,23 @@ export class HomeworksController {
   ) {}
 
   @Get()
+  @UseGuards(TokenAuthGuard)
   async getAll() {
     return this.homeworkRepository.find({
+      relations: ['lesson'],
+      order: {
+        date: 'DESC',
+      },
+    });
+  }
+
+  @Get('byTutor')
+  @UseGuards(TokenAuthGuard)
+  async getAllByTutor(@Req() req: Request) {
+    const user = req.user as User;
+    return this.homeworkRepository.find({
+      relations: ['lesson'],
+      where: { tutorEmail: user.email },
       order: {
         date: 'DESC',
       },

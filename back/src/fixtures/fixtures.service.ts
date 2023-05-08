@@ -55,11 +55,11 @@ export class FixturesService {
     await this.usersLessonsRepository.query(
       'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
     );
-    await this.homeworksRepository.query(
-      'TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE',
-    );
     await this.studentHomeworksRepository.query(
       'TRUNCATE TABLE "student_homework" RESTART IDENTITY CASCADE',
+    );
+    await this.homeworksRepository.query(
+      'TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE',
     );
   }
 

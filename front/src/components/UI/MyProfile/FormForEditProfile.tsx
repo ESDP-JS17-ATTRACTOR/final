@@ -28,7 +28,7 @@ const FormForEditProfile: React.FC<Props> = ({onCloseForm}) => {
     const onFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         await dispatch(editUserProfile(state));
-        await router.push('/myProfile');
+        await router.push('/my-profile');
         onCloseForm();
     };
 

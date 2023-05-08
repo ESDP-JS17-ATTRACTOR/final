@@ -38,10 +38,6 @@ const MyProfile = () => {
         setShowForm(true);
     }
 
-    const onAddHomework = () => {
-        setShowModal(true);
-    }
-
     const onSubmit = async (homework: ApiHomework) => {
         await dispatch(addHomework(homework));
         setShowModal(false);
@@ -51,6 +47,7 @@ const MyProfile = () => {
         try {
             await dispatch(addStudentHomework(studentHomework)).unwrap();
             await dispatch(fetchStudentHomeworks());
+            setValidationError(null);
             setShowModal(false);
         } catch (error) {
             setValidationError(error as ValidationError);
@@ -91,7 +88,7 @@ const MyProfile = () => {
                     {showForm && <FormForEditProfile onCloseForm={() => setShowForm(false)}/>}
                 </div>
             </div>
-            {user?.role === "tutor" && <button onClick={() => router.push('/myProfile/allHomeworks')} className="button profile-btn-add">All Homework</button>}
+            {user?.role === "tutor" && <button onClick={() => router.push('/my-profile/allHomeworks')} className="button profile-btn-add">All Homeworks</button>}
             <div className="homework-block">
                 <h2>Homework</h2>
                 <div className="homework-headlines-block">
@@ -126,7 +123,7 @@ const MyProfile = () => {
                                                    isChecked={studentHomework.isChecked}/>
                 })}
             </div>
-            <button onClick={onAddHomework} className="button profile-btn-add">Add Homework</button>
+            <button onClick={() => setShowModal(true)} className="button profile-btn-add">Add Homework</button>
             {user?.role === "tutor" &&
                 <Modal
                     open={showModal}

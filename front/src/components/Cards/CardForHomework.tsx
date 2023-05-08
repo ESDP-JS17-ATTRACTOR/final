@@ -25,7 +25,7 @@ const CardForHomework: React.FC<Props> = ({id, title, date, tutorName, status, i
                <p>{id}</p>
             </div>
             <div style={{width: "390px", overflow: "hidden"}}>
-               <p onClick={toggleTitle}>{title}</p>
+               <p className="heading-hover" onClick={toggleTitle}>{title}</p>
             </div>
             <div style={{width: "280px", overflow: "hidden"}}>
                <p>{date}</p>
@@ -43,7 +43,7 @@ const CardForHomework: React.FC<Props> = ({id, title, date, tutorName, status, i
             {showDescription && <div style={{padding: "10px", borderBottom: "1px solid #4688C1"}}>
                 {description}
                 <div>
-                    <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a>
+                    {pdf ? <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a> : null}
                 </div>
             </div>}
         </>

@@ -17,7 +17,7 @@ const CardForStudentHomework: React.FC<Props> = ({id, title, date, studentName, 
                 <p>{id}</p>
             </div>
             <div style={{width: "390px", overflow: "hidden"}}>
-                <p>{title}</p>
+                <p className="heading-hover">{title}</p>
             </div>
             <div style={{width: "280px", overflow: "hidden"}}>
                 <p>{date}</p>
@@ -29,7 +29,7 @@ const CardForStudentHomework: React.FC<Props> = ({id, title, date, studentName, 
                 <p>{studentName}</p>
             </div>
             <div style={{width: "150px", overflow: "hidden"}}>
-                <p onClick={checked}>{isChecked}</p>
+                <p className="heading-hover" onClick={checked}>{isChecked}</p>
             </div>
         </div>
     );

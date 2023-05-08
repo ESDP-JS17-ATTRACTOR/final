@@ -44,7 +44,7 @@ const MyProfile = () => {
 
     const onSubmit = async (homework: ApiHomework) => {
         await dispatch(addHomework(homework));
-        setShowModal(true);
+        setShowModal(false);
     };
 
     const onSubmitStudent = async (studentHomework: ApiStudentHomework) => {

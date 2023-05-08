@@ -1,15 +1,11 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class UpdateHomeworkDto {
   @IsOptional()
-  @IsNumber()
+  @Transform(({ value }) => parseFloat(value))
   @IsNotEmpty()
-  lesson: number;
+  lesson: string;
 
   @IsOptional()
   @IsString()
@@ -20,13 +16,4 @@ export class UpdateHomeworkDto {
   @IsString()
   @IsNotEmpty()
   description: string;
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  tutorName: string;
-
-  @IsOptional()
-  @IsNotEmpty()
-  file: string;
 }

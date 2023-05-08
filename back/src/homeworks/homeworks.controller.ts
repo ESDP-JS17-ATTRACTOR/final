@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Req,
   UploadedFile,
@@ -22,6 +23,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { HomeworksService } from './homeworks.service';
 import { CurrentUser } from '../auth/currentUser.decorator';
 import { Request } from 'express';
+import { UpdateHomeworkDto } from './dto/updateHomework.dto';
 
 @Controller('homeworks')
 export class HomeworksController {
@@ -68,6 +70,19 @@ export class HomeworksController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.homeworksService.createHomework(user, homeworkData, file);
+  }
+
+  @Patch(':id')
+  @UseGuards(TokenAuthGuard, TutorGuard)
+  @UseInterceptors(
+    FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }),
+  )
+  async updateLesson(
+    @Param('id') id: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() updateHomeworkDto: UpdateHomeworkDto,
+  ) {
+    return this.homeworksService.updateHomework(id, file, updateHomeworkDto);
   }
 
   @Get(':id')

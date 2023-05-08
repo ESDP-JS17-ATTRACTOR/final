@@ -5,6 +5,7 @@ import { Lesson } from '../entities/lesson.entity';
 import { Homework } from '../entities/homework.entity';
 import { AddHomeworkDto } from './dto/addHomework.dto';
 import { User } from '../entities/user.entity';
+import { UpdateHomeworkDto } from './dto/updateHomework.dto';
 
 @Injectable()
 export class HomeworksService {
@@ -35,6 +36,23 @@ export class HomeworksService {
     private readonly homeworkRepository: Repository<Homework>,
   ) {}
 
+  async updateHomework(
+    id: number,
+    file: Express.Multer.File,
+    homeworkData: UpdateHomeworkDto,
+  ): Promise<Homework> {
+    const homework = await this.ifExistReturnsHomework(id);
+
+    homework.lesson = await this.findLessonById(
+      parseFloat(homeworkData.lesson),
+    );
+    homework.title = homeworkData.title;
+    homework.description = homeworkData.description;
+    homework.pdf = file ? '/uploads/homeworks/pdf/' + file.filename : null;
+
+    return this.homeworkRepository.save(homework);
+  }
+
   async removeOneHomework(id: number) {
     const homework: Homework = await this.homeworkRepository.findOne({
       where: { id },
@@ -44,6 +62,14 @@ export class HomeworksService {
     }
     await this.homeworkRepository.delete(id);
     return { message: `Homework with id ${id} deleted` };
+  }
+
+  private async ifExistReturnsHomework(id: number): Promise<Homework> {
+    const homework = await this.homeworkRepository.findOne({ where: { id } });
+    if (!homework) {
+      throw new NotFoundException('Homework not found');
+    }
+    return homework;
   }
 
   async findLessonById(id: number): Promise<Lesson> {

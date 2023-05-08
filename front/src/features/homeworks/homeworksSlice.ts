@@ -1,7 +1,13 @@
 import {Homework, ValidationError} from "../../../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import {addHomework, fetchHomeworks, fetchHomeworksByTutor} from "@/features/homeworks/homeworksThunks";
+import {
+    addHomework,
+    editHomework,
+    fetchHomeworks,
+    fetchHomeworksByTutor,
+    fetchOneHomework
+} from "@/features/homeworks/homeworksThunks";
 
 interface HomeworkState {
     homeworks: Homework[];
@@ -42,6 +48,17 @@ const homeworksSlice = createSlice({
         });
         builder.addCase(fetchHomeworks.rejected, (state) => {
             state.homeworksLoading = false;
+        });
+
+        builder.addCase(fetchOneHomework.pending, (state) => {
+            state.homeworkLoading = true;
+        });
+        builder.addCase(fetchOneHomework.fulfilled, (state, {payload: homework}) => {
+            state.homeworkLoading = false;
+            state.homework = homework;
+        });
+        builder.addCase(fetchOneHomework.rejected, (state) => {
+            state.homeworkLoading = false;
         });
 
         builder.addCase(fetchHomeworksByTutor.pending, (state) => {

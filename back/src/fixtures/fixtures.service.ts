@@ -9,6 +9,7 @@ import { Lesson } from '../entities/lesson.entity';
 import { Purchase } from '../entities/purchase.entity';
 import { UsersLesson } from '../entities/usersLesson.entity';
 import { Homework } from '../entities/homework.entity';
+import { StudentHomework } from '../entities/studentHomework.entity';
 
 @Injectable()
 export class FixturesService {
@@ -28,6 +29,8 @@ export class FixturesService {
     private readonly usersLessonsRepository: Repository<UsersLesson>,
     @InjectRepository(Homework)
     private readonly homeworksRepository: Repository<Homework>,
+    @InjectRepository(StudentHomework)
+    private readonly studentHomeworksRepository: Repository<StudentHomework>,
   ) {}
 
   async dropTables(): Promise<void> {
@@ -53,7 +56,10 @@ export class FixturesService {
       'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
     );
     await this.homeworksRepository.query(
-      'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
+      'TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE',
+    );
+    await this.studentHomeworksRepository.query(
+      'TRUNCATE TABLE "student_homework" RESTART IDENTITY CASCADE',
     );
   }
 
@@ -66,6 +72,15 @@ export class FixturesService {
     });
     await user.generateToken();
     await this.usersRepository.save(user);
+
+    const userSecond = await this.usersRepository.create({
+      email: 'user-second@gmail.com',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      password: 'password',
+    });
+    await userSecond.generateToken();
+    await this.usersRepository.save(userSecond);
 
     const admin = await this.usersRepository.create({
       email: 'admin@gmail.com',
@@ -334,29 +349,139 @@ export class FixturesService {
       where: { title: 'Lesson #1' },
     });
 
+    const lesson2 = await this.lessonsRepository.findOne({
+      where: { title: 'Lesson #2' },
+    });
+
     const tutorFirst = await this.usersRepository.findOne({
       where: { email: 'tutor-first@gmail.com' },
     });
 
-    const homework1 = await this.homeworksRepository.create({
-      lesson: lesson1,
-      title: 'Homework1',
-      tutorName: tutorFirst.firstName,
-      date: '2023-05-18T09:00:00',
-      // pdf: 'fixtures/homeworks/pdf/example.pdf',
-      description: 'about homework1',
+    const tutorSecond = await this.usersRepository.findOne({
+      where: { email: 'tutor-second@gmail.com' },
     });
-    await this.homeworksRepository.save(homework1);
 
-    const homework2 = await this.homeworksRepository.create({
+    const homework1ToLesson1 = await this.homeworksRepository.create({
       lesson: lesson1,
-      title: 'Homework2',
+      title: 'Homework1ToLesson1',
       tutorName: tutorFirst.firstName,
-      date: '2023-05-18T09:00:00',
-      // pdf: 'fixtures/homeworks/pdf/example.pdf',
-      description: 'about homework2',
+      tutorEmail: tutorFirst.email,
+      date: '2023-05-03 20:19:16.937+06',
+      description: 'Description about Homework1ToLesson1',
+      pdf: 'fixtures/homeworks/pdf/example.pdf',
     });
-    await this.homeworksRepository.save(homework2);
+    await this.homeworksRepository.save(homework1ToLesson1);
+
+    const homework2ToLesson1 = await this.homeworksRepository.create({
+      lesson: lesson1,
+      title: 'Homework2ToLesson1',
+      tutorName: tutorSecond.firstName,
+      tutorEmail: tutorSecond.email,
+      date: '2023-05-03 20:19:17.937+06',
+      description: 'Description about Homework2ToLesson1',
+      pdf: 'fixtures/homeworks/pdf/example.pdf',
+    });
+    await this.homeworksRepository.save(homework2ToLesson1);
+
+    const homework1ToLesson2 = await this.homeworksRepository.create({
+      lesson: lesson2,
+      title: 'Homework1ToLesson2',
+      tutorName: tutorFirst.firstName,
+      tutorEmail: tutorFirst.email,
+      date: '2023-05-03 20:19:18.937+06',
+      description: 'Description about Homework1ToLesson2',
+      pdf: 'fixtures/homeworks/pdf/example.pdf',
+    });
+    await this.homeworksRepository.save(homework1ToLesson2);
+
+    const homework2ToLesson2 = await this.homeworksRepository.create({
+      lesson: lesson2,
+      title: 'Homework2ToLesson2',
+      tutorName: tutorSecond.firstName,
+      tutorEmail: tutorSecond.email,
+      date: '2023-05-03 20:19:19.937+06',
+      description: 'Description about Homework2ToLesson2',
+      pdf: 'fixtures/homeworks/pdf/example.pdf',
+    });
+    await this.homeworksRepository.save(homework2ToLesson2);
+  }
+
+  async createStudentHomeworks() {
+    const homework1 = await this.homeworksRepository.findOne({
+      where: { id: 1 },
+    });
+
+    const homework2 = await this.homeworksRepository.findOne({
+      where: { id: 2 },
+    });
+
+    const userFirst = await this.usersRepository.findOne({
+      where: { email: 'user@gmail.com' },
+    });
+
+    const userSecond = await this.usersRepository.findOne({
+      where: { email: 'user-second@gmail.com' },
+    });
+
+    const studentHomework1ToHomework1 =
+      await this.studentHomeworksRepository.create({
+        homework: homework1,
+        studentName: userFirst.firstName,
+        status: 'Done',
+        studentEmail: userFirst.email,
+        date: '2023-05-03 20:19:16.937+06',
+        isChecked: 'Not checked',
+        studentFiles: [
+          'fixtures/studentHomeworks/pdf/example.pdf',
+          'fixtures/studentHomeworks/pdf/book.jpeg',
+        ],
+      });
+    await this.studentHomeworksRepository.save(studentHomework1ToHomework1);
+
+    const studentHomework2ToHomework1 =
+      await this.studentHomeworksRepository.create({
+        homework: homework1,
+        studentName: userSecond.firstName,
+        status: 'Done',
+        studentEmail: userSecond.email,
+        date: '2023-05-03 20:19:17.937+06',
+        isChecked: 'Not checked',
+        studentFiles: [
+          'fixtures/studentHomeworks/pdf/example.pdf',
+          'fixtures/studentHomeworks/pdf/book.jpeg',
+        ],
+      });
+    await this.studentHomeworksRepository.save(studentHomework2ToHomework1);
+
+    const studentHomework1ToHomework2 =
+      await this.studentHomeworksRepository.create({
+        homework: homework2,
+        studentName: userFirst.firstName,
+        status: 'Done',
+        studentEmail: userFirst.email,
+        date: '2023-05-03 20:19:18.937+06',
+        isChecked: 'Not checked',
+        studentFiles: [
+          'fixtures/studentHomeworks/pdf/example.pdf',
+          'fixtures/studentHomeworks/pdf/book.jpeg',
+        ],
+      });
+    await this.studentHomeworksRepository.save(studentHomework1ToHomework2);
+
+    const studentHomework2ToHomework2 =
+      await this.studentHomeworksRepository.create({
+        homework: homework2,
+        studentName: userSecond.firstName,
+        status: 'Done',
+        studentEmail: userSecond.email,
+        date: '2023-05-03 20:19:19.937+06',
+        isChecked: 'Not checked',
+        studentFiles: [
+          'fixtures/studentHomeworks/pdf/example.pdf',
+          'fixtures/studentHomeworks/pdf/book.jpeg',
+        ],
+      });
+    await this.studentHomeworksRepository.save(studentHomework2ToHomework2);
   }
 
   async createPurchases() {

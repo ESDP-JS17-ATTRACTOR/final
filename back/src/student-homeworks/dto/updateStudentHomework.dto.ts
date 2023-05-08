@@ -25,8 +25,4 @@ export class UpdateHomeworkDto {
   @IsString()
   @IsNotEmpty()
   isChecked: string;
-
-  @IsOptional()
-  @IsNotEmpty()
-  file: string;
 }

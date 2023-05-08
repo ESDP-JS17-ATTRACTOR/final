@@ -109,7 +109,10 @@ const MyProfile = () => {
                                             status={studentHomework ? studentHomework.status : 'In Process'}
                                             id={homework.id} title={homework.title}
                                             date={dayjs(homework.date).format('DD MMMM YYYY')}
-                                            tutorName={homework.tutorName}/>
+                                            tutorName={homework.tutorName}
+                                            description={homework.description}
+                                            pdf={homework.pdf}
+                    />
                 })}
                 {user?.role === "tutor" && studentHomeworks.map(studentHomework => {
                     const homework = homeworks.find(homework => homework.id === studentHomework.homework.id);

@@ -1,22 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 interface Props {
     id: string;
-    description: string;
+    title: string;
     date: string;
     tutorName: string;
     status?: string;
     isChecked?: string;
+    description: string;
+    pdf: string;
 }
 
-const CardForHomework: React.FC<Props> = ({id, description, date, tutorName, status, isChecked}) => {
+const CardForHomework: React.FC<Props> = ({id, title, date, tutorName, status, isChecked, description, pdf}) => {
+    const [showDescription, setShowDescription] = useState(false);
+
+    const toggleTitle = () => {
+        setShowDescription(!showDescription);
+    }
+
     return (
+        <>
         <div className="card-for-homework-block">
             <div style={{width: "90px",  overflow: "hidden"}}>
                <p>{id}</p>
             </div>
             <div style={{width: "390px", overflow: "hidden"}}>
-               <p>{description}</p>
+               <p onClick={toggleTitle}>{title}</p>
             </div>
             <div style={{width: "280px", overflow: "hidden"}}>
                <p>{date}</p>
@@ -31,6 +40,13 @@ const CardForHomework: React.FC<Props> = ({id, description, date, tutorName, sta
                <p>{isChecked}</p>
             </div>
         </div>
+            {showDescription && <div style={{padding: "10px", borderBottom: "1px solid #4688C1"}}>
+                {description}
+                <div>
+                    <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a>
+                </div>
+            </div>}
+        </>
     );
 };
 

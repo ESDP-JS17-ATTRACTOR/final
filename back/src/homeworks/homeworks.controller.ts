@@ -4,7 +4,9 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -20,6 +22,8 @@ import { User } from '../entities/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HomeworksService } from './homeworks.service';
 import { CurrentUser } from '../auth/currentUser.decorator';
+import { Request } from 'express';
+import { UpdateHomeworkDto } from './dto/updateHomework.dto';
 
 @Controller('homeworks')
 export class HomeworksController {
@@ -32,8 +36,23 @@ export class HomeworksController {
   ) {}
 
   @Get()
+  @UseGuards(TokenAuthGuard)
   async getAll() {
     return this.homeworkRepository.find({
+      relations: ['lesson'],
+      order: {
+        date: 'DESC',
+      },
+    });
+  }
+
+  @Get('byTutor')
+  @UseGuards(TokenAuthGuard)
+  async getAllByTutor(@Req() req: Request) {
+    const user = req.user as User;
+    return this.homeworkRepository.find({
+      relations: ['lesson'],
+      where: { tutorEmail: user.email },
       order: {
         date: 'DESC',
       },
@@ -51,6 +70,19 @@ export class HomeworksController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.homeworksService.createHomework(user, homeworkData, file);
+  }
+
+  @Patch(':id')
+  @UseGuards(TokenAuthGuard, TutorGuard)
+  @UseInterceptors(
+    FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }),
+  )
+  async updateLesson(
+    @Param('id') id: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() updateHomeworkDto: UpdateHomeworkDto,
+  ) {
+    return this.homeworksService.updateHomework(id, file, updateHomeworkDto);
   }
 
   @Get(':id')

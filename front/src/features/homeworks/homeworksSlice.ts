@@ -1,10 +1,17 @@
 import {Homework, ValidationError} from "../../../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
+import {
+    addHomework,
+    editHomework,
+    fetchHomeworks,
+    fetchHomeworksByTutor,
+    fetchOneHomework
+} from "@/features/homeworks/homeworksThunks";
 
 interface HomeworkState {
     homeworks: Homework[];
+    homeworksByTutor: Homework[];
     homeworksLoading: boolean;
     homeworkAdding: boolean;
     homeworkAddError: ValidationError | null;
@@ -17,6 +24,7 @@ interface HomeworkState {
 
 const initialState: HomeworkState = {
     homeworks: [],
+    homeworksByTutor: [],
     homeworksLoading: false,
     homeworkAdding: false,
     homeworkAddError: null,
@@ -42,6 +50,28 @@ const homeworksSlice = createSlice({
             state.homeworksLoading = false;
         });
 
+        builder.addCase(fetchOneHomework.pending, (state) => {
+            state.homeworkLoading = true;
+        });
+        builder.addCase(fetchOneHomework.fulfilled, (state, {payload: homework}) => {
+            state.homeworkLoading = false;
+            state.homework = homework;
+        });
+        builder.addCase(fetchOneHomework.rejected, (state) => {
+            state.homeworkLoading = false;
+        });
+
+        builder.addCase(fetchHomeworksByTutor.pending, (state) => {
+            state.homeworksLoading = true;
+        });
+        builder.addCase(fetchHomeworksByTutor.fulfilled, (state, {payload: homeworks}) => {
+            state.homeworksLoading = false;
+            state.homeworksByTutor = homeworks;
+        });
+        builder.addCase(fetchHomeworksByTutor.rejected, (state) => {
+            state.homeworksLoading = false;
+        });
+
         builder.addCase(addHomework.pending, (state) => {
             state.homeworkAdding = true;
         });
@@ -59,6 +89,7 @@ const homeworksSlice = createSlice({
 export const homeworksReducer = homeworksSlice.reducer;
 
 export const selectHomeworks = (state: RootState) => state.homeworks.homeworks;
+export const selectHomeworksByTutor = (state: RootState) => state.homeworks.homeworksByTutor;
 export const selectHomeworksLoading = (state: RootState) => state.homeworks.homeworksLoading;
 export const selectHomeworkAdding = (state: RootState) => state.homeworks.homeworkAdding;
 export const selectHomeworkError = (state: RootState) => state.homeworks.homeworkAddError;

@@ -35,7 +35,24 @@ export class UsersLessonsService {
         throw new NotFoundException('There is no lessons on this module');
       }
 
-      return lessons;
+      const responseUsersLessons = [];
+
+      for (let i = 0; i < lessons.length; i++) {
+        const lesson = {
+          id: lessons[i].id,
+          number: lessons[i].lesson.number,
+          description: lessons[i].lesson.description,
+          title: lessons[i].lesson.title,
+          video: lessons[i].lesson.video,
+          isViewed: lessons[i].isViewed,
+          viewedAt: lessons[i].viewedAt,
+          isStopLesson: lessons[i].lesson.isStopLesson,
+          isAvailable: lessons[i].isAvailable,
+        };
+        responseUsersLessons.push(lesson);
+      }
+
+      return responseUsersLessons;
     }
 
     const usersLessons = await this.usersLessonRepository

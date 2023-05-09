@@ -1,11 +1,17 @@
-import {Course, CourseMutation, Homework, ValidationError} from "../../../types";
+import {Homework, ValidationError} from "../../../types";
 import { createSlice } from "@reduxjs/toolkit";
-import {addCourse, deleteCourse, editCourse, fetchCourses, fetchOneCourse} from "@/features/courses/coursesThunks";
 import { RootState } from "@/app/store";
-import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
+import {
+    addHomework,
+    editHomework,
+    fetchHomeworks,
+    fetchHomeworksByTutor,
+    fetchOneHomework
+} from "@/features/homeworks/homeworksThunks";
 
 interface HomeworkState {
     homeworks: Homework[];
+    homeworksByTutor: Homework[];
     homeworksLoading: boolean;
     homeworkAdding: boolean;
     homeworkAddError: ValidationError | null;
@@ -18,6 +24,7 @@ interface HomeworkState {
 
 const initialState: HomeworkState = {
     homeworks: [],
+    homeworksByTutor: [],
     homeworksLoading: false,
     homeworkAdding: false,
     homeworkAddError: null,
@@ -43,6 +50,28 @@ const homeworksSlice = createSlice({
             state.homeworksLoading = false;
         });
 
+        builder.addCase(fetchOneHomework.pending, (state) => {
+            state.homeworkLoading = true;
+        });
+        builder.addCase(fetchOneHomework.fulfilled, (state, {payload: homework}) => {
+            state.homeworkLoading = false;
+            state.homework = homework;
+        });
+        builder.addCase(fetchOneHomework.rejected, (state) => {
+            state.homeworkLoading = false;
+        });
+
+        builder.addCase(fetchHomeworksByTutor.pending, (state) => {
+            state.homeworksLoading = true;
+        });
+        builder.addCase(fetchHomeworksByTutor.fulfilled, (state, {payload: homeworks}) => {
+            state.homeworksLoading = false;
+            state.homeworksByTutor = homeworks;
+        });
+        builder.addCase(fetchHomeworksByTutor.rejected, (state) => {
+            state.homeworksLoading = false;
+        });
+
         builder.addCase(addHomework.pending, (state) => {
             state.homeworkAdding = true;
         });
@@ -54,44 +83,13 @@ const homeworksSlice = createSlice({
             state.homeworkAdding = false;
             state.homeworkAddError = error || null;
         });
-
-        // builder.addCase(deleteCourse.pending, (state) => {
-        //     state.courseDeleting = true;
-        // });
-        // builder.addCase(deleteCourse.fulfilled, (state) => {
-        //     state.courseDeleting = false;
-        // });
-        // builder.addCase(deleteCourse.rejected, (state) => {
-        //     state.courseDeleting = false;
-        // });
-        //
-        // builder.addCase(fetchOneCourse.pending, (state) => {
-        //     state.oneCourse = null;
-        //     state.oneCourseLoading = true;
-        // });
-        // builder.addCase(fetchOneCourse.fulfilled, (state, {payload: course}) => {
-        //     state.oneCourseLoading = false;
-        //     state.oneCourse = course;
-        // });
-        // builder.addCase(fetchOneCourse.rejected, (state) => {
-        //     state.oneCourseLoading = false;
-        // });
-        //
-        // builder.addCase(editCourse.pending, (state) => {
-        //     state.oneCourseEditing = true;
-        // });
-        // builder.addCase(editCourse.fulfilled, (state) => {
-        //     state.oneCourseEditing = false;
-        // });builder.addCase(editCourse.rejected, (state) => {
-        //     state.oneCourseEditing = false;
-        // });
-
     }
 });
 
 export const homeworksReducer = homeworksSlice.reducer;
 
 export const selectHomeworks = (state: RootState) => state.homeworks.homeworks;
+export const selectHomeworksByTutor = (state: RootState) => state.homeworks.homeworksByTutor;
 export const selectHomeworksLoading = (state: RootState) => state.homeworks.homeworksLoading;
 export const selectHomeworkAdding = (state: RootState) => state.homeworks.homeworkAdding;
 export const selectHomeworkError = (state: RootState) => state.homeworks.homeworkAddError;

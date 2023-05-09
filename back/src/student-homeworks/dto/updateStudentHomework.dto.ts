@@ -1,9 +1,4 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateHomeworkDto {
   @IsOptional()
@@ -25,8 +20,4 @@ export class UpdateHomeworkDto {
   @IsString()
   @IsNotEmpty()
   isChecked: string;
-
-  @IsOptional()
-  @IsNotEmpty()
-  file: string;
 }

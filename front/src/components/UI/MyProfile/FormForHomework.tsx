@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
-import {useRouter} from "next/router";
-import {ApiHomework, HomeworkMutation} from "../../../../types";
+import {ApiHomework, Homework, HomeworkMutation} from "../../../../types";
 import FileInput from "@/components/FileInput/FileInput";
 import {selectLessons} from "@/features/lessons/lessonsSlice";
 import {fetchLessons} from "@/features/lessons/lessonsThunks";
@@ -9,18 +8,19 @@ import {Grid, MenuItem, TextField} from "@mui/material";
 
 interface Props {
     onSubmit: (homework: ApiHomework) => void;
+    existHomework?: Homework;
 }
 
-const FormForHomework: React.FC<Props> = ({onSubmit}) => {
+const FormForHomework: React.FC<Props> = ({onSubmit, existHomework}) => {
     const dispatch = useAppDispatch();
-    const router = useRouter();
     const lessons = useAppSelector(selectLessons);
-    const [homework, setHomework] = useState<HomeworkMutation>({
+    const initialState = existHomework ? {lesson: '', title: existHomework.title, description: existHomework.description, pdf: null} : {
         lesson: '',
         title: '',
         description: '',
-        // pdf: null
-    });
+        pdf: null
+    }
+    const [homework, setHomework] = useState<HomeworkMutation>(initialState);
 
     useEffect(() => {
         dispatch(fetchLessons());
@@ -35,7 +35,7 @@ const FormForHomework: React.FC<Props> = ({onSubmit}) => {
         e.preventDefault();
         onSubmit({
             ...homework,
-            lesson: parseFloat(homework.lesson),
+            lesson: homework.lesson,
         });
     };
 

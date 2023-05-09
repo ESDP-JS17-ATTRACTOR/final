@@ -3,7 +3,7 @@ import CardForHomework from "@/components/Cards/CardForHomework";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useRouter} from "next/router";
 import {selectUser} from "@/features/users/usersSlice";
-import {ApiHomework, ApiStudentHomework, ValidationError} from "../../types";
+import {ApiHomework, ApiStudentHomework, ValidationError} from "../../../types";
 import FormForHomework from "@/components/UI/MyProfile/FormForHomework";
 import {addHomework, fetchHomeworks} from "@/features/homeworks/homeworksThunks";
 import FormForStudentHomework from "@/components/UI/MyProfile/FormForStudentHomework";
@@ -44,7 +44,7 @@ const MyProfile = () => {
 
     const onSubmit = async (homework: ApiHomework) => {
         await dispatch(addHomework(homework));
-        setShowModal(true);
+        setShowModal(false);
     };
 
     const onSubmitStudent = async (studentHomework: ApiStudentHomework) => {
@@ -91,24 +91,28 @@ const MyProfile = () => {
                     {showForm && <FormForEditProfile onCloseForm={() => setShowForm(false)}/>}
                 </div>
             </div>
+            {user?.role === "tutor" && <button onClick={() => router.push('/myProfile/allHomeworks')} className="button profile-btn-add">All Homework</button>}
             <div className="homework-block">
                 <h2>Homework</h2>
                 <div className="homework-headlines-block">
                     <p>ID</p>
-                    <p style={{width: "300px"}}>Articles</p>
-                    <p style={{width: "200px"}}>Added date</p>
-                    <p>Status</p>
-                    {user?.role === "tutor" ? <p>Student name</p> : <p>Tutor name</p>}
-                    <p>Is checked</p>
+                    <p style={{marginLeft: "200px"}}>Articles</p>
+                    <p style={{marginLeft: "280px"}}>Added date</p>
+                    <p style={{marginLeft: "150px"}}>Status</p>
+                    {user?.role === "tutor" ? <p style={{marginLeft: "85px"}}>Student name</p> : <p style={{marginLeft: "85px"}}>Tutor name</p>}
+                    <p style={{marginLeft: "70px"}}>Is checked</p>
                 </div>
                 {user?.role === "student" && homeworks.map(homework => {
-                    const studentHomework = studentHomeworks.find(studentHomework => studentHomework.homework.id === homework.id && studentHomework.studentName === user.firstName);
+                    const studentHomework = studentHomeworks.find(studentHomework => studentHomework.homework.id === homework.id && studentHomework.studentEmail === user.email);
                     return <CardForHomework key={homework.id}
                                             isChecked={studentHomework ? studentHomework.isChecked : 'Not Checked'}
                                             status={studentHomework ? studentHomework.status : 'In Process'}
-                                            id={homework.id} description={homework.description}
+                                            id={homework.id} title={homework.title}
                                             date={dayjs(homework.date).format('DD MMMM YYYY')}
-                                            tutorName={homework.tutorName}/>
+                                            tutorName={homework.tutorName}
+                                            description={homework.description}
+                                            pdf={homework.pdf}
+                    />
                 })}
                 {user?.role === "tutor" && studentHomeworks.map(studentHomework => {
                     const homework = homeworks.find(homework => homework.id === studentHomework.homework.id);
@@ -116,7 +120,7 @@ const MyProfile = () => {
                     return <CardForStudentHomework key={studentHomework.id}
                                                    checked={() => onCheckedClick(studentHomework.id)}
                                                    status={studentHomework.status} id={homework?.id}
-                                                   description={homework?.description}
+                                                   title={homework?.title}
                                                    date={dayjs(studentHomework.date).format('DD MMMM YYYY')}
                                                    studentName={studentHomework.studentName}
                                                    isChecked={studentHomework.isChecked}/>

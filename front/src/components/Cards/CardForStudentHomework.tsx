@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {
     id?: string;
-    description?: string;
+    title?: string;
     date?: string;
     studentName: string;
     status: string;
@@ -10,14 +10,14 @@ interface Props {
     checked: () => void;
 }
 
-const CardForStudentHomework: React.FC<Props> = ({id, description, date, studentName, status, isChecked, checked}) => {
+const CardForStudentHomework: React.FC<Props> = ({id, title, date, studentName, status, isChecked, checked}) => {
     return (
         <div className="card-for-homework-block">
             <div style={{width: "90px",  overflow: "hidden"}}>
                 <p>{id}</p>
             </div>
             <div style={{width: "390px", overflow: "hidden"}}>
-                <p>{description}</p>
+                <p>{title}</p>
             </div>
             <div style={{width: "280px", overflow: "hidden"}}>
                 <p>{date}</p>

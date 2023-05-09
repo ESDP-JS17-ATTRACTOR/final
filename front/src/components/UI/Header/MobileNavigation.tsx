@@ -118,7 +118,7 @@ const MobileNavigation = () => {
           <div className="mobile_side_menu_body">
             <nav>
               <ul>
-                <Link href="/myProfile"><li>My profile</li></Link>
+                <Link href="/myProfile/myProfile"><li>My profile</li></Link>
                 <Link href="/my-documents"><li>My documents</li></Link>
                 <Link href="/catalogs"><li>Catalogs</li></Link>
                 <Link href=""><li>My favourites</li></Link>

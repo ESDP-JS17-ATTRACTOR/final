@@ -29,6 +29,8 @@ export class FixturesService {
     private readonly usersLessonsRepository: Repository<UsersLesson>,
     @InjectRepository(Homework)
     private readonly homeworksRepository: Repository<Homework>,
+    @InjectRepository(StudentHomework)
+    private readonly studentHomeworksRepository: Repository<StudentHomework>,
   ) {}
 
   async dropTables(): Promise<void> {
@@ -342,6 +344,10 @@ export class FixturesService {
   async createHomeworks() {
     const lesson1 = await this.lessonsRepository.findOne({
       where: { title: 'Lesson #1' },
+    });
+
+    const lesson2 = await this.lessonsRepository.findOne({
+      where: { title: 'Lesson #2' },
     });
 
     const tutorFirst = await this.usersRepository.findOne({

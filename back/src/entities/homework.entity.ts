@@ -28,7 +28,7 @@ export class Homework {
   @Column()
   tutorName: string;
 
-  @Column()
+  @Column({ nullable: true })
   tutorEmail: string;
 
   @Column({ nullable: true })

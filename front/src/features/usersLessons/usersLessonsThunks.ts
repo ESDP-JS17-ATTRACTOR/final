@@ -1,7 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../../axiosApi";
-import {GlobalError, UsersLesson} from "../../../types";
+import { GlobalError, ModuleLesson, UsersLesson } from "../../../types";
 import {isAxiosError} from "axios";
+
+export const fetchModuleLessons = createAsyncThunk<ModuleLesson[], string>(
+  'usersLessons/fetchByModuleId',
+  async (moduleId) => {
+    const response = await axiosApi.get<ModuleLesson[]>(`/users-lessons?id=${moduleId}`);
+    return response.data;
+  }
+);
 
 export const fetchUsersLessons = createAsyncThunk<UsersLesson[]>(
   'usersLessons/fetchAll',

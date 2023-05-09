@@ -1,10 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {UsersLesson} from "../../../types";
-import {createUsersLessons, fetchOneUsersLesson, fetchUsersLessons} from "@/features/usersLessons/usersLessonsThunks";
+import { ModuleLesson, UsersLesson } from "../../../types";
+import {
+  createUsersLessons,
+  fetchModuleLessons,
+  fetchOneUsersLesson,
+  fetchUsersLessons
+} from "@/features/usersLessons/usersLessonsThunks";
 import {RootState} from "@/app/store";
 
 interface UsersLessonsState {
-  items: UsersLesson[];
+  moduleLessons: ModuleLesson[];
   fetching: boolean;
   fetchingOne: boolean;
   creating: boolean;
@@ -12,7 +17,7 @@ interface UsersLessonsState {
 }
 
 const initialState: UsersLessonsState = {
-  items: [],
+  moduleLessons: [],
   fetching: false,
   fetchingOne: false,
   creating: false,
@@ -24,14 +29,14 @@ const usersLessonsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUsersLessons.pending, (state) => {
+    builder.addCase(fetchModuleLessons.pending, (state) => {
       state.fetching = true;
     });
-    builder.addCase(fetchUsersLessons.fulfilled, (state, {payload: usersLessons}) => {
+    builder.addCase(fetchModuleLessons.fulfilled, (state, {payload: data}) => {
       state.fetching = false;
-      state.items = usersLessons;
+      state.moduleLessons = data;
     });
-    builder.addCase(fetchUsersLessons.rejected, (state) => {
+    builder.addCase(fetchModuleLessons.rejected, (state) => {
       state.fetching = false;
     });
 
@@ -60,7 +65,7 @@ const usersLessonsSlice = createSlice({
 
 export const usersLessonsReducer = usersLessonsSlice.reducer;
 
-export const selectUsersLessons = (state: RootState) => state.usersLessons.items;
+export const selectModuleLessons = (state: RootState) => state.usersLessons.moduleLessons;
 export const selectUsersLessonsFetching = (state: RootState) => state.usersLessons.fetching;
 export const selectUsersLessonFetchingOne = (state: RootState) => state.usersLessons.fetchingOne;
 export const selectOneUsersLesson = (state: RootState) => state.usersLessons.item;

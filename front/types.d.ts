@@ -193,3 +193,17 @@ export interface ModuleType {
   numberOfLessons: number;
   title: string;
 }
+
+export interface ModuleLesson {
+  id: number;
+  number: number;
+  moduleNumber: number;
+  title: string;
+  description: string;
+  video: string;
+  isAvailable: boolean;
+  isStopLesson: boolean;
+  isViewed: boolean;
+  viewedAt: Date | null;
+}
+

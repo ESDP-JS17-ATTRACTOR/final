@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { fetchModuleLessons } from "@/features/usersLessons/usersLessonsThunks";
+import { selectModuleLessons } from "@/features/usersLessons/usersLessonsSlice";
+import ModuleLessonPreviewCard from "@/components/Cards/ModuleLessonPreviewCard";
 
 const Module = () => {
+  const dispatch = useAppDispatch();
+  const moduleLessons = useAppSelector(selectModuleLessons);
   const moduleId = useRouter().query.id;
+
+  useEffect(() => {
+    dispatch(fetchModuleLessons(moduleId as string));
+  }, [dispatch, moduleId]);
+
+  let content = (
+    moduleLessons.map(moduleLesson => {
+      return <ModuleLessonPreviewCard key={moduleLesson.id} moduleLesson={moduleLesson} moduleId={moduleId as string}/>
+    })
+  );
 
   return (
     <div className="container">
@@ -11,31 +27,7 @@ const Module = () => {
           <h5 className="module-lessons-block-header_title">Mastermind by launches 01.02.2023</h5>
         </div>
         <div className="module-lessons-block-main">
-          <div className="lesson-preview-card">
-            <div className="lesson-preview-card_status">
-              Status
-            </div>
-            <div className="lesson-preview-card_content">
-              <div className="lesson-preview-card_content_image">
-                <img src="/lesson-preview-image.png" alt="" />
-              </div>
-              <div className="lesson-preview-card_content_info">
-                <h6 className="lesson-preview-card_content_info_title">
-                  Module 1 Lesson 4
-                </h6>
-                <p className="lesson-preview-card_content_info_description">
-                  <span>How to represent data:</span>
-                  4 ways of representation through charts
-                </p>
-                <div className="lesson-preview-card_content_info_date">
-                  <span>23\11\2023</span>
-                </div>
-                <button className="button lesson_view_btn">
-                  viewed
-                </button>
-              </div>
-            </div>
-          </div>
+          {content}
         </div>
       </div>
     </div>

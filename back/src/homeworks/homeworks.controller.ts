@@ -77,7 +77,7 @@ export class HomeworksController {
   @UseInterceptors(
     FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }),
   )
-  async updateLesson(
+  async updateHomework(
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
     @Body() updateHomeworkDto: UpdateHomeworkDto,

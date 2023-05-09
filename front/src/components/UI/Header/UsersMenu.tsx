@@ -35,7 +35,7 @@ const UsersMenu = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={() => router.push('/myProfile/myProfile')}>My Profile</MenuItem>
+                <MenuItem onClick={() => router.push('/my-profile')}>My Profile</MenuItem>
                 <MenuItem onClick={() => router.push('/my_documents')}>My Documents</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>

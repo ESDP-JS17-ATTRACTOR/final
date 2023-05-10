@@ -28,7 +28,7 @@ import { UpdateHomeworkDto } from './dto/updateHomework.dto';
 @Controller('homeworks')
 export class HomeworksController {
   constructor(
-    @InjectRepository(        Lesson)
+    @InjectRepository(Lesson)
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Homework)
     private readonly homeworkRepository: Repository<Homework>,

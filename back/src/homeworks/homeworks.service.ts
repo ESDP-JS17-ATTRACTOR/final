@@ -26,7 +26,7 @@ export class HomeworksService {
   }
 
   constructor(
-    @InjectRepository(   Lesson)
+    @InjectRepository(Lesson)
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Homework)
     private readonly homeworkRepository: Repository<Homework>,

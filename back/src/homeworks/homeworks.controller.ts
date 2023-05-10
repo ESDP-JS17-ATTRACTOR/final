@@ -61,9 +61,7 @@ export class HomeworksController {
 
   @Post()
   @UseGuards(TokenAuthGuard, TutorGuard)
-  @UseInterceptors(
-    FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }),
-  )
+  @UseInterceptors(FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }))
   async createHomework(
     @CurrentUser() user: User,
     @Body() homeworkData: AddHomeworkDto,
@@ -74,9 +72,7 @@ export class HomeworksController {
 
   @Patch(':id')
   @UseGuards(TokenAuthGuard, TutorGuard)
-  @UseInterceptors(
-    FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }),
-  )
+  @UseInterceptors(FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }))
   async updateHomework(
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,

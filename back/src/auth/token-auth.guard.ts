@@ -6,9 +6,7 @@ import { User } from '../entities/user.entity';
 
 @Injectable()
 export class TokenAuthGuard implements CanActivate {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest() as Request;

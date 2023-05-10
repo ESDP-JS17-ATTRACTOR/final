@@ -1,12 +1,12 @@
-import {createSlice} from "@reduxjs/toolkit";
-import { ModuleLesson, UsersLesson } from "../../../types";
+import { createSlice } from '@reduxjs/toolkit';
+import { ModuleLesson, UsersLesson } from '../../../types';
 import {
   createUsersLessons,
   fetchModuleLessons,
   fetchOneUsersLesson,
-  fetchUsersLessons
-} from "@/features/usersLessons/usersLessonsThunks";
-import {RootState} from "@/app/store";
+  fetchUsersLessons,
+} from '@/features/usersLessons/usersLessonsThunks';
+import { RootState } from '@/app/store';
 
 interface UsersLessonsState {
   moduleLessons: ModuleLesson[];
@@ -22,7 +22,7 @@ const initialState: UsersLessonsState = {
   fetchingOne: false,
   creating: false,
   item: null,
-}
+};
 
 const usersLessonsSlice = createSlice({
   name: 'usersLessons',
@@ -32,7 +32,7 @@ const usersLessonsSlice = createSlice({
     builder.addCase(fetchModuleLessons.pending, (state) => {
       state.fetching = true;
     });
-    builder.addCase(fetchModuleLessons.fulfilled, (state, {payload: data}) => {
+    builder.addCase(fetchModuleLessons.fulfilled, (state, { payload: data }) => {
       state.fetching = false;
       state.moduleLessons = data;
     });
@@ -43,7 +43,7 @@ const usersLessonsSlice = createSlice({
     builder.addCase(fetchOneUsersLesson.pending, (state) => {
       state.fetchingOne = true;
     });
-    builder.addCase(fetchOneUsersLesson.fulfilled, (state, {payload: usersLesson}) => {
+    builder.addCase(fetchOneUsersLesson.fulfilled, (state, { payload: usersLesson }) => {
       state.fetchingOne = false;
       state.item = usersLesson;
     });

@@ -9,11 +9,7 @@ import { UpdateHomeworkDto } from './dto/updateHomework.dto';
 
 @Injectable()
 export class HomeworksService {
-  async createHomework(
-    user: User,
-    homeworkData: AddHomeworkDto,
-    file: Express.Multer.File,
-  ): Promise<Homework> {
+  async createHomework(user: User, homeworkData: AddHomeworkDto, file: Express.Multer.File): Promise<Homework> {
     const lesson = await this.findLessonById(parseFloat(homeworkData.lesson));
 
     const homework = await this.homeworkRepository.create({
@@ -30,22 +26,16 @@ export class HomeworksService {
   }
 
   constructor(
-    @InjectRepository(Lesson)
+    @InjectRepository(   Lesson)
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Homework)
     private readonly homeworkRepository: Repository<Homework>,
   ) {}
 
-  async updateHomework(
-    id: number,
-    file: Express.Multer.File,
-    homeworkData: UpdateHomeworkDto,
-  ): Promise<Homework> {
+  async updateHomework(id: number, file: Express.Multer.File, homeworkData: UpdateHomeworkDto): Promise<Homework> {
     const homework = await this.ifExistReturnsHomework(id);
 
-    homework.lesson = await this.findLessonById(
-      parseFloat(homeworkData.lesson),
-    );
+    homework.lesson = await this.findLessonById(parseFloat(homeworkData.lesson));
     homework.title = homeworkData.title;
     homework.description = homeworkData.description;
     homework.pdf = file ? '/uploads/homeworks/pdf/' + file.filename : null;

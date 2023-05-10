@@ -36,10 +36,7 @@ export class CommentsController {
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
-  async createComment(
-    @CurrentUser() user: User,
-    @Body() body: CreateCommentDto,
-  ) {
+  async createComment(@CurrentUser() user: User, @Body() body: CreateCommentDto) {
     return this.commentsService.createComment(user.id, body);
   }
 

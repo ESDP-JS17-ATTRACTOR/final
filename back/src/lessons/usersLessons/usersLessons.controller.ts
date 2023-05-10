@@ -41,18 +41,12 @@ export class UsersLessonsController {
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
-  async createUsersLesson(
-    @CurrentUser() user: User,
-    @Body() body: { id: number },
-  ) {
+  async createUsersLesson(@CurrentUser() user: User, @Body() body: { id: number }) {
     return this.usersLessonsService.createUsersLesson(user, body.id);
   }
 
   @Patch(':id')
-  async updateUsersLesson(
-    @Param('id') id: number,
-    @Body() body: { isViewed: boolean },
-  ) {
+  async updateUsersLesson(@Param('id') id: number, @Body() body: { isViewed: boolean }) {
     return await this.usersLessonsService.updateUsersLesson(id, body.isViewed);
   }
 }

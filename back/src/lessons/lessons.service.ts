@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateLessonDto } from './dto/createLesson.dto';
@@ -22,10 +18,7 @@ export class LessonsService {
     private readonly moduleRepository: Repository<CourseModule>,
   ) {}
 
-  async createLesson(
-    lessonData: CreateLessonDto,
-    file: Express.Multer.File,
-  ): Promise<Lesson> {
+  async createLesson(lessonData: CreateLessonDto, file: Express.Multer.File): Promise<Lesson> {
     await this.checkForExistLesson(lessonData.title);
 
     const [course, module] = await Promise.all([
@@ -46,20 +39,14 @@ export class LessonsService {
     return this.lessonRepository.save(lesson);
   }
 
-  async updateLesson(
-    id: number,
-    file: Express.Multer.File,
-    lessonData: UpdateLessonDto,
-  ): Promise<Lesson> {
+  async updateLesson(id: number, file: Express.Multer.File, lessonData: UpdateLessonDto): Promise<Lesson> {
     const lesson = await this.ifExistReturnsLesson(id);
 
     lesson.course = await this.findCourseById(lessonData.course);
     lesson.module = await this.findModuleById(lessonData.module);
     lesson.number = lessonData.number;
     lesson.title = lessonData.title;
-    lesson.video = file
-      ? '/uploads/course/lesson/video/' + file.filename
-      : null;
+    lesson.video = file ? '/uploads/course/lesson/video/' + file.filename : null;
     lesson.description = lessonData.description;
     lesson.isStopLesson = lessonData.isStopLesson;
 

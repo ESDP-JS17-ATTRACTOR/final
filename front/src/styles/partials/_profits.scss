@@ -1,8 +1,8 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 .profits {
-  background: linear-gradient(0deg, rgba(238, 233, 122, 0.29) 0%, #E7B4A5 59.17%, rgba(238, 233, 122, 0.29) 100%);
+  background: linear-gradient(0deg, rgba(238, 233, 122, 0.29) 0%, #e7b4a5 59.17%, rgba(238, 233, 122, 0.29) 100%);
   @include md {
     height: auto;
     background-repeat: no-repeat;
@@ -12,7 +12,7 @@
     border-radius: 160% / 30%;
   }
   &-container {
-    background-image: url("/profits-shapes.png"), url("/profits-shapes-bottom.png");
+    background-image: url('/profits-shapes.png'), url('/profits-shapes-bottom.png');
     background-position: 30% 10%, 70% 96%;
     background-repeat: no-repeat, no-repeat;
     display: flex;

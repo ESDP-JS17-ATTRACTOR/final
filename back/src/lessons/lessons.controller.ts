@@ -41,21 +41,14 @@ export class LessonsController {
 
   @Post()
   @UseGuards(TokenAuthGuard, StaffGuard)
-  @UseInterceptors(
-    FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }),
-  )
-  async createLesson(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() lessonData: CreateLessonDto,
-  ) {
+  @UseInterceptors(FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }))
+  async createLesson(@UploadedFile() file: Express.Multer.File, @Body() lessonData: CreateLessonDto) {
     return this.lessonsService.createLesson(lessonData, file);
   }
 
   @Patch(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
-  @UseInterceptors(
-    FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }),
-  )
+  @UseInterceptors(FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }))
   async updateLesson(
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
@@ -70,14 +63,7 @@ export class LessonsController {
       .createQueryBuilder('lesson')
       .leftJoinAndSelect('lesson.course', 'course')
       .leftJoinAndSelect('lesson.module', 'module')
-      .select([
-        'lesson.title',
-        'lesson.duration',
-        'lesson.price',
-        'lesson.isGroup',
-        'module.id',
-        'course.id',
-      ])
+      .select(['lesson.title', 'lesson.duration', 'lesson.price', 'lesson.isGroup', 'module.id', 'course.id'])
       .where('lesson.id = :id', { id })
       .getOne();
 

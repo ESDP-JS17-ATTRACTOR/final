@@ -1,7 +1,7 @@
-import {Course, CourseMutation, ValidationError} from "../../../types";
-import { createSlice } from "@reduxjs/toolkit";
-import {addCourse, deleteCourse, editCourse, fetchCourses, fetchOneCourse} from "@/features/courses/coursesThunks";
-import { RootState } from "@/app/store";
+import { Course, CourseMutation, ValidationError } from '../../../types';
+import { createSlice } from '@reduxjs/toolkit';
+import { addCourse, deleteCourse, editCourse, fetchCourses, fetchOneCourse } from '@/features/courses/coursesThunks';
+import { RootState } from '@/app/store';
 
 interface CourseState {
   courses: Course[];
@@ -11,9 +11,8 @@ interface CourseState {
   courseDeleting: boolean;
   oneCourse: CourseMutation | null;
   oneCourseLoading: boolean;
-  oneCourseEditing: boolean
+  oneCourseEditing: boolean;
 }
-
 
 const initialState: CourseState = {
   courses: [],
@@ -34,7 +33,7 @@ const coursesSlice = createSlice({
     builder.addCase(fetchCourses.pending, (state) => {
       state.coursesLoading = true;
     });
-    builder.addCase(fetchCourses.fulfilled, (state, {payload: courses}) => {
+    builder.addCase(fetchCourses.fulfilled, (state, { payload: courses }) => {
       state.coursesLoading = false;
       state.courses = courses;
     });
@@ -49,7 +48,7 @@ const coursesSlice = createSlice({
       state.courseAdding = false;
       state.courseAddError = null;
     });
-    builder.addCase(addCourse.rejected, (state, {payload: error}) => {
+    builder.addCase(addCourse.rejected, (state, { payload: error }) => {
       state.courseAdding = false;
       state.courseAddError = error || null;
     });
@@ -68,7 +67,7 @@ const coursesSlice = createSlice({
       state.oneCourse = null;
       state.oneCourseLoading = true;
     });
-    builder.addCase(fetchOneCourse.fulfilled, (state, {payload: course}) => {
+    builder.addCase(fetchOneCourse.fulfilled, (state, { payload: course }) => {
       state.oneCourseLoading = false;
       state.oneCourse = course;
     });
@@ -81,11 +80,11 @@ const coursesSlice = createSlice({
     });
     builder.addCase(editCourse.fulfilled, (state) => {
       state.oneCourseEditing = false;
-    });builder.addCase(editCourse.rejected, (state) => {
+    });
+    builder.addCase(editCourse.rejected, (state) => {
       state.oneCourseEditing = false;
     });
-
-  }
+  },
 });
 
 export const coursesReducer = coursesSlice.reducer;

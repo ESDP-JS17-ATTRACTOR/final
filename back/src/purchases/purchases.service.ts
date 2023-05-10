@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from '../entities/course.entity';
@@ -54,14 +50,7 @@ export class PurchasesService {
       .select(['purchase', 'course'])
       .leftJoinAndSelect('course.tutor', 'tutor')
       .leftJoinAndSelect('course.category', 'category')
-      .select([
-        'purchase',
-        'course.id',
-        'course.title',
-        'category.title',
-        'tutor.firstName',
-        'tutor.lastName',
-      ])
+      .select(['purchase', 'course.id', 'course.title', 'category.title', 'tutor.firstName', 'tutor.lastName'])
       .getMany();
 
     if (!courses.length) {

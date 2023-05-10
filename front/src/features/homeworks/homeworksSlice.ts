@@ -1,89 +1,88 @@
-import {Homework, ValidationError} from "../../../types";
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "@/app/store";
+import { Homework, ValidationError } from '../../../types';
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '@/app/store';
 import {
-    addHomework,
-    editHomework,
-    fetchHomeworks,
-    fetchHomeworksByTutor,
-    fetchOneHomework
-} from "@/features/homeworks/homeworksThunks";
+  addHomework,
+  editHomework,
+  fetchHomeworks,
+  fetchHomeworksByTutor,
+  fetchOneHomework,
+} from '@/features/homeworks/homeworksThunks';
 
 interface HomeworkState {
-    homeworks: Homework[];
-    homeworksByTutor: Homework[];
-    homeworksLoading: boolean;
-    homeworkAdding: boolean;
-    homeworkAddError: ValidationError | null;
-    homeworkDeleting: boolean;
-    homework: Homework | null;
-    homeworkLoading: boolean;
-    homeworkEditing: boolean
+  homeworks: Homework[];
+  homeworksByTutor: Homework[];
+  homeworksLoading: boolean;
+  homeworkAdding: boolean;
+  homeworkAddError: ValidationError | null;
+  homeworkDeleting: boolean;
+  homework: Homework | null;
+  homeworkLoading: boolean;
+  homeworkEditing: boolean;
 }
 
-
 const initialState: HomeworkState = {
-    homeworks: [],
-    homeworksByTutor: [],
-    homeworksLoading: false,
-    homeworkAdding: false,
-    homeworkAddError: null,
-    homeworkDeleting: false,
-    homework: null,
-    homeworkLoading: false,
-    homeworkEditing: false,
+  homeworks: [],
+  homeworksByTutor: [],
+  homeworksLoading: false,
+  homeworkAdding: false,
+  homeworkAddError: null,
+  homeworkDeleting: false,
+  homework: null,
+  homeworkLoading: false,
+  homeworkEditing: false,
 };
 
 const homeworksSlice = createSlice({
-    name: 'homeworks',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(fetchHomeworks.pending, (state) => {
-            state.homeworksLoading = true;
-        });
-        builder.addCase(fetchHomeworks.fulfilled, (state, {payload: homeworks}) => {
-            state.homeworksLoading = false;
-            state.homeworks = homeworks;
-        });
-        builder.addCase(fetchHomeworks.rejected, (state) => {
-            state.homeworksLoading = false;
-        });
+  name: 'homeworks',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchHomeworks.pending, (state) => {
+      state.homeworksLoading = true;
+    });
+    builder.addCase(fetchHomeworks.fulfilled, (state, { payload: homeworks }) => {
+      state.homeworksLoading = false;
+      state.homeworks = homeworks;
+    });
+    builder.addCase(fetchHomeworks.rejected, (state) => {
+      state.homeworksLoading = false;
+    });
 
-        builder.addCase(fetchOneHomework.pending, (state) => {
-            state.homeworkLoading = true;
-        });
-        builder.addCase(fetchOneHomework.fulfilled, (state, {payload: homework}) => {
-            state.homeworkLoading = false;
-            state.homework = homework;
-        });
-        builder.addCase(fetchOneHomework.rejected, (state) => {
-            state.homeworkLoading = false;
-        });
+    builder.addCase(fetchOneHomework.pending, (state) => {
+      state.homeworkLoading = true;
+    });
+    builder.addCase(fetchOneHomework.fulfilled, (state, { payload: homework }) => {
+      state.homeworkLoading = false;
+      state.homework = homework;
+    });
+    builder.addCase(fetchOneHomework.rejected, (state) => {
+      state.homeworkLoading = false;
+    });
 
-        builder.addCase(fetchHomeworksByTutor.pending, (state) => {
-            state.homeworksLoading = true;
-        });
-        builder.addCase(fetchHomeworksByTutor.fulfilled, (state, {payload: homeworks}) => {
-            state.homeworksLoading = false;
-            state.homeworksByTutor = homeworks;
-        });
-        builder.addCase(fetchHomeworksByTutor.rejected, (state) => {
-            state.homeworksLoading = false;
-        });
+    builder.addCase(fetchHomeworksByTutor.pending, (state) => {
+      state.homeworksLoading = true;
+    });
+    builder.addCase(fetchHomeworksByTutor.fulfilled, (state, { payload: homeworks }) => {
+      state.homeworksLoading = false;
+      state.homeworksByTutor = homeworks;
+    });
+    builder.addCase(fetchHomeworksByTutor.rejected, (state) => {
+      state.homeworksLoading = false;
+    });
 
-        builder.addCase(addHomework.pending, (state) => {
-            state.homeworkAdding = true;
-        });
-        builder.addCase(addHomework.fulfilled, (state) => {
-            state.homeworkAdding = false;
-            state.homeworkAddError = null;
-        });
-        builder.addCase(addHomework.rejected, (state, {payload: error}) => {
-            state.homeworkAdding = false;
-            state.homeworkAddError = error || null;
-        });
-    }
+    builder.addCase(addHomework.pending, (state) => {
+      state.homeworkAdding = true;
+    });
+    builder.addCase(addHomework.fulfilled, (state) => {
+      state.homeworkAdding = false;
+      state.homeworkAddError = null;
+    });
+    builder.addCase(addHomework.rejected, (state, { payload: error }) => {
+      state.homeworkAdding = false;
+      state.homeworkAddError = error || null;
+    });
+  },
 });
 
 export const homeworksReducer = homeworksSlice.reducer;

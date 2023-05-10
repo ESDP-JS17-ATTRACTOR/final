@@ -1,13 +1,13 @@
-import "@/styles/globals.scss";
-import type { AppProps } from "next/app";
-import Layout from "@/components/Layout/Layout";
-import "../styles/globals.scss";
-import { Provider } from "react-redux";
-import store, { persistor } from "../app/store";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GOOGLE_CLIENT_ID } from "../../constants";
-import { PersistGate } from "redux-persist/integration/react";
-import {addInterceptors} from "../../axiosApi";
+import '@/styles/globals.scss';
+import type { AppProps } from 'next/app';
+import Layout from '@/components/Layout/Layout';
+import '../styles/globals.scss';
+import { Provider } from 'react-redux';
+import store, { persistor } from '../app/store';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from '../../constants';
+import { PersistGate } from 'redux-persist/integration/react';
+import { addInterceptors } from '../../axiosApi';
 
 addInterceptors(store);
 

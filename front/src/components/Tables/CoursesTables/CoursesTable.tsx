@@ -6,12 +6,12 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
-import { UsersCourse } from "../../../../types";
+import { UsersPurchase } from "../../../../types";
 import ModuleRow from "@/components/Tables/CoursesTables/ModuleRow";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 interface Props {
-  courses: UsersCourse[];
+  courses: UsersPurchase[];
 }
 
 const coursesTableTheme = createTheme({

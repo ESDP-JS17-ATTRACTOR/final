@@ -74,7 +74,7 @@ const MyProfile = () => {
           {!showForm && (
             <div className="profile-info-block">
               <div>
-                <   h5>Email:</h5>
+                <h5>Email:</h5>
                 <span> {user?.email}</span>
               </div>
               <div>

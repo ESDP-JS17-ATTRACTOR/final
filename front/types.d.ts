@@ -173,3 +173,37 @@ export interface UsersLesson {
   isViewed: boolean;
   isAvailable: boolean;
 }
+
+export interface UsersPurchase {
+  id: number;
+  category: string;
+  title: string;
+  tutor: TutorType;
+  modules: ModuleType[];
+}
+
+export interface TutorType {
+  firstName: string;
+  lastName: string;
+}
+
+export interface ModuleType {
+  id: number;
+  number: number;
+  numberOfLessons: number;
+  title: string;
+}
+
+export interface ModuleLesson {
+  id: number;
+  number: number;
+  moduleNumber: number;
+  title: string;
+  description: string;
+  video: string;
+  isAvailable: boolean;
+  isStopLesson: boolean;
+  isViewed: boolean;
+  viewedAt: Date | null;
+}
+

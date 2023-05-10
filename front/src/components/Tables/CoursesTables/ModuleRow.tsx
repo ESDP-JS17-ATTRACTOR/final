@@ -10,13 +10,13 @@ import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
-import { UsersCourse } from "../../../../types";
+import { UsersCourse, UsersPurchase } from "../../../../types";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 interface Props {
-  course: UsersCourse;
+  course: UsersPurchase;
 }
 
 const coursesRowTheme = createTheme({
@@ -44,7 +44,7 @@ const ModuleRow: React.FC<Props> = ({ course }) => {
           {course.category}
         </TableCell>
         <TableCell align="center">{course.title}</TableCell>
-        <TableCell align="center">{course.tutor}</TableCell>
+        <TableCell align="center">{course.tutor.firstName + " " + course.tutor.lastName}</TableCell>
         <TableCell align="center">
           <IconButton
             aria-label="expand row"
@@ -75,7 +75,7 @@ const ModuleRow: React.FC<Props> = ({ course }) => {
                         {module.number}
                       </TableCell>
                       <TableCell align="center">{module.title}</TableCell>
-                      <TableCell align="center">{module.lessons}</TableCell>
+                      <TableCell align="center">{module.numberOfLessons}</TableCell>
                       <TableCell align="center">
                         <IconButton
                           aria-label="expand row"

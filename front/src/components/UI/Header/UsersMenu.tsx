@@ -36,6 +36,7 @@ const UsersMenu = () => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={() => router.push('/my-profile')}>My Profile</MenuItem>
+                <MenuItem onClick={() => router.push('/my-courses')}>My Courses</MenuItem>
                 <MenuItem onClick={() => router.push('/my_documents')}>My Documents</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>

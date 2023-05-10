@@ -219,8 +219,11 @@
 }
 
 .lesson_view_btn {
+  position: absolute;
+  bottom: 0;
+  left: 148px;
   width: 138px;
-  height: 46px;
+  height: 32px;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
@@ -228,7 +231,12 @@
   background-image: url("/plus-ic.png");
   background-position: 90% 50%;
   background-repeat: no-repeat;
+  padding-top: 14px;
+  margin-bottom: 24px;
   &:hover {
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+  }
+  @include md {
+    position: static;
   }
 }

@@ -18,7 +18,7 @@ footer {
       background-size: 270px 220px, 300px 280px;
       @include md {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         padding: 0 100px 0 15px;
         background-position: 19% 50%, 15% 50%;
       }

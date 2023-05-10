@@ -48,6 +48,7 @@ export class UsersLessonsService {
           viewedAt: lessons[i].viewedAt,
           isStopLesson: lessons[i].lesson.isStopLesson,
           isAvailable: lessons[i].isAvailable,
+          moduleNumber: lessons[i].lesson.module.number,
         };
         responseUsersLessons.push(lesson);
       }

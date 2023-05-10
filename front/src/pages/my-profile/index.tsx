@@ -19,7 +19,7 @@ import { Modal } from '@mui/material';
 import dayjs from 'dayjs';
 import FormForEditProfile from '@/components/UI/MyProfile/FormForEditProfile';
 
-const MyProfile = () => {
+const MyProfile = (   ) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const user = useAppSelector(selectUser);
@@ -37,6 +37,8 @@ const MyProfile = () => {
   const onEditClick = () => {
     setShowForm(true);
   };
+
+  const asd = !Boolean(asdasdasd);
 
   const onSubmit = async (homework: ApiHomework) => {
     await dispatch(addHomework(homework));

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from './database.module';
+import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { UsersController } from './users/users.controller';
@@ -34,6 +34,7 @@ import { CommentsService } from './comments/comments.service';
 import { CommentsController } from './comments/comments.controller';
 import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './homeworks/homeworks.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { HomeworksService } from './homeworks/homeworks.service';
       Comment,
     ]),
     PassportModule,
+    UsersModule,
   ],
   providers: [
     AppService,

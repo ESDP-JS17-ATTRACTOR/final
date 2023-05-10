@@ -7,7 +7,7 @@ import {
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import FormForHomework from "@/components/UI/MyProfile/FormForHomework";
 import {Modal} from "@mui/material";
-import {selectHomework, selectHomeworksByTutor} from "@/features/homeworks/homeworksSlice";
+import {selectHomework} from "@/features/homeworks/homeworksSlice";
 import {ApiHomework} from "../../../types";
 
 interface Props {
@@ -34,6 +34,7 @@ const CardForHomework: React.FC<Props> = ({id, title, description, date, tutorNa
     const onSubmit = async (homework: ApiHomework) => {
         await dispatch(editHomework({id, homework}));
         setShowModal(false);
+        await dispatch(fetchHomeworksByTutor());
     };
 
     const toggleTitle = () => {
@@ -55,13 +56,13 @@ const CardForHomework: React.FC<Props> = ({id, title, description, date, tutorNa
                     <p>{lesson}</p>
                 </div>
                 <div style={{width: "390px", overflow: "hidden"}}>
-                    <p onClick={toggleTitle}>{title}</p>
+                    <p className="heading-hover" onClick={toggleTitle}>{title}</p>
                 </div>
                 <div style={{width: "200px", overflow: "hidden"}}>
                     <p>{date}</p>
                 </div>
                 <div style={{width: "300px", overflow: "hidden", marginRight: "10px"}}>
-                    <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a>
+                    {pdf ? <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a> : <span>No files</span>}
                 </div>
                 <button onClick={onEditClick} className="button profile-btn-add">Edit</button>
                 {homework && <Modal

@@ -51,7 +51,7 @@ export const addHomework = createAsyncThunk<void, ApiHomework, { rejectValue: Va
                 }
             });
 
-            const response = await axiosApi.post<ApiHomework>('/homeworks', formData);
+            await axiosApi.post<ApiHomework>('/homeworks', formData);
         }  catch (e) {
             if (isAxiosError(e) && e.response && e.response.status === 400) {
                 return rejectWithValue(e.response.data as ValidationError);
@@ -67,7 +67,7 @@ interface EditParams {
 }
 
 export const editHomework = createAsyncThunk<void, EditParams>(
-    'users/edit',
+    'homeworks/edit',
     async (params) => {
         try {
             const formData = new FormData();

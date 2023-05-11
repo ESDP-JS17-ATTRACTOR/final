@@ -43,6 +43,7 @@ export interface User {
   phoneNumber: string;
   country: string;
   googleId?: string;
+  avatar: string;
 }
 
 export interface ProfileMutation {

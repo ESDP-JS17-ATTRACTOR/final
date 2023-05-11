@@ -6,12 +6,17 @@ import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {createUsersLessons, fetchOneUsersLesson} from "@/features/usersLessons/usersLessonsThunks";
 import {selectOneUsersLesson} from "@/features/usersLessons/usersLessonsSlice";
 import {useRouter} from "next/router";
+import { selectUser } from "@/features/users/usersSlice";
+import DefaultAvatar from "../../../../../public/avatar.png"
 
 const Lesson = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const router = useRouter();
   const id = router.query.id as string;
   const usersLesson = useAppSelector(selectOneUsersLesson);
+
+  const avatar = user && user.avatar ? user.avatar : DefaultAvatar;
 
   useEffect(() => {
     dispatch(fetchOneUsersLesson(id));
@@ -36,32 +41,35 @@ const Lesson = () => {
           <p>I remind you that the lessons go to the course on Wednesdays at 12:00, and on Fridays at 12:30 Bishkek /
             09:30 Moscow time we call up on Zoom for feedback and answers to questions.</p>
         </div>
+        <div className="module-lesson-general-block-navigation-mobile">
+          <Link href='/' className="module-lesson-general-block-navigation-mobile_link">Previous lesson</Link>
+          <Link href='/' className="module-lesson-general-block-navigation-mobile_link">Next lesson</Link>
+        </div>
         <div className="module-lesson-general-block-player">
           <ReactPlayer
             url="https://www.youtube.com/watch?v=OeCR-ZJa1Lw"
             controls={true}
-            width={900}
-            height={560}
           />
         </div>
-        <div>
+        <div className="module-lesson-general-block-status">
+          <span className="module-lesson-general-block-status_info">unviewed</span>
+        </div>
+        <div className="module-lesson-general-block-confirm_info">
           <p>By clicking on the &quot;confirm&quot; button, you confirm the viewing of the lesson in full.</p>
+          <button className="button module-lesson-general-block-confirm_info_button">confirm</button>
         </div>
         <div className="module-lesson-general-block-comment-block">
           <Image
-            src=""
+            src={avatar}
+            className="comment-form_user-avatar"
             alt="avatar"
             width={100}
             height={100}
           />
           <input type="text"/>
         </div>
-        <button className="button module-lesson-general-block-comment-block_button">confirm</button>
+
       </div>
-      <button onClick={async () => {
-        const res = await dispatch(createUsersLessons(1));
-        console.log(res);
-      }}>BUTTON</button>
     </div>
   );
 };

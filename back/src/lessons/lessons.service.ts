@@ -22,6 +22,19 @@ export class LessonsService {
     private readonly moduleRepository: Repository<CourseModule>,
   ) {}
 
+  async getAll() {
+    return await this.lessonRepository.find({
+      relations: ['course', 'module'],
+    });
+  }
+
+  async getOneLesson(id: number) {
+    return await this.lessonRepository.findOne({
+      where: { id },
+      relations: ['course', 'module'],
+    });
+  }
+
   async createLesson(
     lessonData: CreateLessonDto,
     file: Express.Multer.File,
@@ -42,45 +55,39 @@ export class LessonsService {
       description: lessonData.description,
       isStopLesson: lessonData.isStopLesson,
     });
-
     return this.lessonRepository.save(lesson);
   }
 
   async updateLesson(
     id: number,
     file: Express.Multer.File,
-    lessonData: UpdateLessonDto,
+    updateData: UpdateLessonDto,
   ): Promise<Lesson> {
-    const lesson = await this.ifExistReturnsLesson(id);
+    const lesson = await this.getLessonById(id);
 
-    lesson.course = await this.findCourseById(lessonData.course);
-    lesson.module = await this.findModuleById(lessonData.module);
-    lesson.number = lessonData.number;
-    lesson.title = lessonData.title;
+    lesson.course = await this.findCourseById(updateData.course);
+    lesson.module = await this.findModuleById(updateData.module);
+    lesson.number = updateData.number;
+    lesson.title = updateData.title;
     lesson.video = file
       ? '/uploads/course/lesson/video/' + file.filename
       : null;
-    lesson.description = lessonData.description;
-    lesson.isStopLesson = lessonData.isStopLesson;
+    lesson.description = updateData.description;
+    lesson.isStopLesson = updateData.isStopLesson;
 
     return this.lessonRepository.save(lesson);
   }
 
   async removeLesson(id: number) {
-    const lesson: Lesson = await this.lessonRepository.findOne({
-      where: { id },
-    });
-    if (!lesson) {
-      throw new NotFoundException(`Lesson with id ${id} not found`);
-    }
+    await this.getLessonById(id);
     await this.lessonRepository.delete(id);
-    return { message: `Lesson with id ${id} deleted` };
+    return { message: `Lesson successfully deleted` };
   }
 
-  private async ifExistReturnsLesson(id: number): Promise<Lesson> {
+  private async getLessonById(id: number): Promise<Lesson> {
     const lesson = await this.lessonRepository.findOne({ where: { id } });
     if (!lesson) {
-      throw new NotFoundException('Lesson not found');
+      throw new NotFoundException('Lesson with id ${id} not found');
     }
     return lesson;
   }
@@ -92,7 +99,7 @@ export class LessonsService {
     }
   }
 
-  async findCourseById(id: number): Promise<Course> {
+  private async findCourseById(id: number): Promise<Course> {
     const course = await this.courseRepository.findOne({ where: { id: id } });
     if (!course) {
       throw new NotFoundException('Course not found');

@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 @Entity()
 export class CreateCourseModuleDto {
@@ -12,8 +12,10 @@ export class CreateCourseModuleDto {
   number: number;
 
   @IsNotEmpty()
+  @IsString()
   title: string;
 
   @IsNotEmpty()
+  @IsString()
   description: string;
 }

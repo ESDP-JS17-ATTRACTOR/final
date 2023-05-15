@@ -1,6 +1,7 @@
 import {
   BeforeInsert,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -22,7 +23,7 @@ export class Purchase {
   @JoinColumn({ name: 'courseId' })
   course: Course;
 
-  @Column()
+  @CreateDateColumn()
   purchasedAt: Date;
 
   @Column()

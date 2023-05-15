@@ -75,7 +75,6 @@ export class CommentsService {
       author: user,
       lesson: lesson,
       text: body.text,
-      createdAt: new Date(),
     });
 
     return this.commentsRepository.save(newComment);

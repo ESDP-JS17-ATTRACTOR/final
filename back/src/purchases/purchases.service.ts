@@ -119,13 +119,9 @@ export class PurchasesService {
       throw new BadRequestException('You have already bought this course!');
     }
 
-    const course = await this.findCourseById(courseId);
-    const today = new Date();
-
     const purchase = this.purchaseRepository.create({
       purchaser: user,
-      course: course,
-      purchasedAt: today,
+      course: await this.findCourseById(courseId),
     });
     return this.purchaseRepository.save(purchase);
   }

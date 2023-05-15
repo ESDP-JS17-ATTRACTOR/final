@@ -63,6 +63,23 @@ export interface Lesson {
   isStopLesson: boolean;
 }
 
+export interface UserLesson {
+  id: number;
+  number: number;
+  title: string;
+  video: string;
+  description: string;
+  isStopLesson: boolean;
+  module: UsersModule;
+}
+
+export interface UsersModule {
+  id: number;
+  number: number;
+  description: string;
+  title: string;
+}
+
 export interface Homework {
   id: string;
   lesson: Lesson;
@@ -170,7 +187,7 @@ export interface UsersModule {
 export interface UsersLesson {
   id: number;
   student: number;
-  lesson: Lesson;
+  lesson: UserLesson;
   isViewed: boolean;
   isAvailable: boolean;
 }

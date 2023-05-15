@@ -49,3 +49,11 @@ export const createUsersLessons = createAsyncThunk<void, number>(
     }
   }
 );
+
+export const updateUsersLesson = createAsyncThunk<void, string>(
+  'usersLesson/updateOne',
+  async (id) => {
+    const response = await axiosApi.patch('/users-lessons/' + id, { isViewed: true });
+    return response.data;
+  }
+);

@@ -42,6 +42,12 @@
       display: flex;
       justify-content: space-between;
     }
+    .disabled-link {
+      color: gray;
+      cursor: not-allowed;
+      pointer-events: none;
+      text-decoration: none;
+    }
     &_link {
       display: none;
       margin-top: 9px;

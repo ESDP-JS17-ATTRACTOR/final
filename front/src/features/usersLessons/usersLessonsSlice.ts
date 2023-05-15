@@ -4,7 +4,6 @@ import {
   createUsersLessons,
   fetchModuleLessons,
   fetchOneUsersLesson,
-  fetchUsersLessons
 } from "@/features/usersLessons/usersLessonsThunks";
 import {RootState} from "@/app/store";
 
@@ -13,7 +12,7 @@ interface UsersLessonsState {
   fetching: boolean;
   fetchingOne: boolean;
   creating: boolean;
-  item: null | UsersLesson;
+  usersLesson: null | UsersLesson;
 }
 
 const initialState: UsersLessonsState = {
@@ -21,7 +20,7 @@ const initialState: UsersLessonsState = {
   fetching: false,
   fetchingOne: false,
   creating: false,
-  item: null,
+  usersLesson: null,
 }
 
 const usersLessonsSlice = createSlice({
@@ -45,7 +44,7 @@ const usersLessonsSlice = createSlice({
     });
     builder.addCase(fetchOneUsersLesson.fulfilled, (state, {payload: usersLesson}) => {
       state.fetchingOne = false;
-      state.item = usersLesson;
+      state.usersLesson = usersLesson;
     });
     builder.addCase(fetchOneUsersLesson.rejected, (state) => {
       state.fetchingOne = false;
@@ -68,5 +67,5 @@ export const usersLessonsReducer = usersLessonsSlice.reducer;
 export const selectModuleLessons = (state: RootState) => state.usersLessons.moduleLessons;
 export const selectUsersLessonsFetching = (state: RootState) => state.usersLessons.fetching;
 export const selectUsersLessonFetchingOne = (state: RootState) => state.usersLessons.fetchingOne;
-export const selectOneUsersLesson = (state: RootState) => state.usersLessons.item;
+export const selectOneUsersLesson = (state: RootState) => state.usersLessons.usersLesson;
 export const selectUsersLessonsCreating = (state: RootState) => state.usersLessons.creating;

@@ -43,6 +43,7 @@ export interface User {
   phoneNumber: string;
   country: string;
   googleId?: string;
+  avatar: string;
 }
 
 export interface ProfileMutation {
@@ -60,6 +61,23 @@ export interface Lesson {
   video: string;
   description: string;
   isStopLesson: boolean;
+}
+
+export interface UserLesson {
+  id: number;
+  number: number;
+  title: string;
+  video: string;
+  description: string;
+  isStopLesson: boolean;
+  module: UsersModule;
+}
+
+export interface UsersModule {
+  id: number;
+  number: number;
+  description: string;
+  title: string;
 }
 
 export interface Homework {
@@ -169,7 +187,7 @@ export interface UsersModule {
 export interface UsersLesson {
   id: number;
   student: number;
-  lesson: Lesson;
+  lesson: UserLesson;
   isViewed: boolean;
   isAvailable: boolean;
 }

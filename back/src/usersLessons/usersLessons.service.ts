@@ -81,6 +81,17 @@ export class UsersLessonsService {
     return usersLessons;
   }
 
+  async getUsersLessonById(user: User, id: number) {
+    const userLesson = await this.usersLessonRepository
+      .createQueryBuilder('users_lesson')
+      .leftJoinAndSelect('users_lesson.lesson', 'lesson')
+      .where('users_lesson.id = :id', { id })
+      .leftJoinAndSelect('lesson.module', 'module')
+      .getOne();
+
+    return userLesson;
+  }
+
   async createUsersLesson(user: User, courseId: number) {
     const lessons = await this.lessonRepository.find({
       where: { course: { id: courseId } },

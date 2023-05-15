@@ -38,6 +38,13 @@ export class UsersLessonsController {
     return await this.usersLessonsService.getAll(user.id, id);
   }
 
+  @Get('/:id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(TokenAuthGuard)
+  async getById(@CurrentUser() user: User, @Param('id') id: number) {
+    return this.usersLessonsService.getUsersLessonById(user, id);
+  }
+
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)

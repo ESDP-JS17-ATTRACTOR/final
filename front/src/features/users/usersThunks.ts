@@ -48,7 +48,6 @@ export const facebookLogin = createAsyncThunk<User, {accessToken: string, userID
   async (accessToken, {rejectWithValue}) => {
     try {
       const response = await axiosApi.post('/users/facebook-authentication', accessToken);
-      console.log(accessToken);
       return response.data.user;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {

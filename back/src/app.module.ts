@@ -33,6 +33,7 @@ import { CourseModulesController } from './courseModules/courseModules.controlle
 import { CommentsService } from './comments/comments.service';
 import { CommentsController } from './comments/comments.controller';
 import { Comment } from './entities/comment.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { Comment } from './entities/comment.entity';
       StudentHomework,
       Comment,
     ]),
+    JwtModule,
     PassportModule,
   ],
   providers: [

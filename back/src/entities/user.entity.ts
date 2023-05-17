@@ -46,6 +46,12 @@ export class User {
   @Column({ type: 'varchar', length: 255, nullable: true })
   googleId: string;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  facebookId: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  linkedInId: string;
+
   @Column({ type: 'boolean', default: false })
   status: boolean;
 

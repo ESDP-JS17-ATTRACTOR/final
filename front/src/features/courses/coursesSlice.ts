@@ -25,7 +25,7 @@ const initialState: CourseState = {
   oneCourseEditing: false,
 };
 
-const coursesSlice = createSlice({
+export const coursesSlice = createSlice({
   name: 'courses',
   initialState,
   reducers: {},

@@ -15,7 +15,7 @@ const initialState: PurchasesState = {
   usersPurchasesError: false,
 };
 
-const purchasesSlice = createSlice({
+export const purchasesSlice = createSlice({
   name: 'purchases',
   initialState,
   reducers: {},

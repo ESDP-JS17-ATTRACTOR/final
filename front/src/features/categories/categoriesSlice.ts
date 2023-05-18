@@ -31,7 +31,7 @@ const initialState: CategoryState = {
   categoryEditing: false,
 };
 
-const categoriesSlice = createSlice({
+export const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {},

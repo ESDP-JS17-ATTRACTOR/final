@@ -172,3 +172,9 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
+
+// export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+//   console.log('2. Page.getStaticProps uses the store to dispatch things');
+//   await store.dispatch(fetchHomeworks());
+//   return { props: {} };
+// });

@@ -8,16 +8,19 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_CLIENT_ID } from '../../constants';
 import { PersistGate } from 'redux-persist/integration/react';
 import { addInterceptors } from '../../axiosApi';
+// import { wrapper } from '@/app/store';
 
 addInterceptors(store);
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, ...pageProps }: AppProps) {
+  // const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Layout>
             <Component {...pageProps} />
+            {/*<Component {...props.pageProps} />*/}
           </Layout>
         </PersistGate>
       </Provider>

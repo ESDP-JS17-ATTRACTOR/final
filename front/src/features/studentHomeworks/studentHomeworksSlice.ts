@@ -29,7 +29,7 @@ const initialState: StudentHomeworkState = {
   studentHomeworkEditing: false,
 };
 
-const studentHomeworksSlice = createSlice({
+export const studentHomeworksSlice = createSlice({
   name: 'studentHomeworks',
   initialState,
   reducers: {},

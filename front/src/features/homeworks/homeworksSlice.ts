@@ -8,6 +8,7 @@ import {
   fetchHomeworksByTutor,
   fetchOneHomework,
 } from '@/features/homeworks/homeworksThunks';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface HomeworkState {
   homeworks: Homework[];
@@ -33,11 +34,15 @@ const initialState: HomeworkState = {
   homeworkEditing: false,
 };
 
-const homeworksSlice = createSlice({
+export const homeworksSlice = createSlice({
   name: 'homeworks',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // builder.addCase(HYDRATE, (state, action) => {
+    //   // @ts-expect-error
+    //   return action.payload.homeworks;
+    // });
     builder.addCase(fetchHomeworks.pending, (state) => {
       state.homeworksLoading = true;
     });

@@ -27,7 +27,7 @@ const initialState: UserState = {
   tutorsLoading: false,
 };
 
-const usersSlice = createSlice({
+export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {

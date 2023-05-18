@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../../entities/lesson.entity';
+import { Lesson } from '../entities/lesson.entity';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user.entity';
-import { UsersLesson } from '../../entities/usersLesson.entity';
+import { User } from '../entities/user.entity';
+import { UsersLesson } from '../entities/usersLesson.entity';
 
 @Injectable()
 export class UsersLessonsService {
@@ -21,11 +21,11 @@ export class UsersLessonsService {
       const lessons = await this.usersLessonRepository
         .createQueryBuilder('users_lesson')
         .where('users_lesson.userId = :userId', { userId })
-        .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
-        .select(['users_lesson', 'lessonId'])
-        .leftJoinAndSelect('lessonId.module', 'moduleId')
-        .where('moduleId.id = :moduleId', { moduleId })
-        .orderBy('lessonId.number', 'ASC')
+        .leftJoinAndSelect('users_lesson.lesson', 'lesson')
+        .select(['users_lesson', 'lesson'])
+        .leftJoinAndSelect('lesson.module', 'module')
+        .where('module.id = :moduleId', { moduleId })
+        .orderBy('lesson.number', 'ASC')
         .getMany();
       if (!lessons.length) {
         throw new NotFoundException('There is no lessons on this module');
@@ -56,10 +56,10 @@ export class UsersLessonsService {
       .createQueryBuilder('users_lesson')
       .where('users_lesson.userId = :userId', { userId })
       .leftJoinAndSelect('users_lesson.student', 'userId')
-      .leftJoinAndSelect('users_lesson.lesson', 'lessonId')
+      .leftJoinAndSelect('users_lesson.lesson', 'lesson')
       .select(['users_lesson', 'userId.id', 'lessonId'])
-      .leftJoinAndSelect('lessonId.course', 'courseId')
-      .leftJoinAndSelect('lessonId.module', 'moduleId')
+      .leftJoinAndSelect('lesson.course', 'course')
+      .leftJoinAndSelect('lesson.module', 'module')
       .orderBy('lessonId.number', 'ASC')
       .getMany();
 
@@ -73,6 +73,17 @@ export class UsersLessonsService {
       usersLessons[i].isAvailable = true;
     }
     return usersLessons;
+  }
+
+  async getUsersLessonById(user: User, id: number) {
+    const userLesson = await this.usersLessonRepository
+      .createQueryBuilder('users_lesson')
+      .leftJoinAndSelect('users_lesson.lesson', 'lesson')
+      .where('users_lesson.id = :id', { id })
+      .leftJoinAndSelect('lesson.module', 'module')
+      .getOne();
+
+    return userLesson;
   }
 
   async createUsersLesson(user: User, courseId: number) {
@@ -108,9 +119,9 @@ export class UsersLessonsService {
     return this.usersLessonRepository.save(usersLessons);
   }
 
-  async updateUsersLesson(lessonId: number, isViewed: boolean): Promise<{ message: string }> {
+  async updateUsersLesson(id: number, isViewed: boolean): Promise<{ message: string }> {
     const lesson = await this.usersLessonRepository.findOne({
-      where: { id: lessonId },
+      where: { id },
     });
 
     if (!lesson) {

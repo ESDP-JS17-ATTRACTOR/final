@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Course } from './course.entity';
 
@@ -15,7 +15,7 @@ export class Purchase {
   @JoinColumn({ name: 'courseId' })
   course: Course;
 
-  @Column()
+  @CreateDateColumn()
   purchasedAt: Date;
 
   @Column()

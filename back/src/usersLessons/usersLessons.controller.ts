@@ -11,13 +11,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../../entities/lesson.entity';
+import { Lesson } from '../entities/lesson.entity';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user.entity';
-import { UsersLesson } from '../../entities/usersLesson.entity';
+import { User } from '../entities/user.entity';
+import { UsersLesson } from '../entities/usersLesson.entity';
 import { UsersLessonsService } from './usersLessons.service';
-import { CurrentUser } from '../../auth/currentUser.decorator';
-import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { CurrentUser } from '../auth/currentUser.decorator';
+import { TokenAuthGuard } from '../auth/token-auth.guard';
 
 @Controller('users-lessons')
 export class UsersLessonsController {
@@ -36,6 +36,13 @@ export class UsersLessonsController {
   @UseGuards(TokenAuthGuard)
   async getAll(@CurrentUser() user: User, @Query('id') id: number) {
     return await this.usersLessonsService.getAll(user.id, id);
+  }
+
+  @Get('/:id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(TokenAuthGuard)
+  async getById(@CurrentUser() user: User, @Param('id') id: number) {
+    return this.usersLessonsService.getUsersLessonById(user, id);
   }
 
   @Post()

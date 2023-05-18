@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from './database.module';
+import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { UsersController } from './users/users.controller';
@@ -23,9 +23,9 @@ import { Purchase } from './entities/purchase.entity';
 import { Lesson } from './entities/lesson.entity';
 import { UsersLesson } from './entities/usersLesson.entity';
 import { LessonsController } from './lessons/lessons.controller';
-import { UsersLessonsController } from './lessons/usersLessons/usersLessons.controller';
+import { UsersLessonsController } from './usersLessons/usersLessons.controller';
 import { PurchasesController } from './purchases/purchases.controller';
-import { UsersLessonsService } from './lessons/usersLessons/usersLessons.service';
+import { UsersLessonsService } from './usersLessons/usersLessons.service';
 import { LessonsService } from './lessons/lessons.service';
 import { PurchasesService } from './purchases/purchases.service';
 import { CourseModulesService } from './courseModules/courseModules.service';
@@ -34,6 +34,7 @@ import { CommentsService } from './comments/comments.service';
 import { CommentsController } from './comments/comments.controller';
 import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './homeworks/homeworks.service';
+// import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { HomeworksService } from './homeworks/homeworks.service';
       Comment,
     ]),
     PassportModule,
+    // UsersModule,
   ],
   providers: [
     AppService,

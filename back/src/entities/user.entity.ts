@@ -10,26 +10,26 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column({ unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column()
   firstName: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column()
   lastName: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   phoneNumber: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   country: string;
 
   @Exclude()
-  @Column({ type: 'varchar', length: 255 })
+  @Column()
   password: string;
 
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column()
   token: string;
 
   @Column({
@@ -40,10 +40,10 @@ export class User {
   })
   role: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   avatar: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ nullable: true })
   googleId: string;
 
   @Column({ type: 'boolean', default: false })

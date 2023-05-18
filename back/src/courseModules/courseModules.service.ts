@@ -14,12 +14,12 @@ export class CourseModulesService {
     private readonly courseRepository: Repository<Course>,
   ) {}
 
-  async getAll(courseId: number) {
+  async getAll(courseId: number): Promise<CourseModule[]> {
     const courseModules = await this.courseModulesRepository
       .createQueryBuilder('course_module')
       .where('course_module.courseId = :courseId', { courseId })
-      .leftJoinAndSelect('course_module.course', 'courseId')
-      .select(['course_module', 'courseId.id'])
+      .leftJoinAndSelect('course_module.course', 'course')
+      .select(['course_module', 'course.id'])
       .orderBy('course_module.number', 'ASC')
       .getMany();
 
@@ -29,7 +29,7 @@ export class CourseModulesService {
     return courseModules;
   }
 
-  async createCourseModule(body: CreateCourseModuleDto) {
+  async createCourseModule(body: CreateCourseModuleDto): Promise<CourseModule> {
     const courseModule = await this.courseModulesRepository.findOne({
       where: { course: { id: body.course }, number: body.number },
     });
@@ -55,16 +55,10 @@ export class CourseModulesService {
     return this.courseModulesRepository.save(newCourseModule);
   }
 
-  async updateCourseModule(id: number, body: CreateCourseModuleDto) {
-    const courseModule = await this.courseModulesRepository.findOne({
-      where: { id },
-    });
+  async updateCourseModule(id: number, body: CreateCourseModuleDto): Promise<CourseModule> {
+    const courseModule = await this.getCourseModuleById(id);
 
-    if (!courseModule) {
-      throw new NotFoundException('Module not found');
-    }
-
-    courseModule.course = await this.checkCourseExists(body.course);
+    courseModule.course = await this.getCourseById(body.course);
     courseModule.number = body.number;
     courseModule.title = body.title;
     courseModule.description = body.description;
@@ -72,19 +66,25 @@ export class CourseModulesService {
     return await this.courseModulesRepository.save(courseModule);
   }
 
-  async removeCourseModule(id: number) {
+  async removeCourseModule(id: number): Promise<{ message: string }> {
+    await this.getCourseModuleById(id);
+    await this.courseModulesRepository.delete(id);
+    return { message: `Module with id ${id} deleted` };
+  }
+
+  private async getCourseModuleById(id: number): Promise<CourseModule> {
     const courseModule = await this.courseModulesRepository.findOne({
       where: { id },
     });
 
     if (!courseModule) {
-      throw new NotFoundException(`Module with id ${id} not found`);
+      throw new NotFoundException(`Module not found`);
     }
-    await this.courseModulesRepository.delete(id);
-    return { message: `Module with id ${id} deleted` };
+
+    return courseModule;
   }
 
-  private async checkCourseExists(id: number) {
+  private async getCourseById(id: number): Promise<Course> {
     const course = await this.courseRepository.findOne({
       where: { id },
     });

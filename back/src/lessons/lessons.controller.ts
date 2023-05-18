@@ -36,12 +36,17 @@ export class LessonsController {
 
   @Get()
   async getAll() {
-    return this.lessonRepository.find();
+    return this.lessonsService.getAll();
+  }
+
+  @Get(':id')
+  async getOneLesson(@Param('id') id: number) {
+    return this.lessonsService.getOneLesson(id);
   }
 
   @Post()
   @UseGuards(TokenAuthGuard, StaffGuard)
-  @UseInterceptors(FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }))
+  @UseInterceptors(FileInterceptor('video', { dest: './public/uploads/course/lessons/video' }))
   async createLesson(@UploadedFile() file: Express.Multer.File, @Body() lessonData: CreateLessonDto) {
     return this.lessonsService.createLesson(lessonData, file);
   }
@@ -52,26 +57,9 @@ export class LessonsController {
   async updateLesson(
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
-    @Body() updateLessonDto: UpdateLessonDto,
+    @Body() updateData: UpdateLessonDto,
   ) {
-    return this.lessonsService.updateLesson(id, file, updateLessonDto);
-  }
-
-  @Get(':id')
-  async getOneLesson(@Param('id') id: number) {
-    const { course, module, ...result } = await this.lessonRepository
-      .createQueryBuilder('lesson')
-      .leftJoinAndSelect('lesson.course', 'course')
-      .leftJoinAndSelect('lesson.module', 'module')
-      .select(['lesson.title', 'lesson.duration', 'lesson.price', 'lesson.isGroup', 'module.id', 'course.id'])
-      .where('lesson.id = :id', { id })
-      .getOne();
-
-    return {
-      ...result,
-      course: course.id.toString(),
-      module: module.id.toString(),
-    };
+    return this.lessonsService.updateLesson(id, file, updateData);
   }
 
   @Delete(':id')

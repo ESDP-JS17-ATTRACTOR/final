@@ -21,7 +21,7 @@ export class Lesson {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   video: string | null;
 
   @Column()

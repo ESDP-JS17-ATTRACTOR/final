@@ -3,7 +3,6 @@ import { ModuleLesson } from '../../../types';
 import ReactPlayer from 'react-player';
 import dayjs from 'dayjs';
 import Link from 'next/link';
-import axiosApi from '../../../axiosApi';
 import { apiURL } from '../../../constants';
 
 interface Props {

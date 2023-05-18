@@ -10,49 +10,166 @@
 
   &-header {
     &_title {
-      margin-bottom: 16px;
+      margin-bottom: 22px;
       font-weight: 700;
-      font-size: 28px;
-      line-height: 34px;
-      text-transform: capitalize;
-      color: $blue-text;
-    }
-    &_subtitle {
-      margin: 0 auto 16px;
       font-size: 24px;
       line-height: 29px;
       text-transform: capitalize;
+      color: $blue-text;
+      @include md {
+        margin-bottom: 16px;
+        font-size: 28px;
+        line-height: 34px;
+      }
+    }
+    &_subtitle {
+      margin: 0 auto 16px;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 29px;
+      text-transform: capitalize;
+      @include md {
+        font-size: 24px;
+        line-height: 29px;
+      }
     }
   }
   &-navigation {
     display: flex;
-    justify-content: space-between;
-    margin: 0 105px 0;
+    justify-content: center;
+    margin: 0;
+    @include md {
+      display: flex;
+      justify-content: space-between;
+    }
+    .disabled-link {
+      color: gray;
+      cursor: not-allowed;
+      pointer-events: none;
+      text-decoration: none;
+    }
     &_link {
+      display: none;
       margin-top: 9px;
       color: $blue-text;
       text-decoration: none;
+      @include md {
+        display: block;
+        margin-top: 9px;
+        color: $blue-text;
+        text-decoration: none;
+      }
     }
     &_serial {
-      margin-top: 0;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 29px;
+      margin: 0;
+      @include md {
+        margin-top: 0;
+      }
       & span {
         color: $dark-orange;
       }
     }
   }
+  &-navigation-mobile {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    @include md {
+      display: none;
+    }
+    &_link {
+      margin-top: 9px;
+      color: $blue-text;
+      text-decoration: none;
+    }
+  }
   &-description {
-    margin: 0 110px 0;
-    font-size: 20px;
-    line-height: 24px;
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    @include md {
+      font-size: 20px;
+      line-height: 24px;
+    }
   }
   &-player {
-    margin: 0 auto 0;
-    width: 900px;
-    height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    min-width: 297px;
+    width: 100%;
+    height: auto;
+    @include md {
+      min-width: 900px;
+      margin-bottom: 32px;
+    }
+  }
+  &-status {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    @include md {
+      display: none;
+    }
+    &_info {
+      display: block;
+      width: 138px;
+      height: 46px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 48px;
+      color: $blue-text;
+      background: #FCFCFC;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 22px;
+    }
+  }
+  &-confirm_info {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 27px;
+    p {
+      margin: 0;
+    }
+    &_button {
+      align-self: flex-end;
+      color: #FFFFFF;
+      font-size: 20px;
+      line-height: 24px;
+      padding: 13px 24px 14px 24px;
+      border-radius: 24px;
+      margin-top: 10px;
+      @include md {
+        align-self: flex-end;
+        color: #FFFFFF;
+        font-size: 20px;
+        line-height: 24px;
+        padding: 15px 39px 18px 39px;
+        border-radius: 24px;
+      }
+    }
   }
   &-comment-block {
+    display: flex;
+    margin-bottom: 50px;
+    .comment-form_user-avatar {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      background-color: #D9D9D9;
+      object-fit: cover;
+      margin-right: 10px;
+    }
     & input {
-      width: 814px;
+      width: 100%;
+      height: 76px;
       padding: 20px;
       border: 0;
       border-radius: 23px;
@@ -60,17 +177,6 @@
       &:focus {
         outline: none;
       }
-    }
-    & Image {
-      border-radius: 50%;
-    }
-    &_button {
-      align-self: flex-end;
-      color: #ffffff;
-      font-size: 20px;
-      line-height: 24px;
-      padding: 15px 39px 18px 39px;
-      border-radius: 24px;
     }
   }
 }

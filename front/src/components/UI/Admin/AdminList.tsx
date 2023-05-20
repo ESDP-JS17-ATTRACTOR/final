@@ -1,9 +1,9 @@
-import React from "react";
-import {useRouter} from "next/router";
-import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import PeopleIcon from "@mui/icons-material/People";
-import GroupsIcon from "@mui/icons-material/Groups";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import PeopleIcon from '@mui/icons-material/People';
+import GroupsIcon from '@mui/icons-material/Groups';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CategoryIcon from '@mui/icons-material/Category';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
@@ -12,50 +12,39 @@ const AdminListItems = () => {
 
   return (
     <>
-      <ListItemButton
-        onClick={() => router.push('/admin/students')}
-      >
+      <ListItemButton onClick={() => router.push('/admin/students')}>
         <ListItemIcon>
-          <PeopleIcon/>
+          <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="Студенты"/>
+        <ListItemText primary="Студенты" />
       </ListItemButton>
 
-      <ListItemButton
-        onClick={() => router.push('/admin/tutors')}
-      >
+      <ListItemButton onClick={() => router.push('/admin/tutors')}>
         <ListItemIcon>
-          <GroupsIcon/>
+          <GroupsIcon />
         </ListItemIcon>
-        <ListItemText primary="Преподаватели"/>
+        <ListItemText primary="Преподаватели" />
       </ListItemButton>
 
-      <ListItemButton
-        onClick={() => router.push('/admin/categories')}
-      >
+      <ListItemButton onClick={() => router.push('/admin/categories')}>
         <ListItemIcon>
-          <CategoryIcon/>
+          <CategoryIcon />
         </ListItemIcon>
-        <ListItemText primary="Категории"/>
+        <ListItemText primary="Категории" />
       </ListItemButton>
 
-      <ListItemButton
-        onClick={() => router.push('/admin/courses')}
-      >
+      <ListItemButton onClick={() => router.push('/admin/courses')}>
         <ListItemIcon>
-          <AutoStoriesIcon/>
+          <AutoStoriesIcon />
         </ListItemIcon>
-        <ListItemText primary="Курсы"/>
+        <ListItemText primary="Курсы" />
       </ListItemButton>
 
-
-      <ListItemButton
-        onClick={() => router.push('/admin/lessons')}
-      >
+      <ListItemButton onClick={() => router.push('/admin/lessons')}>
         <ListItemIcon>
-          <HistoryEduIcon/>
+          <HistoryEduIcon />
         </ListItemIcon>
-        <ListItemText primary="Уроки"/>
+        <ListItemText primary="Уроки" />
       </ListItemButton>
     </>
   );

@@ -37,13 +37,7 @@ export class CoursesController {
       .createQueryBuilder('course')
       .leftJoinAndSelect('course.category', 'category')
       .leftJoinAndSelect('course.tutor', 'tutor')
-      .select([
-        'course',
-        'tutor.id',
-        'tutor.firstName',
-        'tutor.lastName',
-        'category',
-      ])
+      .select(['course', 'tutor.id', 'tutor.firstName', 'tutor.lastName', 'category'])
       .getMany();
   }
 
@@ -99,10 +93,7 @@ export class CoursesController {
 
   @Patch(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
-  async updateCourse(
-    @Param('id') id: number,
-    @Body() updateCourseDto: UpdateCourseDto,
-  ) {
+  async updateCourse(@Param('id') id: number, @Body() updateCourseDto: UpdateCourseDto) {
     const course = await this.courseRepository.findOne({
       where: { id: id },
     });

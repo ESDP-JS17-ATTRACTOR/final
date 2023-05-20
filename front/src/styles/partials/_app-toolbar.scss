@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 header {
   position: relative;
@@ -25,4 +25,3 @@ header {
     }
   }
 }
-

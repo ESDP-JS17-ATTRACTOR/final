@@ -40,10 +40,7 @@ export class PurchasesController {
   @Post() // Guard ???
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
-  async createPurchase(
-    @CurrentUser() user: User,
-    @Body() body: { id: number },
-  ) {
+  async createPurchase(@CurrentUser() user: User, @Body() body: { id: number }) {
     return this.purchasesService.createPurchase(user, body.id);
   }
 

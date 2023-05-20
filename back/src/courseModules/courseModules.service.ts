@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseModule } from '../entities/courseModule.entity';
 import { Repository } from 'typeorm';
@@ -59,10 +55,7 @@ export class CourseModulesService {
     return this.courseModulesRepository.save(newCourseModule);
   }
 
-  async updateCourseModule(
-    id: number,
-    body: CreateCourseModuleDto,
-  ): Promise<CourseModule> {
+  async updateCourseModule(id: number, body: CreateCourseModuleDto): Promise<CourseModule> {
     const courseModule = await this.getCourseModuleById(id);
 
     courseModule.course = await this.getCourseById(body.course);

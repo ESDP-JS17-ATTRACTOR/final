@@ -1,10 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {
-  BadRequestException,
-  ValidationError,
-  ValidationPipe,
-} from '@nestjs/common';
+import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
@@ -25,9 +21,7 @@ async function bootstrap() {
           const constraints = error.constraints;
 
           if (constraints) {
-            validationErrors[error.property] = Object.keys(constraints).map(
-              (key) => constraints[key],
-            );
+            validationErrors[error.property] = Object.keys(constraints).map((key) => constraints[key]);
           }
         });
 

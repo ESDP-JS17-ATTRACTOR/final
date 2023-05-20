@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import CoursesTable from "@/components/Tables/CoursesTables/CoursesTable";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { fetchUserPurchases } from "@/features/purchases/puchasesThunks";
-import { selectUsersPurchases } from "@/features/purchases/purchasesSlice";
+import React, { useEffect } from 'react';
+import CoursesTable from '@/components/Tables/CoursesTables/CoursesTable';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { fetchUserPurchases } from '@/features/purchases/puchasesThunks';
+import { selectUsersPurchases } from '@/features/purchases/purchasesSlice';
 
 const MyCourses = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +11,6 @@ const MyCourses = () => {
   useEffect(() => {
     dispatch(fetchUserPurchases());
   }, [dispatch]);
-
 
   return (
     <div className="user-courses-block container">

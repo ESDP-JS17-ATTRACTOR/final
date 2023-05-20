@@ -39,10 +39,7 @@ export class StudentHomeworksController {
     const user = req.user as User;
     const studentHomeworks = await this.studentHomeworkRepository.find({
       relations: ['homework'],
-      where: [
-        { studentEmail: user.email },
-        { homework: { tutorEmail: user.email } },
-      ],
+      where: [{ studentEmail: user.email }, { homework: { tutorEmail: user.email } }],
       order: {
         date: 'DESC',
       },
@@ -88,9 +85,7 @@ export class StudentHomeworksController {
       date: new Date(),
       studentName: user.firstName,
       studentEmail: user.email,
-      studentFiles: files
-        ? files.map((file) => '/uploads/studentsHomeworks/' + file.filename)
-        : null,
+      studentFiles: files ? files.map((file) => '/uploads/studentsHomeworks/' + file.filename) : null,
     });
     return this.studentHomeworkRepository.save(studentHomework);
   }
@@ -102,8 +97,7 @@ export class StudentHomeworksController {
       where: { id: id },
     });
 
-    const newStatus =
-      studentHomework.isChecked === 'Not checked' ? 'Checked' : 'Not checked';
+    const newStatus = studentHomework.isChecked === 'Not checked' ? 'Checked' : 'Not checked';
 
     await this.studentHomeworkRepository.update(id, { isChecked: newStatus });
 
@@ -123,11 +117,10 @@ export class StudentHomeworksController {
   @UseGuards(TokenAuthGuard)
   async removeOneStudentHomework(@Req() req: Request, @Param('id') id: number) {
     const user = req.user as User;
-    const studentHomework: StudentHomework =
-      await this.studentHomeworkRepository.findOne({
-        relations: ['homework'],
-        where: { studentEmail: user.email, homework: { id: id } },
-      });
+    const studentHomework: StudentHomework = await this.studentHomeworkRepository.findOne({
+      relations: ['homework'],
+      where: { studentEmail: user.email, homework: { id: id } },
+    });
     if (studentHomework) {
       await this.studentHomeworkRepository.delete(studentHomework.id);
       return { message: 'Student homework deleted' };

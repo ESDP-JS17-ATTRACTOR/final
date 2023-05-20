@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 @import url('https://fonts.cdnfonts.com/css/craftwork-grotesk');
 
 .team-card_bg {
@@ -10,8 +10,8 @@
 .team-card {
   width: 271px;
   height: 388px;
-  background-color: #FFFFFF;
-  border: 2px solid #F6A451;
+  background-color: #ffffff;
+  border: 2px solid #f6a451;
   box-shadow: 2px 4px 12px 12px rgba(0, 0, 0, 0.15);
   border-radius: 26px;
   margin: 15px;
@@ -28,7 +28,7 @@
     margin: 25px auto 12px;
     width: 172px;
     height: 167px;
-    background-color: #D9E8F0;
+    background-color: #d9e8f0;
     border-radius: 14px;
     @include md {
       width: 100px;

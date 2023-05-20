@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseModule } from '../entities/courseModule.entity';
 import { Repository } from 'typeorm';
@@ -33,10 +24,7 @@ export class CourseModulesController {
   }
 
   @Patch(':id')
-  async updateCourseModule(
-    @Param('id') id: number,
-    @Body() body: CreateCourseModuleDto,
-  ) {
+  async updateCourseModule(@Param('id') id: number, @Body() body: CreateCourseModuleDto) {
     return this.courseModulesService.updateCourseModule(id, body);
   }
 

@@ -34,7 +34,7 @@ import { CommentsService } from './comments/comments.service';
 import { CommentsController } from './comments/comments.controller';
 import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './homeworks/homeworks.service';
-import { UsersModule } from './users/users.module';
+// import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -53,7 +53,7 @@ import { UsersModule } from './users/users.module';
       Comment,
     ]),
     PassportModule,
-    UsersModule,
+    // UsersModule,
   ],
   providers: [
     AppService,

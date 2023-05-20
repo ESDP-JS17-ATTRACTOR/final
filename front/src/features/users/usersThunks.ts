@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   LoginError,
   LoginMutation,
@@ -6,18 +6,18 @@ import {
   RegisterMutation,
   Tutor,
   User,
-  ValidationError
-} from "../../../types";
-import axiosApi from "../../../axiosApi";
-import { isAxiosError } from "axios";
-import { unsetUser } from "@/features/users/usersSlice";
-import { RootState } from "@/app/store";
+  ValidationError,
+} from '../../../types';
+import axiosApi from '../../../axiosApi';
+import { isAxiosError } from 'axios';
+import { unsetUser } from '@/features/users/usersSlice';
+import { RootState } from '@/app/store';
 
 export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: ValidationError }>(
-  "users/register",
+  'users/register',
   async (registerMutation, { rejectWithValue }) => {
     try {
-      const response = await axiosApi.post<User>("users/register", registerMutation);
+      const response = await axiosApi.post<User>('users/register', registerMutation);
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
@@ -25,14 +25,14 @@ export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: 
       }
       throw e;
     }
-  }
+  },
 );
 
 export const googleLogin = createAsyncThunk<User, string, { rejectValue: LoginError }>(
-  "users/googleLogin",
+  'users/googleLogin',
   async (credential, { rejectWithValue }) => {
     try {
-      const response = await axiosApi.post("/users/google-authentication", { credential });
+      const response = await axiosApi.post('/users/google-authentication', { credential });
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
@@ -40,14 +40,14 @@ export const googleLogin = createAsyncThunk<User, string, { rejectValue: LoginEr
       }
       throw e;
     }
-  }
+  },
 );
 
 export const login = createAsyncThunk<User, LoginMutation, { rejectValue: LoginError }>(
-  "users/login",
+  'users/login',
   async (loginInfo, { rejectWithValue }) => {
     try {
-      const response = await axiosApi.post<User>("users/login", loginInfo);
+      const response = await axiosApi.post<User>('users/login', loginInfo);
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 401) {
@@ -55,21 +55,21 @@ export const login = createAsyncThunk<User, LoginMutation, { rejectValue: LoginE
       }
       throw e;
     }
-  }
+  },
 );
 
 export const logout = createAsyncThunk<void, void, { state: RootState }>(
-  "users/logout",
+  'users/logout',
   async (_, { dispatch, getState }) => {
     const user = getState().users.user;
-    await axiosApi.delete("users/sessions", { headers: { "Authorization": user?.token } });
+    await axiosApi.delete('users/sessions', { headers: { Authorization: user?.token } });
     dispatch(unsetUser());
-  }
+  },
 );
 
 export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectValue: ValidationError }>(
   'users/edit',
-  async (profileMutation, {rejectWithValue}) => {
+  async (profileMutation, { rejectWithValue }) => {
     try {
       const response = await axiosApi.patch<User>('users/edit-profile', profileMutation);
       return response.data;
@@ -82,10 +82,7 @@ export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectV
   },
 );
 
-export const fetchTutors = createAsyncThunk<Tutor[]>(
-    "users/fetchTutors",
-    async () => {
-        const response = await axiosApi.get<Tutor[]>("/users/tutors");
-        return response.data;
-    }
-);
+export const fetchTutors = createAsyncThunk<Tutor[]>('users/fetchTutors', async () => {
+  const response = await axiosApi.get<Tutor[]>('/users/tutors');
+  return response.data;
+});

@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { LoginError, Tutor, User, ValidationError } from "../../../types";
-import { fetchTutors, editUserProfile, googleLogin, login, register } from "./usersThunks";
-import { RootState } from "@/app/store";
+import { createSlice } from '@reduxjs/toolkit';
+import { LoginError, Tutor, User, ValidationError } from '../../../types';
+import { fetchTutors, editUserProfile, googleLogin, login, register } from './usersThunks';
+import { RootState } from '@/app/store';
 
 interface UserState {
-  user: User | null,
-  registerLoading: boolean,
-  registerError: ValidationError | null,
-  loginLoading: boolean,
-  loginError: LoginError | null,
-  modalWindowStatus: boolean,
-  editLoading: boolean,
-  tutors: Tutor[],
-  tutorsLoading: boolean
+  user: User | null;
+  registerLoading: boolean;
+  registerError: ValidationError | null;
+  loginLoading: boolean;
+  loginError: LoginError | null;
+  modalWindowStatus: boolean;
+  editLoading: boolean;
+  tutors: Tutor[];
+  tutorsLoading: boolean;
 }
 
 const initialState: UserState = {
@@ -24,11 +24,11 @@ const initialState: UserState = {
   modalWindowStatus: false,
   editLoading: false,
   tutors: [],
-  tutorsLoading: false
+  tutorsLoading: false,
 };
 
-const usersSlice = createSlice({
-  name: "users",
+export const usersSlice = createSlice({
+  name: 'users',
   initialState,
   reducers: {
     switchModalWindow: (state) => {
@@ -53,34 +53,43 @@ const usersSlice = createSlice({
       state.registerError = error || null;
     });
 
-    builder.addCase(login.pending, (state) => {
-      state.loginLoading = true;
-    }).addCase(login.fulfilled, (state, { payload: user }) => {
-      state.loginLoading = false;
-      state.user = user;
-    }).addCase(login.rejected, (state, { payload: error }) => {
-      state.loginLoading = false;
-      state.loginError = error || null;
-    });
+    builder
+      .addCase(login.pending, (state) => {
+        state.loginLoading = true;
+      })
+      .addCase(login.fulfilled, (state, { payload: user }) => {
+        state.loginLoading = false;
+        state.user = user;
+      })
+      .addCase(login.rejected, (state, { payload: error }) => {
+        state.loginLoading = false;
+        state.loginError = error || null;
+      });
 
-    builder.addCase(googleLogin.pending, (state) => {
-      state.loginLoading = true;
-    }).addCase(googleLogin.fulfilled, (state, { payload: user }) => {
-      state.loginLoading = false;
-      state.user = user;
-    }).addCase(googleLogin.rejected, (state, { payload: error }) => {
-      state.loginLoading = false;
-      state.loginError = error || null;
-    });
+    builder
+      .addCase(googleLogin.pending, (state) => {
+        state.loginLoading = true;
+      })
+      .addCase(googleLogin.fulfilled, (state, { payload: user }) => {
+        state.loginLoading = false;
+        state.user = user;
+      })
+      .addCase(googleLogin.rejected, (state, { payload: error }) => {
+        state.loginLoading = false;
+        state.loginError = error || null;
+      });
 
-    builder.addCase(editUserProfile.pending, (state) => {
-      state.editLoading = true;
-    }).addCase(editUserProfile.fulfilled, (state, { payload: user }) => {
-      state.editLoading = false;
-      state.user = user;
-    }).addCase(editUserProfile.rejected, (state) => {
-      state.editLoading = false;
-    });
+    builder
+      .addCase(editUserProfile.pending, (state) => {
+        state.editLoading = true;
+      })
+      .addCase(editUserProfile.fulfilled, (state, { payload: user }) => {
+        state.editLoading = false;
+        state.user = user;
+      })
+      .addCase(editUserProfile.rejected, (state) => {
+        state.editLoading = false;
+      });
 
     builder.addCase(fetchTutors.pending, (state) => {
       state.tutorsLoading = true;
@@ -92,7 +101,7 @@ const usersSlice = createSlice({
     builder.addCase(fetchTutors.rejected, (state) => {
       state.tutorsLoading = false;
     });
-  }
+  },
 });
 
 export const usersReducer = usersSlice.reducer;

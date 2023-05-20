@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import ReactPlayer from "react-player";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { fetchModuleLessons, fetchOneUsersLesson, updateUsersLesson } from "@/features/usersLessons/usersLessonsThunks";
-import { selectModuleLessons, selectOneUsersLesson } from "@/features/usersLessons/usersLessonsSlice";
-import { useRouter } from "next/router";
-import { selectUser } from "@/features/users/usersSlice";
-import DefaultAvatar from "../../../../../public/avatar.png";
-import { apiURL } from "../../../../../constants";
+import React, { useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import ReactPlayer from 'react-player';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { fetchModuleLessons, fetchOneUsersLesson, updateUsersLesson } from '@/features/usersLessons/usersLessonsThunks';
+import { selectModuleLessons, selectOneUsersLesson } from '@/features/usersLessons/usersLessonsSlice';
+import { useRouter } from 'next/router';
+import { selectUser } from '@/features/users/usersSlice';
+import DefaultAvatar from '../../../../../public/avatar.png';
+import { apiURL } from '../../../../../constants';
 
 const Lesson = () => {
   const dispatch = useAppDispatch();
@@ -57,54 +57,58 @@ const Lesson = () => {
       <div className="module-lesson-general-block">
         <div className="module-lesson-general-block-header">
           <h5 className="module-lesson-general-block-header_title">Mastermind by launches 01.02.2023</h5>
-          <h6
-            className="module-lesson-general-block-header_subtitle">Module {usersLesson?.lesson.module.number} Lesson {usersLesson?.lesson.number}</h6>
+          <h6 className="module-lesson-general-block-header_subtitle">
+            Module {usersLesson?.lesson.module.number} Lesson {usersLesson?.lesson.number}
+          </h6>
         </div>
         <div className="module-lesson-general-block-navigation">
           <Link
             href={`/my-courses/modules/lesson/${prevLesson}`}
-            className={`module-lesson-general-block-navigation_link ${prevLesson === null ? "disabled-link" : ""}`}
-          >Previous lesson</Link>
+            className={`module-lesson-general-block-navigation_link ${prevLesson === null ? 'disabled-link' : ''}`}
+          >
+            Previous lesson
+          </Link>
           <p className="module-lesson-general-block-navigation_serial">
-            <span>{usersLesson?.lesson.number}</span> of {moduleLessons.length} lessons</p>
+            <span>{usersLesson?.lesson.number}</span> of {moduleLessons.length} lessons
+          </p>
           <Link
             href={`/my-courses/modules/lesson/${nextLesson}`}
-            className={`module-lesson-general-block-navigation_link ${nextLesson === null ? "disabled-link" : ""}`}
-          >Next lesson</Link>
+            className={`module-lesson-general-block-navigation_link ${nextLesson === null ? 'disabled-link' : ''}`}
+          >
+            Next lesson
+          </Link>
         </div>
         <div className="module-lesson-general-block-description">
           <p>Start watching the lesson(s) right now, and do your homework in the &quot;task&quot; section.</p>
-          <p>I remind you that the lessons go to the course on Wednesdays at 12:00, and on Fridays at 12:30 Bishkek /
-            09:30 Moscow time we call up on Zoom for feedback and answers to questions.</p>
+          <p>
+            I remind you that the lessons go to the course on Wednesdays at 12:00, and on Fridays at 12:30 Bishkek /
+            09:30 Moscow time we call up on Zoom for feedback and answers to questions.
+          </p>
         </div>
         <div className="module-lesson-general-block-navigation-mobile">
-          <Link href="/" className="module-lesson-general-block-navigation-mobile_link">Previous lesson</Link>
-          <Link href="/" className="module-lesson-general-block-navigation-mobile_link">Next lesson</Link>
+          <Link href="/" className="module-lesson-general-block-navigation-mobile_link">
+            Previous lesson
+          </Link>
+          <Link href="/" className="module-lesson-general-block-navigation-mobile_link">
+            Next lesson
+          </Link>
         </div>
         <div className="module-lesson-general-block-player">
-          <ReactPlayer
-            url={apiURL + "/" + videoUrl}
-            controls={true}
-          />
+          <ReactPlayer url={apiURL + '/' + videoUrl} controls={true} />
         </div>
         <div className="module-lesson-general-block-status">
           <span className="module-lesson-general-block-status_info">unviewed</span>
         </div>
         <div className="module-lesson-general-block-confirm_info">
           <p>By clicking on the &quot;confirm&quot; button, you confirm the viewing of the lesson in full.</p>
-          <button className="button module-lesson-general-block-confirm_info_button" onClick={confirmView}>confirm</button>
+          <button className="button module-lesson-general-block-confirm_info_button" onClick={confirmView}>
+            confirm
+          </button>
         </div>
         <div className="module-lesson-general-block-comment-block">
-          <Image
-            src={avatar}
-            className="comment-form_user-avatar"
-            alt="avatar"
-            width={100}
-            height={100}
-          />
+          <Image src={avatar} className="comment-form_user-avatar" alt="avatar" width={100} height={100} />
           <input type="text" />
         </div>
-
       </div>
     </div>
   );

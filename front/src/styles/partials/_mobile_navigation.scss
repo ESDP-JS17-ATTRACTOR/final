@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 .navigation_mobile {
   width: 100%;
@@ -40,9 +40,9 @@
     height: 25px;
     background-size: 16px;
     border-radius: 10px;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #ffffff;
     background-color: transparent;
-    background-image: url("/search-icon.png");
+    background-image: url('/search-icon.png');
     background-repeat: no-repeat;
     background-position: 10px 4px;
     padding: 0 2px 0 36px;
@@ -68,7 +68,7 @@
     background-size: 16px;
     border-radius: 10px;
     border: none;
-    background-image: url("/search-icon.png");
+    background-image: url('/search-icon.png');
     background-repeat: no-repeat;
     background-position: 10px 4px;
     padding-left: 36px;
@@ -91,26 +91,26 @@
       font-weight: 700;
       font-size: 11px;
       line-height: 14px;
-      color: #FFFFFF;
+      color: #ffffff;
       bottom: -5px;
       right: -5px;
       border-radius: 50%;
-      background-color: #D85524;
+      background-color: #d85524;
     }
   }
   .search_btn {
-    background-image: url("/search-ic.png");
+    background-image: url('/search-ic.png');
     overflow: hidden;
     text-indent: -200px;
   }
   .favourites_btn {
-    background-image: url("/favourite-ic.png");
+    background-image: url('/favourite-ic.png');
   }
   .purchases_btn {
-    background-image: url("/purchase-ic.png");
+    background-image: url('/purchase-ic.png');
   }
   .side_menu_btn {
-    background-image: url("/nav-menu-ic.png");
+    background-image: url('/nav-menu-ic.png');
     overflow: hidden;
     text-indent: -200px;
   }
@@ -135,7 +135,7 @@
     display: flex;
     flex-direction: column;
     &_header {
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       padding: 10px 10px;
       border-radius: 10px 0 0 0;
       display: flex;
@@ -157,7 +157,7 @@
           text-align: right;
           a {
             text-decoration: none;
-            color: #FFFFFF;
+            color: #ffffff;
           }
         }
       }

@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -97,12 +98,15 @@ export class AuthService {
       where: props,
     });
 
-    if (!user) {
-      if (props.email) {
-        throw new NotFoundException('This email is already registered!');
-      } else {
-        throw new NotFoundException('User not found!');
+    if (props.email) {
+      if (user) {
+        throw new ConflictException('This email is already registered!');
       }
+      return;
+    }
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
     }
 
     return user;

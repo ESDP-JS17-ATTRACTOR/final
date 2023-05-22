@@ -9,7 +9,7 @@ import { deleteStudentHomework, fetchStudentHomeworks } from '@/features/student
 
 interface Props {
   onSubmit: (studentHomework: ApiStudentHomework) => void;
-  error?: string;
+  error?: string[];
   closeModal: () => void;
 }
 

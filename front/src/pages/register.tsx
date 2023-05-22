@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {googleLogin, register} from "@/features/users/usersThunks";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {selectModalWindowStatus, switchModalWindow} from "@/features/users/usersSlice";
+import {selectModalWindowStatus, selectRegisterError, switchModalWindow} from "@/features/users/usersSlice";
 import Home from "@/pages/index";
 import {en} from '../../public/locales/en/auth';
 import {ru} from '../../public/locales/ru/auth';
@@ -15,6 +15,7 @@ const Register = () => {
     const router = useRouter();
     const t = router.locale === 'ru' ? ru : en;
     const dispatch = useAppDispatch();
+    const error = useAppSelector(selectRegisterError);
     const modalWindowStatus = useAppSelector(selectModalWindowStatus);
     const [state, setState] = useState<RegisterMutation>({
         email: "",
@@ -23,7 +24,6 @@ const Register = () => {
         password: "",
     });
     const [confirmedPassword, setConfirmedPassword] = useState("");
-    const [validationError, setValidationError] = useState<string | null>(null);
 
     const closeRegistrationModalWindow = async () => {
         await dispatch(switchModalWindow());
@@ -42,16 +42,11 @@ const Register = () => {
     const submitFormHandler = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (state.password !== confirmedPassword) {
-            setValidationError("Passwords do not match");
-            return;
-        }
-
         try {
             await dispatch(register(state)).unwrap();
             await router.push('/');
         } catch (e) {
-            throw new Error();
+            console.log(e);
         }
     };
 
@@ -78,9 +73,11 @@ const Register = () => {
                     >
                         <div className="registration-form_box">
                             <label htmlFor="registerEmail">
-                                {t.email}
+                                {error?.email ? <b>{error.email}</b> : t.email}
                             </label>
                             <input
+                              pattern={"^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(.\\w{2,3})+$"}
+                              title="Please Enter a Valid Email Address (example@example.com)"
                                 type="email"
                                 id="registerEmail"
                                 name="email"
@@ -92,9 +89,11 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="registerFirstName">
-                                {t.firstName}
+                                {error?.firstName ? <b>{error.firstName}</b> : t.firstName}
                             </label>
                             <input
+                              pattern={"^[a-zA-Z-]+$"}
+                              title="Only letters and hyphens allowed"
                                 type="text"
                                 id="registerFirstName"
                                 name="firstName"
@@ -106,9 +105,11 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="registerLastName">
-                                {t.lastName}
+                                {error?.lastName ? <b>{error.lastName}</b> : t.lastName}
                             </label>
                             <input
+                              pattern={"^[a-zA-Z-]+$"}
+                              title="Only letters and hyphens allowed"
                                 type="text"
                                 id="registerLastName"
                                 name="lastName"
@@ -120,9 +121,11 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="registerPassword">
-                                {t.password}
+                                {error?.password ? <b>{error.password}</b> : t.password}
                             </label>
                             <input
+                              pattern={"^.{8,}$"}
+                              title='The password should be at least 8 characters long'
                                 type="password"
                                 id="registerPassword"
                                 name="password"
@@ -134,10 +137,12 @@ const Register = () => {
                         </div>
                         <div className="registration-form_box">
                             <label htmlFor="confirmingPassword">
-                                {validationError ? <b>{validationError}</b> : t.passConfirm}
+                                {error?.passDouble ? <b>{error.passDouble}</b> : t.passConfirm}
                             </label>
                             <input
-                                type="password"
+                              pattern={(state.password !== confirmedPassword) ? "" : undefined}
+                              title="Passwords do not match"
+                              type="password"
                                 id="confirmingPassword"
                                 name="confirmedPassword"
                                 placeholder={t.passConfirm}

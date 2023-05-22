@@ -22,6 +22,8 @@ export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: 
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
         return rejectWithValue(e.response.data as ValidationError);
+      } else if (isAxiosError(e) && e.response && e.response.status === 409) {
+        return rejectWithValue({ email: e.response.data.message});
       }
       throw e;
     }

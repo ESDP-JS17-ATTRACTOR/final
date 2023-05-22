@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 .lesson-preview-card-bg {
   position: relative;
@@ -30,7 +30,7 @@
     border-radius: 23px;
     text-indent: -1000px;
     overflow: hidden;
-    background-image: url("/mark-ic.png");
+    background-image: url('/mark-ic.png');
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
@@ -40,8 +40,8 @@
     }
   }
   .status_not-viewed {
-    background-color: #A7A49F;
-    background-image: url("/mark-ic-dark.png");
+    background-color: #a7a49f;
+    background-image: url('/mark-ic-dark.png');
   }
   &_content {
     display: flex;

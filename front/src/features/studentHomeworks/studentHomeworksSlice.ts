@@ -1,75 +1,73 @@
-import {StudentHomework, ValidationError} from "../../../types";
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "@/app/store";
+import { StudentHomework, ValidationError } from '../../../types';
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '@/app/store';
 import {
-    addStudentHomework,
-    fetchStudentHomework,
-    fetchStudentHomeworks
-} from "@/features/studentHomeworks/studentHomeworksThunks";
+  addStudentHomework,
+  fetchStudentHomework,
+  fetchStudentHomeworks,
+} from '@/features/studentHomeworks/studentHomeworksThunks';
 
 interface StudentHomeworkState {
-    studentHomeworks: StudentHomework[];
-    studentHomeworksLoading: boolean;
-    studentHomeworkAdding: boolean;
-    studentHomeworkAddError: ValidationError | null;
-    studentHomeworkDeleting: boolean;
-    studentHomework: StudentHomework | null;
-    studentHomeworkLoading: boolean;
-    studentHomeworkEditing: boolean
+  studentHomeworks: StudentHomework[];
+  studentHomeworksLoading: boolean;
+  studentHomeworkAdding: boolean;
+  studentHomeworkAddError: ValidationError | null;
+  studentHomeworkDeleting: boolean;
+  studentHomework: StudentHomework | null;
+  studentHomeworkLoading: boolean;
+  studentHomeworkEditing: boolean;
 }
 
-
 const initialState: StudentHomeworkState = {
-    studentHomeworks: [],
-    studentHomeworksLoading: false,
-    studentHomeworkAdding: false,
-    studentHomeworkAddError: null,
-    studentHomeworkDeleting: false,
-    studentHomework: null,
-    studentHomeworkLoading: false,
-    studentHomeworkEditing: false,
+  studentHomeworks: [],
+  studentHomeworksLoading: false,
+  studentHomeworkAdding: false,
+  studentHomeworkAddError: null,
+  studentHomeworkDeleting: false,
+  studentHomework: null,
+  studentHomeworkLoading: false,
+  studentHomeworkEditing: false,
 };
 
-const studentHomeworksSlice = createSlice({
-    name: 'studentHomeworks',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
+export const studentHomeworksSlice = createSlice({
+  name: 'studentHomeworks',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchStudentHomeworks.pending, (state) => {
+      state.studentHomeworksLoading = true;
+    });
+    builder.addCase(fetchStudentHomeworks.fulfilled, (state, { payload: homeworks }) => {
+      state.studentHomeworksLoading = false;
+      state.studentHomeworks = homeworks;
+    });
+    builder.addCase(fetchStudentHomeworks.rejected, (state) => {
+      state.studentHomeworksLoading = false;
+    });
 
-        builder.addCase(fetchStudentHomeworks.pending, (state) => {
-            state.studentHomeworksLoading = true;
-        });
-        builder.addCase(fetchStudentHomeworks.fulfilled, (state, {payload: homeworks}) => {
-            state.studentHomeworksLoading = false;
-            state.studentHomeworks = homeworks;
-        });
-        builder.addCase(fetchStudentHomeworks.rejected, (state) => {
-            state.studentHomeworksLoading = false;
-        });
+    builder.addCase(fetchStudentHomework.pending, (state) => {
+      state.studentHomeworkLoading = true;
+    });
+    builder.addCase(fetchStudentHomework.fulfilled, (state, { payload: homework }) => {
+      state.studentHomeworkLoading = false;
+      state.studentHomework = homework;
+    });
+    builder.addCase(fetchStudentHomework.rejected, (state) => {
+      state.studentHomeworkLoading = false;
+    });
 
-        builder.addCase(fetchStudentHomework.pending, (state) => {
-            state.studentHomeworkLoading = true;
-        });
-        builder.addCase(fetchStudentHomework.fulfilled, (state, {payload: homework}) => {
-            state.studentHomeworkLoading = false;
-            state.studentHomework = homework;
-        });
-        builder.addCase(fetchStudentHomework.rejected, (state) => {
-            state.studentHomeworkLoading = false;
-        });
-
-        builder.addCase(addStudentHomework.pending, (state) => {
-            state.studentHomeworkAdding = true;
-        });
-        builder.addCase(addStudentHomework.fulfilled, (state) => {
-            state.studentHomeworkAdding = false;
-            state.studentHomeworkAddError = null;
-        });
-        builder.addCase(addStudentHomework.rejected, (state, {payload: error}) => {
-            state.studentHomeworkAdding = false;
-            state.studentHomeworkAddError = error || null;
-        });
-    }
+    builder.addCase(addStudentHomework.pending, (state) => {
+      state.studentHomeworkAdding = true;
+    });
+    builder.addCase(addStudentHomework.fulfilled, (state) => {
+      state.studentHomeworkAdding = false;
+      state.studentHomeworkAddError = null;
+    });
+    builder.addCase(addStudentHomework.rejected, (state, { payload: error }) => {
+      state.studentHomeworkAdding = false;
+      state.studentHomeworkAddError = error || null;
+    });
+  },
 });
 
 export const studentHomeworksReducer = studentHomeworksSlice.reducer;

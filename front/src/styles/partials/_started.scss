@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 @import url('https://fonts.cdnfonts.com/css/craftwork-grotesk');
 
 .started {
@@ -82,7 +82,7 @@
   width: 277px;
   height: 277px;
   border-radius: 50%;
-  border: 5px solid #1488CA;
+  border: 5px solid #1488ca;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,11 +99,11 @@
     position: absolute;
     bottom: -5px;
     left: -5px;
-    content: "";
+    content: '';
     width: 141.5px;
     height: 185px;
     border-radius: 0 0 0 277px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     z-index: 0;
   }
   &::before {
@@ -111,10 +111,10 @@
     bottom: -53%;
     left: 50%;
     transform: translate(-50%, -50%);
-    content: "";
+    content: '';
     width: 277px;
     height: 277px;
-    border: 4px dotted #1488CA;
+    border: 4px dotted #1488ca;
     border-radius: 50%;
     z-index: 1;
     @include md {
@@ -127,16 +127,16 @@
     }
   }
   &_2 {
-    border-color: #F6A451;
+    border-color: #f6a451;
     &::after {
       position: absolute;
       top: -5px;
       left: -5px;
-      content: "";
+      content: '';
       width: 270px;
       height: 185px;
       border-radius: 0 0 0 277px;
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       z-index: 0;
     }
     &::before {
@@ -144,10 +144,10 @@
       bottom: -53%;
       left: 50%;
       transform: translate(-50%, -50%);
-      content: "";
+      content: '';
       width: 277px;
       height: 277px;
-      border: 4px dotted #F6A451;
+      border: 4px dotted #f6a451;
       border-radius: 50%;
       z-index: 1;
       @include md {
@@ -161,16 +161,16 @@
     }
   }
   &_3 {
-    border-color: #69C5EB;
+    border-color: #69c5eb;
     &::after {
       position: absolute;
       bottom: -5px;
       right: -5px;
-      content: "";
+      content: '';
       width: 236px;
       height: 91px;
       border-radius: 0 0 0 277px;
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       z-index: 0;
     }
     &::before {
@@ -178,10 +178,10 @@
       bottom: -53%;
       left: 50%;
       transform: translate(-50%, -50%);
-      content: "";
+      content: '';
       width: 277px;
       height: 277px;
-      border: 4px dotted #69C5EB;
+      border: 4px dotted #69c5eb;
       border-radius: 50%;
       z-index: 1;
       @include md {
@@ -216,7 +216,7 @@
       color: $orange;
       margin: 10px 33px 0;
       padding-top: 42px;
-      background-image: url("/css_sprites-started.png");
+      background-image: url('/css_sprites-started.png');
       background-repeat: no-repeat;
       @include lg {
         margin: 20px 33px 0;

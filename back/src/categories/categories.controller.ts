@@ -61,10 +61,7 @@ export class CategoriesController {
 
   @Patch(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
-  async updateCategory(
-    @Param('id') id: number,
-    @Body() updateCategoryDto: UpdateCategoryDto,
-  ) {
+  async updateCategory(@Param('id') id: number, @Body() updateCategoryDto: UpdateCategoryDto) {
     const category = await this.categoryRepository.findOne({
       where: { id: id },
     });

@@ -34,33 +34,15 @@ export class FixturesService {
   ) {}
 
   async dropTables(): Promise<void> {
-    await this.categoriesRepository.query(
-      'TRUNCATE TABLE "category" RESTART IDENTITY CASCADE',
-    );
-    await this.usersRepository.query(
-      'TRUNCATE TABLE "user" RESTART IDENTITY CASCADE',
-    );
-    await this.coursesRepository.query(
-      'TRUNCATE TABLE "course" RESTART IDENTITY CASCADE',
-    );
-    await this.modulesRepository.query(
-      'TRUNCATE TABLE "course_module" RESTART IDENTITY CASCADE',
-    );
-    await this.lessonsRepository.query(
-      'TRUNCATE TABLE "lesson" RESTART IDENTITY CASCADE',
-    );
-    await this.purchasesRepository.query(
-      'TRUNCATE TABLE "purchase" RESTART IDENTITY CASCADE',
-    );
-    await this.usersLessonsRepository.query(
-      'TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE',
-    );
-    await this.studentHomeworksRepository.query(
-      'TRUNCATE TABLE "student_homework" RESTART IDENTITY CASCADE',
-    );
-    await this.homeworksRepository.query(
-      'TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE',
-    );
+    await this.categoriesRepository.query('TRUNCATE TABLE "category" RESTART IDENTITY CASCADE');
+    await this.usersRepository.query('TRUNCATE TABLE "user" RESTART IDENTITY CASCADE');
+    await this.coursesRepository.query('TRUNCATE TABLE "course" RESTART IDENTITY CASCADE');
+    await this.modulesRepository.query('TRUNCATE TABLE "course_module" RESTART IDENTITY CASCADE');
+    await this.lessonsRepository.query('TRUNCATE TABLE "lesson" RESTART IDENTITY CASCADE');
+    await this.purchasesRepository.query('TRUNCATE TABLE "purchase" RESTART IDENTITY CASCADE');
+    await this.usersLessonsRepository.query('TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE');
+    await this.studentHomeworksRepository.query('TRUNCATE TABLE "student_homework" RESTART IDENTITY CASCADE');
+    await this.homeworksRepository.query('TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE');
   }
 
   async createUsers() {
@@ -179,8 +161,7 @@ export class FixturesService {
       tutor: tutorFirst,
       category: mobilographyCategory,
       title: 'Mobilographya ZA 45 DNEI',
-      description:
-        'My nauchim vas delat Mobilographia, vy budete samyi presamyi luchshii Mobilographia',
+      description: 'My nauchim vas delat Mobilographia, vy budete samyi presamyi luchshii Mobilographia',
       startedAt: '2023-05-25T09:00:00',
       duration: '45',
       price: '15500',
@@ -192,8 +173,7 @@ export class FixturesService {
       tutor: tutorSecond,
       category: contentCreatorCategory,
       title: 'contentCreator ZA 30 DNEI',
-      description:
-        'My nauchim vas delat contentCreator, vy budete samyi presamyi luchshii contentCreator',
+      description: 'My nauchim vas delat contentCreator, vy budete samyi presamyi luchshii contentCreator',
       startedAt: '2023-05-22T09:00:00',
       duration: '30',
       price: '6500',
@@ -205,8 +185,7 @@ export class FixturesService {
       tutor: tutorSecond,
       category: graphicDesignCategory,
       title: 'graphicDesigner ZA 45 DNEI',
-      description:
-        'My nauchim vas delat graphicDesigner, vy budete samyi presamyi luchshii graphicDesigner',
+      description: 'My nauchim vas delat graphicDesigner, vy budete samyi presamyi luchshii graphicDesigner',
       startedAt: '2023-05-18T09:00:00',
       duration: '45',
       price: '25500',
@@ -423,64 +402,48 @@ export class FixturesService {
       where: { email: 'user-second@gmail.com' },
     });
 
-    const studentHomework1ToHomework1 =
-      await this.studentHomeworksRepository.create({
-        homework: homework1,
-        studentName: userFirst.firstName,
-        status: 'Done',
-        studentEmail: userFirst.email,
-        date: '2023-05-03 20:19:16.937+06',
-        isChecked: 'Not checked',
-        studentFiles: [
-          'fixtures/studentHomeworks/pdf/example.pdf',
-          'fixtures/studentHomeworks/pdf/book.jpeg',
-        ],
-      });
+    const studentHomework1ToHomework1 = await this.studentHomeworksRepository.create({
+      homework: homework1,
+      studentName: userFirst.firstName,
+      status: 'Done',
+      studentEmail: userFirst.email,
+      date: '2023-05-03 20:19:16.937+06',
+      isChecked: 'Not checked',
+      studentFiles: ['fixtures/studentHomeworks/pdf/example.pdf', 'fixtures/studentHomeworks/pdf/book.jpeg'],
+    });
     await this.studentHomeworksRepository.save(studentHomework1ToHomework1);
 
-    const studentHomework2ToHomework1 =
-      await this.studentHomeworksRepository.create({
-        homework: homework1,
-        studentName: userSecond.firstName,
-        status: 'Done',
-        studentEmail: userSecond.email,
-        date: '2023-05-03 20:19:17.937+06',
-        isChecked: 'Not checked',
-        studentFiles: [
-          'fixtures/studentHomeworks/pdf/example.pdf',
-          'fixtures/studentHomeworks/pdf/book.jpeg',
-        ],
-      });
+    const studentHomework2ToHomework1 = await this.studentHomeworksRepository.create({
+      homework: homework1,
+      studentName: userSecond.firstName,
+      status: 'Done',
+      studentEmail: userSecond.email,
+      date: '2023-05-03 20:19:17.937+06',
+      isChecked: 'Not checked',
+      studentFiles: ['fixtures/studentHomeworks/pdf/example.pdf', 'fixtures/studentHomeworks/pdf/book.jpeg'],
+    });
     await this.studentHomeworksRepository.save(studentHomework2ToHomework1);
 
-    const studentHomework1ToHomework2 =
-      await this.studentHomeworksRepository.create({
-        homework: homework2,
-        studentName: userFirst.firstName,
-        status: 'Done',
-        studentEmail: userFirst.email,
-        date: '2023-05-03 20:19:18.937+06',
-        isChecked: 'Not checked',
-        studentFiles: [
-          'fixtures/studentHomeworks/pdf/example.pdf',
-          'fixtures/studentHomeworks/pdf/book.jpeg',
-        ],
-      });
+    const studentHomework1ToHomework2 = await this.studentHomeworksRepository.create({
+      homework: homework2,
+      studentName: userFirst.firstName,
+      status: 'Done',
+      studentEmail: userFirst.email,
+      date: '2023-05-03 20:19:18.937+06',
+      isChecked: 'Not checked',
+      studentFiles: ['fixtures/studentHomeworks/pdf/example.pdf', 'fixtures/studentHomeworks/pdf/book.jpeg'],
+    });
     await this.studentHomeworksRepository.save(studentHomework1ToHomework2);
 
-    const studentHomework2ToHomework2 =
-      await this.studentHomeworksRepository.create({
-        homework: homework2,
-        studentName: userSecond.firstName,
-        status: 'Done',
-        studentEmail: userSecond.email,
-        date: '2023-05-03 20:19:19.937+06',
-        isChecked: 'Not checked',
-        studentFiles: [
-          'fixtures/studentHomeworks/pdf/example.pdf',
-          'fixtures/studentHomeworks/pdf/book.jpeg',
-        ],
-      });
+    const studentHomework2ToHomework2 = await this.studentHomeworksRepository.create({
+      homework: homework2,
+      studentName: userSecond.firstName,
+      status: 'Done',
+      studentEmail: userSecond.email,
+      date: '2023-05-03 20:19:19.937+06',
+      isChecked: 'Not checked',
+      studentFiles: ['fixtures/studentHomeworks/pdf/example.pdf', 'fixtures/studentHomeworks/pdf/book.jpeg'],
+    });
     await this.studentHomeworksRepository.save(studentHomework2ToHomework2);
   }
 

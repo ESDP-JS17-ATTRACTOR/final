@@ -1,28 +1,28 @@
-@use "partials/app-toolbar";
-@use "partials/language-switcher";
-@use "partials/search";
-@use "partials/anonymous-menu";
-@use "partials/users-menu";
-@use "partials/landing";
-@use "partials/buttons";
-@use "partials/profits";
-@use "partials/feedback-form";
-@use "partials/footer";
-@use "partials/article";
-@use "partials/started";
-@use "partials/students-works";
-@use "partials/team";
-@use "partials/authorization";
-@use "partials/register";
-@use "partials/course-preview-card";
-@use "partials/my-profile";
-@use "partials/my-courses";
-@use "partials/module-lessons";
-@use "partials/lesson-preview-card";
-@use "partials/mobile_navigation";
-@use "partials/desktop_navigation";
-@use "partials/team-card";
-@use "partials/module-lesson-general";
+@use 'partials/app-toolbar';
+@use 'partials/language-switcher';
+@use 'partials/search';
+@use 'partials/anonymous-menu';
+@use 'partials/users-menu';
+@use 'partials/landing';
+@use 'partials/buttons';
+@use 'partials/profits';
+@use 'partials/feedback-form';
+@use 'partials/footer';
+@use 'partials/article';
+@use 'partials/started';
+@use 'partials/students-works';
+@use 'partials/team';
+@use 'partials/authorization';
+@use 'partials/register';
+@use 'partials/course-preview-card';
+@use 'partials/my-profile';
+@use 'partials/my-courses';
+@use 'partials/module-lessons';
+@use 'partials/lesson-preview-card';
+@use 'partials/mobile_navigation';
+@use 'partials/desktop_navigation';
+@use 'partials/team-card';
+@use 'partials/module-lesson-general';
 
 body {
   margin: 0;
@@ -111,24 +111,24 @@ select {
 }
 
 button,
-[type=button],
-[type=reset],
-[type=submit] {
+[type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button;
 }
 
 button::-moz-focus-inner,
-[type=button]::-moz-focus-inner,
-[type=reset]::-moz-focus-inner,
-[type=submit]::-moz-focus-inner {
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
 
 button:-moz-focusring,
-[type=button]:-moz-focusring,
-[type=reset]:-moz-focusring,
-[type=submit]:-moz-focusring {
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -153,23 +153,23 @@ textarea {
   overflow: auto;
 }
 
-[type=checkbox],
-[type=radio] {
+[type='checkbox'],
+[type='radio'] {
   box-sizing: border-box;
   padding: 0;
 }
 
-[type=number]::-webkit-inner-spin-button,
-[type=number]::-webkit-outer-spin-button {
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
   height: auto;
 }
 
-[type=search] {
+[type='search'] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
 
-[type=search]::-webkit-search-decoration {
+[type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -195,10 +195,10 @@ template {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 18px;
   line-height: 140%;
-  color: #72727E;
+  color: #72727e;
   min-width: 300px;
   background: #fff;
 }
@@ -208,4 +208,3 @@ body {
   margin: 0 auto;
   padding: 0 15px;
 }
-

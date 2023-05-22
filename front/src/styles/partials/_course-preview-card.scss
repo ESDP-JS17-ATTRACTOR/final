@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 .course-preview-card {
   flex-basis: 310px;
@@ -67,7 +67,7 @@
         color: $blue-text;
         margin-bottom: 18px;
         padding: 6px 0 6px 38px;
-        background-image: url("/mark-ic.png");
+        background-image: url('/mark-ic.png');
         background-repeat: no-repeat;
         background-size: 26px;
         background-position: left center;

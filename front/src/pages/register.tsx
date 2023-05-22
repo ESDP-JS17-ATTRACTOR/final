@@ -25,22 +25,22 @@ const Register = () => {
     });
     const [confirmedPassword, setConfirmedPassword] = useState("");
 
-    const closeRegistrationModalWindow = async () => {
-        await dispatch(switchModalWindow());
-        await router.push('/');
-    };
+  const closeRegistrationModalWindow = async () => {
+    await dispatch(switchModalWindow());
+    await router.push('/');
+  };
 
-    const confirmPasswordInputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setConfirmedPassword(event.target.value);
-    };
+  const confirmPasswordInputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmedPassword(event.target.value);
+  };
 
-    const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
-        setState((prevState => ({...prevState, [name]: value})));
-    };
+  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setState((prevState) => ({ ...prevState, [name]: value }));
+  };
 
-    const submitFormHandler = async (event: React.FormEvent) => {
-        event.preventDefault();
+  const submitFormHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
 
         try {
             await dispatch(register(state)).unwrap();
@@ -50,12 +50,12 @@ const Register = () => {
         }
     };
 
-    const googleLoginHandler = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            await dispatch(googleLogin(tokenResponse.access_token)).unwrap()
-            await router.push('/');
-        }
-    });
+  const googleLoginHandler = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      await dispatch(googleLogin(tokenResponse.access_token)).unwrap();
+      await router.push('/');
+    },
+  });
 
     return (
         <Home>

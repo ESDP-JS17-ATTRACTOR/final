@@ -117,7 +117,7 @@ export interface ApiStudentHomework {
   homework: string;
   studentFiles: File[] | null;
 }
-  
+
 export interface Category {
   id: number;
   title: string;
@@ -216,4 +216,3 @@ export interface ModuleLesson {
   isViewed: boolean;
   viewedAt: Date | null;
 }
-

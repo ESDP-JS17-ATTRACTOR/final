@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 @import url('https://fonts.cdnfonts.com/css/craftwork-grotesk');
 
 .team-block {
@@ -13,5 +13,3 @@
     color: #173442;
   }
 }
-
-

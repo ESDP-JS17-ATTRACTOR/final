@@ -1,5 +1,5 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 .button {
   background: $dark-orange;
@@ -10,7 +10,8 @@
   line-height: 22px;
 }
 
-.start_btn, .contact_btn {
+.start_btn,
+.contact_btn {
   width: 165px;
   height: 65px;
   padding: 20px 0 23px;
@@ -87,27 +88,27 @@
   border-radius: 30px;
   border: none;
   &:hover {
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.75);
   }
 }
 
 .auth_facebook {
-  background-color: #405D9B;
-  background-image: url("/facebook-icon.png");
+  background-color: #405d9b;
+  background-image: url('/facebook-icon.png');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .auth_linkedin {
-  background-color: #0073B2;
-  background-image: url("/linkedin-icon.png");
+  background-color: #0073b2;
+  background-image: url('/linkedin-icon.png');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .auth_google {
-  background-color: #DC4E41;
-  background-image: url("/googleplus-icon.png");
+  background-color: #dc4e41;
+  background-image: url('/googleplus-icon.png');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -210,11 +211,11 @@
   width: 29px;
   height: 29px;
   text-align: center;
-  background-image: url("/keyboard-arrow-down.svg");
+  background-image: url('/keyboard-arrow-down.svg');
   background-repeat: no-repeat;
   background-position: center;
   &:hover {
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.75);
   }
 }
 
@@ -228,13 +229,13 @@
   font-size: 14px;
   line-height: 17px;
   color: $blue-text;
-  background-image: url("/plus-ic.png");
+  background-image: url('/plus-ic.png');
   background-position: 90% 50%;
   background-repeat: no-repeat;
   padding-top: 14px;
   margin-bottom: 24px;
   &:hover {
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.75);
   }
   @include md {
     position: static;

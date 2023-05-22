@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+cd front || exit 1
+npm run lint && npm run typecheck
+
+cd ../back || exit 1
+npm run lint && npm run typecheck

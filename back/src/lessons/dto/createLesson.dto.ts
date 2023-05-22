@@ -1,11 +1,5 @@
 import { Entity } from 'typeorm';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @Entity()
 export class CreateLessonDto {

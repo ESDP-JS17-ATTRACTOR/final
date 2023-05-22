@@ -1,9 +1,9 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
 .invitation-block {
   height: 380px;
-  background: linear-gradient(180deg, #EDA652 0%, rgba(217, 218, 146, 0.29) 100%);
+  background: linear-gradient(180deg, #eda652 0%, rgba(217, 218, 146, 0.29) 100%);
   border-radius: 0 0 40% 40%;
   @include md {
     height: 500px;
@@ -13,13 +13,14 @@
   .invitation-block-container {
     display: flex;
     height: 100%;
-    background-image: url("/main-pic.png"), url("/header_shapes.png");
+    background-image: url('/main-pic.png'), url('/header_shapes.png');
     background-repeat: no-repeat, no-repeat;
     background-position: calc(100% + 190px) 0, 10% 190%;
     background-size: 320px auto, auto;
     padding-bottom: 50px;
     @include md {
-      background-image: url("/main-pic.png"), url("/header_circles.png"), url("/header_shapes.png"), url("/header_shapes_2.png");
+      background-image: url('/main-pic.png'), url('/header_circles.png'), url('/header_shapes.png'),
+        url('/header_shapes_2.png');
       background-position: calc(100% + 150px) 0, 70% 5%, 56% 86%, 96% 80%;
       background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
       background-size: auto;
@@ -48,7 +49,6 @@
             font-size: 40px;
             line-height: 48px;
           }
-
         }
 
         span {
@@ -126,19 +126,19 @@
         margin-bottom: 30px;
 
         &_facebook {
-          background-image: url("/facebook_ic.png");
+          background-image: url('/facebook_ic.png');
           background-repeat: no-repeat;
           background-position: center;
         }
 
         &_whatsapp {
-          background-image: url("/whatsapp_ic.png");
+          background-image: url('/whatsapp_ic.png');
           background-repeat: no-repeat;
           background-position: center;
         }
 
         &_instagram {
-          background-image: url("/instagram_ic.png");
+          background-image: url('/instagram_ic.png');
           background-repeat: no-repeat;
           background-position: center;
         }
@@ -193,5 +193,5 @@
 }
 
 .courses-block {
-  background: linear-gradient(0deg, rgba(238, 233, 122, 0.29) 0%, #E7B4A5 59.17%, rgba(238, 233, 122, 0.29) 100%);
+  background: linear-gradient(0deg, rgba(238, 233, 122, 0.29) 0%, #e7b4a5 59.17%, rgba(238, 233, 122, 0.29) 100%);
 }

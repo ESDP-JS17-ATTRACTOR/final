@@ -1,7 +1,8 @@
-@use "../var/colors" as *;
-@use "../var/mixins" as *;
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
 
-.login_btn, .sign-up_btn {
+.login_btn,
+.sign-up_btn {
   height: 30px;
   font-weight: 500;
   font-size: 14px;

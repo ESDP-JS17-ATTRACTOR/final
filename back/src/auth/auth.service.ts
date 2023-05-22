@@ -12,9 +12,7 @@ import axios from 'axios';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async validateUser(email: string, password: string) {
     const user = await this.userRepository.findOne({ where: { email } });
@@ -55,9 +53,7 @@ export class AuthService {
 
   async registerUserWithGoogle(accessToken: string) {
     try {
-      const response = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`,
-      );
+      const response = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`);
 
       const email = response.data.email;
       const googleId = response.data.sub;

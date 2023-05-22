@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
-import TeamCard from "@/components/Cards/TeamCard";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useRef } from 'react';
+import TeamCard from '@/components/Cards/TeamCard';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
-import "swiper/swiper-bundle.css";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
+import 'swiper/swiper-bundle.css';
 
 const Team = () => {
   return (
@@ -22,11 +22,17 @@ const Team = () => {
               spaceBetween={50}
               slidesPerView={1}
               navigation
-              breakpoints={{860: {slidesPerView: 3, navigation: true}}}
+              breakpoints={{ 860: { slidesPerView: 3, navigation: true } }}
             >
-              <SwiperSlide><TeamCard /></SwiperSlide>
-              <SwiperSlide><TeamCard /></SwiperSlide>
-              <SwiperSlide><TeamCard /></SwiperSlide>
+              <SwiperSlide>
+                <TeamCard />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TeamCard />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TeamCard />
+              </SwiperSlide>
             </Swiper>
           </div>
         </div>

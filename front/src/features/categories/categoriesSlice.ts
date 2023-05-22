@@ -1,16 +1,16 @@
-import {Category, CategoryMutation, GlobalError} from "../../../types";
-import { createSlice } from "@reduxjs/toolkit";
+import { Category, CategoryMutation, GlobalError } from '../../../types';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   addCategory,
   deleteCategory,
   editCategory,
   fetchCategories,
-  fetchOneCategory
-} from "@/features/categories/categoriesThunks";
-import { RootState } from "@/app/store";
+  fetchOneCategory,
+} from '@/features/categories/categoriesThunks';
+import { RootState } from '@/app/store';
 
 interface CategoryState {
-  categories: Category [];
+  categories: Category[];
   categoryLoading: boolean;
   categoryAdding: boolean;
   addError: GlobalError | null;
@@ -28,11 +28,10 @@ const initialState: CategoryState = {
   categoryDeleting: false,
   oneCategoryLoading: false,
   oneCategory: null,
-  categoryEditing: false
+  categoryEditing: false,
 };
 
-
-const categoriesSlice = createSlice({
+export const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {},
@@ -40,7 +39,7 @@ const categoriesSlice = createSlice({
     builder.addCase(fetchCategories.pending, (state) => {
       state.categoryLoading = true;
     });
-    builder.addCase(fetchCategories.fulfilled, (state, {payload: categories}) => {
+    builder.addCase(fetchCategories.fulfilled, (state, { payload: categories }) => {
       state.categories = categories;
       state.categoryLoading = false;
     });
@@ -55,7 +54,7 @@ const categoriesSlice = createSlice({
       state.addError = null;
       state.categoryAdding = false;
     });
-    builder.addCase(addCategory.rejected, (state, {payload: error}) => {
+    builder.addCase(addCategory.rejected, (state, { payload: error }) => {
       state.categoryAdding = false;
       state.addError = error || null;
     });
@@ -63,7 +62,7 @@ const categoriesSlice = createSlice({
     builder.addCase(deleteCategory.pending, (state) => {
       state.categoryDeleting = true;
     });
-    builder.addCase(deleteCategory.fulfilled, (state) =>{
+    builder.addCase(deleteCategory.fulfilled, (state) => {
       state.categoryDeleting = false;
     });
     builder.addCase(deleteCategory.rejected, (state) => {
@@ -73,7 +72,7 @@ const categoriesSlice = createSlice({
     builder.addCase(fetchOneCategory.pending, (state) => {
       state.oneCategoryLoading = true;
     });
-    builder.addCase(fetchOneCategory.fulfilled, (state, {payload: category}) => {
+    builder.addCase(fetchOneCategory.fulfilled, (state, { payload: category }) => {
       state.oneCategoryLoading = false;
       state.oneCategory = category;
     });
@@ -90,8 +89,7 @@ const categoriesSlice = createSlice({
     builder.addCase(editCategory.rejected, (state) => {
       state.categoryEditing = false;
     });
-
-  }
+  },
 });
 
 export const categoriesReducer = categoriesSlice.reducer;

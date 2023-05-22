@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Lesson } from '../entities/lesson.entity';
 import { Repository } from 'typeorm';
@@ -71,9 +67,7 @@ export class UsersLessonsService {
       throw new NotFoundException('No lessons at all!');
     }
 
-    const index = usersLessons.findIndex(
-      (el) => el.lesson.isStopLesson === true && el.isViewed === false,
-    );
+    const index = usersLessons.findIndex((el) => el.lesson.isStopLesson === true && el.isViewed === false);
 
     for (let i = 0; i <= index; i++) {
       usersLessons[i].isAvailable = true;
@@ -125,10 +119,7 @@ export class UsersLessonsService {
     return this.usersLessonRepository.save(usersLessons);
   }
 
-  async updateUsersLesson(
-    id: number,
-    isViewed: boolean,
-  ): Promise<{ message: string }> {
+  async updateUsersLesson(id: number, isViewed: boolean): Promise<{ message: string }> {
     const lesson = await this.usersLessonRepository.findOne({
       where: { id },
     });
@@ -143,9 +134,7 @@ export class UsersLessonsService {
       await this.usersLessonRepository.save(lesson);
       return { message: 'Your lessons status changed to viewed!' };
     } else {
-      throw new BadRequestException(
-        'Invalid request: isViewed parameter should be true',
-      );
+      throw new BadRequestException('Invalid request: isViewed parameter should be true');
     }
   }
 }

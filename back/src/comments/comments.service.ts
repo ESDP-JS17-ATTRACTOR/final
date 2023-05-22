@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
@@ -26,13 +22,7 @@ export class CommentsService {
       .createQueryBuilder('comment')
       .leftJoinAndSelect('comment.author', 'userId')
       .leftJoinAndSelect('comment.lesson', 'lessonId')
-      .select([
-        'comment',
-        'userId.id',
-        'userId.firstName',
-        'userId.lastName',
-        'lessonId.id',
-      ]);
+      .select(['comment', 'userId.id', 'userId.firstName', 'userId.lastName', 'lessonId.id']);
 
     if (lessonId) {
       query = query.where('lessonId.id = :lessonId', { lessonId });
@@ -52,9 +42,7 @@ export class CommentsService {
     });
 
     if (comment) {
-      throw new BadRequestException(
-        'Comment with the same text already exists!',
-      );
+      throw new BadRequestException('Comment with the same text already exists!');
     }
 
     const user = await this.usersRepository.findOne({ where: { id: userId } });

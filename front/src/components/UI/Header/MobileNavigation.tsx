@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import { Avatar } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useRouter } from "next/router";
-import { logout } from "@/features/users/usersThunks";
-import { selectUser } from "@/features/users/usersSlice";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { Avatar } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useRouter } from 'next/router';
+import { logout } from '@/features/users/usersThunks';
+import { selectUser } from '@/features/users/usersSlice';
 
 const MobileNavigation = () => {
   const dispatch = useAppDispatch();
@@ -12,13 +12,13 @@ const MobileNavigation = () => {
   const user = useAppSelector(selectUser);
   const [searchStatus, setSearchStatus] = useState(false);
   const openMobileSideMenu = () => {
-    document.getElementById("mobileSideMenuBackdrop")!.style.width = "100%";
-    document.getElementById("mobileSideMenu")!.style.width = "300px";
+    document.getElementById('mobileSideMenuBackdrop')!.style.width = '100%';
+    document.getElementById('mobileSideMenu')!.style.width = '300px';
   };
 
   const closeMobileSideMenu = () => {
-    document.getElementById("mobileSideMenuBackdrop")!.style.width = "0";
-    document.getElementById("mobileSideMenu")!.style.width = "0";
+    document.getElementById('mobileSideMenuBackdrop')!.style.width = '0';
+    document.getElementById('mobileSideMenu')!.style.width = '0';
   };
 
   const openSearchForm = () => {
@@ -28,7 +28,7 @@ const MobileNavigation = () => {
   const submitSearchForm = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchStatus(false);
-  }
+  };
 
   const closeSearchForm = () => {
     setSearchStatus(false);
@@ -54,22 +54,14 @@ const MobileNavigation = () => {
             {searchStatus ? (
               <div id="searchForm" className="search_form">
                 <form onSubmit={submitSearchForm}>
-                  <input
-                    className="search_form_input"
-                    type="text"
-                    placeholder="Search"
-                  />
+                  <input className="search_form_input" type="text" placeholder="Search" />
                 </form>
               </div>
             ) : (
-              <button
-                className="mobile_btn search_btn"
-                onClick={openSearchForm}
-              >
+              <button className="mobile_btn search_btn" onClick={openSearchForm}>
                 Search
               </button>
             )}
-
 
             <Link href="/my_favourites">
               <button className="mobile_btn favourites_btn">
@@ -81,10 +73,7 @@ const MobileNavigation = () => {
                 <span>1</span>
               </button>
             </Link>
-            <button
-              className="mobile_btn side_menu_btn"
-              onClick={openMobileSideMenu}
-            >
+            <button className="mobile_btn side_menu_btn" onClick={openMobileSideMenu}>
               Navigation Menu
             </button>
           </div>
@@ -98,43 +87,44 @@ const MobileNavigation = () => {
             </Link>
           </div>
         )}
-
       </div>
-      <div
-        id="mobileSideMenuBackdrop"
-        className="mobile_side_menu_backdrop"
-        onClick={closeMobileSideMenu}
-      >
-        <div
-          id="mobileSideMenu"
-          className="mobile_side_menu"
-          onClick={(event) => event.stopPropagation()}
-        >
+      <div id="mobileSideMenuBackdrop" className="mobile_side_menu_backdrop" onClick={closeMobileSideMenu}>
+        <div id="mobileSideMenu" className="mobile_side_menu" onClick={(event) => event.stopPropagation()}>
           <div className="mobile_side_menu_header">
             <span>Hello, User</span>
-            <Avatar sx={{width: "37px", height: "37px"}}/>
+            <Avatar sx={{ width: '37px', height: '37px' }} />
           </div>
 
           <div className="mobile_side_menu_body">
             <nav>
               <ul>
-                <Link href="/my-profile/index"><li>My profile</li></Link>
-                <Link href="/my-documents"><li>My documents</li></Link>
-                <Link href="/catalogs"><li>Catalogs</li></Link>
-                <Link href=""><li>My favourites</li></Link>
-                <Link href=""><li>Articles</li></Link>
-                <Link href=""><li>Users</li></Link>
-                <Link href=""><li>Departments</li></Link>
+                <Link href="/my-profile/index">
+                  <li>My profile</li>
+                </Link>
+                <Link href="/my-documents">
+                  <li>My documents</li>
+                </Link>
+                <Link href="/catalogs">
+                  <li>Catalogs</li>
+                </Link>
+                <Link href="">
+                  <li>My favourites</li>
+                </Link>
+                <Link href="">
+                  <li>Articles</li>
+                </Link>
+                <Link href="">
+                  <li>Users</li>
+                </Link>
+                <Link href="">
+                  <li>Departments</li>
+                </Link>
               </ul>
             </nav>
           </div>
 
           <div className="mobile_side_menu_footer">
-            <button
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </div>

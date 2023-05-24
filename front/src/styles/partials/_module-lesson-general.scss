@@ -125,7 +125,7 @@
       font-size: 14px;
       line-height: 48px;
       color: $blue-text;
-      background: #FCFCFC;
+      background: #fcfcfc;
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 22px;
     }
@@ -140,7 +140,7 @@
     }
     &_button {
       align-self: flex-end;
-      color: #FFFFFF;
+      color: #ffffff;
       font-size: 20px;
       line-height: 24px;
       padding: 13px 24px 14px 24px;
@@ -148,7 +148,7 @@
       margin-top: 10px;
       @include md {
         align-self: flex-end;
-        color: #FFFFFF;
+        color: #ffffff;
         font-size: 20px;
         line-height: 24px;
         padding: 15px 39px 18px 39px;
@@ -163,7 +163,7 @@
       width: 33px;
       height: 33px;
       border-radius: 50%;
-      background-color: #D9D9D9;
+      background-color: #d9d9d9;
       object-fit: cover;
       margin-right: 10px;
     }

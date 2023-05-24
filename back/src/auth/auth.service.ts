@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
@@ -10,11 +15,7 @@ export class AuthService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.userRepository.findOne({
-      where: {
-        email,
-      },
-    });
+    const user = await this.userRepository.findOne({ where: { email } });
 
     if (user && (await user.checkPassword(password))) {
       await user.generateToken();
@@ -23,6 +24,31 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  async registerUser(
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+  ) {
+    await this.getUserById({ email });
+
+    const user = await this.userRepository.create({
+      email,
+      firstName,
+      lastName,
+      password,
+    });
+    await user.generateToken();
+    return this.userRepository.save(user);
+  }
+
+  async logout(id: number) {
+    const user = await this.getUserById(id);
+    await user.generateToken();
+    await this.userRepository.save(user);
+    return { message: 'Logout success' };
   }
 
   async registerUserWithGoogle(accessToken: string) {
@@ -61,5 +87,24 @@ export class AuthService {
     } catch (e) {
       throw new BadRequestException(e.message);
     }
+  }
+
+  private async getUserById(props) {
+    const user = await this.userRepository.findOne({
+      where: props,
+    });
+
+    if (props.email) {
+      if (user) {
+        throw new ConflictException('This email is already registered!');
+      }
+      return;
+    }
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return user;
   }
 }

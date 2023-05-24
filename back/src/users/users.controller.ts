@@ -32,12 +32,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UsePipes(ValidationPipe)
   async registerUser(@Body() body: RegisterDto) {
-    return this.authService.registerUser(
-      body.email,
-      body.firstName,
-      body.lastName,
-      body.password,
-    );
+    return this.authService.registerUser(body.email, body.firstName, body.lastName, body.password);
   }
 
   @Post('google-authentication')

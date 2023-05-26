@@ -10,6 +10,7 @@ import { googleLogin, login } from '@/features/users/usersThunks';
 import { en } from '../../public/locales/en/auth';
 import { ru } from '../../public/locales/ru/auth';
 import { useGoogleLogin } from '@react-oauth/google';
+import FacebookLoginButton from '@/components/FacebookLoginButton/FacebookLoginButton';
 
 const Authorization = () => {
   const dispatch = useAppDispatch();
@@ -92,7 +93,7 @@ const Authorization = () => {
           <div className="authorization-footer">
             <h5>{t.signInNow}</h5>
             <div className="authorization-footer_buttons">
-              <button className="social_auth_btn auth_facebook">Facebook</button>
+              <FacebookLoginButton />
               <button className="social_auth_btn auth_linkedin">Linkedin</button>
               <button className="social_auth_btn auth_google" onClick={() => googleLoginHandler()}>
                 Google+

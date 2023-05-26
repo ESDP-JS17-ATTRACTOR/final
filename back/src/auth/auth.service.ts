@@ -4,10 +4,14 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { randomUUID } from 'crypto';
 import axios from 'axios';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser(email: string, password: string) {
     const user = await this.userRepository.findOne({ where: { email } });
@@ -19,6 +23,17 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  generateJwtToken(user: User): string {
+    const payload = {
+      userId: user.id,
+      email: user.email,
+    };
+    const options: JwtSignOptions = {
+      secret: process.env.JWT_SECRET,
+    };
+    return this.jwtService.sign(payload, options);
   }
 
   async registerUser(email: string, firstName: string, lastName: string, password: string) {
@@ -73,6 +88,51 @@ export class AuthService {
     }
   }
 
+  async registerUserWithFacebook(accessToken: string, userID: string) {
+    try {
+      const facebookResponse = await axios.get(
+        `https://graph.facebook.com/v12.0/${userID}?fields=name,email,picture,first_name,last_name&access_token=${accessToken}`,
+      );
+
+      const email = facebookResponse.data.email;
+      const facebookId = facebookResponse.data.id;
+      const firstName = facebookResponse.data.first_name;
+      const lastName = facebookResponse.data.last_name;
+      const avatar = facebookResponse.data.picture?.data.url;
+
+      if (!email) {
+        throw new BadRequestException('Not enough user data to continue.');
+      }
+
+      let user = await this.userRepository.findOne({
+        where: { facebookId },
+      });
+
+      if (!user) {
+        user = await this.userRepository.create({
+          email,
+          firstName,
+          lastName,
+          facebookId,
+          avatar,
+          password: crypto.randomUUID(),
+        });
+
+        const jwtToken = this.generateJwtToken(user);
+
+        await user.generateToken();
+        await this.userRepository.save(user);
+
+        return { user, jwtToken };
+      }
+
+      const jwtToken = this.generateJwtToken(user);
+
+      return { user, jwtToken };
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
   private async getUserById(props) {
     const user = await this.userRepository.findOne({
       where: props,

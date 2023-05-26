@@ -10,6 +10,7 @@ import Home from '@/pages/index';
 import { en } from '../../public/locales/en/auth';
 import { ru } from '../../public/locales/ru/auth';
 import { useGoogleLogin } from '@react-oauth/google';
+import FacebookLoginButton from '@/components/FacebookLoginButton/FacebookLoginButton';
 
 const Register = () => {
   const router = useRouter();
@@ -151,7 +152,7 @@ const Register = () => {
           <div className="registration-footer">
             <h5>{t.signUpWith}</h5>
             <div className="registration-footer_buttons">
-              <button className="social_auth_btn auth_facebook">Facebook</button>
+              <FacebookLoginButton />
               <button className="social_auth_btn auth_linkedin">Linkedin</button>
               <button className="social_auth_btn auth_google" onClick={() => googleLoginHandler()}></button>
             </div>

@@ -45,6 +45,22 @@ export const googleLogin = createAsyncThunk<User, string, { rejectValue: LoginEr
   },
 );
 
+export const facebookLogin = createAsyncThunk<
+  User,
+  { accessToken: string; userID: string },
+  { rejectValue: LoginError }
+>('users/facebookLogin', async (accessToken, { rejectWithValue }) => {
+  try {
+    const response = await axiosApi.post('/users/facebook-authentication', accessToken);
+    return response.data.user;
+  } catch (e) {
+    if (isAxiosError(e) && e.response && e.response.status === 400) {
+      return rejectWithValue(e.response.data as LoginError);
+    }
+    throw e;
+  }
+});
+
 export const login = createAsyncThunk<User, LoginMutation, { rejectValue: LoginError }>(
   'users/login',
   async (loginInfo, { rejectWithValue }) => {

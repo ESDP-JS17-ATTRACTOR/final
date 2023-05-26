@@ -42,6 +42,13 @@ export class UsersController {
     return this.authService.registerUserWithGoogle(body.credential);
   }
 
+  @Post('facebook-authentication')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UsePipes(ValidationPipe)
+  async registerUserWithFacebook(@Body() body: { accessToken: string; userID: string }) {
+    return this.authService.registerUserWithFacebook(body.accessToken, body.userID);
+  }
+
   @Post('login')
   @UseGuards(LocalAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)

@@ -1,5 +1,5 @@
 import { Homework, ValidationError } from '../../../types';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import {
   addHomework,
@@ -39,10 +39,9 @@ export const homeworksSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder.addCase(HYDRATE, (state, action) => {
-    //   // @ts-expect-error
-    //   return action.payload.homeworks;
-    // });
+    builder.addCase<typeof HYDRATE, PayloadAction<RootState, typeof HYDRATE>>(HYDRATE, (state, action) => {
+      return action.payload.homeworks;
+    });
     builder.addCase(fetchHomeworks.pending, (state) => {
       state.homeworksLoading = true;
     });

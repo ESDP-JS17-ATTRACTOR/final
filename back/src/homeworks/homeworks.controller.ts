@@ -59,6 +59,13 @@ export class HomeworksController {
     });
   }
 
+  @Get('tutorHomeworks')
+  @UseGuards(TokenAuthGuard)
+  async getTutorHomeworks(@Req() req: Request) {
+    const user = req.user as User;
+    return this.homeworksService.getTutorsHomeworks(user);
+  }
+
   @Post()
   @UseGuards(TokenAuthGuard, TutorGuard)
   @UseInterceptors(FileInterceptor('pdf', { dest: './public/uploads/homeworks/pdf' }))

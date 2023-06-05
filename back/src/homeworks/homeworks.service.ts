@@ -6,6 +6,7 @@ import { Homework } from '../entities/homework.entity';
 import { AddHomeworkDto } from './dto/addHomework.dto';
 import { User } from '../entities/user.entity';
 import { UpdateHomeworkDto } from './dto/updateHomework.dto';
+import { StudentHomework } from '../entities/studentHomework.entity';
 
 @Injectable()
 export class HomeworksService {
@@ -30,6 +31,8 @@ export class HomeworksService {
     private readonly lessonRepository: Repository<Lesson>,
     @InjectRepository(Homework)
     private readonly homeworkRepository: Repository<Homework>,
+    @InjectRepository(StudentHomework)
+    private readonly studentHomeworkRepository: Repository<StudentHomework>,
   ) {}
 
   async updateHomework(id: number, file: Express.Multer.File, homeworkData: UpdateHomeworkDto): Promise<Homework> {
@@ -68,5 +71,14 @@ export class HomeworksService {
       throw new NotFoundException('Lesson not found');
     }
     return lesson;
+  }
+
+  async getTutorsHomeworks(user: User) {
+    const email = user.email;
+    return this.studentHomeworkRepository
+      .createQueryBuilder('studentHomework')
+      .innerJoin('studentHomework.homework', 'homework')
+      .where('homework.tutorEmail = :tutorEmail', { tutorEmail: email })
+      .getMany();
   }
 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ValidationError, Homework, ApiHomework, TutorHomework } from "../../../types";
+import { ValidationError, Homework, ApiHomework, TutorHomework } from '../../../types';
 import axiosApi from '../../../axiosApi';
 import { isAxiosError } from 'axios';
 
@@ -27,6 +27,14 @@ export const fetchTutorsHomeworks = createAsyncThunk<TutorHomework[]>('/homework
   const response = await axiosApi.get('/homeworks/tutorHomeworks');
   return response.data;
 });
+
+export const fetchTutorHomeworkById = createAsyncThunk<TutorHomework, string>(
+  '/homeworks/fetchTutorHomeworkById',
+  async (id) => {
+    const response = await axiosApi.get(`/homeworks/tutorHomeworks/${id}`);
+    return response.data;
+  },
+);
 
 export const addHomework = createAsyncThunk<void, ApiHomework, { rejectValue: ValidationError }>(
   'homeworks/add',

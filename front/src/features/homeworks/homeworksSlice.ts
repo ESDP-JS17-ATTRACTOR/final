@@ -1,4 +1,4 @@
-import { Homework, TutorHomework, ValidationError } from "../../../types";
+import { Homework, TutorHomework, ValidationError } from '../../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import {
@@ -6,14 +6,17 @@ import {
   editHomework,
   fetchHomeworks,
   fetchHomeworksByTutor,
-  fetchOneHomework, fetchTutorsHomeworks
-} from "@/features/homeworks/homeworksThunks";
+  fetchOneHomework,
+  fetchTutorHomeworkById,
+  fetchTutorsHomeworks,
+} from '@/features/homeworks/homeworksThunks';
 import { HYDRATE } from 'next-redux-wrapper';
 
 interface HomeworkState {
   homeworks: Homework[];
   homeworksByTutor: Homework[];
   tutorHomeworks: TutorHomework[];
+  studentHomework: TutorHomework | null;
   homeworksLoading: boolean;
   homeworkAdding: boolean;
   homeworkAddError: ValidationError | null;
@@ -27,6 +30,7 @@ const initialState: HomeworkState = {
   homeworks: [],
   homeworksByTutor: [],
   tutorHomeworks: [],
+  studentHomework: null,
   homeworksLoading: false,
   homeworkAdding: false,
   homeworkAddError: null,
@@ -89,6 +93,17 @@ export const homeworksSlice = createSlice({
       state.homeworksLoading = false;
     });
 
+    builder.addCase(fetchTutorHomeworkById.pending, (state) => {
+      state.homeworksLoading = true;
+    });
+    builder.addCase(fetchTutorHomeworkById.fulfilled, (state, { payload: homework }) => {
+      state.homeworksLoading = false;
+      state.studentHomework = homework;
+    });
+    builder.addCase(fetchTutorHomeworkById.rejected, (state) => {
+      state.homeworksLoading = false;
+    });
+
     builder.addCase(addHomework.pending, (state) => {
       state.homeworkAdding = true;
     });
@@ -108,6 +123,7 @@ export const homeworksReducer = homeworksSlice.reducer;
 export const selectHomeworks = (state: RootState) => state.homeworks.homeworks;
 export const selectHomeworksByTutor = (state: RootState) => state.homeworks.homeworksByTutor;
 export const selectTutorsHomeworks = (state: RootState) => state.homeworks.tutorHomeworks;
+export const selectStudentHomework = (state: RootState) => state.homeworks.studentHomework;
 export const selectHomeworksLoading = (state: RootState) => state.homeworks.homeworksLoading;
 export const selectHomeworkAdding = (state: RootState) => state.homeworks.homeworkAdding;
 export const selectHomeworkError = (state: RootState) => state.homeworks.homeworkAddError;

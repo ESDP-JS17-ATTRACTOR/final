@@ -1,70 +1,57 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-// import { homeworkSlice } from '@/features/homeworks/homeworksSlice';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { usersReducer, usersSlice } from '@/features/users/usersSlice';
-import { categoriesReducer, categoriesSlice } from '@/features/categories/categoriesSlice';
-import { coursesReducer, coursesSlice } from '@/features/courses/coursesSlice';
-import { homeworksReducer, homeworksSlice } from '@/features/homeworks/homeworksSlice';
-import { lessonsReducer, lessonsSlice } from '@/features/lessons/lessonsSlice';
-import { studentHomeworksReducer, studentHomeworksSlice } from '@/features/studentHomeworks/studentHomeworksSlice';
-import { usersLessonsReducer, usersLessonsSlice } from '@/features/usersLessons/usersLessonsSlice';
-import { purchasesReducer, purchasesSlice } from '@/features/purchases/purchasesSlice';
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistReducer, persistStore } from 'redux-persist';
+import { categoriesSlice } from '@/features/categories/categoriesSlice';
+import { coursesSlice } from '@/features/courses/coursesSlice';
+import { homeworksSlice } from '@/features/homeworks/homeworksSlice';
+import { lessonsSlice } from '@/features/lessons/lessonsSlice';
+import { studentHomeworksSlice } from '@/features/studentHomeworks/studentHomeworksSlice';
+import { usersLessonsSlice } from '@/features/usersLessons/usersLessonsSlice';
+import { purchasesSlice } from '@/features/purchases/purchasesSlice';
 import { createWrapper } from 'next-redux-wrapper';
-
-const rootReducer = combineReducers({
-  users: usersReducer,
-  categories: categoriesReducer,
-  courses: coursesReducer,
-  lessons: lessonsReducer,
-  homeworks: homeworksReducer,
-  studentHomeworks: studentHomeworksReducer,
-  usersLessons: usersLessonsReducer,
-  purchases: purchasesReducer,
-});
+import { usersSlice } from '@/features/users/usersSlice';
+import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['users'],
+  whitelist: ['user'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const makeStore = () => {
+  const isServer = typeof window === 'undefined';
 
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-});
+  let rootReducer = combineReducers({
+    [homeworksSlice.name]: homeworksSlice.reducer,
+    [usersSlice.name]: persistReducer(persistConfig, usersSlice.reducer),
+    [categoriesSlice.name]: categoriesSlice.reducer,
+    [coursesSlice.name]: coursesSlice.reducer,
+    [lessonsSlice.name]: lessonsSlice.reducer,
+    [studentHomeworksSlice.name]: studentHomeworksSlice.reducer,
+    [usersLessonsSlice.name]: usersLessonsSlice.reducer,
+    [purchasesSlice.name]: purchasesSlice.reducer,
+  });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+  const store = configureStore({
+    reducer: rootReducer,
+    devTools: true,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+  });
 
-export const persistor = persistStore(store);
+  if (!isServer) {
+    // @ts-expect-error
+    store.__persistor = persistStore(store);
+  }
 
-export default store;
+  return store;
+};
 
-// const makeStore = () =>
-//   configureStore({
-//     reducer: {
-//       [homeworksSlice.name]: homeworksSlice.reducer,
-//       [usersSlice.name]: usersSlice.reducer,
-//       [categoriesSlice.name]: categoriesSlice.reducer,
-//       [coursesSlice.name]: coursesSlice.reducer,
-//       [lessonsSlice.name]: lessonsSlice.reducer,
-//       [studentHomeworksSlice.name]: studentHomeworksSlice.reducer,
-//       [usersLessonsSlice.name]: usersLessonsSlice.reducer,
-//       [purchasesSlice.name]: purchasesSlice.reducer,
-//     },
-//     devTools: true,
-//   });
-//
-// export type RootStore = ReturnType<typeof makeStore>;
-// export type RootState = ReturnType<RootStore['getState']>;
-// export type AppDispatch = RootStore['dispatch'];
-//
-// export const wrapper = createWrapper<RootStore>(makeStore);
+export type RootStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<RootStore['getState']>;
+export type AppDispatch = RootStore['dispatch'];
+
+export const wrapper = createWrapper<RootStore>(makeStore);

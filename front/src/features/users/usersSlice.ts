@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { LoginError, Tutor, User, ValidationError } from '../../../types';
 import { fetchTutors, editUserProfile, googleLogin, login, register, facebookLogin } from './usersThunks';
 import { RootState } from '@/app/store';
+import { PersistPartial } from 'redux-persist/es/persistReducer';
 
 interface UserState {
   user: User | null;

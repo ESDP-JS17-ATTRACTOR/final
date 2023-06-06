@@ -81,4 +81,14 @@ export class HomeworksService {
       .where('homework.tutorEmail = :tutorEmail', { tutorEmail: email })
       .getMany();
   }
+
+  async getTutorHomeworkById(user: User, id: number) {
+    const email = user.email;
+    return this.studentHomeworkRepository
+      .createQueryBuilder('studentHomework')
+      .innerJoin('studentHomework.homework', 'homework')
+      .where('homework.tutorEmail = :tutorEmail', { tutorEmail: email })
+      .andWhere('studentHomework.id = :id', { id })
+      .getOne();
+  }
 }

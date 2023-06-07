@@ -70,6 +70,7 @@ export class CoursesController {
       tutor: user,
       category: category,
       title: courseData.title,
+      description: courseData.description,
       duration: courseData.duration,
       price: courseData.price,
       isGroup: courseData.isGroup,
@@ -114,12 +115,26 @@ export class CoursesController {
       course.tutor = user;
       course.category = category;
       course.title = updateCourseDto.title;
+      course.description = updateCourseDto.description;
       course.duration = updateCourseDto.duration;
       course.price = updateCourseDto.price;
       course.isGroup = updateCourseDto.isGroup;
       course.startedAt = updateCourseDto.startedAt;
 
-      return this.courseRepository.save(course);
+      await this.courseRepository.save(course);
+      const { tutor, ...result } = await this.courseRepository
+        .createQueryBuilder('course')
+        .leftJoinAndSelect('course.category', 'category')
+        .leftJoinAndSelect('course.tutor', 'tutor')
+        .select(['course', 'tutor.id', 'category.id'])
+        .where('course.id = :id', { id })
+        .getOne();
+
+      return {
+        ...result,
+        category: category.id.toString(),
+        tutor: tutor.id.toString(),
+      };
     } else {
       throw new NotFoundException(`Course with id ${id} not found`);
     }
@@ -131,15 +146,7 @@ export class CoursesController {
       .createQueryBuilder('course')
       .leftJoinAndSelect('course.category', 'category')
       .leftJoinAndSelect('course.tutor', 'tutor')
-      .select([
-        'course.title',
-        'course.duration',
-        'course.price',
-        'course.isGroup',
-        'course.startedAt',
-        'tutor.id',
-        'category.id',
-      ])
+      .select(['course', 'tutor.id', 'category.id'])
       .where('course.id = :id', { id })
       .getOne();
 

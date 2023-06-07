@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateCourseDto {
   @IsOptional()
@@ -37,7 +37,8 @@ export class UpdateCourseDto {
   isGroup: boolean;
 
   @IsOptional()
-  @IsDate()
+  // @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   startedAt: Date;
 }

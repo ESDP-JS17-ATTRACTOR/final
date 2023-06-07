@@ -18,6 +18,7 @@ import CardForStudentHomework from '@/components/Cards/CardForStudentHomework';
 import { Modal } from '@mui/material';
 import dayjs from 'dayjs';
 import FormForEditProfile from '@/components/UI/MyProfile/FormForEditProfile';
+import { wrapper } from '@/app/store';
 
 const MyProfile = () => {
   const dispatch = useAppDispatch();
@@ -173,8 +174,8 @@ const MyProfile = () => {
 
 export default MyProfile;
 
-// export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-//   console.log('2. Page.getStaticProps uses the store to dispatch things');
-//   await store.dispatch(fetchHomeworks());
-//   return { props: {} };
-// });
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  console.log('2. Page.getStaticProps uses the store to dispatch things');
+  await store.dispatch(fetchHomeworks());
+  return { props: {} };
+});

@@ -1,4 +1,4 @@
-import { Homework, Homework, ValidationError } from '../../../types';
+import { Homework, TutorHomework, ValidationError } from '../../../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import {

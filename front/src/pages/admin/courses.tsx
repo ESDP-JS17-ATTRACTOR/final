@@ -43,7 +43,6 @@ const Courses = () => {
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography>Ниже список всех курсов</Typography>
         <Button>
-          {' '}
           <Link href="/admin/addCourse">Добавить курс</Link>
         </Button>
       </Box>
@@ -58,6 +57,7 @@ const Courses = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ width: '30%' }}>Название курса</TableCell>
+                <TableCell sx={{ width: '30%' }}>Описание курса</TableCell>
                 {isLargeScreen && (
                   <TableCell align="right" sx={{ width: '20%' }}>
                     Преподаватель
@@ -68,6 +68,9 @@ const Courses = () => {
                 </TableCell>
                 <TableCell align="center" sx={{ width: '10%' }}>
                   Цена
+                </TableCell>
+                <TableCell align="center" sx={{ width: '10%' }}>
+                  Начало курса
                 </TableCell>
                 <TableCell align="center" sx={{ width: '20%' }}>
                   Тип
@@ -86,11 +89,15 @@ const Courses = () => {
                   <TableCell component="th" scope="row">
                     {course.title}
                   </TableCell>
+                  <TableCell component="th" scope="row">
+                    {course.description}
+                  </TableCell>
                   <TableCell align="right">
                     {course.tutor.firstName} {course.tutor.lastName}
                   </TableCell>
                   <TableCell align="right">{course.duration}</TableCell>
                   <TableCell align="right">{course.price} KGS</TableCell>
+                  <TableCell align="right">{course.startedAt.toString()}</TableCell>
                   <TableCell align="right">{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
 
                   <TableCell align="center">

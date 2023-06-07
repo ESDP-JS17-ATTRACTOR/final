@@ -16,7 +16,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -27,7 +26,6 @@ const Courses = () => {
   const courses = useAppSelector(selectCourses);
   const loading = useAppSelector(selectCoursesLoading);
   const deleting = useAppSelector(selectCourseDeleting);
-  const isLargeScreen = useMediaQuery('(min-width: 768px)');
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -54,52 +52,32 @@ const Courses = () => {
         </Box>
       ) : (
         <TableContainer component={Paper}>
-          <Table aria-label="courses-table">
+          <Table sx={{ minWidth: 320 }} aria-label="courses-table" className="admin-courses">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ width: '5%' }}>Название курса</TableCell>
-                <TableCell sx={{ width: '30%' }}>Описание курса</TableCell>
-                {isLargeScreen && (
-                  <TableCell align="right" sx={{ width: '20%' }}>
-                    Преподаватель
-                  </TableCell>
-                )}
-                <TableCell align="center" sx={{ width: '20%' }}>
-                  Длительность курса
-                </TableCell>
-                <TableCell align="center" sx={{ width: '10%' }}>
-                  Цена
-                </TableCell>
-                <TableCell align="center" sx={{ width: '10%' }}>
-                  Начало курса
-                </TableCell>
-                <TableCell align="center" sx={{ width: '20%' }}>
-                  Тип
-                </TableCell>
-                <TableCell align="center" sx={{ width: '5%' }}>
-                  Удалить
-                </TableCell>
-                <TableCell align="center" sx={{ width: '5%' }}>
-                  Редактировать
-                </TableCell>
+                <TableCell>Название курса</TableCell>
+                <TableCell>Описание курса</TableCell>
+                <TableCell>Преподаватель</TableCell>
+                <TableCell>Длительность курса</TableCell>
+                <TableCell>Цена</TableCell>
+                <TableCell>Начало курса</TableCell>
+                <TableCell>Тип курса</TableCell>
+                <TableCell>Удалить</TableCell>
+                <TableCell>Редактировать</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {courses.map((course) => (
                 <TableRow key={course.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell component="th" scope="row">
-                    {course.title}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {course.description}
-                  </TableCell>
-                  <TableCell align="right">
+                  <TableCell>{course.title}</TableCell>
+                  <TableCell>{course.description}</TableCell>
+                  <TableCell>
                     {course.tutor.firstName} {course.tutor.lastName}
                   </TableCell>
-                  <TableCell align="right">{course.duration} дней</TableCell>
-                  <TableCell align="right">{course.price} KGS</TableCell>
-                  <TableCell align="right"> {dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>
-                  <TableCell align="right">{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
+                  <TableCell>{course.duration} дней</TableCell>
+                  <TableCell>{course.price} KGS</TableCell>
+                  <TableCell>{dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>
+                  <TableCell>{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
 
                   <TableCell align="center">
                     <Button variant="contained" onClick={() => handleDelete(course.id.toString())} disabled={deleting}>
@@ -113,7 +91,7 @@ const Courses = () => {
                     </Button>
                   </TableCell>
 
-                  <TableCell align="center">
+                  <TableCell>
                     <Button variant="outlined">
                       <Link href={`/admin/editCourse/${course.id}`}>
                         <EditIcon />

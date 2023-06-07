@@ -18,6 +18,7 @@ import { fetchTutors } from '@/features/users/usersThunks';
 import { selectCoursesLoading } from '@/features/courses/coursesSlice';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { parseISO } from 'date-fns';
 
 interface Props {
   onSubmit: (course: ApiCourse) => void;
@@ -33,7 +34,7 @@ const initialState: CourseMutation = {
   price: '',
   duration: '',
   isGroup: false,
-  startedAt: null,
+  startedAt: '',
 };
 
 const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = false }) => {
@@ -42,7 +43,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
   const tutors = useAppSelector(selectTutors);
   const adding = useAppSelector(selectCoursesLoading);
   const [state, setState] = useState<CourseMutation>(exist);
-  const [date, setDate] = React.useState<Date | null>(state.startedAt || null);
+  const [date, setDate] = React.useState<Date | null>(null);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -74,7 +75,8 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
         ...state,
         tutor: parseFloat(state.tutor),
         category: parseFloat(state.category),
-        startedAt: new Date(date),
+        startedAt: date.toISOString(),
+        // startedAt: new Date(date),
       };
       onSubmit(updatedState);
     }
@@ -188,7 +190,11 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
 
           <Grid item xs>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker label="Начало курса" value={date} onChange={handleDateChange} />
+              <DatePicker
+                label="Начало курса"
+                value={isEdit ? parseISO(state.startedAt) : date}
+                onChange={handleDateChange}
+              />
             </LocalizationProvider>
           </Grid>
 

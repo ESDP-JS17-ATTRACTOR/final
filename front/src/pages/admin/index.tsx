@@ -13,7 +13,6 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
           <>
             <SideBar />
             <Box
-              component="main"
               sx={{
                 backgroundColor: (theme) =>
                   theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -24,12 +23,12 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
                 flexDirection: 'column',
               }}
             >
-              <Container maxWidth="lg" sx={{ mt: 4, mb: 4, pt: 6 }}>
+              <Container sx={{ mt: 4, mb: 4, pt: 6 }}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} md={8} lg={9}>
-                    {children}
-                  </Grid>
+                  {/*<Grid item xs={12} md={8} lg={9}>*/}
+                  {children}
                 </Grid>
+                {/*</Grid>*/}
               </Container>
             </Box>
           </>

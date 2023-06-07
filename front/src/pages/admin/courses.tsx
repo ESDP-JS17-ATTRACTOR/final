@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import dayjs from 'dayjs';
 
 const Courses = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,7 @@ const Courses = () => {
   };
 
   return (
-    <>
+    <Box>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography>Ниже список всех курсов</Typography>
         <Button>
@@ -53,10 +54,10 @@ const Courses = () => {
         </Box>
       ) : (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="courses-table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ width: '30%' }}>Название курса</TableCell>
+                <TableCell sx={{ width: '5%' }}>Название курса</TableCell>
                 <TableCell sx={{ width: '30%' }}>Описание курса</TableCell>
                 {isLargeScreen && (
                   <TableCell align="right" sx={{ width: '20%' }}>
@@ -95,9 +96,9 @@ const Courses = () => {
                   <TableCell align="right">
                     {course.tutor.firstName} {course.tutor.lastName}
                   </TableCell>
-                  <TableCell align="right">{course.duration}</TableCell>
+                  <TableCell align="right">{course.duration} дней</TableCell>
                   <TableCell align="right">{course.price} KGS</TableCell>
-                  <TableCell align="right">{course.startedAt.toString()}</TableCell>
+                  <TableCell align="right"> {dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>
                   <TableCell align="right">{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
 
                   <TableCell align="center">
@@ -125,7 +126,7 @@ const Courses = () => {
           </Table>
         </TableContainer>
       )}
-    </>
+    </Box>
   );
 };
 

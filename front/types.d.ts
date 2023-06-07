@@ -147,7 +147,7 @@ export interface CourseMutation {
   price: string;
   duration: string;
   isGroup: boolean | null;
-  startedAt: Date | null;
+  startedAt: string;
 }
 
 export interface ApiCourse {
@@ -158,7 +158,7 @@ export interface ApiCourse {
   price: string;
   duration: string;
   isGroup: boolean | null;
-  startedAt: Date | null;
+  startedAt: Date | null | string;
 }
 
 export interface Tutor {

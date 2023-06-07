@@ -52,8 +52,8 @@ import { JwtModule } from '@nestjs/jwt';
       StudentHomework,
       Comment,
     ]),
-    JwtModule,
     PassportModule,
+    JwtModule,
   ],
   providers: [
     AppService,

@@ -35,6 +35,7 @@ import { CommentsController } from './comments/comments.controller';
 import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './homeworks/homeworks.service';
 import { JwtModule } from '@nestjs/jwt';
+import { CategoriesService } from './categories/categories.service';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { JwtModule } from '@nestjs/jwt';
     CourseModulesService,
     CommentsService,
     HomeworksService,
+    CategoriesService,
   ],
   controllers: [
     UsersController,

@@ -12,26 +12,6 @@ export class CategoriesService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  private async checkForCategoryNotExists(title: string): Promise<void> {
-    const existCategory = await this.categoryRepository.findOne({
-      where: { title },
-    });
-    if (existCategory) {
-      throw new BadRequestException('Category with this title already exists');
-    }
-  }
-
-  private async checkForCategoryExists(id: number): Promise<Category> {
-    const existCategory = await this.categoryRepository.findOne({
-      where: { id },
-    });
-    if (!existCategory) {
-      throw new NotFoundException(`Category with id ${id} not found`);
-    } else {
-      return existCategory;
-    }
-  }
-
   async addCategory(categoryData: AddCategoryDto): Promise<Category> {
     await this.checkForCategoryNotExists(categoryData.title);
 
@@ -66,5 +46,25 @@ export class CategoriesService {
       throw new NotFoundException(`Category with id ${id} not found`);
     }
     return oneCategory;
+  }
+
+  private async checkForCategoryNotExists(title: string): Promise<void> {
+    const existCategory = await this.categoryRepository.findOne({
+      where: { title },
+    });
+    if (existCategory) {
+      throw new BadRequestException('Category with this title already exists');
+    }
+  }
+
+  private async checkForCategoryExists(id: number): Promise<Category> {
+    const existCategory = await this.categoryRepository.findOne({
+      where: { id },
+    });
+    if (!existCategory) {
+      throw new NotFoundException(`Category with id ${id} not found`);
+    } else {
+      return existCategory;
+    }
   }
 }

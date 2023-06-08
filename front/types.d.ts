@@ -26,7 +26,7 @@ export interface LoginError {
 }
 
 export interface User {
-  _id: string;
+  id: number;
   firstName: string;
   lastName: string;
   token: string;

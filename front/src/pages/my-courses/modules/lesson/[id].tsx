@@ -1,24 +1,20 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import ReactPlayer from 'react-player';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { fetchModuleLessons, fetchOneUsersLesson, updateUsersLesson } from '@/features/usersLessons/usersLessonsThunks';
 import { selectModuleLessons, selectOneUsersLesson } from '@/features/usersLessons/usersLessonsSlice';
 import { useRouter } from 'next/router';
-import { selectUser } from '@/features/users/usersSlice';
-import DefaultAvatar from '../../../../../public/avatar.png';
 import { apiURL } from '../../../../../constants';
+import LessonsChat from '@/components/LessonsChat/LessonsChat';
 
 const Lesson = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
   const router = useRouter();
   const id = router.query.id as string;
   const usersLesson = useAppSelector(selectOneUsersLesson);
   const moduleLessons = useAppSelector(selectModuleLessons);
 
-  const avatar = user && user.avatar ? user.avatar : DefaultAvatar;
   const videoUrl = usersLesson && (usersLesson.lesson.video ?? usersLesson?.lesson.video);
   let nextLesson: string | null = null;
   let prevLesson: string | null = null;
@@ -35,8 +31,8 @@ const Lesson = () => {
   });
 
   const confirmView = async () => {
-    if (usersLesson?.id!) {
-      await dispatch(updateUsersLesson(usersLesson?.id!.toString())).unwrap();
+    if (usersLesson && usersLesson.id) {
+      await dispatch(updateUsersLesson(usersLesson.id.toString())).unwrap();
     }
   };
 
@@ -106,8 +102,7 @@ const Lesson = () => {
           </button>
         </div>
         <div className="module-lesson-general-block-comment-block">
-          <Image src={avatar} className="comment-form_user-avatar" alt="avatar" width={100} height={100} />
-          <input type="text" />
+          <LessonsChat />
         </div>
       </div>
     </div>

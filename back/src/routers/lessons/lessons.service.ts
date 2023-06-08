@@ -2,9 +2,9 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateLessonDto } from './dto/createLesson.dto';
-import { Lesson } from '../entities/lesson.entity';
-import { Course } from '../entities/course.entity';
-import { CourseModule } from '../entities/courseModule.entity';
+import { Lesson } from '../../entities/lesson.entity';
+import { Course } from '../../entities/course.entity';
+import { CourseModule } from '../../entities/courseModule.entity';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
 
 @Injectable()

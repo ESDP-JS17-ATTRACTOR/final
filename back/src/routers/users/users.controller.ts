@@ -13,12 +13,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { AuthService } from '../auth/auth.service';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
-import { CurrentUser } from '../auth/currentUser.decorator';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { AuthService } from '../../auth/auth.service';
+import { LocalAuthGuard } from '../../auth/local-auth.guard';
+import { CurrentUser } from '../../auth/currentUser.decorator';
 
 @Controller('users')
 export class UsersController {

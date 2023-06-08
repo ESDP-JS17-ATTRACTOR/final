@@ -12,16 +12,16 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../entities/lesson.entity';
+import { Lesson } from '../../entities/lesson.entity';
 import { Repository } from 'typeorm';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { TutorGuard } from '../auth/tutor.guard';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { TutorGuard } from '../../auth/tutor.guard';
 import { AddHomeworkDto } from './dto/addHomework.dto';
-import { Homework } from '../entities/homework.entity';
-import { User } from '../entities/user.entity';
+import { Homework } from '../../entities/homework.entity';
+import { User } from '../../entities/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HomeworksService } from './homeworks.service';
-import { CurrentUser } from '../auth/currentUser.decorator';
+import { CurrentUser } from '../../auth/currentUser.decorator';
 import { Request } from 'express';
 import { UpdateHomeworkDto } from './dto/updateHomework.dto';
 

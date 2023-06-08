@@ -11,13 +11,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../entities/lesson.entity';
+import { Lesson } from '../../entities/lesson.entity';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { UsersLesson } from '../entities/usersLesson.entity';
+import { User } from '../../entities/user.entity';
+import { UsersLesson } from '../../entities/usersLesson.entity';
 import { UsersLessonsService } from './usersLessons.service';
-import { CurrentUser } from '../auth/currentUser.decorator';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
+import { CurrentUser } from '../../auth/currentUser.decorator';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
 
 @Controller('users-lessons')
 export class UsersLessonsController {

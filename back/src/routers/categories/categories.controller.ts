@@ -15,11 +15,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from '../entities/category.entity';
+import { Category } from '../../entities/category.entity';
 import { Repository } from 'typeorm';
 import { AddCategoryDto } from './dto/addCategory.dto';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { StaffGuard } from '../auth/staff.guard';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { StaffGuard } from '../../auth/staff.guard';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
 
 @Controller('categories')

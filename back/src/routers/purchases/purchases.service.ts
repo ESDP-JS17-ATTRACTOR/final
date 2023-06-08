@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Course } from '../entities/course.entity';
-import { User } from '../entities/user.entity';
-import { Purchase } from '../entities/purchase.entity';
-import { CourseModule } from '../entities/courseModule.entity';
-import { Lesson } from '../entities/lesson.entity';
+import { Course } from '../../entities/course.entity';
+import { User } from '../../entities/user.entity';
+import { Purchase } from '../../entities/purchase.entity';
+import { CourseModule } from '../../entities/courseModule.entity';
+import { Lesson } from '../../entities/lesson.entity';
 
 @Injectable()
 export class PurchasesService {

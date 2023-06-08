@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CourseModule } from '../entities/courseModule.entity';
+import { CourseModule } from '../../entities/courseModule.entity';
 import { Repository } from 'typeorm';
 import { CourseModulesService } from './courseModules.service';
 import { CreateCourseModuleDto } from './dto/createCourseModule.dto';

@@ -11,13 +11,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../entities/lesson.entity';
+import { Lesson } from '../../entities/lesson.entity';
 import { Repository } from 'typeorm';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { StaffGuard } from '../auth/staff.guard';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { StaffGuard } from '../../auth/staff.guard';
 import { CreateLessonDto } from './dto/createLesson.dto';
-import { Course } from '../entities/course.entity';
-import { CourseModule } from '../entities/courseModule.entity';
+import { Course } from '../../entities/course.entity';
+import { CourseModule } from '../../entities/courseModule.entity';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
 import { LessonsService } from './lessons.service';
 import { FileInterceptor } from '@nestjs/platform-express';

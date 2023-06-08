@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../entities/lesson.entity';
+import { Lesson } from '../../entities/lesson.entity';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { UsersLesson } from '../entities/usersLesson.entity';
+import { User } from '../../entities/user.entity';
+import { UsersLesson } from '../../entities/usersLesson.entity';
 
 @Injectable()
 export class UsersLessonsService {

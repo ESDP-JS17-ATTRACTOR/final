@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Lesson } from '../entities/lesson.entity';
-import { Homework } from '../entities/homework.entity';
+import { Lesson } from '../../entities/lesson.entity';
+import { Homework } from '../../entities/homework.entity';
 import { AddHomeworkDto } from './dto/addHomework.dto';
-import { User } from '../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { UpdateHomeworkDto } from './dto/updateHomework.dto';
-import { StudentHomework } from '../entities/studentHomework.entity';
+import { StudentHomework } from '../../entities/studentHomework.entity';
 
 @Injectable()
 export class HomeworksService {

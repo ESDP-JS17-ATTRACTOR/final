@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { Lesson } from '../entities/lesson.entity';
+import { User } from '../../entities/user.entity';
+import { Lesson } from '../../entities/lesson.entity';
 import { CommentsService } from './comments.service';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { CurrentUser } from '../auth/currentUser.decorator';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { CurrentUser } from '../../auth/currentUser.decorator';
 import { CreateCommentDto } from './dto/createComment.dto';
 
 @Controller('comments')

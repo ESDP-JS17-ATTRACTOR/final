@@ -15,12 +15,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { TutorGuard } from '../auth/tutor.guard';
-import { Homework } from '../entities/homework.entity';
-import { User } from '../entities/user.entity';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { TutorGuard } from '../../auth/tutor.guard';
+import { Homework } from '../../entities/homework.entity';
+import { User } from '../../entities/user.entity';
 import { Request } from 'express';
-import { StudentHomework } from '../entities/studentHomework.entity';
+import { StudentHomework } from '../../entities/studentHomework.entity';
 import { AddStudentHomeworkDto } from './dto/addStudentHomework.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 

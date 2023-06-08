@@ -11,13 +11,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Course } from '../entities/course.entity';
+import { Course } from '../../entities/course.entity';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { AddCourseDto } from './dto/addCourse.dto';
-import { Category } from '../entities/category.entity';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
-import { StaffGuard } from '../auth/staff.guard';
+import { Category } from '../../entities/category.entity';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { StaffGuard } from '../../auth/staff.guard';
 import { UpdateCourseDto } from './dto/updateCourse.dto';
 
 @Controller('courses')

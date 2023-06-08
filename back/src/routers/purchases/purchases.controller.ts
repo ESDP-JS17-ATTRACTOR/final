@@ -12,11 +12,11 @@ import {
 } from '@nestjs/common';
 import { PurchasesService } from './purchases.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Purchase } from '../entities/purchase.entity';
+import { Purchase } from '../../entities/purchase.entity';
 import { Repository } from 'typeorm';
-import { CurrentUser } from '../auth/currentUser.decorator';
-import { User } from '../entities/user.entity';
-import { TokenAuthGuard } from '../auth/token-auth.guard';
+import { CurrentUser } from '../../auth/currentUser.decorator';
+import { User } from '../../entities/user.entity';
+import { TokenAuthGuard } from '../../auth/token-auth.guard';
 
 @Controller('purchases')
 export class PurchasesController {

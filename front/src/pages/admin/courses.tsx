@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Grid,
   Paper,
   Table,
   TableBody,
@@ -39,12 +40,18 @@ const Courses = () => {
 
   return (
     <Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography>Ниже список всех курсов</Typography>
-        <Button>
-          <Link href="/admin/addCourse">Добавить курс</Link>
-        </Button>
-      </Box>
+      <Grid container spacing={4} alignContent="flex-end">
+        <Grid item xs={12} md={6} display={'flex'} justifyContent={{ xs: 'center', md: 'flex-start' }}>
+          <Typography>Ниже список всех курсов</Typography>
+        </Grid>
+        <Grid item xs={12} md={6} display={'flex'} justifyContent={{ xs: 'center', md: 'flex-end' }}>
+          <Button>
+            <Link href="/admin/addCourse" style={{ textDecoration: 'none' }}>
+              Добавить курс
+            </Link>
+          </Button>
+        </Grid>
+      </Grid>
 
       {loading ? (
         <Box sx={{ display: 'flex' }}>
@@ -52,16 +59,16 @@ const Courses = () => {
         </Box>
       ) : (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 320 }} aria-label="courses-table" className="admin-courses">
+          <Table aria-label="courses-table" className="admin-courses">
             <TableHead>
               <TableRow>
-                <TableCell>Название курса</TableCell>
-                <TableCell>Описание курса</TableCell>
+                <TableCell>Название</TableCell>
+                <TableCell>Описание</TableCell>
                 <TableCell>Преподаватель</TableCell>
-                <TableCell>Длительность курса</TableCell>
+                <TableCell>Период</TableCell>
                 <TableCell>Цена</TableCell>
-                <TableCell>Начало курса</TableCell>
-                <TableCell>Тип курса</TableCell>
+                <TableCell>Начало</TableCell>
+                <TableCell>Тип</TableCell>
                 <TableCell>Удалить</TableCell>
                 <TableCell>Редактировать</TableCell>
               </TableRow>

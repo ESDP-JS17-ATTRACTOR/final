@@ -1,7 +1,7 @@
 @use "../var/mixins" as *;
 
 .admin-courses {
-  @media (min-device-width: 320px) and (max-device-width: 860px) {
+  @media (max-device-width: 859px) {
 
     table, thead, tbody, th, td, tr {
       display: block;
@@ -39,20 +39,36 @@
       transform: translateY(-50%);
     }
 
-    td:nth-of-type(1):before {content: "Название курса";}
-    td:nth-of-type(2):before {content: "Описание курса";}
+    td:nth-of-type(1):before {content: "Название";}
+    td:nth-of-type(2):before {content: "Описание";}
     td:nth-of-type(3):before {content: "Преподаватель";}
-    td:nth-of-type(4):before {content: "Длительность курса";}
+    td:nth-of-type(4):before {content: "Длительность";}
     td:nth-of-type(5):before {content: "Цена";}
-    td:nth-of-type(6):before {content: "Начало курса";}
+    td:nth-of-type(6):before {content: "Начало";}
     td:nth-of-type(7):before {content: "Тип";}
     td:nth-of-type(8):before {content: "Удалить";}
     td:nth-of-type(9):before {content: "Редактировать";}
   }
 
   @include md {
+    table, thead, tbody, th, td, tr{
+      padding: 5px;
+      font-size: 0.75rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
     td {
       width: 10.5%;
+    }
+  }
+
+  @include lg {
+    table, thead, tbody, th, td, tr{
+      padding: 10px;
+      font-size: 0.85rem;
     }
   }
 

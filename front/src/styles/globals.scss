@@ -24,6 +24,8 @@
 @use 'partials/team-card';
 @use 'partials/module-lesson-general';
 @use 'partials/tutor-homeworks';
+@use 'partials/lessons-chat-message';
+@use 'partials/lesson-chat';
 
 body {
   margin: 0;
@@ -50,7 +52,6 @@ a {
 
 abbr[title] {
   border-bottom: none;
-  text-decoration: underline;
   text-decoration: underline dotted;
 }
 

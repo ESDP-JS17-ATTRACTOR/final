@@ -1,17 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CourseModule } from '../../entities/courseModule.entity';
-import { Repository } from 'typeorm';
 import { CourseModulesService } from './courseModules.service';
 import { CreateCourseModuleDto } from './dto/createCourseModule.dto';
 
 @Controller('course-modules')
 export class CourseModulesController {
-  constructor(
-    @InjectRepository(CourseModule)
-    private readonly courseModulesRepository: Repository<CourseModule>,
-    private readonly courseModulesService: CourseModulesService,
-  ) {}
+  constructor(private readonly courseModulesService: CourseModulesService) {}
 
   @Get()
   async getAll(@Query('courseId') courseId: number) {

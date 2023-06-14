@@ -10,29 +10,16 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Lesson } from '../../entities/lesson.entity';
-import { Repository } from 'typeorm';
 import { TokenAuthGuard } from '../../auth/token-auth.guard';
 import { StaffGuard } from '../../auth/staff.guard';
 import { CreateLessonDto } from './dto/createLesson.dto';
-import { Course } from '../../entities/course.entity';
-import { CourseModule } from '../../entities/courseModule.entity';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
 import { LessonsService } from './lessons.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('lessons')
 export class LessonsController {
-  constructor(
-    @InjectRepository(Lesson)
-    private readonly lessonRepository: Repository<Lesson>,
-    @InjectRepository(Course)
-    private readonly courseRepository: Repository<Course>,
-    @InjectRepository(CourseModule)
-    private readonly courseModulesRepository: Repository<CourseModule>,
-    private readonly lessonsService: LessonsService,
-  ) {}
+  constructor(private readonly lessonsService: LessonsService) {}
 
   @Get()
   async getAll() {
@@ -53,7 +40,7 @@ export class LessonsController {
 
   @Patch(':id')
   @UseGuards(TokenAuthGuard, StaffGuard)
-  @UseInterceptors(FileInterceptor('image', { dest: './public/uploads/course/lessons/video' }))
+  @UseInterceptors(FileInterceptor('video', { dest: './public/uploads/course/lessons/video' }))
   async updateLesson(
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,

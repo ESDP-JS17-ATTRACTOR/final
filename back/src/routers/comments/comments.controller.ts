@@ -9,10 +9,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { User } from '../../entities/user.entity';
-import { Lesson } from '../../entities/lesson.entity';
 import { CommentsService } from './comments.service';
 import { TokenAuthGuard } from '../../auth/token-auth.guard';
 import { CurrentUser } from '../../auth/currentUser.decorator';
@@ -20,13 +17,7 @@ import { CreateCommentDto } from './dto/createComment.dto';
 
 @Controller('comments')
 export class CommentsController {
-  constructor(
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
-    @InjectRepository(Lesson)
-    private readonly lessonsRepository: Repository<Lesson>,
-    private readonly commentsService: CommentsService,
-  ) {}
+  constructor(private readonly commentsService: CommentsService) {}
 
   @Get(':id')
   async getAll(@Param('id') id: number) {

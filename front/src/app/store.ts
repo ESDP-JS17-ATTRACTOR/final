@@ -22,7 +22,7 @@ const makeStore = () => {
 
   let rootReducer = combineReducers({
     [homeworksSlice.name]: homeworksSlice.reducer,
-    [usersSlice.name]: persistReducer(persistConfig, usersSlice.reducer),
+    [usersSlice.name]: isServer ? usersSlice.reducer : persistReducer(persistConfig, usersSlice.reducer),
     [categoriesSlice.name]: categoriesSlice.reducer,
     [coursesSlice.name]: coursesSlice.reducer,
     [lessonsSlice.name]: lessonsSlice.reducer,

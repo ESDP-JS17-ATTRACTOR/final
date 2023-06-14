@@ -94,7 +94,7 @@ const Lesson = () => {
           </Link>
         </div>
         <div className="module-lesson-general-block-player">
-          <ReactPlayer url={apiURL + '/' + videoUrl} controls={true} />
+          {videoUrl ? <ReactPlayer url={apiURL + '/' + videoUrl} controls={true} /> : <p>No video available</p>}
         </div>
         <div className="module-lesson-general-block-status">
           <span className="module-lesson-general-block-status_info">unviewed</span>

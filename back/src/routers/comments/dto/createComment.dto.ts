@@ -9,5 +9,5 @@ export class CreateCommentDto {
 
   @IsNotEmpty()
   @IsString()
-  text: string;
+  message: string;
 }

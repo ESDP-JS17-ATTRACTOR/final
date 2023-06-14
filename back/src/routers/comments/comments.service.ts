@@ -33,12 +33,13 @@ export class CommentsService {
     if (!lessonsComments.length) {
       throw new NotFoundException('This lesson has no comments!');
     }
+
     return lessonsComments;
   }
 
   async createComment(userId: number, body: CreateCommentDto) {
     const comment = await this.commentsRepository.findOne({
-      where: { text: body.text },
+      where: { message: body.message },
     });
 
     if (comment) {
@@ -62,7 +63,7 @@ export class CommentsService {
     const newComment = await this.commentsRepository.create({
       author: user,
       lesson: lesson,
-      text: body.text,
+      message: body.message,
     });
 
     return this.commentsRepository.save(newComment);

@@ -16,7 +16,7 @@ export class Comment {
   lesson: Lesson;
 
   @Column()
-  text: string;
+  message: string;
 
   @CreateDateColumn()
   createdAt: Date;

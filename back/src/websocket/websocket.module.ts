@@ -1,11 +1,4 @@
-import {
-  WebSocketGateway,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-  SubscribeMessage,
-  WebSocketServer,
-  MessageBody,
-} from '@nestjs/websockets';
+import { WebSocketGateway, SubscribeMessage, WebSocketServer, MessageBody } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { CommentsService } from '../routers/comments/comments.service';
 import { CurrentUser } from '../auth/currentUser.decorator';
@@ -16,7 +9,7 @@ import { CreateCommentDto } from '../routers/comments/dto/createComment.dto';
 import { Param } from '@nestjs/common';
 
 @WebSocketGateway({ cors: true })
-export class MyWebSocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class MyWebSocketGateway {
   @WebSocketServer()
   private server: Server;
 
@@ -27,18 +20,18 @@ export class MyWebSocketGateway implements OnGatewayConnection, OnGatewayDisconn
   ) {}
 
   async handleConnection(@Param('id') lessonId: number, client: Socket) {
-    // const messages = await this.commentsService.getAll(lessonId);
-    // client.emit('allMessages', messages);
+    const messages = await this.commentsService.getAll(lessonId);
+    client.emit('allMessages', messages);
     console.log('Server on');
   }
 
-  handleDisconnect(client: Socket) {
-    // Обработка отключения
-  }
+  // handleDisconnect(client: Socket) {
+  // Обработка отключения
+  // }
 
   @SubscribeMessage('message')
   async handleMessage(@CurrentUser() user: User, @MessageBody() message: CreateCommentDto): Promise<void> {
     const newMessage = await this.commentsService.createComment(user.id, message);
-    this.server.emit('message', newMessage as any);
+    // this.server.emit('newMessage', newMessage);
   }
 }

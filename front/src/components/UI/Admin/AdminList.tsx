@@ -25,14 +25,14 @@ const AdminListItems = () => {
         <ListItemText primary="Преподаватели" />
       </ListItemButton>
 
-      <ListItemButton onClick={() => router.push('/admin/categories')}>
+      <ListItemButton className="categoryBtn" onClick={() => router.push('/admin/categories')}>
         <ListItemIcon sx={{ minWidth: '35px' }}>
           <CategoryIcon />
         </ListItemIcon>
         <ListItemText primary="Категории" />
       </ListItemButton>
 
-      <ListItemButton onClick={() => router.push('/admin/courses')}>
+      <ListItemButton className="categoryBtn" onClick={() => router.push('/admin/courses')}>
         <ListItemIcon sx={{ minWidth: '35px' }}>
           <AutoStoriesIcon />
         </ListItemIcon>

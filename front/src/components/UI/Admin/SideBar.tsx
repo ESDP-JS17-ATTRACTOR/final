@@ -17,7 +17,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
 
 const drawerWidth: number = 200;
 
@@ -63,8 +62,6 @@ const SideBar = () => {
       }),
     }),
   }));
-
-  const container = window !== undefined ? () => window.document.body : undefined;
 
   const drawer = (
     <>
@@ -117,7 +114,7 @@ const SideBar = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar sx={{ height: '70px' }} open={open}>
         <Toolbar sx={{ pr: '24px' }}>
           <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawerHandler}>
             <MenuIcon />
@@ -128,8 +125,6 @@ const SideBar = () => {
         </Toolbar>
       </AppBar>
       <Drawer
-        container={container}
-        variant="temporary"
         open={mobileOpen}
         onClose={toggleDrawerHandler}
         ModalProps={{

@@ -105,3 +105,17 @@ Then('I should see Avatar box with classname {string} in App Tool Bar', (classNa
 Then('I refresh page', () => {
     I.refreshPage();
 });
+
+Given('I am on the admin page', () => {
+    I.amOnPage('/admin');
+    I.wait(3);
+});
+
+When('I click {string} list item', (listItemText: string) => {
+    I.click(locate('.MuiListItemButton-root').withText(listItemText));
+    I.wait(2);
+});
+
+Then('I see {string} headline', (headlineText: string) => {
+    I.see(headlineText);
+});

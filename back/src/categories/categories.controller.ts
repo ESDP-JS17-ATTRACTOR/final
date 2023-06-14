@@ -30,7 +30,7 @@ export class CategoriesController {
   ) {}
 
   @Post()
-  @UseGuards(TokenAuthGuard, StaffGuard)
+  // @UseGuards(TokenAuthGuard, StaffGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @UsePipes(ValidationPipe)
   async addCourse(@Body() body: AddCategoryDto) {

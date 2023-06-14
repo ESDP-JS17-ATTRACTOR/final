@@ -9,7 +9,7 @@ interface Props {
   displayName: string;
   avatar: string;
   message: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
 const LessonsChatMessage: React.FC<Props> = ({ userId, displayName, avatar, message, createdAt }) => {

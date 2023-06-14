@@ -227,3 +227,12 @@ export interface ModuleLesson {
   isViewed: boolean;
   viewedAt: Date | null;
 }
+
+export interface ChatMsg {
+  id: number;
+  userId: number;
+  displayName: string;
+  avatar: string;
+  message: string;
+  createdAt: Date;
+}

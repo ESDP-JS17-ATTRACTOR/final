@@ -119,3 +119,19 @@ When('I click {string} list item', (listItemText: string) => {
 Then('I see {string} headline', (headlineText: string) => {
     I.see(headlineText);
 });
+
+Given('I am on page with categories', () => {
+    I.amOnPage('/admin/categories');
+    I.wait(2);
+});
+
+When('I click the delete button in categories table', () => {
+    I.click(locate('tr').last().find('button').first());
+    // I.click(locate('button').inside('tr').last());
+    I.wait(2);
+});
+
+Then('The category with title {string} should be removed', (categoryTitle) => {
+    I.dontSee(locate(categoryTitle));
+    I.wait(2);
+});

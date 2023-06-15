@@ -86,8 +86,13 @@ const Courses = () => {
                   <TableCell>{dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>
                   <TableCell>{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
 
-                  <TableCell align="center">
-                    <Button variant="contained" onClick={() => handleDelete(course.id.toString())} disabled={deleting}>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      sx={{ background: '#EDA652' }}
+                      onClick={() => handleDelete(course.id.toString())}
+                      disabled={deleting}
+                    >
                       {deleting ? (
                         <Box sx={{ display: 'flex' }}>
                           <CircularProgress />
@@ -99,9 +104,9 @@ const Courses = () => {
                   </TableCell>
 
                   <TableCell>
-                    <Button variant="outlined">
+                    <Button variant="outlined" sx={{ borderColor: '#EDA652' }}>
                       <Link href={`/admin/editCourse/${course.id}`}>
-                        <EditIcon />
+                        <EditIcon sx={{ color: '#EDA652' }} />
                       </Link>
                     </Button>
                   </TableCell>

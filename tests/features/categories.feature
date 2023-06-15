@@ -14,4 +14,4 @@ Feature: Categories
   Scenario: Removal of Category
     Given I am on page with categories
     When I click the delete button in categories table
-    Then The category with title "CategoryForTestDelete" should be removed
+    Then The category with title "testCategory" should be removed

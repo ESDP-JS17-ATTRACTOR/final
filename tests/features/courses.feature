@@ -14,3 +14,9 @@ Feature: Courses
 
     And I click "Добавить" button
     Then I see "Ниже список всех категорий" headline
+
+  @removeCourse
+  Scenario: Removal of Course
+    Given I am on page with course
+    When I click the delete button in courses table
+    Then The course with title "testCourse" should be removed

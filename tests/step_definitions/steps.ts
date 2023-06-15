@@ -127,11 +127,24 @@ Given('I am on page with categories', () => {
 
 When('I click the delete button in categories table', () => {
     I.click(locate('tr').last().find('button').first());
-    // I.click(locate('button').inside('tr').last());
     I.wait(2);
 });
 
 Then('The category with title {string} should be removed', (categoryTitle) => {
     I.dontSee(locate(categoryTitle));
     I.wait(2);
+});
+
+Given('I am on page with course', () => {
+    I.amOnPage('/admin/courses');
+    I.wait(2);
+});
+
+When('I click the delete button in courses table', () => {
+    I.click(locate('button').inside('tr').first());
+    I.wait(2);
+});
+
+Then('The course with title {string} should be removed', (courseTitle) => {
+    I.dontSee(locate(courseTitle));
 });

@@ -17,6 +17,8 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -27,6 +29,8 @@ const Courses = () => {
   const courses = useAppSelector(selectCourses);
   const loading = useAppSelector(selectCoursesLoading);
   const deleting = useAppSelector(selectCourseDeleting);
+  const theme = useTheme();
+  const isMdScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -59,7 +63,7 @@ const Courses = () => {
         </Box>
       ) : (
         <TableContainer component={Paper}>
-          <Table aria-label="courses-table" className="admin-courses">
+          <Table aria-label="courses-table" className={`${isMdScreen ? 'admin-courses-big' : 'admin-courses-small'}`}>
             <TableHead>
               <TableRow>
                 <TableCell>Название</TableCell>

@@ -1,8 +1,7 @@
 @use "../var/mixins" as *;
 
-.admin-courses {
-  @media (max-device-width: 859px) {
-
+.admin-courses-small {
+  @media (min-device-width: 480px) {
     table, thead, tbody, th, td, tr {
       display: block;
       text-align: center;
@@ -49,9 +48,11 @@
     td:nth-of-type(8):before {content: "Удалить";}
     td:nth-of-type(9):before {content: "Редактировать";}
   }
+  }
 
+.admin-courses-big {
   @include md {
-    table, thead, tbody, th, td, tr{
+    table, thead, tbody, th, td, tr {
       padding: 5px;
       font-size: 0.75rem;
     }
@@ -66,11 +67,9 @@
   }
 
   @include lg {
-    table, thead, tbody, th, td, tr{
+    table, thead, tbody, th, td, tr {
       padding: 10px;
       font-size: 0.85rem;
     }
   }
-
-
 }

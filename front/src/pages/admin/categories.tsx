@@ -57,11 +57,7 @@ const Categories = () => {
         </Box>
       ) : (
         <TableContainer component={Paper}>
-          <Table
-            // sx={{ minWidth: 650 }}
-            aria-label="simple table"
-            className="admin-categories"
-          >
+          <Table aria-label="simple table" className="admin-categories">
             <TableHead>
               <TableRow>
                 <TableCell>Название категории</TableCell>

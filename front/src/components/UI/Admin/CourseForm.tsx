@@ -76,7 +76,6 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
         tutor: parseFloat(state.tutor),
         category: parseFloat(state.category),
         startedAt: date.toISOString(),
-        // startedAt: new Date(date),
       };
       onSubmit(updatedState);
     }

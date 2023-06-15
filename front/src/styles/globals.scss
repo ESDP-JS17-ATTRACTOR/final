@@ -24,6 +24,7 @@
 @use 'partials/team-card';
 @use 'partials/module-lesson-general';
 @use 'partials/admin-courses';
+@use "partials/admin-categories";
 
 body {
   margin: 0;

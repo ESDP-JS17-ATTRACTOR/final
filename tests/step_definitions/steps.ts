@@ -135,7 +135,7 @@ Then('The category with title {string} should be removed', (categoryTitle) => {
     I.wait(2);
 });
 
-Given('I am on page with course', () => {
+Given('I am on page with courses', () => {
     I.amOnPage('/admin/courses');
     I.wait(2);
 });
@@ -147,4 +147,34 @@ When('I click the delete button in courses table', () => {
 
 Then('The course with title {string} should be removed', (courseTitle) => {
     I.dontSee(locate(courseTitle));
+});
+
+When('I click the edit button in categories table', () => {
+    I.click(locate('button').inside('tr').last());
+    I.wait(2);
+});
+
+When('I click the edit button in courses table', () => {
+    I.click(locate('button').inside('tr').last());
+    I.wait(2);
+});
+
+When('I select option {string}', (optionValue: string) => {
+    I.selectOption('#category', optionValue);
+    I.wait(1);
+});
+
+When('I select option {string}', (optionValue: string) => {
+    I.selectOption('#tutor', optionValue);
+    I.wait(1);
+});
+
+When('I click Datepicker button', () => {
+    I.click(locate('button').withAttr({class: 'MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root'}));
+    I.wait(2);
+});
+
+When('I click Date button', () => {
+    I.click(locate('button').withAttr({class: 'MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-qa7bje-MuiButtonBase-root-MuiPickersDay-root'}));
+    I.wait(3);
 });

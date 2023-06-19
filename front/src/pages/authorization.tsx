@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { Modal } from '@mui/material';
 import Home from '@/pages/index';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { selectLoginError, selectModalWindowStatus, switchModalWindow } from '@/features/users/usersSlice';
+import {
+  selectLoginError,
+  selectModalWindowStatus,
+  selectPasswordError,
+  switchModalWindow,
+} from '@/features/users/usersSlice';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LoginMutation } from '../../types';
-import { googleLogin, login } from '@/features/users/usersThunks';
+import { googleLogin, login, recoverPassword } from '@/features/users/usersThunks';
 import { en } from '../../public/locales/en/auth';
 import { ru } from '../../public/locales/ru/auth';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -17,11 +22,23 @@ const Authorization = () => {
   const router = useRouter();
   const t = router.locale === 'en' ? en : ru;
   const modalWindowStatus = useAppSelector(selectModalWindowStatus);
+  const [modalRecoverWindowStatus, setModalRecoverWindowStatus] = useState(false);
   const loginError = useAppSelector(selectLoginError);
+  const passwordError = useAppSelector(selectPasswordError);
   const [state, setState] = useState<LoginMutation>({
     email: '',
     password: '',
   });
+  const [email, setEmail] = useState('');
+
+  const openRecoverPasswordModal = () => {
+    setModalRecoverWindowStatus(true);
+  };
+
+  const closeRecoverPasswordModal = () => {
+    setModalRecoverWindowStatus(false);
+    setEmail('');
+  };
 
   const closeAuthorizationModalWindow = async () => {
     await dispatch(switchModalWindow());
@@ -37,6 +54,16 @@ const Authorization = () => {
     event.preventDefault();
     await dispatch(login(state)).unwrap();
     await router.push('/');
+  };
+
+  const submitRecoverPasswordFormHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      await dispatch(recoverPassword(email)).unwrap();
+      closeRecoverPasswordModal();
+    } catch (e) {
+      throw e;
+    }
   };
 
   const googleLoginHandler = useGoogleLogin({
@@ -83,7 +110,9 @@ const Authorization = () => {
               <label htmlFor="rememberMe">{t.rememberMe}</label>
             </div>
             <div className="authorization-form_box_links">
-              <Link href="#">{t.forgotPassword}</Link>
+              <Link onClick={openRecoverPasswordModal} href="#">
+                {t.forgotPassword}
+              </Link>
               <Link href="/register">{t.createAcc}</Link>
             </div>
             <button type="submit" className="button auth_login_btn">
@@ -100,6 +129,29 @@ const Authorization = () => {
               </button>
             </div>
           </div>
+          <Modal open={modalRecoverWindowStatus} onClose={closeRecoverPasswordModal}>
+            <div className="recover-password">
+              <div className="recover-password-header">
+                <h4 className="recover-password-header_title">Recover Password</h4>
+              </div>
+              <form className="recover-password-form" onSubmit={submitRecoverPasswordFormHandler}>
+                <div className="recover-password-form_box">
+                  <label htmlFor="authEmail">{passwordError ? <b>{passwordError.message}</b> : t.email}</label>
+                  <input
+                    type="email"
+                    id="recoverPasswordEmail"
+                    name="recoverPasswordEmail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required={true}
+                  />
+                </div>
+                <button type="submit" className="button recover-password_btn">
+                  Reset your password
+                </button>
+              </form>
+            </div>
+          </Modal>
         </div>
       </Modal>
     </Home>

@@ -1,37 +1,55 @@
-import { WebSocketGateway, SubscribeMessage, WebSocketServer, MessageBody } from '@nestjs/websockets';
+import { WebSocketGateway, SubscribeMessage, WebSocketServer, OnGatewayConnection } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { CommentsService } from '../routers/comments/comments.service';
-import { CurrentUser } from '../auth/currentUser.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateCommentDto } from '../routers/comments/dto/createComment.dto';
-import { Param } from '@nestjs/common';
+import { MessageDto } from './dto/message.dto';
 
 @WebSocketGateway({ cors: true })
-export class MyWebSocketGateway {
-  @WebSocketServer()
-  private server: Server;
-
+export class MyWebSocketGateway implements OnGatewayConnection {
   constructor(
     private readonly commentsService: CommentsService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async handleConnection(@Param('id') lessonId: number, client: Socket) {
-    const messages = await this.commentsService.getAll(lessonId);
-    client.emit('allMessages', messages);
-    console.log('Server on');
+  @WebSocketServer()
+  private server: Server;
+
+  async handleConnection(client: Socket): Promise<void> {
+    console.log(`Client connected: ${client.id}`);
   }
 
-  // handleDisconnect(client: Socket) {
-  // Обработка отключения
-  // }
+  @SubscribeMessage('start')
+  async handleStart(client: Socket, lessonId: number): Promise<void> {
+    const comments = await this.commentsService.getAll(lessonId);
+    client.emit('comments', comments);
+  }
 
   @SubscribeMessage('message')
-  async handleMessage(@CurrentUser() user: User, @MessageBody() message: CreateCommentDto): Promise<void> {
-    const newMessage = await this.commentsService.createComment(user.id, message);
-    // this.server.emit('newMessage', newMessage);
+  async handleMessage(client: Socket, data: MessageDto): Promise<void> {
+    const { author, lesson, message } = data;
+    const newMessage = this.commentsService.createComment(author, lesson, message);
+    this.server.emit('message', newMessage);
   }
+
+  // @SubscribeMessage('start')
+  // async handleStart(@MessageBody() message: string, @ConnectedSocket() client: Socket): Promise<void> {
+  //   const id = parseInt(message);
+  //   if (!isNaN(id)) {
+  //     const allMessages = await this.commentsService.getAll(id);
+  //     client.emit('start', allMessages);
+  //   }
+  // }
+
+  // @SubscribeMessage('message')
+  // handleMessage(@MessageBody() message: MessageDto): void {
+  //   const newMessage = this.commentsService.createComment(
+  //     message.data.author,
+  //     message.data.lesson,
+  //     message.data.message,
+  //   );
+  //   this.server.emit('message', newMessage);
+  // }
 }

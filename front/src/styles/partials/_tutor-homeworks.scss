@@ -1,0 +1,79 @@
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
+
+.tutor-homeworks-block {
+  &-header {
+    text-align: center;
+    &_title {
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 34px;
+      text-transform: capitalize;
+      color: $blue-text;
+    }
+  }
+  &-main {
+    margin-bottom: 34px;
+    .tutor-homeworks-main_table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      .table-header {
+        font-size: 14px;
+        line-height: 17px;
+        color: $blue-text;
+        th {
+          text-align: center;
+          font-weight: 500;
+        }
+      }
+      .table-body {
+        text-align: center;
+        background: $beige;
+        font-size: 16px;
+        line-height: 19px;
+        color: $dark-grey;
+        tr {
+          border-top: 1px solid #4688C1;
+          td {
+            padding: 31px 0;
+          }
+          .homework-status {
+            color: #339AF0;
+          }
+          .edit-status {
+            button {
+              background: none;
+              border: none;
+              color: #8C1540;
+            }
+          }
+        }
+      }
+    }
+  }
+  &-footer {
+    padding-left: 171px;
+    &_controls {
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      background: none;
+      border: 1px solid #334169;
+      border-radius: 22px;
+      color: $blue-text;
+      span {
+        padding: 0 4px 0 11px;
+      }
+      .add-new-homework-button {
+        width: 58px;
+        height: 46px;
+        background-color: $dark-orange;
+        //background-image: url("/plus-ic.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 22px;
+      }
+    }
+  }
+}

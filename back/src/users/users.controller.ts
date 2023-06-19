@@ -56,6 +56,12 @@ export class UsersController {
     return user;
   }
 
+  @Post('recoverPassword')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async recoverPassword(@Body() body: { email: string }) {
+    return this.authService.restorePassword(body.email);
+  }
+
   @Delete('sessions')
   @UseGuards(TokenAuthGuard)
   async logout(@CurrentUser() user: User) {

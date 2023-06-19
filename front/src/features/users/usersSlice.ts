@@ -1,15 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoginError, Tutor, User, ValidationError } from '../../../types';
-import { fetchTutors, editUserProfile, googleLogin, login, register, facebookLogin } from './usersThunks';
+import {
+  fetchTutors,
+  editUserProfile,
+  googleLogin,
+  login,
+  register,
+  facebookLogin,
+  recoverPassword,
+} from './usersThunks';
 import { RootState } from '@/app/store';
 import { PersistPartial } from 'redux-persist/es/persistReducer';
 
-interface UserState {
+export interface UserState {
   user: User | null;
   registerLoading: boolean;
   registerError: ValidationError | null;
   loginLoading: boolean;
   loginError: LoginError | null;
+  recoverPasswordLoading: boolean;
+  recoverPasswordError: ValidationError | null;
   modalWindowStatus: boolean;
   editLoading: boolean;
   tutors: Tutor[];
@@ -22,6 +32,8 @@ const initialState: UserState = {
   registerError: null,
   loginLoading: false,
   loginError: null,
+  recoverPasswordLoading: false,
+  recoverPasswordError: null,
   modalWindowStatus: false,
   editLoading: false,
   tutors: [],
@@ -94,6 +106,20 @@ export const usersSlice = createSlice({
       });
 
     builder
+      .addCase(recoverPassword.pending, (state) => {
+        state.recoverPasswordLoading = true;
+        state.recoverPasswordError = null;
+      })
+      .addCase(recoverPassword.fulfilled, (state) => {
+        state.recoverPasswordLoading = false;
+        state.recoverPasswordError = null;
+      })
+      .addCase(recoverPassword.rejected, (state, { payload: error }) => {
+        state.recoverPasswordLoading = false;
+        state.recoverPasswordError = error || null;
+      });
+
+    builder
       .addCase(editUserProfile.pending, (state) => {
         state.editLoading = true;
       })
@@ -131,3 +157,5 @@ export const selectModalWindowStatus = (state: RootState) => state.users.modalWi
 export const selectEditLoading = (state: RootState) => state.users.editLoading;
 export const selectTutors = (state: RootState) => state.users.tutors;
 export const selectTutorsLoading = (state: RootState) => state.users.tutorsLoading;
+export const selectPasswordLoading = (state: RootState) => state.users.recoverPasswordLoading;
+export const selectPasswordError = (state: RootState) => state.users.recoverPasswordError;

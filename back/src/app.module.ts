@@ -37,6 +37,7 @@ import { HomeworksService } from './homeworks/homeworks.service';
 import { JwtModule } from '@nestjs/jwt';
 import { CategoriesService } from './categories/categories.service';
 import { CoursesService } from './courses/courses.service';
+import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
   imports: [
@@ -54,8 +55,9 @@ import { CoursesService } from './courses/courses.service';
       StudentHomework,
       Comment,
     ]),
-    JwtModule,
     PassportModule,
+    JwtModule,
+    NodemailerModule,
   ],
   providers: [
     AppService,

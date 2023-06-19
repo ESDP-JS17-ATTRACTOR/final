@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, Reducer } from '@reduxjs/toolkit';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistReducer, persistStore } from 'redux-persist';
 import { categoriesSlice } from '@/features/categories/categoriesSlice';
 import { coursesSlice } from '@/features/courses/coursesSlice';
@@ -8,7 +8,7 @@ import { studentHomeworksSlice } from '@/features/studentHomeworks/studentHomewo
 import { usersLessonsSlice } from '@/features/usersLessons/usersLessonsSlice';
 import { purchasesSlice } from '@/features/purchases/purchasesSlice';
 import { createWrapper } from 'next-redux-wrapper';
-import { usersSlice } from '@/features/users/usersSlice';
+import { usersSlice, UserState } from '@/features/users/usersSlice';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
@@ -20,9 +20,13 @@ const persistConfig = {
 const makeStore = () => {
   const isServer = typeof window === 'undefined';
 
+  const usersReducer = isServer
+    ? usersSlice.reducer
+    : (persistReducer(persistConfig, usersSlice.reducer) as unknown as Reducer<UserState>);
+
   let rootReducer = combineReducers({
     [homeworksSlice.name]: homeworksSlice.reducer,
-    [usersSlice.name]: persistReducer(persistConfig, usersSlice.reducer),
+    [usersSlice.name]: usersReducer,
     [categoriesSlice.name]: categoriesSlice.reducer,
     [coursesSlice.name]: coursesSlice.reducer,
     [lessonsSlice.name]: lessonsSlice.reducer,

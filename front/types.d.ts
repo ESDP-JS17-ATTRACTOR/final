@@ -83,6 +83,17 @@ export interface Homework {
   pdf: string;
 }
 
+export interface TutorHomework {
+  id: string;
+  homework: Homework;
+  date: Date;
+  status: string;
+  studentName: string;
+  studentEmail: string;
+  isChecked: string;
+  studentFiles: string[];
+}
+
 export interface HomeworkMutation {
   lesson: string;
   title: string;

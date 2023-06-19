@@ -21,21 +21,20 @@ const LessonsChat = () => {
   useEffect(() => {
     const socket = io(apiURL);
 
+    socket.on('comments', (commentsData) => {
+      setMsgState(commentsData);
+    });
+
+    socket.on('message', (newComment) => {
+      setMsgState((prevComments) => [...prevComments, newComment]);
+    });
+
     socket.on('connect', () => {
-      console.log('Client connected');
-    });
-
-    socket.on('start', (allMessages: ChatMsg[]) => {
-      setMsgState(allMessages);
-    });
-
-    socket.on('message', (newMessage: ChatMsg) => {
-      console.log(msgState);
-      setMsgState((prevMessages) => [...prevMessages, newMessage]);
+      socket.emit('start', id);
     });
 
     return () => {
-      socket.off('connect');
+      socket.disconnect();
     };
   }, [socket, msgState, id]);
 
@@ -79,20 +78,6 @@ const LessonsChat = () => {
             createdAt={message.createdAt}
           />
         ))}
-        {/*<LessonsChatMessage*/}
-        {/*  userId={2}*/}
-        {/*  displayName={'Jake'}*/}
-        {/*  avatar={'asd'}*/}
-        {/*  message={'text message'}*/}
-        {/*  createdAt={'2023-05-03 20:19:17.937+06'}*/}
-        {/*/>*/}
-        {/*<LessonsChatMessage*/}
-        {/*  userId={1}*/}
-        {/*  displayName={'John'}*/}
-        {/*  avatar={'asd'}*/}
-        {/*  message={'etext messagetext messagetext messagetext messagetext messagetext message'}*/}
-        {/*  createdAt={'2023-05-03 20:19:17.937+06'}*/}
-        {/*/>*/}
       </div>
       {/*<Image src={avatar} className="comment-form_user-avatar" alt="avatar" width={100} height={100} />*/}
       <div className="input-block">

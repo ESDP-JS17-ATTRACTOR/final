@@ -28,7 +28,7 @@ export class CommentsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
   async createComment(@CurrentUser() user: User, @Body() body: CreateCommentDto) {
-    return this.commentsService.createComment(user.id, body);
+    return this.commentsService.createComment(user.id, body.lessonId, body.message);
   }
 
   @Delete(':id')

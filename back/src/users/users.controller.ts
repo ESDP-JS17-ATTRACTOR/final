@@ -19,6 +19,7 @@ import { TokenAuthGuard } from '../auth/token-auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { CurrentUser } from '../auth/currentUser.decorator';
+import { NodemailerService } from '../nodemailer/nodemailer.service';
 
 @Controller('users')
 export class UsersController {
@@ -26,6 +27,7 @@ export class UsersController {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
+    private readonly nodemailerService: NodemailerService,
   ) {}
 
   @Post('register')
@@ -54,6 +56,12 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   async login(@CurrentUser() user: User) {
     return user;
+  }
+
+  @Post('recoverPassword')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async recoverPassword(@Body() body: { email: string }) {
+    return this.authService.restorePassword(body.email);
   }
 
   @Delete('sessions')

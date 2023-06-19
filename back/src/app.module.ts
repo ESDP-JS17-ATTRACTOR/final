@@ -35,6 +35,7 @@ import { CommentsController } from './comments/comments.controller';
 import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './homeworks/homeworks.service';
 import { JwtModule } from '@nestjs/jwt';
+import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { JwtModule } from '@nestjs/jwt';
     ]),
     PassportModule,
     JwtModule,
+    NodemailerModule,
   ],
   providers: [
     AppService,

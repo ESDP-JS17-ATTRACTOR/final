@@ -26,7 +26,7 @@ export interface LoginError {
 }
 
 export interface User {
-  _id: string;
+  id: number;
   firstName: string;
   lastName: string;
   token: string;
@@ -226,4 +226,13 @@ export interface ModuleLesson {
   isStopLesson: boolean;
   isViewed: boolean;
   viewedAt: Date | null;
+}
+
+export interface ChatMsg {
+  id: number;
+  userId: number;
+  displayName: string;
+  avatar: string;
+  message: string;
+  createdAt: Date;
 }

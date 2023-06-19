@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { apiURL } from '../../../constants';
+import { useRouter } from 'next/router';
 
 interface Props {
   moduleLesson: ModuleLesson;
@@ -14,6 +15,11 @@ const ModuleLessonPreviewCard: React.FC<Props> = ({ moduleLesson, moduleId }) =>
   const viewedDate = moduleLesson.viewedAt ? dayjs(moduleLesson.viewedAt).format('DD/MM/yyyy') : '--/--/----';
 
   const lessonVideo = apiURL + '/' + moduleLesson.video;
+  const router = useRouter();
+
+  const handleClick = async () => {
+    await router.push(`/my-courses/modules/lesson/${moduleLesson.number}`);
+  };
 
   return (
     <div className="lesson-preview-card-bg">
@@ -24,7 +30,7 @@ const ModuleLessonPreviewCard: React.FC<Props> = ({ moduleLesson, moduleId }) =>
             <ReactPlayer url={lessonVideo} controls={false} />
           </div>
           <div className="lesson-preview-card_content_info">
-            <h6 className="lesson-preview-card_content_info_title">
+            <h6 className="lesson-preview-card_content_info_title" onClick={handleClick}>
               Module {moduleLesson.moduleNumber} Lesson {moduleLesson.number}
             </h6>
             <p className="lesson-preview-card_content_info_description">

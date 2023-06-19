@@ -26,6 +26,8 @@
 @use 'partials/admin-courses';
 @use "partials/admin-categories";
 @use 'partials/tutor-homeworks';
+@use 'partials/lessons-chat-message';
+@use 'partials/lesson-chat';
 
 body {
   margin: 0;

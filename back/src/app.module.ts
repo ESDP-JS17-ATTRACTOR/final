@@ -36,6 +36,8 @@ import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './routers/homeworks/homeworks.service';
 import { JwtModule } from '@nestjs/jwt';
 import { MyWebSocketGateway } from './websocket/websocket.module';
+import { CategoriesService } from './routers/categories/categories.service';
+import { CoursesService } from './routers/courses/courses.service';
 import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
@@ -70,6 +72,8 @@ import { NodemailerModule } from './nodemailer/nodemailer.module';
     CourseModulesService,
     CommentsService,
     HomeworksService,
+    CategoriesService,
+    CoursesService,
     MyWebSocketGateway,
   ],
   controllers: [

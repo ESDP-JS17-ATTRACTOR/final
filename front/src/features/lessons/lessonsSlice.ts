@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { fetchLessons } from '@/features/lessons/lessonsThunks';
 import { Lesson } from '../../../types';

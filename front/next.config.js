@@ -6,6 +6,9 @@ const nextConfig = {
     defaultLocale: 'ru',
     localeDetection: true,
   },
+  experimental: {
+    appDir: true,
+  },
 };
 
 module.exports = nextConfig;

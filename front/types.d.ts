@@ -143,27 +143,33 @@ export interface Course {
   tutor: User;
   category: Category;
   title: string;
+  description: string;
   price: string;
   duration: string;
   isGroup: boolean;
+  startedAt: Date;
 }
 
 export interface CourseMutation {
   tutor: string;
   category: string;
   title: string;
+  description: string;
   price: string;
   duration: string;
   isGroup: boolean | null;
+  startedAt: string;
 }
 
 export interface ApiCourse {
   tutor: number;
   category: number;
   title: string;
+  description: string;
   price: string;
   duration: string;
   isGroup: boolean | null;
+  startedAt: Date | null | string;
 }
 
 export interface Tutor {

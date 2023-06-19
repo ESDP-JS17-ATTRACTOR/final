@@ -5,12 +5,14 @@ import { User } from '../entities/user.entity';
 import { randomUUID } from 'crypto';
 import axios from 'axios';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
+import { NodemailerService } from '../nodemailer/nodemailer.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService,
+    private readonly nodemailerService: NodemailerService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -83,6 +85,34 @@ export class AuthService {
         return await this.userRepository.save(user);
       }
       return user;
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  async restorePassword(email: string) {
+    try {
+      const user = await this.userRepository.findOne({ where: { email } });
+
+      if (!user) {
+        throw new BadRequestException('Incorrect E-mail.');
+      }
+
+      const generateRandomPassword = () => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let password = '';
+        for (let i = 0; i < 8; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          password += characters.charAt(randomIndex);
+        }
+        return password;
+      };
+
+      const newPassword = generateRandomPassword();
+      user.password = newPassword;
+      await user.hashPassword();
+      await this.userRepository.save(user);
+      return this.nodemailerService.sendUpdatedPassword(user.email, newPassword);
     } catch (e) {
       throw new BadRequestException(e.message);
     }

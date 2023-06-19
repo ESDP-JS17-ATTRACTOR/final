@@ -81,6 +81,20 @@ export const logout = createAsyncThunk<void, void, { state: RootState }>('users/
   dispatch(unsetUser());
 });
 
+export const recoverPassword = createAsyncThunk<void, string, { rejectValue: ValidationError }>(
+  'users/recoverPassword',
+  async (email, { rejectWithValue }) => {
+    try {
+      await axiosApi.post('users/recoverPassword', { email });
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data as ValidationError);
+      }
+      throw e;
+    }
+  },
+);
+
 export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectValue: ValidationError }>(
   'users/edit',
   async (profileMutation, { rejectWithValue }) => {

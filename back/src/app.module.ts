@@ -36,6 +36,7 @@ import { Comment } from './entities/comment.entity';
 import { HomeworksService } from './routers/homeworks/homeworks.service';
 import { JwtModule } from '@nestjs/jwt';
 import { MyWebSocketGateway } from './websocket/websocket.module';
+import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { MyWebSocketGateway } from './websocket/websocket.module';
     ]),
     PassportModule,
     JwtModule,
+    NodemailerModule,
   ],
   providers: [
     AppService,

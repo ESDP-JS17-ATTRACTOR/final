@@ -16,6 +16,9 @@ import { fetchCategories } from '@/features/categories/categoriesThunks';
 import { selectTutors } from '@/features/users/usersSlice';
 import { fetchTutors } from '@/features/users/usersThunks';
 import { selectCoursesLoading } from '@/features/courses/coursesSlice';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { parseISO } from 'date-fns';
 
 interface Props {
   onSubmit: (course: ApiCourse) => void;
@@ -27,9 +30,11 @@ const initialState: CourseMutation = {
   tutor: '',
   category: '',
   title: '',
+  description: '',
   price: '',
   duration: '',
   isGroup: false,
+  startedAt: '',
 };
 
 const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = false }) => {
@@ -38,6 +43,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
   const tutors = useAppSelector(selectTutors);
   const adding = useAppSelector(selectCoursesLoading);
   const [state, setState] = useState<CourseMutation>(exist);
+  const [date, setDate] = React.useState<Date | null>(null);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -58,13 +64,21 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
     });
   };
 
+  const handleDateChange = (date: Date | null) => {
+    setDate(date);
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit({
-      ...state,
-      tutor: parseFloat(state.tutor),
-      category: parseFloat(state.category),
-    });
+    if (date) {
+      const updatedState = {
+        ...state,
+        tutor: parseFloat(state.tutor),
+        category: parseFloat(state.category),
+        startedAt: date.toISOString(),
+      };
+      onSubmit(updatedState);
+    }
   };
 
   return (
@@ -72,7 +86,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
       <Typography>{isEdit ? 'Обновите курс' : 'Добавьте новый курс'}</Typography>
       <form onSubmit={handleSubmit}>
         <Grid container direction="column" spacing={2}>
-          <Grid item xs>
+          <Grid item xs={12}>
             <label
               htmlFor="category"
               className="mb-2"
@@ -90,6 +104,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
               required
               value={state.category}
               onChange={inputChangeHandler}
+              style={{ width: 350 }}
             >
               <option disabled value="">
                 Выберите категорию
@@ -102,7 +117,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
             </select>
           </Grid>
 
-          <Grid item xs>
+          <Grid item xs={12}>
             <label
               htmlFor="tutor"
               className="mb-2"
@@ -132,53 +147,88 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
             </select>
           </Grid>
 
-          <Grid item xs>
+          <Grid item xs={12}>
             <TextField
               id="title"
-              label="Title"
+              label="Название"
               name="title"
               required
               value={state.title}
               onChange={inputChangeHandler}
+              sx={{ width: 350 }}
             />
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12}>
+            <TextField
+              id="description"
+              label="Описание"
+              name="description"
+              required
+              value={state.description}
+              onChange={inputChangeHandler}
+              sx={{ width: 350 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               id="price"
-              label="Price"
+              label="Цена"
               name="price"
               required
               value={state.price}
               onChange={inputChangeHandler}
+              sx={{ width: 350 }}
             />
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12}>
             <TextField
               id="duration"
-              label="Duration"
+              label="Длительность"
               name="duration"
               required
               value={state.duration}
               onChange={inputChangeHandler}
+              sx={{ width: 350 }}
             />
           </Grid>
 
-          <Grid item xs>
+          <Grid item xs={12}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Начало курса"
+                value={isEdit ? parseISO(state.startedAt) : date}
+                onChange={handleDateChange}
+                sx={{ width: 350 }}
+              />
+            </LocalizationProvider>
+          </Grid>
+
+          <Grid item xs={12}>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
               value={state.isGroup}
               onChange={handleRadioChange}
+              sx={{ width: 350 }}
             >
               <FormControlLabel value={true} control={<Radio />} label="Групповой" />
               <FormControlLabel value={false} control={<Radio />} label="Индивидуальный" />
             </RadioGroup>
           </Grid>
 
-          <Grid item xs>
+          <Grid item xs={12}>
             <Button
-              disabled={adding || !state.tutor || !state.category || !state.title || !state.duration || !state.price}
+              disabled={
+                adding ||
+                !state.tutor ||
+                !state.category ||
+                !state.title ||
+                !state.description ||
+                !state.duration ||
+                !state.price ||
+                !date
+              }
               type="submit"
             >
               {adding && <CircularProgress />}

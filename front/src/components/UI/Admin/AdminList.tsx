@@ -5,7 +5,6 @@ import PeopleIcon from '@mui/icons-material/People';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CategoryIcon from '@mui/icons-material/Category';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
 const AdminListItems = () => {
   const router = useRouter();
@@ -13,38 +12,31 @@ const AdminListItems = () => {
   return (
     <>
       <ListItemButton onClick={() => router.push('/admin/students')}>
-        <ListItemIcon>
+        <ListItemIcon sx={{ minWidth: '35px' }}>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="Студенты" />
+        <ListItemText primary="Студенты" sx={{ fontSize: '15px' }} />
       </ListItemButton>
 
       <ListItemButton onClick={() => router.push('/admin/tutors')}>
-        <ListItemIcon>
+        <ListItemIcon sx={{ minWidth: '35px' }}>
           <GroupsIcon />
         </ListItemIcon>
         <ListItemText primary="Преподаватели" />
       </ListItemButton>
 
-      <ListItemButton onClick={() => router.push('/admin/categories')}>
-        <ListItemIcon>
+      <ListItemButton className="categoryBtn" onClick={() => router.push('/admin/categories')}>
+        <ListItemIcon sx={{ minWidth: '35px' }}>
           <CategoryIcon />
         </ListItemIcon>
         <ListItemText primary="Категории" />
       </ListItemButton>
 
-      <ListItemButton onClick={() => router.push('/admin/courses')}>
-        <ListItemIcon>
+      <ListItemButton className="categoryBtn" onClick={() => router.push('/admin/courses')}>
+        <ListItemIcon sx={{ minWidth: '35px' }}>
           <AutoStoriesIcon />
         </ListItemIcon>
         <ListItemText primary="Курсы" />
-      </ListItemButton>
-
-      <ListItemButton onClick={() => router.push('/admin/lessons')}>
-        <ListItemIcon>
-          <HistoryEduIcon />
-        </ListItemIcon>
-        <ListItemText primary="Уроки" />
       </ListItemButton>
     </>
   );

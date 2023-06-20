@@ -22,7 +22,7 @@ const Team = () => {
               spaceBetween={50}
               slidesPerView={1}
               navigation
-              breakpoints={{860: {slidesPerView: 3, navigation: true}}}
+              breakpoints={{ 860: { slidesPerView: 3, navigation: true } }}
             >
               <SwiperSlide>
                 <TeamCard />

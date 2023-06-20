@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import SideBar from '@/components/UI/Admin/SideBar';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Admin: React.FC<PropsWithChildren> = ({ children }) => {
@@ -13,7 +13,6 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
           <>
             <SideBar />
             <Box
-              component="main"
               sx={{
                 backgroundColor: (theme) =>
                   theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -24,13 +23,7 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
                 flexDirection: 'column',
               }}
             >
-              <Container maxWidth="lg" sx={{ mt: 4, mb: 4, pt: 6 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={8} lg={9}>
-                    {children}
-                  </Grid>
-                </Grid>
-              </Container>
+              <Container sx={{ mt: 4, mb: 4, pt: 6 }}>{children}</Container>
             </Box>
           </>
         ) : (

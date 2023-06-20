@@ -1,24 +1,55 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AdminList from '@/components/UI/Admin/AdminList';
-import { AppBar, CssBaseline, Divider, Drawer, IconButton, List, styled, Toolbar, Typography } from '@mui/material';
+import {
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  styled,
+  Theme,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+
+const drawerWidth: number = 200;
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
 
 const SideBar = () => {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-  const drawerWidth: number = 240;
+  const handleBigDrawerToggle = () => {
+    setOpen(!open);
+  };
 
-  interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
-  }
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+
+  const toggleDrawerHandler = () => {
+    if (isMobile) {
+      handleDrawerToggle();
+    } else {
+      handleBigDrawerToggle();
+    }
+  };
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
   })<AppBarProps>(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
+    background: '#EDA652',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -33,7 +64,28 @@ const SideBar = () => {
     }),
   }));
 
-  const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+  const drawer = (
+    <>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          px: [1],
+        }}
+      >
+        <IconButton onClick={handleBigDrawerToggle}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </Toolbar>
+      <Divider />
+      <List component="nav">
+        <AdminList />
+      </List>
+    </>
+  );
+
+  const BigDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
     '& .MuiDrawer-paper': {
       position: 'relative',
       whiteSpace: 'nowrap',
@@ -49,37 +101,23 @@ const SideBar = () => {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing(7),
+        width: theme.spacing(6.5),
         [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
+          width: theme.spacing(6.5),
+        },
+        [theme.breakpoints.down('sm')]: {
+          width: theme.spacing(0),
         },
       }),
     },
   }));
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   return (
-    <>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
-        <Toolbar
-          sx={{
-            pr: '24px',
-          }}
-        >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
-            }}
-          >
+      <AppBar sx={{ height: '70px' }} open={open}>
+        <Toolbar sx={{ pr: '24px' }}>
+          <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawerHandler}>
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
@@ -87,26 +125,24 @@ const SideBar = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-
-      <Drawer variant="permanent" open={open}>
-        <Toolbar
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            px: [1],
-          }}
-        >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </Toolbar>
-        <Divider />
-        <List component="nav">
-          <AdminList />
-        </List>
+      <Drawer
+        open={mobileOpen}
+        onClose={toggleDrawerHandler}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        }}
+      >
+        {drawer}
       </Drawer>
-    </>
+
+      <BigDrawer variant="permanent" open={open}>
+        {drawer}
+      </BigDrawer>
+    </Box>
   );
 };
 

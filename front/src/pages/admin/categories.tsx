@@ -45,8 +45,9 @@ const Categories = () => {
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography>Ниже список всех категорий</Typography>
         <Button>
-          {' '}
-          <Link href="/admin/addCategory">Добавить категорию</Link>
+          <Link href="/admin/addCategory" style={{ textDecoration: 'none' }}>
+            Добавить категорию
+          </Link>
         </Button>
       </Box>
 
@@ -56,27 +57,22 @@ const Categories = () => {
         </Box>
       ) : (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table" className="admin-categories">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ width: '30%' }}>Название категории</TableCell>
-                <TableCell align="center" sx={{ width: '5%' }}>
-                  Удалить
-                </TableCell>
-                <TableCell align="center" sx={{ width: '5%' }}>
-                  Редактировать
-                </TableCell>
+                <TableCell>Название категории</TableCell>
+                <TableCell>Удалить</TableCell>
+                <TableCell>Редактировать</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {categories.map((category) => (
                 <TableRow key={category.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell component="th" scope="row">
-                    {category.title}
-                  </TableCell>
-                  <TableCell align="center">
+                  <TableCell>{category.title}</TableCell>
+                  <TableCell>
                     <Button
                       variant="contained"
+                      sx={{ background: '#EDA652' }}
                       onClick={() => handleDelete(category.id.toString())}
                       disabled={deleting}
                     >
@@ -91,9 +87,9 @@ const Categories = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    <Button variant="outlined">
+                    <Button variant="outlined" sx={{ borderColor: '#EDA652' }}>
                       <Link href={`/admin/editCategory/${category.id}`}>
-                        <EditIcon />
+                        <EditIcon sx={{ color: '#EDA652' }} />
                       </Link>
                     </Button>
                   </TableCell>

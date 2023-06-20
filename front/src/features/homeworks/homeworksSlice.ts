@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import {
   addHomework,
-  editHomework,
   fetchHomeworks,
   fetchHomeworksByTutor,
   fetchOneHomework,

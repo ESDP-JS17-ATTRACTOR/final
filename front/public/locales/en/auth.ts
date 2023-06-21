@@ -2,7 +2,7 @@ export const en = {
   authorization: "Authorization",
   login: "Log in",
   registration: "Registration",
-  email: "e-mail",
+  email: "E-mail",
   enterEmail: "Enter your e-mail",
   firstName: "First name",
   enterFirstName: "Enter your first name",

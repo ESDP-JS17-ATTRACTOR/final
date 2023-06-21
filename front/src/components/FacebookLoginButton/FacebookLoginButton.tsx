@@ -4,6 +4,7 @@ import { FACEBOOK_APP_ID } from '../../../constants';
 import { useAppDispatch } from '@/app/hooks';
 import { facebookLogin } from '@/features/users/usersThunks';
 import { router } from 'next/client';
+import {switchModalWindow} from "@/features/users/usersSlice";
 
 const FacebookLoginButton = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ const FacebookLoginButton = () => {
       appId={FACEBOOK_APP_ID}
       onSuccess={async (response: SuccessResponse) => {
         await dispatch(facebookLogin({ accessToken: response.accessToken, userID: response.userID }));
-        await router.push('/');
+        await dispatch(switchModalWindow());
       }}
       onFail={(error) => {
         console.log('Login Failed!', error);

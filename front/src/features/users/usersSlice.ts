@@ -51,6 +51,11 @@ export const usersSlice = createSlice({
     unsetUser: (state) => {
       state.user = null;
     },
+    unsetErrors: (state) => {
+      state.registerError = null;
+      state.loginError = null;
+      state.recoverPasswordError = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(register.pending, (state) => {
@@ -146,7 +151,7 @@ export const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 
-export const { switchModalWindow, unsetUser } = usersSlice.actions;
+export const { switchModalWindow, unsetUser, unsetErrors } = usersSlice.actions;
 
 export const selectUser = (state: RootState) => state.users.user;
 export const selectRegisterLoading = (state: RootState) => state.users.registerLoading;

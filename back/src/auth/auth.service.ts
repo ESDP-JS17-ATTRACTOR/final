@@ -68,7 +68,7 @@ export class AuthService {
       }
 
       let user = await this.userRepository.findOne({
-        where: { googleId },
+        where: { email },
       });
 
       if (!user) {
@@ -170,7 +170,9 @@ export class AuthService {
 
     if (props.email) {
       if (user) {
-        throw new ConflictException({ email: 'This email is already registered!' });
+        throw new BadRequestException({
+          email: ['This email is already registered!'],
+        });
       }
       return;
     }

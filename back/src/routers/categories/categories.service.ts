@@ -4,12 +4,15 @@ import { Category } from '../../entities/category.entity';
 import { Repository } from 'typeorm';
 import { AddCategoryDto } from './dto/addCategory.dto';
 import { UpdateCategoryDto } from './dto/updateCategory.dto';
+import { Course } from '../../entities/course.entity';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(Course)
+    private readonly courseRepository: Repository<Course>,
   ) {}
 
   async addCategory(categoryData: AddCategoryDto): Promise<Category> {
@@ -33,6 +36,12 @@ export class CategoriesService {
     if (!category) {
       throw new NotFoundException(`Category with id ${id} not found`);
     } else {
+      const defaultCategory = await this.categoryRepository.findOne({ where: { isDefault: true } });
+      const coursesToMove = await this.courseRepository.find({ where: { category: category } });
+      for (const course of coursesToMove) {
+        course.category = defaultCategory;
+        await this.courseRepository.save(course);
+      }
       return this.categoryRepository.delete(category);
     }
   }

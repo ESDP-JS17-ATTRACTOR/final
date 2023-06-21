@@ -30,7 +30,7 @@ export class CategoriesController {
   ) {}
 
   @Post()
-  // @UseGuards(TokenAuthGuard, StaffGuard)
+  @UseGuards(TokenAuthGuard, StaffGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @UsePipes(ValidationPipe)
   async addCourse(@Body() body: AddCategoryDto) {
@@ -39,7 +39,7 @@ export class CategoriesController {
 
   @Get()
   async getAll() {
-    return this.categoryRepository.find();
+    return this.categoryRepository.find({ where: { isDefault: false } });
   }
 
   @Patch(':id')

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Modal } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import {
-  selectModalWindowStatus,
   selectRegisterError,
   selectRegisterLoading,
-  switchModalWindow,
+  selectRegisterModalWindowStatus,
+  switchLoginModalWindow,
+  switchRegistrationModalWindow,
   unsetErrors,
 } from '@/features/users/usersSlice';
 import Link from 'next/link';
@@ -28,14 +29,14 @@ const Registration = () => {
   const router = useRouter();
   const t = router.locale === 'ru' ? ru : en;
   const dispatch = useAppDispatch();
-  const isModalOpen = useAppSelector(selectModalWindowStatus);
+  const isModalOpen = useAppSelector(selectRegisterModalWindowStatus);
   const loading = useAppSelector(selectRegisterLoading);
   const error = useAppSelector(selectRegisterError);
   const [state, setState] = useState<RegisterMutation>(initialState);
   const [confirmedPassword, setConfirmedPassword] = useState('');
 
   const closeRegistrationModalWindow = async () => {
-    await dispatch(switchModalWindow());
+    await dispatch(switchRegistrationModalWindow());
     await setState(initialState);
     await setConfirmedPassword('');
     await dispatch(unsetErrors());
@@ -70,6 +71,11 @@ const Registration = () => {
       await closeRegistrationModalWindow();
     },
   });
+
+  const openLoginWindow = () => {
+    dispatch(switchRegistrationModalWindow());
+    dispatch(switchLoginModalWindow());
+  };
 
   return (
     <Modal open={isModalOpen} onClose={closeRegistrationModalWindow}>
@@ -153,7 +159,9 @@ const Registration = () => {
             <label htmlFor="rememberMe">Remember me</label>
           </div>
           <div className="registration-form_box_links">
-            <Link href="/authorization">Already registered?</Link>
+            <Link href="#" onClick={openLoginWindow}>
+              Already registered?
+            </Link>
           </div>
           <button
             type="submit"

@@ -9,13 +9,11 @@ import StudentWorks from '@/components/UI/StudentWorks/StudentWorks';
 import Team from '@/components/UI/Team/Team';
 import Footer from '@/components/UI/Footer/Footer';
 import Registration from '@/components/UI/Auth/Registration';
-import { useAppSelector } from '@/app/hooks';
-import { selectModalWindowStatus } from '@/features/users/usersSlice';
+import Login from '@/components/UI/Auth/Login';
 
 const Home: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const t = router.locale === 'ru' ? ru : en;
-  const isModalOpen = useAppSelector(selectModalWindowStatus);
 
   return (
     <>
@@ -49,8 +47,6 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
             </div>
           </div>
         </div>
-        {/*{isModalOpen ?? <Registration />}*/}
-        {/*<Registration />*/}
         <Article />
         <Profits />
         <Started />
@@ -59,6 +55,7 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
         <Footer />
       </main>
       <Registration />
+      <Login />
       {children}
     </>
   );

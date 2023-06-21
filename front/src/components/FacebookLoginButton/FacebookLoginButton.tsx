@@ -3,8 +3,7 @@ import FacebookLogin, { SuccessResponse } from '@greatsumini/react-facebook-logi
 import { FACEBOOK_APP_ID } from '../../../constants';
 import { useAppDispatch } from '@/app/hooks';
 import { facebookLogin } from '@/features/users/usersThunks';
-import { router } from 'next/client';
-import {switchModalWindow} from "@/features/users/usersSlice";
+import { switchRegistrationModalWindow, switchLoginModalWindow } from '@/features/users/usersSlice';
 
 const FacebookLoginButton = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +13,8 @@ const FacebookLoginButton = () => {
       appId={FACEBOOK_APP_ID}
       onSuccess={async (response: SuccessResponse) => {
         await dispatch(facebookLogin({ accessToken: response.accessToken, userID: response.userID }));
-        await dispatch(switchModalWindow());
+        await dispatch(switchRegistrationModalWindow());
+        await dispatch(switchLoginModalWindow());
       }}
       onFail={(error) => {
         console.log('Login Failed!', error);

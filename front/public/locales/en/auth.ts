@@ -11,7 +11,7 @@ export const en = {
   password: "Password",
   enterPassword: "Enter your password",
   passConfirm: "Confirm your password",
-  forgotPassword: "forgot password",
+  forgotPassword: "Forgot password?",
   rememberMe: "Remember me",
   alreadyLogin: "Already have an account? Log in",
   signUp: "Sign Up",

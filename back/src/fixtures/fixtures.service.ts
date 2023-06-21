@@ -106,21 +106,27 @@ export class FixturesService {
   }
 
   async createCategories() {
-    const smm = await this.categoriesRepository.create({ title: 'SMM' });
+    const defaultCategory = await this.categoriesRepository.create({ title: 'Default  Category', isDefault: true });
+    await this.categoriesRepository.save(defaultCategory);
+
+    const smm = await this.categoriesRepository.create({ title: 'SMM', isDefault: false });
     await this.categoriesRepository.save(smm);
 
     const mobilography = await this.categoriesRepository.create({
       title: 'Mobilography',
+      isDefault: false,
     });
     await this.categoriesRepository.save(mobilography);
 
     const graphicDesign = await this.categoriesRepository.create({
       title: 'Graphic Design',
+      isDefault: false,
     });
     await this.categoriesRepository.save(graphicDesign);
 
     const contentCreator = await this.categoriesRepository.create({
       title: 'Content creator',
+      isDefault: false,
     });
     await this.categoriesRepository.save(contentCreator);
   }

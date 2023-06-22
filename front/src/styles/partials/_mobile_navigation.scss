@@ -1,5 +1,10 @@
 @use '../var/colors' as *;
 @use '../var/mixins' as *;
+$search-icon: '/search-icon.png';
+$favorite-icon: '/favourite-ic.png';
+$purchase-icon: '/purchase-ic.png';
+$nav-menu-icon: '/nav-menu-ic.png';
+
 
 .navigation_mobile {
   width: 100%;
@@ -14,6 +19,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   @include md {
     width: 0;
     display: none;
@@ -24,6 +30,7 @@
   display: flex;
   align-items: center;
   margin-right: auto;
+  margin-left: 10px;
   select {
     background-color: transparent;
     border: none;
@@ -42,7 +49,7 @@
     border-radius: 10px;
     border: 1px solid #ffffff;
     background-color: transparent;
-    background-image: url('/search-icon.png');
+    background-image: url($search-icon);
     background-repeat: no-repeat;
     background-position: 10px 4px;
     padding: 0 2px 0 36px;
@@ -68,7 +75,7 @@
     background-size: 16px;
     border-radius: 10px;
     border: none;
-    background-image: url('/search-icon.png');
+    background-image: url($search-icon);
     background-repeat: no-repeat;
     background-position: 10px 4px;
     padding-left: 36px;
@@ -99,18 +106,18 @@
     }
   }
   .search_btn {
-    background-image: url('/search-ic.png');
+    background-image: url($search-icon);
     overflow: hidden;
     text-indent: -200px;
   }
   .favourites_btn {
-    background-image: url('/favourite-ic.png');
+    background-image: url($favorite-icon);
   }
   .purchases_btn {
-    background-image: url('/purchase-ic.png');
+    background-image: url($purchase-icon);
   }
   .side_menu_btn {
-    background-image: url('/nav-menu-ic.png');
+    background-image: url($nav-menu-icon);
     overflow: hidden;
     text-indent: -200px;
   }

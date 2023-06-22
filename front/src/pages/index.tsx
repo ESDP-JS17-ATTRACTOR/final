@@ -8,6 +8,8 @@ import Started from '@/components/UI/Started/Started';
 import StudentWorks from '@/components/UI/StudentWorks/StudentWorks';
 import Team from '@/components/UI/Team/Team';
 import Footer from '@/components/UI/Footer/Footer';
+import Registration from '@/components/UI/Auth/Registration';
+import Login from '@/components/UI/Auth/Login';
 
 const Home: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -52,6 +54,8 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
         <Team />
         <Footer />
       </main>
+      <Registration />
+      <Login />
       {children}
     </>
   );

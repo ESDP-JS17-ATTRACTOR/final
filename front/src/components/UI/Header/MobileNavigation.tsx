@@ -4,7 +4,8 @@ import { Avatar } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { useRouter } from 'next/router';
 import { logout } from '@/features/users/usersThunks';
-import { selectUser } from '@/features/users/usersSlice';
+import { selectUser, switchLoginModalWindow, switchRegistrationModalWindow } from '@/features/users/usersSlice';
+import Image from 'next/image';
 
 const MobileNavigation = () => {
   const dispatch = useAppDispatch();
@@ -37,11 +38,15 @@ const MobileNavigation = () => {
   const handleLogout = async () => {
     await dispatch(logout());
     await router.push('/');
+    closeMobileSideMenu();
   };
 
   return (
     <div className="navigation_mobile">
       <div className="navigation_mobile_controllers">
+        <Link href="/" className="logo">
+          <Image className="logo-image" src="/logo.png" alt="Logo" width={43} height={43} priority />
+        </Link>
         <div className="language_switcher">
           <select name="" id="">
             <option value="en">EN</option>
@@ -63,12 +68,12 @@ const MobileNavigation = () => {
               </button>
             )}
 
-            <Link href="/my_favourites">
+            <Link href="#">
               <button className="mobile_btn favourites_btn">
                 <span>1</span>
               </button>
             </Link>
-            <Link href="/my_purchases">
+            <Link href="#">
               <button className="mobile_btn purchases_btn">
                 <span>1</span>
               </button>
@@ -79,12 +84,12 @@ const MobileNavigation = () => {
           </div>
         ) : (
           <div className="anonymous_menu">
-            <Link href="/authorization">
-              <button className="button login_btn">Login</button>
-            </Link>
-            <Link href="/register">
-              <button className="button sign-up_btn">Sign Up</button>
-            </Link>
+            <button className="button login_btn" onClick={() => dispatch(switchLoginModalWindow())}>
+              Login
+            </button>
+            <button className="button sign-up_btn" onClick={() => dispatch(switchRegistrationModalWindow())}>
+              Sign Up
+            </button>
           </div>
         )}
       </div>
@@ -94,35 +99,33 @@ const MobileNavigation = () => {
             <span>Hello, User</span>
             <Avatar sx={{ width: '37px', height: '37px' }} />
           </div>
-
           <div className="mobile_side_menu_body">
             <nav>
               <ul>
-                <Link href="/my-profile/index">
+                <Link href="/my-profile" onClick={closeMobileSideMenu}>
                   <li>My profile</li>
                 </Link>
-                <Link href="/my-documents">
-                  <li>My documents</li>
+                <Link href="/my-courses" onClick={closeMobileSideMenu}>
+                  <li>My courses</li>
                 </Link>
-                <Link href="/catalogs">
+                <Link href="#">
                   <li>Catalogs</li>
                 </Link>
-                <Link href="">
+                <Link href="#">
                   <li>My favourites</li>
                 </Link>
-                <Link href="">
+                <Link href="#">
                   <li>Articles</li>
                 </Link>
-                <Link href="">
+                <Link href="#">
                   <li>Users</li>
                 </Link>
-                <Link href="">
+                <Link href="#">
                   <li>Departments</li>
                 </Link>
               </ul>
             </nav>
           </div>
-
           <div className="mobile_side_menu_footer">
             <button onClick={handleLogout}>Logout</button>
           </div>

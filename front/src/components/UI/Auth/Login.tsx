@@ -61,6 +61,7 @@ const Login = () => {
       await dispatch(login(state)).unwrap();
       await setState(initialState);
       await dispatch(unsetErrors);
+      await dispatch(switchLoginModalWindow());
     } catch (e) {
       throw e;
     }

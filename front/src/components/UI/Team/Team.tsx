@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import TeamCard from '@/components/Cards/TeamCard';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
-import 'swiper/swiper-bundle.css';
 
 const Team = () => {
   return (
@@ -18,12 +17,34 @@ const Team = () => {
         <div className="swiper-container">
           <div className="swiper-wrapper">
             <Swiper
-              modules={[Navigation, Pagination, Scrollbar, A11y]}
-              spaceBetween={50}
               slidesPerView={1}
+              spaceBetween={10}
+              pagination={{
+                clickable: true,
+              }}
               navigation
-              breakpoints={{ 860: { slidesPerView: 3, navigation: true } }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                900: {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 50,
+                },
+              }}
+              modules={[Navigation]}
             >
+              <SwiperSlide>
+                <TeamCard />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TeamCard />
+              </SwiperSlide>
               <SwiperSlide>
                 <TeamCard />
               </SwiperSlide>

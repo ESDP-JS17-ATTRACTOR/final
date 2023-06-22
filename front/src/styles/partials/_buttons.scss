@@ -1,5 +1,9 @@
 @use '../var/colors' as *;
 @use '../var/mixins' as *;
+$google-icon: '/googleplus-icon.png';
+$linkedin-icon: '/linkedin-icon.png';
+$facebook-icon: '/facebook-icon.png';
+$keyboard-down-icon: '/keyboard-arrow-down.svg';
 
 .button {
   background: $dark-orange;
@@ -110,47 +114,47 @@
 
 .auth_facebook {
   background-color: #405d9b;
-  //background-image: url('/facebook-icon.png');
+  background-image: url($facebook-icon);
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .auth_linkedin {
   background-color: #0073b2;
-  //background-image: url('/linkedin-icon.png');
+  background-image: url($linkedin-icon);
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .auth_google {
   background-color: #dc4e41;
-  //background-image: url('/googleplus-icon.png');
+  background-image: url($google-icon);
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .profile-btn-edit {
-  border: 2px solid $dark-orange;
-  color: #ffffff;
+  line-height: 17px;
   border-radius: 22px;
   padding: 13px 29px;
   font-size: 14px;
-  line-height: 17px;
+  border: 2px solid $dark-orange;
+  color: #ffffff;
   &:hover {
-    background: transparent;
     color: $dark-orange;
+    background: transparent;
   }
   &:active {
-    background: $dark-orange;
     border: 2px solid #ffffff;
+    background: $dark-orange;
     color: #ffffff;
   }
 }
 
 .profile-btn-save {
   margin-top: 10px;
-  border: 2px solid $dark-orange;
   color: #ffffff;
+  border: 2px solid $dark-orange;
   border-radius: 22px;
   padding: 13px 29px;
   font-size: 14px;
@@ -168,10 +172,10 @@
 
 .profile-btn-add {
   margin: 20px 10px 20px 0;
-  border: 2px solid $dark-orange;
   color: #ffffff;
   border-radius: 22px;
   padding: 13px 29px;
+  border: 2px solid $dark-orange;
   font-size: 14px;
   line-height: 17px;
   &:hover {
@@ -206,20 +210,20 @@
 }
 
 .homework-btn {
-  border: 2px solid $dark-orange;
   color: #ffffff;
+  line-height: 17px;
   border-radius: 22px;
   padding: 13px 29px;
   font-size: 14px;
-  line-height: 17px;
+  border: 2px solid $dark-orange;
   &:hover {
-    background: transparent;
     color: $dark-orange;
+    background: transparent;
   }
   &:active {
-    background: $dark-orange;
     border: 2px solid #ffffff;
     color: #ffffff;
+    background: $dark-orange;
   }
 }
 
@@ -227,7 +231,7 @@
   width: 29px;
   height: 29px;
   text-align: center;
-  //background-image: url('/keyboard-arrow-down.svg');
+  background-image: url($keyboard-down-icon);
   background-repeat: no-repeat;
   background-position: center;
   &:hover {

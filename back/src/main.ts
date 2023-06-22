@@ -35,5 +35,6 @@ async function bootstrap() {
   });
 
   await app.listen(8000);
+  console.log(process.env.MESSAGE);
 }
 bootstrap();

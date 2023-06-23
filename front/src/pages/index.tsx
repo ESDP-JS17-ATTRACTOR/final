@@ -10,6 +10,9 @@ import Team from '@/components/UI/Team/Team';
 import Footer from '@/components/UI/Footer/Footer';
 import Registration from '@/components/UI/Auth/Registration';
 import Login from '@/components/UI/Auth/Login';
+import { GetServerSideProps } from 'next';
+import { wrapper } from '@/app/store';
+import { fetchCourses } from '@/features/courses/coursesThunks';
 
 const Home: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -62,3 +65,8 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (): Promise<any> => {
+  await store.dispatch(fetchCourses());
+  return { props: {} };
+});

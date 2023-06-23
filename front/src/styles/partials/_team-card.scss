@@ -24,6 +24,11 @@
     width: 271px;
     height: 388px;
   }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
   &_photo {
     margin: 25px auto 12px;
     width: 172px;

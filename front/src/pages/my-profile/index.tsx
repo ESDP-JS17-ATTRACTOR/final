@@ -5,8 +5,9 @@ import { useRouter } from 'next/router';
 import { selectUser } from '@/features/users/usersSlice';
 import { ApiHomework, ApiStudentHomework, ValidationError } from '../../../types';
 import FormForHomework from '@/components/UI/MyProfile/FormForHomework';
-import { addHomework, fetchHomeworks } from '@/features/homeworks/homeworksThunks';
+import { Modal } from '@mui/material';
 import FormForStudentHomework from '@/components/UI/MyProfile/FormForStudentHomework';
+import { addHomework, fetchHomeworks } from '@/features/homeworks/homeworksThunks';
 import {
   addStudentHomework,
   checkStudentHomework,
@@ -15,10 +16,8 @@ import {
 import { selectHomeworks } from '@/features/homeworks/homeworksSlice';
 import { selectStudentHomeworks } from '@/features/studentHomeworks/studentHomeworksSlice';
 import CardForStudentHomework from '@/components/Cards/CardForStudentHomework';
-import { Modal } from '@mui/material';
 import dayjs from 'dayjs';
 import FormForEditProfile from '@/components/UI/MyProfile/FormForEditProfile';
-import { wrapper } from '@/app/store';
 
 const MyProfile = () => {
   const dispatch = useAppDispatch();
@@ -102,16 +101,30 @@ const MyProfile = () => {
       <div className="homework-block">
         <h2>Homework</h2>
         <div className="homework-headlines-block">
-          <p>ID</p>
-          <p style={{ marginLeft: '200px' }}>Articles</p>
-          <p style={{ marginLeft: '280px' }}>Added date</p>
-          <p style={{ marginLeft: '150px' }}>Status</p>
+          <div style={{ width: '90px', overflow: 'hidden' }}>
+            <p>ID</p>
+          </div>
+          <div style={{ width: '380px', overflow: 'hidden' }}>
+            <p>Articles</p>
+          </div>
+          <div style={{ width: '280px', overflow: 'hidden' }}>
+            <p>Added date</p>
+          </div>
+          <div style={{ width: '130px', overflow: 'hidden' }}>
+            <p>Status</p>
+          </div>
           {user?.role === 'tutor' ? (
-            <p style={{ marginLeft: '85px' }}>Student name</p>
+            <div style={{ width: '150px', overflow: 'hidden' }}>
+              <p>Student name</p>
+            </div>
           ) : (
-            <p style={{ marginLeft: '85px' }}>Tutor name</p>
+            <div style={{ width: '130px', overflow: 'hidden' }}>
+              <p>Tutor name</p>
+            </div>
           )}
-          <p style={{ marginLeft: '70px' }}>Is checked</p>
+          <div style={{ width: '170px', overflow: 'hidden' }}>
+            <p>Is checked</p>
+          </div>
         </div>
         {user?.role === 'student' &&
           homeworks.map((homework) => {
@@ -156,16 +169,20 @@ const MyProfile = () => {
       </button>
       {user?.role === 'tutor' && (
         <Modal open={showModal} onClose={() => setShowModal(false)}>
-          <FormForHomework onSubmit={onSubmit} />
+          <>
+            <FormForHomework onSubmit={onSubmit} />
+          </>
         </Modal>
       )}
       {user?.role === 'student' && (
         <Modal open={showModal} onClose={() => setShowModal(false)}>
-          <FormForStudentHomework
-            onSubmit={onSubmitStudent}
-            closeModal={() => setShowModal(false)}
-            error={validationError?.message}
-          />
+          <>
+            <FormForStudentHomework
+              onSubmit={onSubmitStudent}
+              closeModal={() => setShowModal(false)}
+              error={validationError?.message}
+            />
+          </>
         </Modal>
       )}
     </div>
@@ -174,8 +191,8 @@ const MyProfile = () => {
 
 export default MyProfile;
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  console.log('2. Page.getStaticProps uses the store to dispatch things');
-  await store.dispatch(fetchHomeworks());
-  return { props: {} };
-});
+// export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+//   console.log('2. Page.getStaticProps uses the store to dispatch things');
+//   await store.dispatch(fetchHomeworks());
+//   return { props: {} };
+// });

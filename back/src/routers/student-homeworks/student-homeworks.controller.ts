@@ -24,7 +24,7 @@ import { StudentHomework } from '../../entities/studentHomework.entity';
 import { AddStudentHomeworkDto } from './dto/addStudentHomework.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 
-@Controller('student-homework')
+@Controller('student-homeworks')
 export class StudentHomeworksController {
   constructor(
     @InjectRepository(Homework)

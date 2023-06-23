@@ -27,6 +27,11 @@
 
 .profile-info-block {
   margin-left: 30px;
+  span {
+    @media (max-width: 600px) {
+      font-size: 14px;
+    }
+  }
 }
 
 .profile-avatar {
@@ -76,9 +81,8 @@
 }
 
 .homework-headlines-block {
-  padding: 0 40px 0 40px;
-  //display: flex;
-  //text-align: center;
+  display: flex;
+  text-align: center;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #4688c1;

@@ -201,6 +201,9 @@ footer {
         @include md {
           background-color: #ffffff;
         }
+        &:hover {
+          background-color: $light-orange;
+        }
       }
     }
     &_navigation {

@@ -12,6 +12,7 @@
     font-size: 24px;
     line-height: 29px;
     color: $black;
+
     &-orange {
       color: $orange-btn;
     }
@@ -88,6 +89,7 @@
 .students-works-block {
   margin: 0 auto 30px;
   padding: 0 15px;
+
   &_title {
     display: none;
     @include md {
@@ -95,23 +97,27 @@
       text-align: center;
       margin-bottom: 20px;
     }
+
     h6 {
       font-weight: 400;
       font-size: 24px;
       line-height: 29px;
       color: #173442;
       margin: 0;
+
       span {
         color: #f6a451;
       }
     }
   }
+
   &_content {
     display: flex;
     flex-direction: column-reverse;
     @include lg {
       flex-direction: row;
     }
+
     .students-works_content_description {
       text-align: center;
       @include lg {
@@ -120,18 +126,21 @@
         flex-direction: column;
         justify-content: center;
       }
+
       span {
         font-weight: 400;
         font-size: 18px;
         line-height: 22px;
         color: $orange;
       }
+
       p {
         font-weight: 400;
         font-size: 18px;
         line-height: 23px;
         color: $light-grey;
       }
+
       .work_view_btn {
         font-family: 'Craftwork Grotesk';
         font-style: normal;
@@ -146,6 +155,7 @@
         }
       }
     }
+
     .students-works_content_cards {
       display: flex;
       flex-direction: column;
@@ -178,12 +188,15 @@
     width: 307px;
     height: 295px;
   }
+
   &_info {
     position: relative;
     border-radius: 26px;
     display: flex;
     justify-content: center;
     height: 100%;
+
+
     img {
       position: absolute;
       border-radius: 26px;
@@ -215,11 +228,16 @@
         width: 266px;
         height: 43px;
       }
+      &:hover {
+        transform: scale(1.05);
+      }
+
       h6 {
         font-size: 18px;
         line-height: 22px;
         margin: 0;
       }
+
       a {
         text-decoration: none;
         color: #ffffff;

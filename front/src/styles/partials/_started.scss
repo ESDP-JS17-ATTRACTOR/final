@@ -74,6 +74,10 @@
     font-weight: 600;
     font-size: 19px;
     line-height: 23px;
+    &:hover {
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
   }
 }
 

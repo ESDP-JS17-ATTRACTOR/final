@@ -12,6 +12,9 @@ $keyboard-down-icon: '/keyboard-arrow-down.svg';
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
+  &:hover {
+    background: lighten($dark-orange, 10%);
+  }
 }
 
 .start_btn,

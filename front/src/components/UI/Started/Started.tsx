@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Started = () => {
   return (
@@ -44,7 +45,9 @@ const Started = () => {
           </div>
         </div>
       </div>
-      <button className="started-btn">Discuss the course</button>
+      <Link href="#myForm">
+        <button className="started-btn">Discuss the course</button>
+      </Link>
     </div>
   );
 };

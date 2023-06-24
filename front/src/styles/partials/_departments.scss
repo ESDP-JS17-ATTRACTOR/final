@@ -4,30 +4,56 @@
 .departments {
   display: flex;
   flex-direction: column;
+
   &-top {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    @include md {
+      display: flex;
+      flex-direction: column;
+    }
     &-block {
       display: flex;
+      flex-direction: column;
+      @include md {
+        display: flex;
+        flex-direction: row;
+      }
       &-title {
         margin-bottom: 50px;
       }
       &-social-links {
-        width: 50%;
+        width: 100%;
+        @include md {
+          width: 50%;
+        }
       }
       &-social {
-        margin-left: -158px;
+        margin-left: -70px;
+        @include lg {
+          margin-left: -158px;
+        }
       }
       &-requisites {
-        width: 50%;
+        width: 100%;
+        @include md {
+          width: 50%;
+        }
       }
     }
   }
   &-bottom {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    @include md {
+      justify-content: space-between;
+      flex-direction: row;
+    }
     &-contacts {
-      width: 50%;
+      @include md {
+        width: 50%;
+      }
+      width: 100%;
       &-number {
         text-decoration: none;
         color: $dark-orange;
@@ -38,7 +64,10 @@
       }
     }
     &-addresses {
-      width: 50%;
+      width: 100%;
+      @include md {
+        width: 50%;
+      }
     }
   }
 }

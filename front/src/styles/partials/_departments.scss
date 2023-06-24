@@ -1,0 +1,44 @@
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
+
+.departments {
+  display: flex;
+  flex-direction: column;
+  &-top {
+    display: flex;
+    flex-direction: column;
+    &-block {
+      display: flex;
+      &-title {
+        margin-bottom: 50px;
+      }
+      &-social-links {
+        width: 50%;
+      }
+      &-social {
+        margin-left: -158px;
+      }
+      &-requisites {
+        width: 50%;
+      }
+    }
+  }
+  &-bottom {
+    display: flex;
+    justify-content: space-between;
+    &-contacts {
+      width: 50%;
+      &-number {
+        text-decoration: none;
+        color: $dark-orange;
+        margin: 10px;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+    &-addresses {
+      width: 50%;
+    }
+  }
+}

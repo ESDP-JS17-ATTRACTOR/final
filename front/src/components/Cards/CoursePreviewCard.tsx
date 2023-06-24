@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const CoursePreviewCard = () => {
   return (
@@ -14,7 +15,9 @@ const CoursePreviewCard = () => {
           <li className="course-preview-card-main_details_item">Up to 5 users</li>
           <li className="course-preview-card-main_details_item">File storage - 1 GB</li>
         </ul>
-        <button className="course-preview-card-main_button">Select</button>
+        <Link href="#myForm">
+          <button className="course-preview-card-main_button">Select</button>
+        </Link>
       </div>
     </div>
   );

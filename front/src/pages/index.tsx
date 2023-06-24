@@ -10,6 +10,7 @@ import Team from '@/components/UI/Team/Team';
 import Footer from '@/components/UI/Footer/Footer';
 import Registration from '@/components/UI/Auth/Registration';
 import Login from '@/components/UI/Auth/Login';
+import Link from 'next/link';
 
 const Home: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -30,18 +31,25 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
                 <p>We are collecting courses for you. courses in the system: 21</p>
               </div>
               <div className="invitation-info_buttons">
-                <button className="button start_btn">Get started</button>
-                <button className="button contact_btn">Contact sales</button>
+                <Link href="#myForm">
+                  <button className="button start_btn">Get started</button>
+                </Link>
+                <Link href="#myForm">
+                  <button className="button contact_btn">Contact sales</button>
+                </Link>
               </div>
             </div>
             <div className="invitation-contacts">
-              <a href="#" className="contact-link contact-link_facebook">
+              <a href="https://www.facebook.com/cholponakhmdesign" className="contact-link contact-link_facebook">
                 Facebook
               </a>
-              <a href="#" className="contact-link contact-link_whatsapp">
+              <a href="https://wa.me/996707924217" className="contact-link contact-link_whatsapp">
                 WhatsApp
               </a>
-              <a href="#" className="contact-link contact-link_instagram">
+              <a
+                href="https://instagram.com/cholponah_design?igshid=MzRlODBiNWFlZA=="
+                className="contact-link contact-link_instagram"
+              >
                 Instagram
               </a>
             </div>

@@ -10,6 +10,7 @@ import FormForHomework from '@/components/UI/MyProfile/FormForHomework';
 import { Modal } from '@mui/material';
 import { selectHomework } from '@/features/homeworks/homeworksSlice';
 import { ApiHomework } from '../../../types';
+import { apiURL } from '../../../constants';
 
 interface Props {
   id: string;
@@ -26,6 +27,7 @@ const CardForHomework: React.FC<Props> = ({ id, title, description, date, tutorN
   const homework = useAppSelector(selectHomework);
   const [showDescription, setShowDescription] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const fileUrl = apiURL + '/' + pdf;
 
   const onEditClick = async () => {
     await dispatch(fetchOneHomework(id));
@@ -65,7 +67,7 @@ const CardForHomework: React.FC<Props> = ({ id, title, description, date, tutorN
           <p>{date}</p>
         </div>
         <div style={{ width: '300px', overflow: 'hidden', marginRight: '10px' }}>
-          {pdf ? <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a> : <span>No files</span>}
+          {pdf ? <a href={fileUrl}>PDF FILE</a> : <span>No files</span>}
         </div>
         <button onClick={onEditClick} className="button profile-btn-add">
           Edit

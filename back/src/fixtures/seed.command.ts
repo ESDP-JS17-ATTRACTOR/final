@@ -9,7 +9,7 @@ export class SeedCommand extends CommandRunner {
 
   async run(): Promise<void> {
     console.log('===== Dropping tables! =======');
-    await this.fixturesService.dropTables();
+    // await this.fixturesService.dropTables();
     console.log('===== Done! =================');
     console.log('===== Creating users! =======');
     await this.fixturesService.createUsers();

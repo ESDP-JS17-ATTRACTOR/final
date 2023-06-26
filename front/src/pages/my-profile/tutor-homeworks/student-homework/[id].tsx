@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { useRouter } from 'next/router';
 import { fetchTutorHomeworkById } from '@/features/homeworks/homeworksThunks';
 import { selectStudentHomework } from '@/features/homeworks/homeworksSlice';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const StudentHomework = () => {
   const dispatch = useAppDispatch();
@@ -54,4 +55,4 @@ const StudentHomework = () => {
   );
 };
 
-export default StudentHomework;
+export default IsAuth(StudentHomework);

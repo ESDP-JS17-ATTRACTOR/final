@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { fetchUserPurchases } from '@/features/purchases/puchasesThunks';
 import { selectUsersPurchases } from '@/features/purchases/purchasesSlice';
 import Link from 'next/link';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const MyCourses = () => {
   const dispatch = useAppDispatch();
@@ -37,4 +38,4 @@ const MyCourses = () => {
   );
 };
 
-export default MyCourses;
+export default IsAuth(MyCourses);

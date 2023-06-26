@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { selectHomeworksByTutor } from '@/features/homeworks/homeworksSlice';
 import CardForAllHomeworks from '@/components/Cards/CardForAllHomeworks';
 import { fetchHomeworksByTutor } from '@/features/homeworks/homeworksThunks';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const AllHomeworks = () => {
   const dispatch = useAppDispatch();
@@ -43,4 +44,4 @@ const AllHomeworks = () => {
   );
 };
 
-export default AllHomeworks;
+export default IsAuth(AllHomeworks);

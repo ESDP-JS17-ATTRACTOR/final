@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { fetchTutorsHomeworks } from '@/features/homeworks/homeworksThunks';
 import { selectTutorsHomeworks } from '@/features/homeworks/homeworksSlice';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const TutorHomeworks = () => {
   const dispatch = useAppDispatch();
@@ -57,4 +58,4 @@ const TutorHomeworks = () => {
   );
 };
 
-export default TutorHomeworks;
+export default IsAuth(TutorHomeworks);

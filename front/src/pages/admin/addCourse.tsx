@@ -4,6 +4,7 @@ import { useAppDispatch } from '@/app/hooks';
 import { addCourse } from '@/features/courses/coursesThunks';
 import { useRouter } from 'next/router';
 import { ApiCourse } from '../../../types';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const AddCourse = () => {
   const dispatch = useAppDispatch();
@@ -21,4 +22,4 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default IsAdmin(AddCourse);

@@ -25,7 +25,7 @@
     "makemigrations": "npm run typeorm migration:generate -- -d ./typeOrm.config.ts src/database/migrations/auto  && prettier --write \"src/database/migrations/*.ts\"",
     "migrate": "npm run typeorm migration:run -- -d ./typeOrm.config.ts",
     "revert": "npm run typeorm migration:revert -- -d ./typeOrm.config.ts",
-    "cli": "ts-node src/cli.ts",
+    "cli": "ts-node src/cli.ts seed",
     "cli:test": "NODE_ENV=test ts-node src/cli.ts seed",
     "prepare": "cd .. && npm i"
   },

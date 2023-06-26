@@ -18,6 +18,7 @@ import { selectStudentHomeworks } from '@/features/studentHomeworks/studentHomew
 import CardForStudentHomework from '@/components/Cards/CardForStudentHomework';
 import dayjs from 'dayjs';
 import FormForEditProfile from '@/components/UI/MyProfile/FormForEditProfile';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const MyProfile = () => {
   const dispatch = useAppDispatch();
@@ -189,10 +190,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
-
-// export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-//   console.log('2. Page.getStaticProps uses the store to dispatch things');
-//   await store.dispatch(fetchHomeworks());
-//   return { props: {} };
-// });
+export default IsAuth(MyProfile);

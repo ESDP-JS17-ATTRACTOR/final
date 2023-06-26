@@ -6,6 +6,7 @@ import { selectOneCourse } from '@/features/courses/coursesSlice';
 import CourseForm from '@/components/UI/Admin/CourseForm';
 import { ApiCourse } from '../../../../types';
 import { useRouter } from 'next/router';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 interface Props {
   id: string;
@@ -39,4 +40,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default EditCourse;
+export default IsAdmin(EditCourse);

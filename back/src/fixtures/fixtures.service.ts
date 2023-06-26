@@ -560,5 +560,29 @@ export class FixturesService {
       lesson: lessons[2],
     });
     await this.usersLessonsRepository.save(thirdUsersLesson);
+
+    const fourthUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[3],
+    });
+    await this.usersLessonsRepository.save(fourthUsersLesson);
+
+    const fifthUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[4],
+    });
+    await this.usersLessonsRepository.save(fifthUsersLesson);
+
+    const sixthUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[5],
+    });
+    await this.usersLessonsRepository.save(sixthUsersLesson);
+
+    const seventhUsersLesson = await this.usersLessonsRepository.create({
+      student: user,
+      lesson: lessons[6],
+    });
+    await this.usersLessonsRepository.save(seventhUsersLesson);
   }
 }

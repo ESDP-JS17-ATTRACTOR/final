@@ -7,6 +7,7 @@ import { selectModuleLessons, selectOneUsersLesson } from '@/features/usersLesso
 import { useRouter } from 'next/router';
 import { apiURL } from '../../../../../constants';
 import LessonsChat from '@/components/LessonsChat/LessonsChat';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const Lesson = () => {
   const dispatch = useAppDispatch();
@@ -110,4 +111,4 @@ const Lesson = () => {
   );
 };
 
-export default Lesson;
+export default IsAuth(Lesson);

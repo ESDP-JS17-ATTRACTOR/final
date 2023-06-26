@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Article = () => {
   return (
@@ -23,7 +24,9 @@ const Article = () => {
           </p>
         </div>
         <div className="article-right-side-btn">
-          <button>Tell me more</button>
+          <Link href="/about">
+            <button>Tell me more</button>
+          </Link>
         </div>
       </div>
     </div>

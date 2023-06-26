@@ -515,7 +515,7 @@ export class FixturesService {
     });
 
     const mobilographyCourse = await this.coursesRepository.findOne({
-      where: { title: 'Mobilographya ZA 45 DNEI' },
+      where: { title: 'Mobile Photography' },
     });
 
     const firstPurchase = await this.purchasesRepository.create({

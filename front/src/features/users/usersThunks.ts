@@ -4,6 +4,7 @@ import {
   LoginMutation,
   ProfileMutation,
   RegisterMutation,
+  Student,
   Tutor,
   User,
   ValidationError,
@@ -112,5 +113,10 @@ export const editUserProfile = createAsyncThunk<User, ProfileMutation, { rejectV
 
 export const fetchTutors = createAsyncThunk<Tutor[]>('users/fetchTutors', async () => {
   const response = await axiosApi.get<Tutor[]>('/users/tutors');
+  return response.data;
+});
+
+export const fetchStudents = createAsyncThunk<Student[]>('users/fetchStudents', async () => {
+  const response = await axiosApi.get<Student[]>('/users/students');
   return response.data;
 });

@@ -66,7 +66,7 @@ export class FixturesService {
 
     const admin = await this.usersRepository.create({
       email: 'admin@gmail.com',
-      firstName: 'Jane',
+      firstName: 'Kate',
       lastName: 'Doe',
       password: 'password',
       role: 'admin',
@@ -86,7 +86,7 @@ export class FixturesService {
 
     const tutorSecond = await this.usersRepository.create({
       email: 'tutor-second@gmail.com',
-      firstName: 'Jack',
+      firstName: 'Sam',
       lastName: 'Doe',
       password: 'password',
       role: 'tutor',
@@ -103,6 +103,26 @@ export class FixturesService {
     });
     await moderator.generateToken();
     await this.usersRepository.save(moderator);
+
+    const studentFirst = await this.usersRepository.create({
+      email: 'student-first@gmail.com',
+      firstName: 'Jasmine',
+      lastName: 'Doe',
+      password: 'password',
+      role: 'student',
+    });
+    await studentFirst.generateToken();
+    await this.usersRepository.save(studentFirst);
+
+    const studentSecond = await this.usersRepository.create({
+      email: 'student-second@gmail.com',
+      firstName: 'Jill',
+      lastName: 'Doe',
+      password: 'password',
+      role: 'student',
+    });
+    await studentSecond.generateToken();
+    await this.usersRepository.save(studentSecond);
   }
 
   async createCategories() {
@@ -494,12 +514,23 @@ export class FixturesService {
       where: { title: 'SMM Manager' },
     });
 
+    const mobilographyCourse = await this.coursesRepository.findOne({
+      where: { title: 'Mobile Photography' },
+    });
+
     const firstPurchase = await this.purchasesRepository.create({
       purchaser: user,
       course: smmCourse,
       purchasedAt: new Date('2023-05-05T09:00:00'),
     });
     await this.purchasesRepository.save(firstPurchase);
+
+    const secondPurchase = await this.purchasesRepository.create({
+      purchaser: user,
+      course: mobilographyCourse,
+      purchasedAt: '2023-05-05T09:00:00',
+    });
+    await this.purchasesRepository.save(secondPurchase);
   }
 
   async createUsersLessons() {

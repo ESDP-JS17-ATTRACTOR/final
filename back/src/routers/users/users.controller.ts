@@ -12,13 +12,16 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { User } from '../../entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { TokenAuthGuard } from '../../auth/token-auth.guard';
 import { AuthService } from '../../auth/auth.service';
 import { LocalAuthGuard } from '../../auth/local-auth.guard';
 import { CurrentUser } from '../../auth/currentUser.decorator';
+import { Purchase } from '../../entities/purchase.entity';
+import { StaffGuard } from '../../auth/staff.guard';
+import { Course } from '../../entities/course.entity';
 
 @Controller('users')
 export class UsersController {
@@ -26,6 +29,10 @@ export class UsersController {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
+    @InjectRepository(Purchase)
+    private readonly purchaseRepository: Repository<Purchase>,
+    @InjectRepository(Course)
+    private readonly courseRepository: Repository<Course>,
   ) {}
 
   @Post('register')
@@ -78,10 +85,46 @@ export class UsersController {
   }
 
   @Get('tutors')
+  @UseGuards(TokenAuthGuard, StaffGuard)
   async getTutors() {
-    return await this.userRepository.find({
+    const tutors = await this.userRepository.find({
       where: { role: 'tutor' },
       select: ['id', 'firstName', 'lastName', 'role'],
+    });
+    const tutorsIds = tutors.map((tutor) => tutor.id);
+    const courses = await this.courseRepository.find({
+      where: { tutor: { id: In(tutorsIds) } },
+      relations: ['tutor'],
+    });
+
+    return tutors.map((tutor) => {
+      const tutorCourses = courses.filter((course) => course.tutor.id === tutor.id);
+      return {
+        ...tutor,
+        courses: tutorCourses.map((course) => course.title),
+      };
+    });
+  }
+
+  @Get('students')
+  @UseGuards(TokenAuthGuard, StaffGuard)
+  async getStudents() {
+    const students = await this.userRepository.find({
+      where: { role: 'student' },
+      select: ['id', 'firstName', 'lastName', 'role'],
+    });
+    const studentsIds = students.map((student) => student.id);
+    const purchases = await this.purchaseRepository.find({
+      where: { purchaser: { id: In(studentsIds) } },
+      relations: ['purchaser', 'course'],
+    });
+
+    return students.map((student) => {
+      const studentPurchases = purchases.filter((purchase) => purchase.purchaser.id === student.id);
+      return {
+        ...student,
+        purchases: studentPurchases.map((purchase) => purchase.course.title),
+      };
     });
   }
 }

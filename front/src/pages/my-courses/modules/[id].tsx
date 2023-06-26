@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { fetchModuleLessons } from '@/features/usersLessons/usersLessonsThunks';
 import { selectModuleLessons } from '@/features/usersLessons/usersLessonsSlice';
 import ModuleLessonPreviewCard from '@/components/Cards/ModuleLessonPreviewCard';
+import IsAuth from '@/components/UI/Auth/IsAuth';
 
 const Module = () => {
   const dispatch = useAppDispatch();
@@ -38,4 +39,4 @@ const Module = () => {
   );
 };
 
-export default Module;
+export default IsAuth(Module);

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { CategoryMutation } from '../../../types';
 import { addCategory } from '@/features/categories/categoriesThunks';
 import CategoryForm from '@/components/UI/Admin/CategoryForm';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const AddCategory = () => {
   const dispatch = useAppDispatch();
@@ -21,4 +22,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default IsAdmin(AddCategory);

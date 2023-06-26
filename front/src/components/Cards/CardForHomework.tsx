@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiURL } from '../../../constants';
 
 interface Props {
   id: string;
@@ -13,6 +14,7 @@ interface Props {
 
 const CardForHomework: React.FC<Props> = ({ id, title, date, tutorName, status, isChecked, description, pdf }) => {
   const [showDescription, setShowDescription] = useState(false);
+  const fileUrl = apiURL + '/' + pdf;
 
   const toggleTitle = () => {
     setShowDescription(!showDescription);
@@ -21,31 +23,31 @@ const CardForHomework: React.FC<Props> = ({ id, title, date, tutorName, status, 
   return (
     <>
       <div className="card-for-homework-block">
-        <div style={{ width: '90px', overflow: 'hidden' }}>
+        <div>
           <p>{id}</p>
         </div>
-        <div style={{ width: '390px', overflow: 'hidden' }}>
+        <div>
           <p className="heading-hover" onClick={toggleTitle}>
             {title}
           </p>
         </div>
-        <div style={{ width: '280px', overflow: 'hidden' }}>
+        <div>
           <p>{date}</p>
         </div>
-        <div style={{ width: '130px', overflow: 'hidden' }}>
+        <div>
           <p>{status}</p>
         </div>
-        <div style={{ width: '150px', overflow: 'hidden' }}>
+        <div>
           <p>{tutorName}</p>
         </div>
-        <div style={{ width: '150px', overflow: 'hidden' }}>
+        <div>
           <p>{isChecked}</p>
         </div>
       </div>
       {showDescription && (
-        <div style={{ padding: '10px', borderBottom: '1px solid #4688C1' }}>
+        <div>
           {description}
-          <div>{pdf ? <a href={`http://localhost:8000/${pdf}`}>PDF FILE</a> : null}</div>
+          <div>{pdf ? <a href={fileUrl}>PDF FILE</a> : null}</div>
         </div>
       )}
     </>

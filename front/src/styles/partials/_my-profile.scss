@@ -4,12 +4,14 @@
 .profile-block {
   margin-top: 40px;
   color: $blue-text;
+
   h1 {
     text-align: center;
     font-weight: 700;
     font-size: 28px;
     line-height: 34px;
   }
+
   h5 {
     display: inline-block;
     margin-top: 0;
@@ -18,15 +20,25 @@
 }
 
 .profile-main-info-block {
-  height: 300px;
+  height: auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  @include md {
+    height: 300px;
+    flex-direction: row;
+  }
+
   form {
+    flex-grow: 1;
     margin-left: 30px;
   }
 }
 
 .profile-info-block {
   margin-left: 30px;
+
   span {
     @media (max-width: 600px) {
       font-size: 14px;
@@ -81,11 +93,18 @@
 }
 
 .homework-headlines-block {
-  display: flex;
+  display: none;
   text-align: center;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #4688c1;
+  @include md {
+    display: flex;
+    div {
+      width: 15%;
+    }
+  }
+
   p {
     display: inline-block;
     color: $blue-text;
@@ -98,11 +117,28 @@
 }
 
 .card-for-homework-block {
-  text-align: center;
   background-color: $light-orange;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #4688c1;
+  @include md {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #4688c1;
+  }
+
+  div {
+    width: 49%;
+    display: inline-grid;
+  }
+
+  p {
+    text-align: center;
+    margin: 0.5rem;
+    word-break: break-all;
+    @include md {
+      word-break: normal;
+    }
+  };
+
   .heading-hover {
     &:hover {
       color: $dark-orange;
@@ -124,10 +160,18 @@
 .allHomeworks-block {
   margin-top: 40px;
   color: $blue-text;
+
   h1 {
     text-align: center;
     font-weight: 700;
     font-size: 28px;
     line-height: 34px;
+  }
+}
+
+.homework-block .card-for-homework-block:nth-child(even) {
+  background: #FFF;
+  @include md {
+    background-color: $light-orange;
   }
 }

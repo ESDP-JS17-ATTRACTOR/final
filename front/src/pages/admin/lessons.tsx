@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Paper, TableContainer } from '@mui/material';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const Lessons = () => {
   return (
@@ -9,4 +10,4 @@ const Lessons = () => {
   );
 };
 
-export default Lessons;
+export default IsAdmin(Lessons);

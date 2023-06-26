@@ -23,6 +23,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import dayjs from 'dayjs';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const Courses = () => {
   const dispatch = useAppDispatch();
@@ -124,4 +125,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default IsAdmin(Courses);

@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { selectOneCategory } from '@/features/categories/categoriesSlice';
 import { editCategory, fetchOneCategory } from '@/features/categories/categoriesThunks';
 import CategoryForm from '@/components/UI/Admin/CategoryForm';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 interface Props {
   id: string;
@@ -38,4 +39,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default EditCourse;
+export default IsAdmin(EditCourse);

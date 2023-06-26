@@ -23,6 +23,7 @@ import Link from 'next/link';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useRouter } from 'next/router';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const Categories = () => {
   const dispatch = useAppDispatch();
@@ -103,4 +104,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default IsAdmin(Categories);

@@ -1,7 +1,6 @@
 @use "../var/mixins" as *;
 
 .admin-courses-small {
-  @media (min-device-width: 480px) {
     table, thead, tbody, th, td, tr {
       display: block;
       text-align: center;
@@ -47,7 +46,6 @@
     td:nth-of-type(7):before {content: "Тип";}
     td:nth-of-type(8):before {content: "Удалить";}
     td:nth-of-type(9):before {content: "Редактировать";}
-  }
   }
 
 .admin-courses-big {

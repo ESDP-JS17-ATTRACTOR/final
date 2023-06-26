@@ -20,9 +20,9 @@ import { Comment } from '../entities/comment.entity';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
+        port: parseInt(configService.get('DB_PORT') as string),
         username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD') as string,
+        password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [
           User,

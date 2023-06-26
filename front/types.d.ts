@@ -176,6 +176,7 @@ export interface Tutor {
   id: number;
   firstName: string;
   lastName: string;
+  courses: string[];
 }
 
 export interface Student {

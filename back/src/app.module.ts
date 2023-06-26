@@ -42,7 +42,9 @@ import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+    }),
     DatabaseModule,
     TypeOrmModule.forFeature([
       User,

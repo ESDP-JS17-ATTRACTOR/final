@@ -1,0 +1,73 @@
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
+
+.departments {
+  display: flex;
+  flex-direction: column;
+
+  &-top {
+    display: flex;
+    flex-direction: row;
+    @include md {
+      display: flex;
+      flex-direction: column;
+    }
+    &-block {
+      display: flex;
+      flex-direction: column;
+      @include md {
+        display: flex;
+        flex-direction: row;
+      }
+      &-title {
+        margin-bottom: 50px;
+      }
+      &-social-links {
+        width: 100%;
+        @include md {
+          width: 50%;
+        }
+      }
+      &-social {
+        margin-left: -70px;
+        @include lg {
+          margin-left: -158px;
+        }
+      }
+      &-requisites {
+        width: 100%;
+        @include md {
+          width: 50%;
+        }
+      }
+    }
+  }
+  &-bottom {
+    display: flex;
+    flex-direction: column;
+    @include md {
+      justify-content: space-between;
+      flex-direction: row;
+    }
+    &-contacts {
+      @include md {
+        width: 50%;
+      }
+      width: 100%;
+      &-number {
+        text-decoration: none;
+        color: $dark-orange;
+        margin: 10px;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+    &-addresses {
+      width: 100%;
+      @include md {
+        width: 50%;
+      }
+    }
+  }
+}

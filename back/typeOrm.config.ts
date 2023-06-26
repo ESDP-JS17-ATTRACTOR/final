@@ -1,17 +1,3 @@
-// import { NestFactory } from '@nestjs/core';
-// import { DataSource } from 'typeorm';
-// import { DatabaseModule } from './src/database/database.module';
-//
-// async function createDataSource(): Promise<DataSource> {
-//   const app = await NestFactory.create(DatabaseModule);
-//   const dataSource = app.select(DatabaseModule).get(DataSource);
-//   await dataSource.destroy();
-//
-//   return dataSource;
-// }
-//
-// export default createDataSource(); // Tsyganov migration logic
-
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 config();
@@ -36,22 +22,3 @@ AppDataSource.initialize()
   });
 
 export default AppDataSource;
-
-// import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-// import { ConfigService } from '@nestjs/config';
-// import { DataSource } from 'typeorm';
-//
-// export default async function typeOrmConfig(): Promise<DataSource> {
-//   const configService = new ConfigService();
-//
-//   return {
-//     type: 'postgres',
-//     host: process.env.DB_HOST,
-//     port: configService.get('DB_PORT'),
-//     username: configService.get('DB_USERNAME'),
-//     password: configService.get('DB_PASSWORD'),
-//     database: configService.get('DB_DATABASE'),
-//     entities: ['**/*.entity{.ts,.js}'],
-//     migrations: ['src/database/migrations/*.ts'],
-//   };
-// }

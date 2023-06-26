@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// import { DataSource, DataSourceOptions } from 'typeorm'; // Tsyganov migration logic
-// import migrations from './migrations'; // Tsyganov migration logic
 import { User } from '../entities/user.entity';
 import { Category } from '../entities/category.entity';
 import { Course } from '../entities/course.entity';
@@ -39,11 +37,7 @@ import { Comment } from '../entities/comment.entity';
           Comment,
         ],
         synchronize: false,
-        // migrations, // Tsyganov migration logic
       }),
-      // dataSourceFactory: async (options) => {
-      //   return new DataSource(options as DataSourceOptions).initialize(); // Tsyganov migration logic
-      // },
     }),
   ],
 })

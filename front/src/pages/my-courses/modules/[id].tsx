@@ -20,12 +20,20 @@ const Module = () => {
 
   return (
     <div className="container">
-      <div className="module-lesson-general-block">
-        <div className="module-lessons-block-header">
-          <h5 className="module-lessons-block-header_title">Mastermind by launches 01.02.2023</h5>
+      {moduleLessons.length !== 0 ? (
+        <div className="module-lesson-general-block">
+          <div className="module-lessons-block-header">
+            <h5 className="module-lessons-block-header_title">Mastermind by launches 01.02.2023</h5>
+          </div>
+          <div className="module-lessons-block-main">{content}</div>
         </div>
-        <div className="module-lessons-block-main">{content}</div>
-      </div>
+      ) : (
+        <div className="module-lesson-general-block">
+          <div className="module-lessons-block-header">
+            <h5 className="module-lessons-block-header_title">There are no lessons in this module yet</h5>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

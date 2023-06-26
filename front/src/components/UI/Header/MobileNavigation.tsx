@@ -108,7 +108,7 @@ const MobileNavigation = () => {
                 <Link href="/my-courses" onClick={closeMobileSideMenu}>
                   <li>My courses</li>
                 </Link>
-                <Link href="#">
+                <Link href="/catalogs">
                   <li>Catalogs</li>
                 </Link>
                 <Link href="#">
@@ -120,7 +120,7 @@ const MobileNavigation = () => {
                 <Link href="#">
                   <li>Users</li>
                 </Link>
-                <Link href="#">
+                <Link href="/departments">
                   <li>Departments</li>
                 </Link>
               </ul>

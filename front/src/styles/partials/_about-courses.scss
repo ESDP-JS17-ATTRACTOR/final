@@ -1,0 +1,20 @@
+@use '../var/colors' as *;
+@use '../var/mixins' as *;
+
+.about {
+  line-height: 33px;
+  @include md {
+    line-height: 40px;
+  }
+
+  &-title {
+    font-size: 24px;
+    color: $dark-orange;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    @include md {
+      font-size: 30px;
+    }
+  }
+}

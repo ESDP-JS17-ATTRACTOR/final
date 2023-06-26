@@ -4,10 +4,10 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <>
-      <footer>
+      <footer className="footer">
         <div className="footer-block_feedback">
           <div className="footer-block_feedback_bg">
-            <form className="footer-block_feedback_bg_form">
+            <form className="footer-block_feedback_bg_form" id="myForm">
               <div className="footer-block_feedback_bg_title">
                 <h6>
                   Lets get started your <span>course now</span>
@@ -26,16 +26,16 @@ const Footer = () => {
               <Link href="/">
                 <li className="social_link_youtube">YouTube</li>
               </Link>
-              <Link href="/">
+              <Link href="https://wa.me/996707924217">
                 <li className="social_link_whatsapp">WhatsApp</li>
               </Link>
-              <Link href="/">
+              <Link href="https://instagram.com/cholponah_design?igshid=MzRlODBiNWFlZA==">
                 <li className="social_link_instagram">Instagram</li>
               </Link>
               <Link href="/">
                 <li className="social_link_twitter">Twitter</li>
               </Link>
-              <Link href="/">
+              <Link href="https://www.facebook.com/cholponakhmdesign">
                 <li className="social_link_facebook">Facebook</li>
               </Link>
             </ul>

@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// import { DataSource, DataSourceOptions } from 'typeorm'; // Tsyganov migration logic
-// import migrations from './migrations'; // Tsyganov migration logic
 import { User } from '../entities/user.entity';
 import { Category } from '../entities/category.entity';
 import { Course } from '../entities/course.entity';
@@ -22,9 +20,9 @@ import { Comment } from '../entities/comment.entity';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
+        port: parseInt(configService.get('DB_PORT') as string),
         username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD') as string,
+        password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [
           User,
@@ -39,11 +37,7 @@ import { Comment } from '../entities/comment.entity';
           Comment,
         ],
         synchronize: false,
-        // migrations, // Tsyganov migration logic
       }),
-      // dataSourceFactory: async (options) => {
-      //   return new DataSource(options as DataSourceOptions).initialize(); // Tsyganov migration logic
-      // },
     }),
   ],
 })

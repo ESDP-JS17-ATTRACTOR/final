@@ -2,8 +2,38 @@
 @use '../var/mixins' as *;
 
 .user-courses-block {
+  &-link {
+    font-size: 32px;
+    font-weight: bold;
+    text-decoration: none;
+    color: $orange-btn;
+
+    &:hover {
+      color: $dark-orange;
+    }
+
+    @include md {
+      margin: 0 0 0 13px;
+    }
+  }
+
+  &-title {
+    @include md {
+      display: flex;
+    }
+
+    &-link {
+      margin: 0;
+    }
+  }
+
+  &-titles {
+    line-height: 50px;
+  }
+
   &-header {
     text-align: center;
+
     &_title {
       font-weight: 700;
       font-size: 28px;
@@ -12,25 +42,30 @@
       color: $blue-text;
     }
   }
+
   &-main {
     .user-courses-list {
       width: 100%;
       border-collapse: collapse;
       text-align: center;
+
       thead {
         font-weight: 500;
         font-size: 14px;
         line-height: 17px;
         color: #334169;
+
         tr {
           margin-bottom: 10px;
         }
       }
+
       tbody {
         font-weight: 500;
         font-size: 16px;
         line-height: 19px;
         color: #444444;
+
         tr {
           height: 70px;
           border-top: 1px solid #4688c1;
@@ -39,6 +74,7 @@
           position: relative;
         }
       }
+
       &_modules {
         position: absolute;
         bottom: -45px;
@@ -48,11 +84,13 @@
         margin: 0 auto;
         border-collapse: collapse;
         text-align: center;
+
         tbody {
           font-weight: 500;
           font-size: 16px;
           line-height: 19px;
           color: #444444;
+
           tr {
             height: 40px;
             background: $gray;

@@ -34,6 +34,8 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
   });
 
-  await app.listen(8000);
+  await app.listen(process.env.PORT || 8000);
+  console.log('living on port: ', process.env.PORT);
+  console.log(process.env.MESSAGE);
 }
 bootstrap();

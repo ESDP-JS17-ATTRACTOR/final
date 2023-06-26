@@ -1,11 +1,12 @@
 @use '../var/colors' as *;
 @use '../var/mixins' as *;
+$auth-icon: '/authorization-icon.png';
 
 .registration {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 489px;
+  width: 300px;
   height: 554px;
   background: $gray;
   border-radius: 23px;
@@ -13,14 +14,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @include sm {
+    width: 489px;
+    height: 554px;
+  }
 }
 
 .registration-header {
-  border-bottom: 1px solid #c4c4c4;
   width: 100%;
   display: flex;
   justify-content: center;
-
+  border-bottom: 1px solid #c4c4c4;
   &_title {
     display: flex;
     align-items: center;
@@ -33,7 +37,7 @@
   }
 
   &_title:before {
-    content: url('/authorization-icon.png');
+    content: url($auth-icon);
     margin-right: 20px;
     height: 30px;
   }
@@ -55,12 +59,17 @@
     padding-left: 12px;
 
     input {
-      width: 273px;
+      width: 200px;
       height: 38px;
       background: transparent;
       border: 1px solid #c4c4c4;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       padding: 0 5px;
+      @include sm {
+        width: 273px;
+        height: 38px;
+        margin-bottom: 12px;
+      }
     }
 
     label {

@@ -3,8 +3,8 @@ export const config: CodeceptJS.MainConfig = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost:3000',
-      show: true,
+      url: 'http://localhost:3010',
+      show: !process.env.CI,
       windowSize: '1200x900'
     }
   },

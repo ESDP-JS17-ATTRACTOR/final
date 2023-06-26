@@ -1,7 +1,8 @@
 import { Course, CourseMutation, ValidationError } from '../../../types';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addCourse, deleteCourse, editCourse, fetchCourses, fetchOneCourse } from '@/features/courses/coursesThunks';
 import { RootState } from '@/app/store';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface CourseState {
   courses: Course[];
@@ -30,6 +31,9 @@ export const coursesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase<typeof HYDRATE, PayloadAction<RootState, typeof HYDRATE>>(HYDRATE, (state, action) => {
+      return action.payload.courses;
+    });
     builder.addCase(fetchCourses.pending, (state) => {
       state.coursesLoading = true;
     });

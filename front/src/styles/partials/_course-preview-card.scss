@@ -84,8 +84,12 @@
       border-radius: 12px;
       background: transparent;
       color: $blue-text;
-      position: absolute;
       bottom: 38px;
+      &:hover {
+        background: $light-blue;
+        border: none;
+        color: white;
+      }
     }
   }
 }

@@ -21,7 +21,8 @@ export interface UserState {
   loginError: LoginError | null;
   recoverPasswordLoading: boolean;
   recoverPasswordError: ValidationError | null;
-  modalWindowStatus: boolean;
+  registrationModalWindowStatus: boolean;
+  loginModalWindowStatus: boolean;
   editLoading: boolean;
   tutors: Tutor[];
   tutorsLoading: boolean;
@@ -37,7 +38,8 @@ const initialState: UserState = {
   loginError: null,
   recoverPasswordLoading: false,
   recoverPasswordError: null,
-  modalWindowStatus: false,
+  registrationModalWindowStatus: false,
+  loginModalWindowStatus: false,
   editLoading: false,
   tutors: [],
   tutorsLoading: false,
@@ -49,12 +51,21 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    switchModalWindow: (state) => {
-      state.modalWindowStatus = !state.modalWindowStatus;
+    switchRegistrationModalWindow: (state) => {
+      state.registrationModalWindowStatus = !state.registrationModalWindowStatus;
+      state.registerError = null;
+    },
+    switchLoginModalWindow: (state) => {
+      state.loginModalWindowStatus = !state.loginModalWindowStatus;
       state.loginError = null;
     },
     unsetUser: (state) => {
       state.user = null;
+    },
+    unsetErrors: (state) => {
+      state.registerError = null;
+      state.loginError = null;
+      state.recoverPasswordError = null;
     },
   },
   extraReducers: (builder) => {
@@ -162,14 +173,15 @@ export const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 
-export const { switchModalWindow, unsetUser } = usersSlice.actions;
+export const { switchRegistrationModalWindow, switchLoginModalWindow, unsetUser, unsetErrors } = usersSlice.actions;
 
 export const selectUser = (state: RootState) => state.users.user;
 export const selectRegisterLoading = (state: RootState) => state.users.registerLoading;
 export const selectRegisterError = (state: RootState) => state.users.registerError;
 export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
 export const selectLoginError = (state: RootState) => state.users.loginError;
-export const selectModalWindowStatus = (state: RootState) => state.users.modalWindowStatus;
+export const selectRegisterModalWindowStatus = (state: RootState) => state.users.registrationModalWindowStatus;
+export const selectLoginModalWindowStatus = (state: RootState) => state.users.loginModalWindowStatus;
 export const selectEditLoading = (state: RootState) => state.users.editLoading;
 export const selectTutors = (state: RootState) => state.users.tutors;
 export const selectTutorsLoading = (state: RootState) => state.users.tutorsLoading;

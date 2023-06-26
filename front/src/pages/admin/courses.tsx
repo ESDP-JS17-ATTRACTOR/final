@@ -82,9 +82,7 @@ const Courses = () => {
                 <TableRow key={course.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell>{course.title}</TableCell>
                   <TableCell>{course.description}</TableCell>
-                  <TableCell>
-                    {course.tutor.firstName} {course.tutor.lastName}
-                  </TableCell>
+                  <TableCell>{course.tutor.firstName + ' ' + course.tutor.lastName}</TableCell>
                   <TableCell>{course.duration} дней</TableCell>
                   <TableCell>{course.price} KGS</TableCell>
                   <TableCell>{dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LoginError, Tutor, User, ValidationError } from '../../../types';
+import { LoginError, Student, Tutor, User, ValidationError } from '../../../types';
 import {
   fetchTutors,
   editUserProfile,
@@ -8,6 +8,7 @@ import {
   register,
   facebookLogin,
   recoverPassword,
+  fetchStudents,
 } from './usersThunks';
 import { RootState } from '@/app/store';
 import { PersistPartial } from 'redux-persist/es/persistReducer';
@@ -24,6 +25,8 @@ export interface UserState {
   editLoading: boolean;
   tutors: Tutor[];
   tutorsLoading: boolean;
+  students: Student[];
+  studentsLoading: boolean;
 }
 
 const initialState: UserState = {
@@ -38,6 +41,8 @@ const initialState: UserState = {
   editLoading: false,
   tutors: [],
   tutorsLoading: false,
+  students: [],
+  studentsLoading: false,
 };
 
 export const usersSlice = createSlice({
@@ -141,6 +146,17 @@ export const usersSlice = createSlice({
     builder.addCase(fetchTutors.rejected, (state) => {
       state.tutorsLoading = false;
     });
+
+    builder.addCase(fetchStudents.pending, (state) => {
+      state.studentsLoading = true;
+    });
+    builder.addCase(fetchStudents.fulfilled, (state, { payload: students }) => {
+      state.studentsLoading = false;
+      state.students = students;
+    });
+    builder.addCase(fetchStudents.rejected, (state) => {
+      state.studentsLoading = false;
+    });
   },
 });
 
@@ -159,3 +175,5 @@ export const selectTutors = (state: RootState) => state.users.tutors;
 export const selectTutorsLoading = (state: RootState) => state.users.tutorsLoading;
 export const selectPasswordLoading = (state: RootState) => state.users.recoverPasswordLoading;
 export const selectPasswordError = (state: RootState) => state.users.recoverPasswordError;
+export const selectStudents = (state: RootState) => state.users.students;
+export const selectStudentsLoading = (state: RootState) => state.users.studentsLoading;

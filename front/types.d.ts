@@ -178,6 +178,13 @@ export interface Tutor {
   lastName: string;
 }
 
+export interface Student {
+  id: number;
+  firstName: string;
+  lastName: string;
+  purchases: string[];
+}
+
 export interface UsersCourse {
   id: number;
   category: string;

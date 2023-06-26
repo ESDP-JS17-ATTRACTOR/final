@@ -21,6 +21,7 @@ import { LocalAuthGuard } from '../../auth/local-auth.guard';
 import { CurrentUser } from '../../auth/currentUser.decorator';
 import { Purchase } from '../../entities/purchase.entity';
 import { StaffGuard } from '../../auth/staff.guard';
+import { Course } from '../../entities/course.entity';
 
 @Controller('users')
 export class UsersController {
@@ -30,6 +31,8 @@ export class UsersController {
     private readonly authService: AuthService,
     @InjectRepository(Purchase)
     private readonly purchaseRepository: Repository<Purchase>,
+    @InjectRepository(Course)
+    private readonly courseRepository: Repository<Course>,
   ) {}
 
   @Post('register')
@@ -82,10 +85,24 @@ export class UsersController {
   }
 
   @Get('tutors')
+  @UseGuards(TokenAuthGuard, StaffGuard)
   async getTutors() {
-    return await this.userRepository.find({
+    const tutors = await this.userRepository.find({
       where: { role: 'tutor' },
       select: ['id', 'firstName', 'lastName', 'role'],
+    });
+    const tutorsIds = tutors.map((tutor) => tutor.id);
+    const courses = await this.courseRepository.find({
+      where: { tutor: { id: In(tutorsIds) } },
+      relations: ['tutor'],
+    });
+
+    return tutors.map((tutor) => {
+      const tutorCourses = courses.filter((course) => course.tutor.id === tutor.id);
+      return {
+        ...tutor,
+        courses: tutorCourses.map((course) => course.title),
+      };
     });
   }
 

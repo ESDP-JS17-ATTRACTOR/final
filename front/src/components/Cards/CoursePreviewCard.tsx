@@ -1,14 +1,19 @@
 import React from 'react';
+import { Course } from '../../../types';
 
-const CoursePreviewCard = () => {
+interface Props {
+  course: Course;
+}
+
+const CoursePreviewCard: React.FC<Props> = ({ course }) => {
   return (
     <div className="course-preview-card">
       <div className="course-preview-card-header">
-        <h5 className="course-preview-card-header_title">SMM</h5>
+        <h5 className="course-preview-card-header_title">{course.title}</h5>
       </div>
       <div className="course-preview-card-main">
         <p className="course-preview-card-main_price">
-          $500 <span>month</span>
+          {course.price} $ <span>month</span>
         </p>
         <ul className="course-preview-card-main_details">
           <li className="course-preview-card-main_details_item">Up to 5 users</li>

@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
@@ -116,6 +116,37 @@ export class AuthService {
     } catch (e) {
       throw new BadRequestException(e.message);
     }
+  }
+
+  async registerNewStudent(email: string) {
+    const isUserExist = await this.userRepository.findOne({ where: { email } });
+
+    if (isUserExist) {
+      throw new BadRequestException({ email: ['Student with this E-mail is already registered'] });
+    }
+
+    const generateRandomChars = () => {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randomName = '';
+      for (let i = 0; i < 10; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomName += characters.charAt(randomIndex);
+      }
+      return randomName;
+    };
+
+    const password = generateRandomChars();
+    const newStudent = await this.userRepository.create({
+      email,
+      firstName: generateRandomChars(),
+      lastName: generateRandomChars(),
+      password,
+    });
+
+    await newStudent.generateToken();
+
+    await this.userRepository.save(newStudent);
+    return this.nodemailerService.sendAccountsInfo(email, password);
   }
 
   async registerUserWithFacebook(accessToken: string, userID: string) {

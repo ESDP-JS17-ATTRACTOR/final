@@ -14,6 +14,10 @@ export interface ValidationError {
   [key: string]: string[];
 }
 
+export interface ValidationErrors {
+  [key: string]: string;
+}
+
 export interface GlobalError {
   error: string;
   message: string;
@@ -249,4 +253,10 @@ export interface ChatMsg {
   avatar: string;
   message: string;
   createdAt: Date;
+}
+
+export interface UserData {
+  name: string;
+  email: string;
+  message: string;
 }

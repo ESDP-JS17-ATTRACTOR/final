@@ -22,6 +22,7 @@ import { CurrentUser } from '../../auth/currentUser.decorator';
 import { Purchase } from '../../entities/purchase.entity';
 import { StaffGuard } from '../../auth/staff.guard';
 import { Course } from '../../entities/course.entity';
+import { NodemailerService } from '../../nodemailer/nodemailer.service';
 
 @Controller('users')
 export class UsersController {
@@ -29,6 +30,7 @@ export class UsersController {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
+    private readonly nodemailerService: NodemailerService,
     @InjectRepository(Purchase)
     private readonly purchaseRepository: Repository<Purchase>,
     @InjectRepository(Course)
@@ -67,6 +69,12 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   async recoverPassword(@Body() body: { email: string }) {
     return this.authService.restorePassword(body.email);
+  }
+
+  @Post('registerNewStudent')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async registerNewStudent(@Body() body: { email: string }) {
+    return this.authService.registerNewStudent(body.email);
   }
 
   @Delete('sessions')
@@ -126,5 +134,11 @@ export class UsersController {
         purchases: studentPurchases.map((purchase) => purchase.course.title),
       };
     });
+  }
+
+  @Post('userData')
+  async userData(@Body() body: { name: string; email: string; message: string }) {
+    await this.nodemailerService.sendFormData(body);
+    return { success: true };
   }
 }

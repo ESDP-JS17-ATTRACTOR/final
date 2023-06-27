@@ -7,7 +7,7 @@ header {
 }
 
 .header {
-  background: radial-gradient(ellipse at top, $orange 0,$orange 90%,#FFF 92%, #FFF 100%);
+  background: $orange;
   color: $blue-text;
   padding: 16px 0;
   @include md {

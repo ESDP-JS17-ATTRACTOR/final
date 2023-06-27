@@ -10,16 +10,16 @@ const departments = () => {
             <h2 className="departments-top-block-title">Следите за нами в соцсетях</h2>
             <div className="footer-block_links_social departments-top-block-social">
               <ul className="social_links_list">
-                <Link href="/">
+                <Link href="https://www.youtube.com/channel/UCaJPESY_U3fsb2IyUj4aAeQ" target="_blank">
                   <li className="social_link_youtube">YouTube</li>
                 </Link>
-                <Link href="https://wa.me/996707924217">
+                <Link href="https://wa.me/996707924217" target="_blank">
                   <li className="social_link_whatsapp">WhatsApp</li>
                 </Link>
-                <Link href="https://instagram.com/cholponah_design?igshid=MzRlODBiNWFlZA==">
+                <Link href="https://instagram.com/cholponah_design?igshid=MzRlODBiNWFlZA==" target="_blank">
                   <li className="social_link_instagram">Instagram</li>
                 </Link>
-                <Link href="https://www.facebook.com/cholponakhmdesign">
+                <Link href="https://www.facebook.com/cholponakhmdesign" target="_blank">
                   <li className="social_link_facebook">Facebook</li>
                 </Link>
               </ul>
@@ -59,7 +59,7 @@ const departments = () => {
           <p>
             Почта:
             <a href="mailto:" className="departments-bottom-contacts-number">
-              chipslol@gmail.com
+              cholponakhm@gmail.com
             </a>
             <br />
           </p>

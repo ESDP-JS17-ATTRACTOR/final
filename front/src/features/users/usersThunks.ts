@@ -9,6 +9,7 @@ import {
   User,
   UserData,
   ValidationError,
+  ValidationErrors,
 } from '../../../types';
 import axiosApi from '../../../axiosApi';
 import { isAxiosError } from 'axios';
@@ -26,6 +27,20 @@ export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: 
         return rejectWithValue(e.response.data as ValidationError);
       } else if (isAxiosError(e) && e.response && e.response.status === 409) {
         return rejectWithValue({ email: e.response.data.message });
+      }
+      throw e;
+    }
+  },
+);
+
+export const registerNewStudent = createAsyncThunk<void, string, { rejectValue: ValidationErrors }>(
+  'users/registerNewStudent',
+  async (email, { rejectWithValue }) => {
+    try {
+      await axiosApi.post('users/registerNewStudent', { email });
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data as ValidationErrors);
       }
       throw e;
     }

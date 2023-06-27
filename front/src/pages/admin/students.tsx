@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import {
   Box,
+  Button,
   CircularProgress,
   Grid,
   List,
@@ -19,8 +20,10 @@ import {
 } from '@mui/material';
 import { selectStudents, selectStudentsLoading } from '@/features/users/usersSlice';
 import { fetchStudents } from '@/features/users/usersThunks';
+import RegisterStudentForm from '@/components/Forms/RegisterStudentForm';
 
 const Students = () => {
+  const [modalStatus, setModalStatus] = useState(false);
   const dispatch = useAppDispatch();
   const students = useAppSelector(selectStudents);
   const loading = useAppSelector(selectStudentsLoading);
@@ -36,6 +39,9 @@ const Students = () => {
       <Grid container spacing={4} alignContent="flex-end">
         <Grid item xs={12} md={6} display={'flex'} justifyContent={{ xs: 'center', md: 'flex-start' }}>
           <Typography>Ниже список всех студентов</Typography>
+        </Grid>
+        <Grid item xs={12} md={6} display={'flex'} justifyContent={{ xs: 'center', md: 'flex-end' }}>
+          <Button onClick={() => setModalStatus(true)}>Зарегистрировать студента</Button>
         </Grid>
       </Grid>
 
@@ -80,6 +86,7 @@ const Students = () => {
           </Table>
         </TableContainer>
       )}
+      <RegisterStudentForm isOpen={modalStatus} onClose={() => setModalStatus(false)} />
     </Box>
   );
 };

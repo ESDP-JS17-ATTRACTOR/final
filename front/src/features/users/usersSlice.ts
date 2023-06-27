@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoginError, Student, Tutor, User, ValidationError, ValidationErrors } from '../../../types';
 import {
-  fetchTutors,
   editUserProfile,
+  facebookLogin,
+  fetchStudents,
+  fetchTutors,
   googleLogin,
   login,
-  register,
-  facebookLogin,
   recoverPassword,
-  fetchStudents,
   registerNewStudent,
+  register,
+  sendUserData,
 } from './usersThunks';
 import { RootState } from '@/app/store';
 import { PersistPartial } from 'redux-persist/es/persistReducer';
@@ -31,6 +32,7 @@ export interface UserState {
   studentsLoading: boolean;
   registerNewStudentLoading: boolean;
   registerNewStudentError: ValidationErrors | null;
+  userDataLoading: boolean;
 }
 
 const initialState: UserState = {
@@ -48,6 +50,7 @@ const initialState: UserState = {
   tutorsLoading: false,
   students: [],
   studentsLoading: false,
+  userDataLoading: false,
   registerNewStudentLoading: false,
   registerNewStudentError: null,
 };
@@ -186,6 +189,16 @@ export const usersSlice = createSlice({
     builder.addCase(fetchStudents.rejected, (state) => {
       state.studentsLoading = false;
     });
+
+    builder.addCase(sendUserData.pending, (state) => {
+      state.userDataLoading = true;
+    });
+    builder.addCase(sendUserData.fulfilled, (state) => {
+      state.userDataLoading = false;
+    });
+    builder.addCase(sendUserData.rejected, (state) => {
+      state.userDataLoading = false;
+    });
   },
 });
 
@@ -207,5 +220,6 @@ export const selectPasswordLoading = (state: RootState) => state.users.recoverPa
 export const selectPasswordError = (state: RootState) => state.users.recoverPasswordError;
 export const selectStudents = (state: RootState) => state.users.students;
 export const selectStudentsLoading = (state: RootState) => state.users.studentsLoading;
+export const selectFormDataLoading = (state: RootState) => state.users.userDataLoading;
 export const selectRegisterStudentLoading = (state: RootState) => state.users.registerNewStudentLoading;
 export const selectRegisterStudentError = (state: RootState) => state.users.registerNewStudentError;

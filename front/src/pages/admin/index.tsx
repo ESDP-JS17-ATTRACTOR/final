@@ -1,10 +1,21 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import SideBar from '@/components/UI/Admin/SideBar';
 import { Box, Container, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAppSelector } from '@/app/hooks';
+import { selectUser } from '@/features/users/usersSlice';
+import { useRouter } from 'next/router';
 
 const Admin: React.FC<PropsWithChildren> = ({ children }) => {
   const mdTheme = createTheme();
+  const user = useAppSelector(selectUser);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user?.role !== 'admin' && user?.role !== 'moderator') {
+      router.push('/');
+    }
+  }, [user, router]);
 
   return (
     <ThemeProvider theme={mdTheme}>

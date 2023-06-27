@@ -66,4 +66,21 @@ export class NodemailerService {
       html: htmlContent,
     });
   }
+
+  async sendFormData(userData: { name: string; email: string; message: string }) {
+    const { name, email, message } = userData;
+
+    const htmlContent = `
+      <p>Name: ${name}</p>
+      <p>Email: ${email}</p>
+      <p>Message: ${message}</p>
+    `;
+
+    return await this.transporter.sendMail({
+      from: '"ONLINE-SCHOOL" <esdp.group4@gmail.com>',
+      to: 'cholponakhm@gmail.com',
+      subject: 'New Form Submission',
+      html: htmlContent,
+    });
+  }
 }

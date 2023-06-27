@@ -202,3 +202,4 @@ export const selectPasswordLoading = (state: RootState) => state.users.recoverPa
 export const selectPasswordError = (state: RootState) => state.users.recoverPasswordError;
 export const selectStudents = (state: RootState) => state.users.students;
 export const selectStudentsLoading = (state: RootState) => state.users.studentsLoading;
+export const selectFormDataLoading = (state: RootState) => state.users.userDataLoading;

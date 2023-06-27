@@ -11,6 +11,7 @@ import { UsersLesson } from '../entities/usersLesson.entity';
 import { Homework } from '../entities/homework.entity';
 import { StudentHomework } from '../entities/studentHomework.entity';
 import { Comment } from '../entities/comment.entity';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 @Module({
   imports: [
@@ -38,6 +39,9 @@ import { Comment } from '../entities/comment.entity';
         ],
         synchronize: false,
       }),
+      dataSourceFactory: async (options) => {
+        return new DataSource(options as DataSourceOptions).initialize();
+      },
     }),
   ],
 })

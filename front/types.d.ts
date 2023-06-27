@@ -14,6 +14,10 @@ export interface ValidationError {
   [key: string]: string[];
 }
 
+export interface ValidationErrors {
+  [key: string]: string;
+}
+
 export interface GlobalError {
   error: string;
   message: string;

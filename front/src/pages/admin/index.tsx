@@ -35,4 +35,4 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export default IsAdmin(Admin);
+export default Admin;

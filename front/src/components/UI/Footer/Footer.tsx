@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { UserData } from '../../../../types';
 import { sendUserData } from '@/features/users/usersThunks';
+import { selectFormDataLoading } from '@/features/users/usersSlice';
+import { CircularProgress } from '@mui/material';
 
 const Footer = () => {
   const dispatch = useAppDispatch();
+  const formSubmitLoading = useAppSelector(selectFormDataLoading);
   const [state, setState] = useState<UserData>({
     name: '',
     email: '',
@@ -19,6 +22,11 @@ const Footer = () => {
   const onFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await dispatch(sendUserData(state));
+    setState({
+      name: '',
+      email: '',
+      message: '',
+    });
   };
   return (
     <>
@@ -61,7 +69,9 @@ const Footer = () => {
                 cols={30}
                 rows={10}
               />
-              <button className="button feedback_send_btn">send information</button>
+              <button className="button feedback_send_btn">
+                {formSubmitLoading ? <CircularProgress /> : 'send information'}
+              </button>
             </form>
           </div>
         </div>

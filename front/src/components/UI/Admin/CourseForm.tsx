@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   Button,
   CircularProgress,
   FormControlLabel,
@@ -15,7 +16,13 @@ import { selectCategories } from '@/features/categories/categoriesSlice';
 import { fetchCategories } from '@/features/categories/categoriesThunks';
 import { selectTutors } from '@/features/users/usersSlice';
 import { fetchTutors } from '@/features/users/usersThunks';
-import { selectCoursesLoading } from '@/features/courses/coursesSlice';
+import {
+  selectCourseAddError,
+  selectCourseAdding,
+  selectCourseEditError,
+  selectOneCourseEditing,
+  unsetCourseError,
+} from '@/features/courses/coursesSlice';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { parseISO } from 'date-fns';
@@ -41,11 +48,15 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const tutors = useAppSelector(selectTutors);
-  const adding = useAppSelector(selectCoursesLoading);
+  const adding = useAppSelector(selectCourseAdding);
+  const editing = useAppSelector(selectOneCourseEditing);
+  const addError = useAppSelector(selectCourseAddError);
+  const editError = useAppSelector(selectCourseEditError);
   const [state, setState] = useState<CourseMutation>(exist);
   const [date, setDate] = React.useState<Date | null>(null);
 
   useEffect(() => {
+    dispatch(unsetCourseError());
     dispatch(fetchCategories());
     dispatch(fetchTutors());
   }, [dispatch]);
@@ -70,14 +81,20 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (date) {
-      const updatedState = {
-        ...state,
-        tutor: parseFloat(state.tutor),
-        category: parseFloat(state.category),
-        startedAt: date.toISOString(),
-      };
-      onSubmit(updatedState);
+    try {
+      if (date) {
+        const updatedState = {
+          ...state,
+          tutor: parseFloat(state.tutor),
+          category: parseFloat(state.category),
+          startedAt: date.toISOString(),
+        };
+        onSubmit(updatedState);
+        setDate(null);
+        setState(initialState);
+      }
+    } catch (e) {
+      throw e;
     }
   };
 
@@ -85,6 +102,11 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
     <>
       <Typography>{isEdit ? 'Обновите курс' : 'Добавьте новый курс'}</Typography>
       <form onSubmit={handleSubmit}>
+        {(addError || editError) && (
+          <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
+            {addError?.message || editError?.message}
+          </Alert>
+        )}
         <Grid container direction="column" spacing={2}>
           <Grid item xs={12}>
             <label
@@ -221,6 +243,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
             <Button
               disabled={
                 adding ||
+                editing ||
                 !state.tutor ||
                 !state.category ||
                 !state.title ||
@@ -231,7 +254,7 @@ const CourseForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = 
               }
               type="submit"
             >
-              {adding && <CircularProgress />}
+              {(adding || editing) && <CircularProgress />}
               {isEdit ? 'Обновить курс' : 'Добавить курс'}
             </Button>
           </Grid>

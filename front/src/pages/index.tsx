@@ -43,14 +43,19 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
               </div>
             </div>
             <div className="invitation-contacts">
-              <a href="https://www.facebook.com/cholponakhmdesign" className="contact-link contact-link_facebook">
+              <a
+                href="https://www.facebook.com/cholponakhmdesign"
+                target="_blank"
+                className="contact-link contact-link_facebook"
+              >
                 Facebook
               </a>
-              <a href="https://wa.me/996707924217" className="contact-link contact-link_whatsapp">
+              <a href="https://wa.me/996707924217" target="_blank" className="contact-link contact-link_whatsapp">
                 WhatsApp
               </a>
               <a
                 href="https://instagram.com/cholponah_design?igshid=MzRlODBiNWFlZA=="
+                target="_blank"
                 className="contact-link contact-link_instagram"
               >
                 Instagram

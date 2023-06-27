@@ -7,7 +7,7 @@ const AppDataSource = new DataSource({
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_PASSWORD as string,
   database: process.env.DB_DATABASE,
   entities: ['*/**/*.entity.ts'],
   migrations: ['src/database/migrations/*.ts'],

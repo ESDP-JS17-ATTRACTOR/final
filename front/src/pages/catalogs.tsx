@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { fetchCourses } from '@/features/courses/coursesThunks';
 import { selectCourses, selectCoursesLoading } from '@/features/courses/coursesSlice';
+import Footer from '@/components/UI/Footer/Footer';
 import {
   Box,
   CircularProgress,
@@ -17,7 +19,6 @@ import {
   useTheme,
 } from '@mui/material';
 import dayjs from 'dayjs';
-import Footer from '@/components/UI/Footer/Footer';
 
 const Catalogs = () => {
   const dispatch = useAppDispatch();
@@ -67,9 +68,9 @@ const Catalogs = () => {
                   <TableCell>{dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>
                   <TableCell>{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
                   <TableCell>
-                    <a href="#myForm" className="general-courses-link">
+                    <Link href="#myForm" className="general-courses-link">
                       Записаться на курс
-                    </a>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

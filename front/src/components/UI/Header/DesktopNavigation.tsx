@@ -19,9 +19,9 @@ const DesktopNavigation = () => {
       <nav className="main-nav" style={{ display: user ? 'flex' : 'none' }}>
         <ul className="main-nav_list">
           <li className="main-nav_item">
-            <a className="main-nav_link" href="/catalogs">
+            <Link className="main-nav_link" href="/catalogs">
               Catalogs
-            </a>
+            </Link>
           </li>
           <li className="main-nav_item">
             <a className="main-nav_link" href="front/src/components/UI/header#">
@@ -39,9 +39,9 @@ const DesktopNavigation = () => {
             </a>
           </li>
           <li className="main-nav_item">
-            <a className="main-nav_link" href="/departments#">
+            <Link className="main-nav_link" href="/departments#">
               Departments
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

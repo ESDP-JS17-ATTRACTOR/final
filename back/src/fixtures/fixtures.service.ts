@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Category } from '../entities/category.entity';
 import { Course } from '../entities/course.entity';
 import { CourseModule } from '../entities/courseModule.entity';
@@ -10,6 +10,8 @@ import { Purchase } from '../entities/purchase.entity';
 import { UsersLesson } from '../entities/usersLesson.entity';
 import { Homework } from '../entities/homework.entity';
 import { StudentHomework } from '../entities/studentHomework.entity';
+import { NestFactory } from '@nestjs/core';
+import { DatabaseModule } from '../database/database.module';
 
 @Injectable()
 export class FixturesService {
@@ -31,19 +33,38 @@ export class FixturesService {
     private readonly homeworksRepository: Repository<Homework>,
     @InjectRepository(StudentHomework)
     private readonly studentHomeworksRepository: Repository<StudentHomework>,
+    private readonly dataSource: DataSource,
   ) {}
 
-  async dropTables(): Promise<void> {
-    await this.categoriesRepository.query('TRUNCATE TABLE "category" RESTART IDENTITY CASCADE');
-    await this.usersRepository.query('TRUNCATE TABLE "user" RESTART IDENTITY CASCADE');
-    await this.coursesRepository.query('TRUNCATE TABLE "course" RESTART IDENTITY CASCADE');
-    await this.modulesRepository.query('TRUNCATE TABLE "course_module" RESTART IDENTITY CASCADE');
-    await this.lessonsRepository.query('TRUNCATE TABLE "lesson" RESTART IDENTITY CASCADE');
-    await this.purchasesRepository.query('TRUNCATE TABLE "purchase" RESTART IDENTITY CASCADE');
-    await this.usersLessonsRepository.query('TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE');
-    await this.studentHomeworksRepository.query('TRUNCATE TABLE "student_homework" RESTART IDENTITY CASCADE');
-    await this.homeworksRepository.query('TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE');
+  // async createTables() {
+  //   const app = await NestFactory.create(DatabaseModule);
+  //   const connection = app.get(Connection);
+  //   await connection.runMigrations();
+  //   await app.close();
+  // }
+
+  async cleanDatabase(): Promise<void> {
+    try {
+      const entities = this.dataSource.entityMetadatas;
+      const tableNames = entities.map((entity) => `"${entity.tableName}"`).join(', ');
+
+      await this.dataSource.query(`TRUNCATE ${tableNames} RESTART IDENTITY CASCADE;`);
+    } catch (error) {
+      throw new Error(`ERROR: Cleaning database: ${error}`);
+    }
   }
+
+  // async dropTables(): Promise<void> {
+  //   await this.categoriesRepository.query('TRUNCATE TABLE "category" RESTART IDENTITY CASCADE');
+  //   await this.usersRepository.query('TRUNCATE TABLE "user" RESTART IDENTITY CASCADE');
+  //   await this.coursesRepository.query('TRUNCATE TABLE "course" RESTART IDENTITY CASCADE');
+  //   await this.modulesRepository.query('TRUNCATE TABLE "course_module" RESTART IDENTITY CASCADE');
+  //   await this.lessonsRepository.query('TRUNCATE TABLE "lesson" RESTART IDENTITY CASCADE');
+  //   await this.purchasesRepository.query('TRUNCATE TABLE "purchase" RESTART IDENTITY CASCADE');
+  //   await this.usersLessonsRepository.query('TRUNCATE TABLE "users_lesson" RESTART IDENTITY CASCADE');
+  //   await this.studentHomeworksRepository.query('TRUNCATE TABLE "student_homework" RESTART IDENTITY CASCADE');
+  //   await this.homeworksRepository.query('TRUNCATE TABLE "homework" RESTART IDENTITY CASCADE');
+  // }
 
   async createUsers() {
     const user = await this.usersRepository.create({

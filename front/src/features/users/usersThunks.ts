@@ -102,7 +102,6 @@ export const sendUserData = createAsyncThunk<void, UserData, { rejectValue: Vali
   async (data, { rejectWithValue }) => {
     try {
       await axiosApi.post('users/userData', data);
-      console.log(data);
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
         return rejectWithValue(e.response.data as ValidationError);

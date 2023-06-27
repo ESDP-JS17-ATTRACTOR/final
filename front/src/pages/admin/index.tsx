@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 import SideBar from '@/components/UI/Admin/SideBar';
 import { Box, Container, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const Admin: React.FC<PropsWithChildren> = ({ children }) => {
   const mdTheme = createTheme();

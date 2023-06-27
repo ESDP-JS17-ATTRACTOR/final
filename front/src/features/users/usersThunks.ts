@@ -7,6 +7,7 @@ import {
   Student,
   Tutor,
   User,
+  UserData,
   ValidationError,
 } from '../../../types';
 import axiosApi from '../../../axiosApi';
@@ -87,6 +88,21 @@ export const recoverPassword = createAsyncThunk<void, string, { rejectValue: Val
   async (email, { rejectWithValue }) => {
     try {
       await axiosApi.post('users/recoverPassword', { email });
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data as ValidationError);
+      }
+      throw e;
+    }
+  },
+);
+
+export const sendUserData = createAsyncThunk<void, UserData, { rejectValue: ValidationError }>(
+  'users/userData',
+  async (data, { rejectWithValue }) => {
+    try {
+      await axiosApi.post('users/userData', data);
+      console.log(data);
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
         return rejectWithValue(e.response.data as ValidationError);

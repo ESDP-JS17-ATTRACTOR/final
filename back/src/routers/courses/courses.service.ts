@@ -62,8 +62,8 @@ export class CoursesService {
     const course = await this.findCourseById(id);
     const user = await this.checkUserExists(updateCourseDto);
     const category = await this.checkCategoryExists(updateCourseDto);
+    await this.findCourseByTitle(updateCourseDto.title);
 
-    // if (course) { {* без этой проверки результат такой же, удалить?*}
     course.tutor = user;
     course.category = category;
     course.title = updateCourseDto.title;
@@ -87,7 +87,6 @@ export class CoursesService {
       category: category.id.toString(),
       tutor: tutor.id.toString(),
     };
-    // }
   }
 
   async getOneCourse(id: number) {

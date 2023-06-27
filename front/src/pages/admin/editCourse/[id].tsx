@@ -5,7 +5,6 @@ import { editCourse, fetchCourses, fetchOneCourse } from '@/features/courses/cou
 import { selectOneCourse } from '@/features/courses/coursesSlice';
 import CourseForm from '@/components/UI/Admin/CourseForm';
 import { ApiCourse } from '../../../../types';
-import { useRouter } from 'next/router';
 import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 interface Props {
@@ -14,7 +13,6 @@ interface Props {
 
 const EditCourse: React.FC<Props> = ({ id }) => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const course = useAppSelector(selectOneCourse);
 
   useEffect(() => {
@@ -24,7 +22,6 @@ const EditCourse: React.FC<Props> = ({ id }) => {
   const onSubmit = async (course: ApiCourse) => {
     await dispatch(editCourse({ id, course }));
     await dispatch(fetchCourses());
-    await router.push('/admin/courses');
   };
 
   return <>{course && <CourseForm onSubmit={onSubmit} exist={course} isEdit />}</>;

@@ -52,6 +52,17 @@ interface EditParams {
   category: CategoryMutation;
 }
 
-export const editCategory = createAsyncThunk<void, EditParams>('categories/editCategory', async (params) => {
-  await axiosApi.patch('/categories/' + params.id, params.category);
-});
+export const editCategory = createAsyncThunk<void, EditParams, { rejectValue: GlobalError }>(
+  'categories/editCategory',
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await axiosApi.patch('/categories/' + params.id, params.category);
+      return response.data;
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data as GlobalError);
+      }
+      throw e;
+    }
+  },
+);

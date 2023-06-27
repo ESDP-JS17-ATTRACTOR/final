@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { CategoryMutation } from '../../../../types';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { selectCategoryAddError, selectCategoryAdding } from '@/features/categories/categoriesSlice';
+import {
+  selectCategoryAddError,
+  selectCategoryAdding,
+  selectCategoryEditError,
+  selectCategoryEditing,
+  unsetCategoryError,
+} from '@/features/categories/categoriesSlice';
 import { fetchCategories } from '@/features/categories/categoriesThunks';
 import { Alert, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
 
@@ -18,10 +23,15 @@ const initialState: CategoryMutation = {
 
 const CategoryForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit = false }) => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const isAdding = useAppSelector(selectCategoryAdding);
-  const error = useAppSelector(selectCategoryAddError);
+  const isEditing = useAppSelector(selectCategoryEditing);
+  const addError = useAppSelector(selectCategoryAddError);
+  const editError = useAppSelector(selectCategoryEditError);
   const [category, setCategory] = useState<CategoryMutation>(exist);
+
+  useEffect(() => {
+    dispatch(unsetCategoryError());
+  }, [dispatch]);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,17 +40,21 @@ const CategoryForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit 
 
   const onFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(category);
-    await dispatch(fetchCategories());
-    await router.push('/admin/categories');
+    try {
+      onSubmit(category);
+      await dispatch(fetchCategories());
+      setCategory(initialState);
+    } catch (e) {
+      throw e;
+    }
   };
 
   return (
     <>
       <form onSubmit={onFormSubmit}>
-        {error && (
+        {(addError || editError) && (
           <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
-            {error.message}
+            {addError?.message || editError?.message}
           </Alert>
         )}
         <Typography sx={{ marginBottom: 2 }}>{isEdit ? 'Редактировать категорию' : 'Добавить категорию'}</Typography>
@@ -56,8 +70,8 @@ const CategoryForm: React.FC<Props> = ({ onSubmit, exist = initialState, isEdit 
             />
           </Grid>
           <Grid item xs>
-            <Button disabled={isAdding || !category.title} type="submit">
-              {isAdding && <CircularProgress />}
+            <Button disabled={isAdding || isEditing || !category.title} type="submit">
+              {(isAdding || isEditing) && <CircularProgress />}
               {isEdit ? 'Отредактировать' : 'Добавить'}
             </Button>
           </Grid>

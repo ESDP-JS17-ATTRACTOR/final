@@ -38,4 +38,32 @@ export class NodemailerService {
       html: htmlContent,
     });
   }
+
+  async sendAccountsInfo(email: string, content: string) {
+    const htmlContent =
+      '<td style="padding: 20px;">\n' +
+      '  <p>Dear user,</p>\n' +
+      '  <p>Congratulations on creating your new account in our application!</p>\n' +
+      '  <p>Your account details are:</p>\n' +
+      '  <ul>\n' +
+      '    <li><strong>Email:</strong> ' +
+      email +
+      '</li>\n' +
+      '    <li><strong>Password:</strong> ' +
+      content +
+      '</li>\n' +
+      '  </ul>\n' +
+      '  <p>Please use these credentials to log in to the application.</p>\n' +
+      '  <p>We recommend changing your password after logging in to ensure account security.</p>\n' +
+      '  <p>If you did not create this account, please contact our support team immediately.</p>\n' +
+      '</td>\n';
+
+    return await this.transporter.sendMail({
+      from: '"ONLINE-SCHOOL" <esdp.group4@gmail.com>',
+      to: email,
+      subject: 'Hello',
+      text: content,
+      html: htmlContent,
+    });
+  }
 }

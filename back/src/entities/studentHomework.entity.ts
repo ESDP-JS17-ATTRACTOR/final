@@ -27,4 +27,7 @@ export class StudentHomework {
 
   @Column('simple-array', { nullable: true })
   studentFiles: string[];
+
+  @Column({ nullable: true })
+  feedback: string;
 }

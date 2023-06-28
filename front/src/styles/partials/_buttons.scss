@@ -129,6 +129,24 @@ $keyboard-down-icon: '/keyboard-arrow-down.svg';
   background-position: center;
 }
 
+.feedback-btn {
+  color: #ffffff;
+  border: 2px solid $dark-orange;
+  border-radius: 22px;
+  padding: 13px 29px;
+  font-size: 14px;
+  line-height: 17px;
+  &:hover {
+    background: transparent;
+    color: $dark-orange;
+  }
+  &:active {
+    background: $dark-orange;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+}
+
 .profile-btn-edit {
   line-height: 17px;
   border-radius: 22px;

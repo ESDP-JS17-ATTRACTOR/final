@@ -130,12 +130,17 @@ export interface StudentHomework {
   studentEmail: string;
   date: string;
   isChecked: string;
-  studentFiles: string;
+  studentFiles: string[];
+  feedback: string;
 }
 
 export interface StudentHomeworkMutation {
   homework: string;
   studentFiles: File[] | null;
+}
+
+export interface Feedback {
+  feedback: string;
 }
 
 export interface ApiStudentHomework {

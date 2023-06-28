@@ -142,6 +142,7 @@ const MyProfile = () => {
                 tutorName={homework.tutorName}
                 description={homework.description}
                 pdf={homework.pdf}
+                feedback={studentHomework ? studentHomework.feedback : null}
               />
             );
           })}
@@ -159,6 +160,7 @@ const MyProfile = () => {
                 date={dayjs(studentHomework.date).format('DD MMMM YYYY')}
                 studentName={studentHomework.studentName}
                 isChecked={studentHomework.isChecked}
+                onTitleClick={() => router.push('/my-profile/feedback/' + studentHomework.id)}
               />
             );
           })}

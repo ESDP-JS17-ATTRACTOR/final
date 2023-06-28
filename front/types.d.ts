@@ -47,7 +47,17 @@ export interface ProfileMutation {
 export interface Lesson {
   id: number;
   courseId: number;
-  moduleId: number;
+  module: UsersModule;
+  number: number;
+  title: string;
+  video: string;
+  description: string;
+  isStopLesson: boolean;
+}
+
+export interface LessonMutation {
+  course: number;
+  module: number;
   number: number;
   title: string;
   video: string;

@@ -1,5 +1,6 @@
 import React from 'react';
 import LessonForm from '@/components/UI/Admin/LessonForm';
+import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const Id = () => {
   return (
@@ -9,4 +10,4 @@ const Id = () => {
   );
 };
 
-export default Id;
+export default IsAdmin(Id);

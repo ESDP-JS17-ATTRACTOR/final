@@ -9,7 +9,11 @@ const IsAdmin = (WrappedComponent: React.ComponentType<any>) => {
     const user = useAppSelector(selectUser);
 
     useEffect(() => {
-      if (user?.role !== 'admin' && user?.role !== 'moderator') {
+      if (user) {
+        if (user.role !== 'admin' && user.role !== 'moderator') {
+          router.push('/');
+        }
+      } else {
         router.push('/');
       }
     }, [user, router]);

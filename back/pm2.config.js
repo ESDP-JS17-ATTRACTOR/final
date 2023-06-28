@@ -9,7 +9,7 @@ module.exports = {
       ignore_watch: ['node_modules'],
       interpreter: 'none',
       env: {
-        NODE_ENV: 'development',
+        NODE_ENV: 'test',
       },
     },
   ],

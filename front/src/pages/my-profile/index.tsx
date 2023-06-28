@@ -19,6 +19,7 @@ import CardForStudentHomework from '@/components/Cards/CardForStudentHomework';
 import dayjs from 'dayjs';
 import FormForEditProfile from '@/components/UI/MyProfile/FormForEditProfile';
 import IsAuth from '@/components/UI/Auth/IsAuth';
+import { apiURL } from '../../../constants';
 
 const MyProfile = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const MyProfile = () => {
   const [showForm, setShowForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [validationError, setValidationError] = useState<ValidationError | null>(null);
+  const avatar = user && user.avatar ? apiURL + '/' + user.avatar : null;
 
   useEffect(() => {
     void dispatch(fetchHomeworks());
@@ -66,11 +68,7 @@ const MyProfile = () => {
         <h1>My Profile</h1>
         <div className="profile-main-info-block">
           <div>
-            <img
-              className="profile-avatar"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU0VGHL3JrJAD7mgw9FP77qpKv0IuIv_p2hg&usqp=CAU"
-              alt=""
-            />
+            <img className="profile-avatar" src={avatar!} alt="" />
           </div>
           {!showForm && (
             <div className="profile-info-block">

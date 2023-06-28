@@ -59,7 +59,7 @@
 
       &-box {
         width: 33%;
-        background-image: url('/work-card-1.png');
+        //background-image: url('/work-card-1.png');
         background-size: contain;
         background-repeat: no-repeat;
         height: 295px;
@@ -196,7 +196,6 @@
     justify-content: center;
     height: 100%;
 
-
     img {
       position: absolute;
       border-radius: 26px;
@@ -243,7 +242,7 @@
         color: #ffffff;
         font-size: 14px;
         line-height: 17px;
-        background-image: url('/work-arrow.png');
+        //background-image: url('/work-arrow.png');
         background-repeat: no-repeat;
         background-position: right center;
         padding-right: 50px;

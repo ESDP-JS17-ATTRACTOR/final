@@ -149,7 +149,7 @@
     @include md {
       word-break: normal;
     }
-  };
+  }
 
   .heading-hover {
     &:hover {
@@ -182,7 +182,7 @@
 }
 
 .homework-block .card-for-homework-block:nth-child(even) {
-  background: #FFF;
+  background: #fff;
   @include md {
     background-color: $light-orange;
   }

@@ -13,8 +13,6 @@ const IsAuth = (WrappedComponent: React.ComponentType<any>) => {
         if (user.role !== 'student' && user.role !== 'tutor') {
           router.push('/');
         }
-      } else {
-        router.push('/');
       }
     }, [user, router]);
 

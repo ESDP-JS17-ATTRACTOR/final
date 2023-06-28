@@ -16,8 +16,6 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
       if (user.role !== 'admin' && user.role !== 'moderator') {
         router.push('/');
       }
-    } else {
-      router.push('/');
     }
   }, [user, router]);
 

@@ -24,6 +24,13 @@ export class LessonsService {
     });
   }
 
+  async getLessonsByCourse(id: number) {
+    return await this.lessonRepository.find({
+      where: { course: { id } },
+      relations: ['course', 'module'],
+    });
+  }
+
   async getOneLesson(id: number) {
     return await this.lessonRepository.findOne({
       where: { id },
@@ -33,20 +40,26 @@ export class LessonsService {
 
   async createLesson(lessonData: CreateLessonDto, file: Express.Multer.File): Promise<Lesson> {
     await this.checkForExistLesson(lessonData.title);
+    console.log(lessonData);
+
+    const selectedCourse = parseInt(lessonData.course);
+    const selectedModule = parseInt(lessonData.module);
+    const number = parseInt(lessonData.number);
+    const isStopLesson = Boolean(lessonData.isStopLesson);
 
     const [course, module] = await Promise.all([
-      this.findCourseById(lessonData.course),
-      this.findModuleById(lessonData.module),
+      this.findCourseById(selectedCourse),
+      this.findModuleById(selectedModule),
     ]);
 
     const lesson = await this.lessonRepository.create({
       course,
       module,
-      number: lessonData.number,
+      number,
       title: lessonData.title,
-      video: file ? '/uploads/course/lesson/video/' + file.filename : null,
+      video: file ? '/uploads/course/lessons/video/' + file.filename : null,
       description: lessonData.description,
-      isStopLesson: lessonData.isStopLesson,
+      isStopLesson,
     });
     return this.lessonRepository.save(lesson);
   }

@@ -16,6 +16,7 @@ import { CreateLessonDto } from './dto/createLesson.dto';
 import { UpdateLessonDto } from './dto/updateLesson.dto';
 import { LessonsService } from './lessons.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { multerVideoStorage } from './multer.videoStorage';
 
 @Controller('lessons')
 export class LessonsController {
@@ -26,6 +27,11 @@ export class LessonsController {
     return this.lessonsService.getAll();
   }
 
+  @Get('/byCourse/:id')
+  async getLessonsByCourse(@Param('id') id: number) {
+    return this.lessonsService.getLessonsByCourse(id);
+  }
+
   @Get(':id')
   async getOneLesson(@Param('id') id: number) {
     return this.lessonsService.getOneLesson(id);
@@ -33,8 +39,8 @@ export class LessonsController {
 
   @Post()
   @UseGuards(TokenAuthGuard, StaffGuard)
-  @UseInterceptors(FileInterceptor('video', { dest: './public/uploads/course/lessons/video' }))
-  async createLesson(@UploadedFile() file: Express.Multer.File, @Body() lessonData: CreateLessonDto) {
+  @UseInterceptors(FileInterceptor('video', { storage: multerVideoStorage }))
+  async createLesson(@Body() lessonData: CreateLessonDto, @UploadedFile() file: Express.Multer.File) {
     return this.lessonsService.createLesson(lessonData, file);
   }
 

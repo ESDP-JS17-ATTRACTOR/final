@@ -1,6 +1,13 @@
 @use '../var/colors' as *;
 @use '../var/mixins' as *;
 @import url('https://fonts.cdnfonts.com/css/craftwork-grotesk');
+$footer-circle: '/footer-circle.png';
+$main-footer: '/main-footer.png';
+$youtube: '/social-youtube-ic.svg';
+$whats: '/social-whatsapp-ic.svg';
+$insta: '/social-instagram-ic.svg';
+$face: '/social-facebook-ic.svg';
+$arrow: '/arrow-up-ic.png';
 
 .footer {
   .footer-block_feedback {
@@ -13,7 +20,7 @@
 
     &_bg {
       padding-top: 325px;
-      //background-image: url(''), url('/footer-circle.png');
+      background-image: url($main-footer), url($footer-circle);
       background-repeat: no-repeat;
       background-position: 55% 10%, 50% 5%;
       background-size: 270px 220px, 300px 280px;
@@ -153,7 +160,7 @@
         }
 
         .social_link_youtube {
-          //-webkit-mask-image: url('/social-youtube-ic.svg');
+          -webkit-mask-image: url($youtube);
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
@@ -164,7 +171,7 @@
         }
 
         .social_link_whatsapp {
-          //-webkit-mask-image: url('/social-whatsapp-ic.svg');
+          -webkit-mask-image: url($whats);
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
@@ -175,7 +182,7 @@
         }
 
         .social_link_instagram {
-          //-webkit-mask-image: url('/social-instagram-ic.svg');
+          -webkit-mask-image: url($insta);
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
@@ -186,7 +193,7 @@
         }
 
         .social_link_facebook {
-          //-webkit-mask-image: url('/social-facebook-ic.svg');
+          -webkit-mask-image: url($face);
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
@@ -208,7 +215,7 @@
         overflow: hidden;
         text-indent: -150px;
         box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.13);
-        //background-image: url('/arrow-up-ic.png');
+        background-image: url($arrow);
         background-position: center;
         background-repeat: no-repeat;
         @include md {

@@ -9,8 +9,10 @@ const IsAuth = (WrappedComponent: React.ComponentType<any>) => {
     const user = useAppSelector(selectUser);
 
     useEffect(() => {
-      if (!user) {
-        router.push('/');
+      if (user) {
+        if (user.role !== 'student' && user.role !== 'tutor') {
+          router.push('/');
+        }
       }
     }, [user, router]);
 

@@ -144,7 +144,6 @@ const Login = () => {
           <h5>{t.signInNow}</h5>
           <div className="authorization-footer_buttons">
             <FacebookLoginButton />
-            <button className="social_auth_btn auth_linkedin">Linkedin</button>
             <button className="social_auth_btn auth_google" onClick={() => googleLoginHandler()}>
               Google+
             </button>

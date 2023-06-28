@@ -6,12 +6,14 @@ import { useRouter } from 'next/router';
 import { logout } from '@/features/users/usersThunks';
 import { selectUser, switchLoginModalWindow, switchRegistrationModalWindow } from '@/features/users/usersSlice';
 import Image from 'next/image';
+import { apiURL } from '../../../../constants';
 
 const MobileNavigation = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const user = useAppSelector(selectUser);
   const [searchStatus, setSearchStatus] = useState(false);
+  const avatar = user && user.avatar ? apiURL + '/' + user.avatar : null;
   const openMobileSideMenu = () => {
     document.getElementById('mobileSideMenuBackdrop')!.style.width = '100%';
     document.getElementById('mobileSideMenu')!.style.width = '300px';
@@ -39,6 +41,43 @@ const MobileNavigation = () => {
     await dispatch(logout());
     await router.push('/');
     closeMobileSideMenu();
+  };
+
+  const userContent = [
+    <Link key="my-profile" href="/my-profile" onClick={closeMobileSideMenu}>
+      <li>My profile</li>
+    </Link>,
+    <Link key="my-courses" href="/my-courses" onClick={closeMobileSideMenu}>
+      <li>My courses</li>
+    </Link>,
+    <Link key="catalogs" href="/catalogs">
+      <li>Catalogs</li>
+    </Link>,
+    <Link key="#" href="/articles">
+      <li>Articles</li>
+    </Link>,
+    <Link key="#" href="/users">
+      <li>Users</li>
+    </Link>,
+    <Link key="departments" href="/departments">
+      <li>Departments</li>
+    </Link>,
+  ];
+  const adminContent = [
+    <Link key="admin-menu" href="/admin">
+      <li>Admin Menu</li>
+    </Link>,
+  ];
+
+  const checkUsersRole = () => {
+    if (user) {
+      if (user.role === 'student' || user.role === 'tutor') {
+        return userContent;
+      }
+      if (user.role === 'moderator' || user.role === 'admin') {
+        return adminContent;
+      }
+    }
   };
 
   return (
@@ -96,34 +135,12 @@ const MobileNavigation = () => {
       <div id="mobileSideMenuBackdrop" className="mobile_side_menu_backdrop" onClick={closeMobileSideMenu}>
         <div id="mobileSideMenu" className="mobile_side_menu" onClick={(event) => event.stopPropagation()}>
           <div className="mobile_side_menu_header">
-            <span>Hello, User</span>
-            <Avatar sx={{ width: '37px', height: '37px' }} />
+            <span>Hello, {user?.firstName}</span>
+            <Avatar sx={{ width: '37px', height: '37px' }} src={avatar!} />
           </div>
           <div className="mobile_side_menu_body">
             <nav>
-              <ul>
-                <Link href="/my-profile" onClick={closeMobileSideMenu}>
-                  <li>My profile</li>
-                </Link>
-                <Link href="/my-courses" onClick={closeMobileSideMenu}>
-                  <li>My courses</li>
-                </Link>
-                <Link href="/catalogs">
-                  <li>Catalogs</li>
-                </Link>
-                <Link href="#">
-                  <li>My favourites</li>
-                </Link>
-                <Link href="#">
-                  <li>Articles</li>
-                </Link>
-                <Link href="#">
-                  <li>Users</li>
-                </Link>
-                <Link href="/departments">
-                  <li>Departments</li>
-                </Link>
-              </ul>
+              <ul>{checkUsersRole()}</ul>
             </nav>
           </div>
           <div className="mobile_side_menu_footer">

@@ -4,16 +4,13 @@ import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-val
 @Entity()
 export class CreateLessonDto {
   @IsNotEmpty()
-  @IsNumber()
-  course: number;
+  course: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  module: number;
+  module: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  number: number;
+  number: string;
 
   @IsNotEmpty()
   title: string;
@@ -23,6 +20,5 @@ export class CreateLessonDto {
   description: string;
 
   @IsOptional()
-  @IsBoolean()
-  isStopLesson: boolean;
+  isStopLesson: string;
 }

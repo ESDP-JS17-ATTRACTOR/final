@@ -12,8 +12,10 @@ const Admin: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user?.role !== 'admin' && user?.role !== 'moderator') {
-      router.push('/');
+    if (user) {
+      if (user.role !== 'admin' && user.role !== 'moderator') {
+        router.push('/');
+      }
     }
   }, [user, router]);
 

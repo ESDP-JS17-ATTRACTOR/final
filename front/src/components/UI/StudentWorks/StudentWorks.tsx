@@ -22,9 +22,9 @@ const StudentWorks = () => {
           </Link>
         </div>
         <div className="students-works_content_cards">
-          <StudentWorkPreviewCard />
-          <StudentWorkPreviewCard />
-          <StudentWorkPreviewCard />
+          <StudentWorkPreviewCard image={'/work-card-1.png'} />
+          <StudentWorkPreviewCard image={'/work-card-2.png'} />
+          <StudentWorkPreviewCard image={'/work-card-3.png'} />
         </div>
       </div>
     </div>

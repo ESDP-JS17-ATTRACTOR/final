@@ -6,6 +6,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CategoryIcon from '@mui/icons-material/Category';
 import SchoolIcon from '@mui/icons-material/School';
 import HomeIcon from '@mui/icons-material/Home';
+import CastForEducationIcon from '@mui/icons-material/CastForEducation';
 
 const AdminListItems = () => {
   const router = useRouter();
@@ -45,6 +46,13 @@ const AdminListItems = () => {
           <AutoStoriesIcon />
         </ListItemIcon>
         <ListItemText primary="Курсы" />
+      </ListItemButton>
+
+      <ListItemButton className="categoryBtn" onClick={() => router.push('/admin/newPurchase')}>
+        <ListItemIcon sx={{ minWidth: '35px' }}>
+          <CastForEducationIcon />
+        </ListItemIcon>
+        <ListItemText primary="Запись на курс" />
       </ListItemButton>
     </>
   );

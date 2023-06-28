@@ -41,7 +41,9 @@ const Students = () => {
           <Typography>Ниже список всех студентов</Typography>
         </Grid>
         <Grid item xs={12} md={6} display={'flex'} justifyContent={{ xs: 'center', md: 'flex-end' }}>
-          <Button onClick={() => setModalStatus(true)}>Зарегистрировать студента</Button>
+          <Button onClick={() => setModalStatus(true)} style={{ color: '#EDA652FF' }}>
+            Зарегистрировать студента
+          </Button>
         </Grid>
       </Grid>
 

@@ -46,7 +46,7 @@ const Categories = () => {
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography>Ниже список всех категорий</Typography>
         <Button>
-          <Link href="/admin/addCategory" style={{ textDecoration: 'none' }}>
+          <Link href="/admin/addCategory" style={{ textDecoration: 'none', color: '#EDA652FF' }}>
             Добавить категорию
           </Link>
         </Button>

@@ -10,6 +10,7 @@
       border-radius: 50% 50% 0 0 / 30% 30% 0 0;
       padding-top: 50px;
     }
+
     &_bg {
       padding-top: 325px;
       background-image: url('/main-footer.png'), url('/footer-circle.png');
@@ -26,6 +27,7 @@
         background-position: 20% 50%, 15% 70%;
         background-size: 478px 399px, 526px 512px;
       }
+
       &_title {
         font-weight: 600;
         font-size: 24px;
@@ -38,21 +40,25 @@
           text-align: left;
           align-self: start;
         }
+
         h6 {
           color: #173442;
           margin: 0;
         }
+
         span {
           display: block;
           color: $orange;
         }
       }
+
       &_form {
         font-family: 'Craftwork Grotesk';
         margin-top: 27px;
         display: flex;
         flex-direction: column;
         align-items: center;
+
         input {
           width: 257px;
           height: 19px;
@@ -64,6 +70,7 @@
           @include lg {
             width: 373px;
           }
+
           &::placeholder {
             font-weight: 400;
             font-size: 14px;
@@ -71,6 +78,7 @@
             text-transform: lowercase;
           }
         }
+
         .feedback_textarea {
           background: #ffffff;
           border-radius: 32px;
@@ -83,6 +91,7 @@
           @include lg {
             width: 373px;
           }
+
           &::placeholder {
             font-family: 'Craftwork Grotesk';
             font-weight: 400;
@@ -91,6 +100,7 @@
             text-transform: lowercase;
           }
         }
+
         .feedback_send_btn {
           font-weight: 400;
           font-size: 14px;
@@ -106,6 +116,7 @@
       }
     }
   }
+
   .footer-block_links {
     display: flex;
     flex-direction: column;
@@ -116,12 +127,14 @@
       justify-content: space-between;
       padding-top: 20px;
     }
+
     &_social {
       .social_links_list {
         list-style: none;
         display: flex;
         justify-content: space-evenly;
         padding: 0 50px;
+
         a {
           width: 34px;
           height: 34px;
@@ -133,58 +146,58 @@
           @include md {
             margin-left: 20px;
           }
+
           &:hover {
             transform: scale(1.2);
           }
         }
+
         .social_link_youtube {
           -webkit-mask-image: url('/social-youtube-ic.svg');
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
+
           &:hover {
             background-color: $orange-btn;
           }
         }
+
         .social_link_whatsapp {
           -webkit-mask-image: url('/social-whatsapp-ic.svg');
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
+
           &:hover {
             background-color: $orange-btn;
           }
         }
+
         .social_link_instagram {
           -webkit-mask-image: url('/social-instagram-ic.svg');
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
+
           &:hover {
             background-color: $orange-btn;
           }
         }
-        .social_link_twitter {
-          -webkit-mask-image: url('/social-twitter-ic.svg');
-          -webkit-mask-position: 50% 85%;
-          -webkit-mask-repeat: no-repeat;
-          -webkit-mask-size: 50%;
-          background-color: #183442;
-          &:hover {
-            background-color: $orange-btn;
-          }
-        }
+
         .social_link_facebook {
           -webkit-mask-image: url('/social-facebook-ic.svg');
           -webkit-mask-position: 50% 85%;
           -webkit-mask-repeat: no-repeat;
           background-color: #183442;
+
           &:hover {
             background-color: $orange-btn;
           }
         }
       }
     }
+
     &_anchor {
       a {
         display: block;
@@ -201,11 +214,13 @@
         @include md {
           background-color: #ffffff;
         }
+
         &:hover {
           background-color: $light-orange;
         }
       }
     }
+
     &_navigation {
       .links_navigation {
         &_list {
@@ -216,6 +231,7 @@
             text-align: left;
             margin-right: 50px;
           }
+
           a {
             text-decoration: none;
             font-family: 'Craftwork Grotesk';
@@ -224,6 +240,7 @@
             font-size: 14px;
             line-height: 22px;
             color: $light-grey;
+
             &:hover {
               color: $dark-orange;
             }

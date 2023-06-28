@@ -51,7 +51,7 @@ const Courses = () => {
         </Grid>
         <Grid item xs={12} md={6} display={'flex'} justifyContent={{ xs: 'center', md: 'flex-end' }}>
           <Button>
-            <Link href="/admin/addCourse" style={{ textDecoration: 'none' }}>
+            <Link href="/admin/addCourse" style={{ textDecoration: 'none', color: '#EDA652FF' }}>
               Добавить курс
             </Link>
           </Button>

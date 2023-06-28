@@ -14,6 +14,7 @@ import { PurchasesService } from './purchases.service';
 import { CurrentUser } from '../../auth/currentUser.decorator';
 import { User } from '../../entities/user.entity';
 import { TokenAuthGuard } from '../../auth/token-auth.guard';
+import { StaffGuard } from '../../auth/staff.guard';
 
 @Controller('purchases')
 export class PurchasesController {
@@ -35,6 +36,13 @@ export class PurchasesController {
   @UseGuards(TokenAuthGuard)
   async createPurchase(@CurrentUser() user: User, @Body() body: { id: number }) {
     return this.purchasesService.createPurchase(user, body.id);
+  }
+
+  @Post('assign')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(TokenAuthGuard, StaffGuard)
+  async assignPurchase(@Body() body: { email: string; course: number }) {
+    return this.purchasesService.assignPurchase(body.email, body.course);
   }
 
   @Delete(':id') // Guard ???

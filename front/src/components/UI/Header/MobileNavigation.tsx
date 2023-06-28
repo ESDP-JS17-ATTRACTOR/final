@@ -53,10 +53,10 @@ const MobileNavigation = () => {
     <Link key="catalogs" href="/catalogs">
       <li>Catalogs</li>
     </Link>,
-    <Link key="#" href="#">
+    <Link key="#" href="/articles">
       <li>Articles</li>
     </Link>,
-    <Link key="#" href="#">
+    <Link key="#" href="/users">
       <li>Users</li>
     </Link>,
     <Link key="departments" href="/departments">

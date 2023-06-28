@@ -1,7 +1,7 @@
 import React from 'react';
 import TeamCard from '@/components/Cards/TeamCard';
-import { Navigation } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {Navigation} from 'swiper';
+import {Swiper, SwiperSlide} from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -40,19 +40,56 @@ const Team = () => {
               modules={[Navigation]}
             >
               <SwiperSlide>
-                <TeamCard />
+                <TeamCard
+                  image={'/team-erica.png'}
+                  name={'Nino'}
+                  info={
+                    'With her extensive background in managing IT teams, she proudly succeeds in all her projects. She has a side\n' +
+                    '            passion for writing fiction stories, playing guitar, singing, and traveling.'
+                  }
+                  position={'Project Manager'}
+                />
               </SwiperSlide>
               <SwiperSlide>
-                <TeamCard />
+                <TeamCard
+                  image={'/team-man.png'}
+                  name={'Mark'}
+                  info={
+                    'Serial entrepreneur, innovator, an expert in Product Development, User Experience, and Design. Has successfully managed product teams for over a decade. Enjoys traveling and being in nature.'
+                  }
+                  position={'Founder, CEO'}
+                />
               </SwiperSlide>
               <SwiperSlide>
-                <TeamCard />
+                <TeamCard
+                  image={'/team-erica.png'}
+                  name={'Erika'}
+                  info={
+                    'Serial entrepreneur, innovator, an expert in Product Development, User Experience, and Design. Has successfully managed product teams for over a decade. Enjoys traveling and being in nature.'
+                  }
+                  position={'Founder, CEO'}
+                />
               </SwiperSlide>
               <SwiperSlide>
-                <TeamCard />
+                <TeamCard
+                  image={'/team-man.png'}
+                  name={'Nino'}
+                  info={
+                    'With her extensive background in managing IT teams, she proudly succeeds in all her projects. She has a side\n' +
+                    '            passion for writing fiction stories, playing guitar, singing, and traveling.'
+                  }
+                  position={'Project Manager'}
+                />
               </SwiperSlide>
               <SwiperSlide>
-                <TeamCard />
+                <TeamCard
+                  image={'/team-erica.png'}
+                  name={'Erika'}
+                  info={
+                    'Serial entrepreneur, innovator, an expert in Product Development, User Experience, and Design. Has successfully managed product teams for over a decade. Enjoys traveling and being in nature.'
+                  }
+                  position={'Founder, CEO'}
+                />
               </SwiperSlide>
             </Swiper>
           </div>

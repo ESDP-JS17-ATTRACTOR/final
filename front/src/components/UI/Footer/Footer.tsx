@@ -87,9 +87,6 @@ const Footer = () => {
               <Link href="https://instagram.com/cholponah_design?igshid=MzRlODBiNWFlZA==" target="_blank">
                 <li className="social_link_instagram">Instagram</li>
               </Link>
-              <Link href="/">
-                <li className="social_link_twitter">Twitter</li>
-              </Link>
               <Link href="https://www.facebook.com/cholponakhmdesign" target="_blank">
                 <li className="social_link_facebook">Facebook</li>
               </Link>
@@ -101,22 +98,22 @@ const Footer = () => {
           <div className="footer-block_links_navigation">
             <nav className="links_navigation">
               <ul className="links_navigation_list">
-                <Link href="/">
+                <Link href="/catalogs">
                   <li>Services</li>
                 </Link>
-                <Link href="/">
+                <Link href="/about">
                   <li>Product Strategy</li>
                 </Link>
-                <Link href="/">
+                <Link href="/students-works">
                   <li>Product DesignWeb</li>
                 </Link>
-                <Link href="/">
+                <Link href="/development">
                   <li>Development</li>
                 </Link>
-                <Link href="/">
+                <Link href="/consumer-research">
                   <li>Consumer Research</li>
                 </Link>
-                <Link href="/">
+                <Link href="/links">
                   <li>Links</li>
                 </Link>
               </ul>

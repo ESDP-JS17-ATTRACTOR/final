@@ -24,19 +24,19 @@ const DesktopNavigation = () => {
             </Link>
           </li>
           <li className="main-nav_item">
-            <a className="main-nav_link" href="front/src/components/UI/header#">
+            <Link className="main-nav_link" href="/favourites">
               My favourites
-            </a>
+            </Link>
           </li>
           <li className="main-nav_item">
-            <a className="main-nav_link" href="front/src/components/UI/header#">
+            <Link className="main-nav_link" href="/articles">
               Articles
-            </a>
+            </Link>
           </li>
           <li className="main-nav_item">
-            <a className="main-nav_link" href="front/src/components/UI/header#">
+            <Link className="main-nav_link" href="/users">
               Users
-            </a>
+            </Link>
           </li>
           <li className="main-nav_item">
             <Link className="main-nav_link" href="/departments#">

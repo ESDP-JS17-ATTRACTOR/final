@@ -1,7 +1,5 @@
 import React from 'react';
-import StudentWorksCard from '@/components/Cards/StudentWorksCard';
 import Link from 'next/link';
-import Image from 'next/image';
 import StudentWorkPreviewCard from '@/components/Cards/StudentWorkPreviewCard';
 
 const StudentWorks = () => {
@@ -19,12 +17,14 @@ const StudentWorks = () => {
             Creation of websites and web applications for business: high-load services, cloud solutions, marketplaces,
             development of native mobile applications for iOS and Android
           </p>
-          <button className="button work_view_btn">View all</button>
+          <Link href="/students-works">
+            <button className="button work_view_btn">View all</button>
+          </Link>
         </div>
         <div className="students-works_content_cards">
-          <StudentWorkPreviewCard />
-          <StudentWorkPreviewCard />
-          <StudentWorkPreviewCard />
+          <StudentWorkPreviewCard image={'/work-card-1.png'} />
+          <StudentWorkPreviewCard image={'/work-card-2.png'} />
+          <StudentWorkPreviewCard image={'/work-card-3.png'} />
         </div>
       </div>
     </div>

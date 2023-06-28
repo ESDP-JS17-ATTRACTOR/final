@@ -6,12 +6,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+import { useRouter } from 'next/router';
+import { ru } from '../../../../public/locales/ru/mainBlock';
+import { en } from '../../../../public/locales/en/mainBlock';
 
 const Team = () => {
+  const router = useRouter();
+  const t = router.locale === 'ru' ? ru : en;
   return (
     <div className="team-block">
       <div className="team-block_title">
-        <h6>Our Team</h6>
+        <h6>{t.teamTitle}</h6>
       </div>
       <div className="team-block_swiper">
         <div className="swiper-container">

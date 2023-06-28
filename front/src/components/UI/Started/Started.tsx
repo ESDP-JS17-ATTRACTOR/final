@@ -1,52 +1,45 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ru } from '../../../../public/locales/ru/mainBlock';
+import { en } from '../../../../public/locales/en/mainBlock';
 
 const Started = () => {
+  const router = useRouter();
+  const t = router.locale === 'ru' ? ru : en;
   return (
     <div className="started">
       <div className="started-title">
         <h4>
-          How do i <span>get started?</span>
+          {t.startedTitle1} <span>{t.startedTitle2}</span>
         </h4>
       </div>
-      <p className="started-description">
-        At the beginning of each billing period, such as a week or a year (depending on the type of subscription), your
-        account will be automatically debited.
-      </p>
+      <p className="started-description">{t.startedSubTitle}</p>
       <div className="started-cards">
         <div className="start-card start-card_1">
           <div className="start-card-content">
-            <span className="start-card-content_sub-title step_1">step 1</span>
-            <h6 className="start-card-content_title">Schedule a consultation</h6>
-            <p className="start-card-content_description">
-              Schedule a quick 30-minute free call with us so we can discuss your product idea and assess your needs in
-              terms of product research, analysis, design, and development.
-            </p>
+            <span className="start-card-content_sub-title step_1">{t.step} 1</span>
+            <h6 className="start-card-content_title">{t.step1title}</h6>
+            <p className="start-card-content_description">{t.step1text}</p>
           </div>
         </div>
         <div className="start-card start-card_2">
           <div className="start-card-content">
-            <span className="start-card-content_sub-title step_2">step 2</span>
-            <h6 className="start-card-content_title">Allow us to create a customized plan</h6>
-            <p className="start-card-content_description">
-              We believe that every client is unique and requires a personalized approach. Our team will strategically
-              create a plan outlining how we’re going to work together and achieve product objectives.
-            </p>
+            <span className="start-card-content_sub-title step_2">{t.step} 2</span>
+            <h6 className="start-card-content_title">{t.step2title}</h6>
+            <p className="start-card-content_description">{t.step2text}</p>
           </div>
         </div>
         <div className="start-card start-card_3">
           <div className="start-card-content">
-            <span className="start-card-content_sub-title step_3">step 3</span>
-            <h6 className="start-card-content_title">Lets execute the plan together</h6>
-            <p className="start-card-content_description">
-              Your product idea will only take off like a rocket if you execute it well. We’ll put a launch plan in
-              place for you, and then we’ll be here as your go-to team to turn your product idea into reality.
-            </p>
+            <span className="start-card-content_sub-title step_3">{t.step} 3</span>
+            <h6 className="start-card-content_title">{t.step3title}</h6>
+            <p className="start-card-content_description">{t.step3text}</p>
           </div>
         </div>
       </div>
       <Link href="#myForm">
-        <button className="started-btn">Discuss the course</button>
+        <button className="started-btn">{t.discussBtn}</button>
       </Link>
     </div>
   );

@@ -1,8 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { en } from '../../../../public/locales/en/mainBlock';
+import { ru } from '../../../../public/locales/ru/mainBlock';
+import { useRouter } from 'next/router';
 
 const Article = () => {
+  const router = useRouter();
+  const t = router.locale === 'ru' ? ru : en;
   return (
     <div className="article">
       <div className="article-left-side">
@@ -11,21 +16,15 @@ const Article = () => {
       <div className="article-right-side">
         <div className="article-right-side-titles">
           <h2>
-            What is <span>online course</span>
+            {t.articlesTitle1} <span>{t.articlesTitle2}</span>
           </h2>
         </div>
         <div className="article-right-side-description">
-          <p>
-            We will help you learn the current profession and start a career. Become a specialist in the promotion of
-            goods, services and brands on the Internet. Learn to research the market, develop a product idea, launch
-            advertising campaigns and analyze their results. Master web analytics services in practice, learn how to
-            build a customer journey map, conduct UX research and present their results to the customer. You can start
-            without experience, and find your first job within 6 months after the start of training.
-          </p>
+          <p>{t.articlesText}</p>
         </div>
         <div className="article-right-side-btn">
           <Link href="/about">
-            <button>Tell me more</button>
+            <button>{t.moreBtn}</button>
           </Link>
         </div>
       </div>

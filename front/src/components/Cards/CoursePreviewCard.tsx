@@ -1,12 +1,17 @@
 import React from 'react';
 import { Course } from '../../../types';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ru } from '../../../public/locales/ru/mainBlock';
+import { en } from '../../../public/locales/en/mainBlock';
 
 interface Props {
   course: Course;
 }
 
 const CoursePreviewCard: React.FC<Props> = ({ course }) => {
+  const router = useRouter();
+  const t = router.locale === 'ru' ? ru : en;
   return (
     <div className="course-preview-card">
       <div className="course-preview-card-header">
@@ -17,11 +22,11 @@ const CoursePreviewCard: React.FC<Props> = ({ course }) => {
           {course.price} $ <span>month</span>
         </p>
         <ul className="course-preview-card-main_details">
-          <li className="course-preview-card-main_details_item">Up to 5 users</li>
-          <li className="course-preview-card-main_details_item">File storage - 1 GB</li>
+          <li className="course-preview-card-main_details_item">{t.usersAmount}</li>
+          <li className="course-preview-card-main_details_item">{t.fileStorage} - 1 GB</li>
         </ul>
         <Link href="#myForm">
-          <button className="course-preview-card-main_button">Select</button>
+          <button className="course-preview-card-main_button">{t.selectBtn}</button>
         </Link>
       </div>
     </div>

@@ -31,14 +31,14 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
                   <span className="">{t.mainTitleBold}</span>
                   {t.mainTitle2}
                 </h1>
-                <p>We are collecting courses for you. courses in the system: 21</p>
+                <p>{t.subTitle}: 4</p>
               </div>
               <div className="invitation-info_buttons">
                 <Link href="#myForm">
-                  <button className="button start_btn">Get started</button>
+                  <button className="button start_btn">{t.startBtn}</button>
                 </Link>
                 <Link href="#myForm">
-                  <button className="button contact_btn">Contact sales</button>
+                  <button className="button contact_btn">{t.contactBtn}</button>
                 </Link>
               </div>
             </div>

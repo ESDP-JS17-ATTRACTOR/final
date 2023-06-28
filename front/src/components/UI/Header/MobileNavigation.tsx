@@ -7,6 +7,8 @@ import { logout } from '@/features/users/usersThunks';
 import { selectUser, switchLoginModalWindow, switchRegistrationModalWindow } from '@/features/users/usersSlice';
 import Image from 'next/image';
 import { apiURL } from '../../../../constants';
+import { ru } from '../../../../public/locales/ru/mainBlock';
+import { en } from '../../../../public/locales/en/mainBlock';
 
 const MobileNavigation = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +16,8 @@ const MobileNavigation = () => {
   const user = useAppSelector(selectUser);
   const [searchStatus, setSearchStatus] = useState(false);
   const avatar = user && user.avatar ? apiURL + '/' + user.avatar : null;
+  const t = router.locale === 'ru' ? ru : en;
+
   const openMobileSideMenu = () => {
     document.getElementById('mobileSideMenuBackdrop')!.style.width = '100%';
     document.getElementById('mobileSideMenu')!.style.width = '300px';
@@ -45,27 +49,27 @@ const MobileNavigation = () => {
 
   const userContent = [
     <Link key="my-profile" href="/my-profile" onClick={closeMobileSideMenu}>
-      <li>My profile</li>
+      <li>{t.profile}</li>
     </Link>,
     <Link key="my-courses" href="/my-courses" onClick={closeMobileSideMenu}>
-      <li>My courses</li>
+      <li>{t.courses}</li>
     </Link>,
     <Link key="catalogs" href="/catalogs">
-      <li>Catalogs</li>
+      <li>{t.catalogs}</li>
     </Link>,
     <Link key="#" href="/articles">
-      <li>Articles</li>
+      <li>{t.articles}</li>
     </Link>,
     <Link key="#" href="/users">
-      <li>Users</li>
+      <li>{t.users}</li>
     </Link>,
     <Link key="departments" href="/departments">
-      <li>Departments</li>
+      <li>{t.depart}</li>
     </Link>,
   ];
   const adminContent = [
     <Link key="admin-menu" href="/admin">
-      <li>Admin Menu</li>
+      <li>{t.admin}</li>
     </Link>,
   ];
 
@@ -144,7 +148,7 @@ const MobileNavigation = () => {
             </nav>
           </div>
           <div className="mobile_side_menu_footer">
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}>{t.logout}</button>
           </div>
         </div>
       </div>

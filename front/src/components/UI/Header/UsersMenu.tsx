@@ -4,12 +4,14 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { logout } from '@/features/users/usersThunks';
 import { selectUser } from '@/features/users/usersSlice';
+import {apiURL} from "../../../../constants";
 
 const UsersMenu = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const user = useAppSelector(selectUser);
+  const avatar = user && user.avatar ? apiURL + '/' + user.avatar : null;
   const adminContent = [
     <MenuItem
       key="admin-menu"
@@ -69,7 +71,7 @@ const UsersMenu = () => {
   return (
     <>
       <Box sx={{ display: 'flex' }} onClick={handleClick} color="inherit">
-        <Avatar alt={'Avatar'} src={''} />
+        <Avatar alt={'Avatar'} src={avatar!} />
       </Box>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         {checkUsersRole()}

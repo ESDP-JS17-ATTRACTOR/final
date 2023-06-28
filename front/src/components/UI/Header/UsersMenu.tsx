@@ -11,19 +11,34 @@ const UsersMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const user = useAppSelector(selectUser);
   const adminContent = [
-    <MenuItem key="admin-menu" onClick={() => router.push('/admin')}>
+    <MenuItem
+      key="admin-menu"
+      onClick={() => {
+        router.push('/admin');
+        handleClose();
+      }}
+    >
       Admin Menu
     </MenuItem>,
   ];
   const userContent = [
-    <MenuItem key="my-profile" onClick={() => router.push('/my-profile')}>
+    <MenuItem
+      key="my-profile"
+      onClick={() => {
+        router.push('/my-profile');
+        handleClose();
+      }}
+    >
       My Profile
     </MenuItem>,
-    <MenuItem key="my-courses" onClick={() => router.push('/my-courses')}>
+    <MenuItem
+      key="my-courses"
+      onClick={() => {
+        router.push('/my-courses');
+        handleClose();
+      }}
+    >
       My Courses
-    </MenuItem>,
-    <MenuItem key="my-documents" onClick={() => router.push('/my-documents')}>
-      My Documents
     </MenuItem>,
   ];
 

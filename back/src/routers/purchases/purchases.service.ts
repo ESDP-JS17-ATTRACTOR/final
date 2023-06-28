@@ -115,6 +115,22 @@ export class PurchasesService {
     return this.purchaseRepository.save(purchase);
   }
 
+  async assignPurchase(email: string, course: number) {
+    const user = await this.findUserByEmail(email);
+    const existingPurchase = await this.purchaseRepository.findOne({
+      where: { course: { id: course } },
+    });
+
+    if (existingPurchase) {
+      throw new BadRequestException('Student has already bought this course!');
+    }
+    const purchase = this.purchaseRepository.create({
+      purchaser: user,
+      course: await this.findCourseById(course),
+    });
+    return this.purchaseRepository.save(purchase);
+  }
+
   async removePurchase(id: number) {
     const purchase: Purchase = await this.purchaseRepository.findOne({
       where: { id },
@@ -133,5 +149,13 @@ export class PurchasesService {
       throw new NotFoundException('Course not found');
     }
     return course;
+  }
+
+  private async findUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email: email } });
+    if (!user) {
+      throw new NotFoundException('Student is not registered');
+    }
+    return user;
   }
 }

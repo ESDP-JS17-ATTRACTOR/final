@@ -270,3 +270,13 @@ export interface UserData {
   email: string;
   message: string;
 }
+
+export interface ApiPurchase {
+  email: string;
+  course: number;
+}
+
+export interface PurchaseMutation {
+  email: string;
+  course: string;
+}

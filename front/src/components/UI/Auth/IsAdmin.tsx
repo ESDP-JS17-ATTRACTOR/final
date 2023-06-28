@@ -13,8 +13,6 @@ const IsAdmin = (WrappedComponent: React.ComponentType<any>) => {
         if (user.role !== 'admin' && user.role !== 'moderator') {
           router.push('/');
         }
-      } else {
-        router.push('/');
       }
     }, [user, router]);
 

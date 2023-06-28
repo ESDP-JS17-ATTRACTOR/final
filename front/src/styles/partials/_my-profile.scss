@@ -92,6 +92,18 @@
   }
 }
 
+.homework-block-feedback {
+  h2 {
+    color: $blue-text;
+    text-align: center;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+}
+
 .homework-headlines-block {
   display: none;
   text-align: center;
@@ -137,7 +149,7 @@
     @include md {
       word-break: normal;
     }
-  };
+  }
 
   .heading-hover {
     &:hover {
@@ -170,7 +182,7 @@
 }
 
 .homework-block .card-for-homework-block:nth-child(even) {
-  background: #FFF;
+  background: #fff;
   @include md {
     background-color: $light-orange;
   }

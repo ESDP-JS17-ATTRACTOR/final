@@ -106,9 +106,24 @@ export class StudentHomeworksController {
     });
   }
 
+  @Patch(':id/feedback')
+  @UseGuards(TokenAuthGuard, TutorGuard)
+  async updateFeedback(@Body() feedbackData: { feedback: string }, @Param('id') id: number) {
+    const studentHomework = await this.studentHomeworkRepository.findOne({
+      where: { id: id },
+    });
+
+    await this.studentHomeworkRepository.update(id, { feedback: feedbackData.feedback });
+
+    return this.studentHomeworkRepository.findOne({
+      where: { id: id },
+    });
+  }
+
   @Get(':id')
   async getOneStudentHomework(@Param('id') id: number) {
     return this.studentHomeworkRepository.findOne({
+      relations: ['homework'],
       where: { id: id },
     });
   }

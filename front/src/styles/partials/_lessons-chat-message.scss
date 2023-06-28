@@ -14,10 +14,10 @@
     position: relative;
     margin-bottom: 10px;
     padding: 15px;
-    background-color: #A8DDFD;
+    background-color: #a8ddfd;
     text-align: left;
-    font: 400 .9em 'Open Sans', sans-serif;
-    border: 1px solid #97C6E3;
+    font: 400 0.9em 'Open Sans', sans-serif;
+    border: 1px solid #97c6e3;
     border-radius: 10px;
     //&:after {
     //  content: '';
@@ -35,7 +35,7 @@
       position: absolute;
       width: 0;
       height: 0;
-      border-top: 17px solid #97C6E3;
+      border-top: 17px solid #97c6e3;
       border-left: 16px solid transparent;
       border-right: 16px solid transparent;
       top: 0;
@@ -47,7 +47,7 @@
     }
     &-timestamp {
       position: absolute;
-      font-size: .85em;
+      font-size: 0.85em;
       font-weight: 300;
       margin-top: 5px;
       bottom: 0;
@@ -69,7 +69,7 @@
     background-color: #f8e896;
     height: 50%;
     text-align: left;
-    font: 400 .9em 'Open Sans', sans-serif;
+    font: 400 0.9em 'Open Sans', sans-serif;
     border: 1px solid #dfd087;
     border-radius: 10px;
 
@@ -104,7 +104,7 @@
 
     &-timestamp {
       position: absolute;
-      font-size: .85em;
+      font-size: 0.85em;
       font-weight: 300;
       margin-top: 10px;
       bottom: 5px;

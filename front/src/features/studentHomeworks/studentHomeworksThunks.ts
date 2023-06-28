@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ValidationError, StudentHomework, ApiStudentHomework } from '../../../types';
+import { ValidationError, StudentHomework, ApiStudentHomework, Feedback } from '../../../types';
 import axiosApi from '../../../axiosApi';
 import { isAxiosError } from 'axios';
 
@@ -48,6 +48,15 @@ export const fetchStudentHomework = createAsyncThunk<StudentHomework, string>(
 
 export const checkStudentHomework = createAsyncThunk<void, string>('studentHomeworks/check', async (id) => {
   await axiosApi.patch('/student-homeworks/' + id + '/toggleCheck');
+});
+
+export interface FeedbackMutation {
+  id: string;
+  feedback: string;
+}
+
+export const addFeedback = createAsyncThunk<void, FeedbackMutation>('studentHomeworks/feedback', async (params) => {
+  await axiosApi.patch('/student-homeworks/' + params.id + '/feedback', params);
 });
 
 export const deleteStudentHomework = createAsyncThunk<void, string>('studentHomeworks/delete', async (id) => {

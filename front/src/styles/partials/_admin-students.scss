@@ -1,8 +1,13 @@
-@use "../var/mixins" as *;
+@use '../var/mixins' as *;
 
 .admin-students-small {
   @media (min-device-width: 480px) {
-    table, thead, tbody, th, td, tr {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
       display: block;
       text-align: center;
     }
@@ -38,14 +43,23 @@
       transform: translateY(-50%);
     }
 
-    td:nth-of-type(1):before {content: "Имя";}
-    td:nth-of-type(2):before {content: "Фамилия";}
+    td:nth-of-type(1):before {
+      content: 'Имя';
+    }
+    td:nth-of-type(2):before {
+      content: 'Фамилия';
+    }
   }
 }
 
 .admin-students-big {
   @include md {
-    table, thead, tbody, th, td, tr {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
       padding: 5px;
       font-size: 0.75rem;
     }
@@ -60,7 +74,12 @@
   }
 
   @include lg {
-    table, thead, tbody, th, td, tr {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
       padding: 10px;
       font-size: 0.85rem;
     }

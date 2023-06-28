@@ -129,6 +129,24 @@ $keyboard-down-icon: '/keyboard-arrow-down.svg';
   background-position: center;
 }
 
+.feedback-btn {
+  color: #ffffff;
+  border: 2px solid $dark-orange;
+  border-radius: 22px;
+  padding: 13px 29px;
+  font-size: 14px;
+  line-height: 17px;
+  &:hover {
+    background: transparent;
+    color: $dark-orange;
+  }
+  &:active {
+    background: $dark-orange;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+}
+
 .profile-btn-edit {
   line-height: 17px;
   border-radius: 22px;
@@ -273,8 +291,8 @@ $keyboard-down-icon: '/keyboard-arrow-down.svg';
 .loader {
   width: 10px;
   height: 10px;
-  border: 1px solid #FFF;
-  border-bottom-color: #FF3D00;
+  border: 1px solid #fff;
+  border-bottom-color: #ff3d00;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;

@@ -5,12 +5,15 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { logout } from '@/features/users/usersThunks';
 import { selectUser } from '@/features/users/usersSlice';
 import { apiURL } from '../../../../constants';
+import { ru } from '../../../../public/locales/ru/mainBlock';
+import { en } from '../../../../public/locales/en/mainBlock';
 
 const UsersMenu = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const user = useAppSelector(selectUser);
+  const t = router.locale === 'ru' ? ru : en;
   const avatar = user && user.avatar ? apiURL + '/' + user.avatar : null;
   const adminContent = [
     <MenuItem
@@ -20,7 +23,7 @@ const UsersMenu = () => {
         handleClose();
       }}
     >
-      Admin Menu
+      {t.admin}
     </MenuItem>,
   ];
   const userContent = [
@@ -31,7 +34,7 @@ const UsersMenu = () => {
         handleClose();
       }}
     >
-      My Profile
+      {t.profile}
     </MenuItem>,
     <MenuItem
       key="my-courses"
@@ -40,7 +43,7 @@ const UsersMenu = () => {
         handleClose();
       }}
     >
-      My Courses
+      {t.courses}
     </MenuItem>,
   ];
 
@@ -75,7 +78,7 @@ const UsersMenu = () => {
       </Box>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         {checkUsersRole()}
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>{t.logout}</MenuItem>
       </Menu>
     </>
   );

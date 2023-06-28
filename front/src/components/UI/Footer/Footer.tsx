@@ -5,8 +5,13 @@ import { UserData } from '../../../../types';
 import { sendUserData } from '@/features/users/usersThunks';
 import { selectFormDataLoading } from '@/features/users/usersSlice';
 import { CircularProgress } from '@mui/material';
+import { useRouter } from 'next/router';
+import { ru } from '../../../../public/locales/ru/mainBlock';
+import { en } from '../../../../public/locales/en/mainBlock';
 
 const Footer = () => {
+  const router = useRouter();
+  const t = router.locale === 'ru' ? ru : en;
   const dispatch = useAppDispatch();
   const formSubmitLoading = useAppSelector(selectFormDataLoading);
   const [state, setState] = useState<UserData>({
@@ -36,12 +41,12 @@ const Footer = () => {
             <form className="footer-block_feedback_bg_form" id="myForm" onSubmit={onFormSubmit}>
               <div className="footer-block_feedback_bg_title">
                 <h6>
-                  Lets get started your <span>course now</span>
+                  {t.footerTitle1} <span>{t.footerTitle2}</span>
                 </h6>
               </div>
               <input
                 className="feedback_input"
-                placeholder="your name"
+                placeholder={t.footerInput1}
                 type="text"
                 id="name"
                 value={state.name}
@@ -51,7 +56,7 @@ const Footer = () => {
               />
               <input
                 className="feedback_input"
-                placeholder="your e-mail"
+                placeholder={t.footerInput2}
                 type="email"
                 id="email"
                 value={state.email}
@@ -61,7 +66,7 @@ const Footer = () => {
               />
               <textarea
                 className="feedback_textarea"
-                placeholder="message"
+                placeholder={t.footerInput3}
                 name="message"
                 value={state.message}
                 onChange={inputChangeHandler}
@@ -70,7 +75,7 @@ const Footer = () => {
                 rows={10}
               />
               <button className="button feedback_send_btn">
-                {formSubmitLoading ? <CircularProgress /> : 'send information'}
+                {formSubmitLoading ? <CircularProgress /> : `${t.footerBtn}`}
               </button>
             </form>
           </div>

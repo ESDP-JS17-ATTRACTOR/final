@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { logout } from '@/features/users/usersThunks';
 import { selectUser } from '@/features/users/usersSlice';
-import {apiURL} from "../../../../constants";
+import { apiURL } from '../../../../constants';
 
 const UsersMenu = () => {
   const dispatch = useAppDispatch();

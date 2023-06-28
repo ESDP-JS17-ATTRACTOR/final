@@ -72,6 +72,7 @@ export class FixturesService {
       firstName: 'John',
       lastName: 'Doe',
       password: 'password',
+      avatar: 'fixtures/users/user.jpeg',
     });
     await user.generateToken();
     await this.usersRepository.save(user);
@@ -81,6 +82,7 @@ export class FixturesService {
       firstName: 'Jane',
       lastName: 'Doe',
       password: 'password',
+      avatar: 'fixtures/users/user.jpeg',
     });
     await userSecond.generateToken();
     await this.usersRepository.save(userSecond);
@@ -91,6 +93,7 @@ export class FixturesService {
       lastName: 'Doe',
       password: 'password',
       role: 'admin',
+      avatar: 'fixtures/users/admin.jpeg',
     });
     await admin.generateToken();
     await this.usersRepository.save(admin);
@@ -101,6 +104,7 @@ export class FixturesService {
       lastName: 'Doe',
       password: 'password',
       role: 'tutor',
+      avatar: 'fixtures/users/user.jpeg',
     });
     await tutorFirst.generateToken();
     await this.usersRepository.save(tutorFirst);
@@ -111,6 +115,7 @@ export class FixturesService {
       lastName: 'Doe',
       password: 'password',
       role: 'tutor',
+      avatar: 'fixtures/users/user.jpeg',
     });
     await tutorSecond.generateToken();
     await this.usersRepository.save(tutorSecond);

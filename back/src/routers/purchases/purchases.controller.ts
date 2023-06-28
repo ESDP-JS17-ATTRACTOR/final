@@ -20,7 +20,7 @@ import { StaffGuard } from '../../auth/staff.guard';
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}
 
-  @Get() // Guard ???
+  @Get()
   async getAll(@Query('userId') userId: number) {
     return this.purchasesService.getAll(userId);
   }
@@ -31,7 +31,7 @@ export class PurchasesController {
     return this.purchasesService.getCoursesWithModules(user.id);
   }
 
-  @Post() // Guard ???
+  @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(TokenAuthGuard)
   async createPurchase(@CurrentUser() user: User, @Body() body: { id: number }) {
@@ -45,7 +45,7 @@ export class PurchasesController {
     return this.purchasesService.assignPurchase(body.email, body.course);
   }
 
-  @Delete(':id') // Guard ???
+  @Delete(':id')
   async removePurchase(@Param('id') id: number) {
     return this.purchasesService.removePurchase(id);
   }

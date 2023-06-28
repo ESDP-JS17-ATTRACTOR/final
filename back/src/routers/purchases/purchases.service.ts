@@ -117,6 +117,13 @@ export class PurchasesService {
 
   async assignPurchase(email: string, course: number) {
     const user = await this.findUserByEmail(email);
+    const existingPurchase = await this.purchaseRepository.findOne({
+      where: { course: { id: course } },
+    });
+
+    if (existingPurchase) {
+      throw new BadRequestException('Student has already bought this course!');
+    }
     const purchase = this.purchaseRepository.create({
       purchaser: user,
       course: await this.findCourseById(course),

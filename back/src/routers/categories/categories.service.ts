@@ -27,8 +27,9 @@ export class CategoriesService {
 
   async updateCategory(id: number, categoryData: UpdateCategoryDto): Promise<Category> {
     const category = await this.checkForCategoryExists(id);
+    await this.checkForCategoryNotExists(categoryData.title);
     category.title = categoryData.title;
-    return this.categoryRepository.save(category);
+    return await this.categoryRepository.save(category);
   }
 
   async removeOneCategory(id: number) {

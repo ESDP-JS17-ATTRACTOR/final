@@ -71,6 +71,12 @@ export class UsersController {
     return this.authService.restorePassword(body.email);
   }
 
+  @Post('registerNewStudent')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async registerNewStudent(@Body() body: { email: string }) {
+    return this.authService.registerNewStudent(body.email);
+  }
+
   @Delete('sessions')
   @UseGuards(TokenAuthGuard)
   async logout(@CurrentUser() user: User) {

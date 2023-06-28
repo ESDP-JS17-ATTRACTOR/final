@@ -13,6 +13,7 @@ interface CourseState {
   oneCourse: CourseMutation | null;
   oneCourseLoading: boolean;
   oneCourseEditing: boolean;
+  courseEditError: ValidationError | null;
 }
 
 const initialState: CourseState = {
@@ -24,12 +25,18 @@ const initialState: CourseState = {
   oneCourse: null,
   oneCourseLoading: false,
   oneCourseEditing: false,
+  courseEditError: null,
 };
 
 export const coursesSlice = createSlice({
   name: 'courses',
   initialState,
-  reducers: {},
+  reducers: {
+    unsetCourseError: (state) => {
+      state.courseAddError = null;
+      state.courseEditError = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase<typeof HYDRATE, PayloadAction<RootState, typeof HYDRATE>>(HYDRATE, (state, action) => {
       return action.payload.courses;
@@ -84,20 +91,25 @@ export const coursesSlice = createSlice({
     });
     builder.addCase(editCourse.fulfilled, (state) => {
       state.oneCourseEditing = false;
+      state.courseEditError = null;
     });
-    builder.addCase(editCourse.rejected, (state) => {
+    builder.addCase(editCourse.rejected, (state, { payload: error }) => {
       state.oneCourseEditing = false;
+      state.courseEditError = error || null;
     });
   },
 });
 
 export const coursesReducer = coursesSlice.reducer;
 
+export const { unsetCourseError } = coursesSlice.actions;
+
 export const selectCourses = (state: RootState) => state.courses.courses;
 export const selectCoursesLoading = (state: RootState) => state.courses.coursesLoading;
 export const selectCourseAdding = (state: RootState) => state.courses.courseAdding;
-export const selectCourseError = (state: RootState) => state.courses.courseAddError;
+export const selectCourseAddError = (state: RootState) => state.courses.courseAddError;
 export const selectCourseDeleting = (state: RootState) => state.courses.courseDeleting;
 export const selectOneCourse = (state: RootState) => state.courses.oneCourse;
 export const selectOneCourseLoading = (state: RootState) => state.courses.oneCourseLoading;
 export const selectOneCourseEditing = (state: RootState) => state.courses.oneCourseEditing;
+export const selectCourseEditError = (state: RootState) => state.courses.courseEditError;

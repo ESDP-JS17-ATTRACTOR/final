@@ -2,6 +2,7 @@ import React from 'react';
 import CoursePreviewCard from '@/components/Cards/CoursePreviewCard';
 import { useAppSelector } from '@/app/hooks';
 import { selectCourses } from '@/features/courses/coursesSlice';
+import Link from 'next/link';
 
 const Profits = () => {
   const courses = useAppSelector(selectCourses);
@@ -14,7 +15,9 @@ const Profits = () => {
             return <CoursePreviewCard course={course} key={course.id} />;
           })}
         </div>
-        <button className="profits-container-btn">10 courses from 23</button>
+        <Link href="/catalogs" style={{ textAlign: 'center' }}>
+          <button className="profits-container-btn">10 courses from 23</button>
+        </Link>
       </div>
     </div>
   );

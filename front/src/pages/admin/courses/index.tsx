@@ -24,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import dayjs from 'dayjs';
 import IsAdmin from '@/components/UI/Auth/IsAdmin';
+import { useRouter } from 'next/router';
 
 const Courses = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ const Courses = () => {
   const loading = useAppSelector(selectCoursesLoading);
   const deleting = useAppSelector(selectCourseDeleting);
   const theme = useTheme();
+  const router = useRouter();
   const isMdScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
@@ -80,16 +82,24 @@ const Courses = () => {
             </TableHead>
             <TableBody>
               {courses.map((course) => (
-                <TableRow key={course.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableRow
+                  onClick={() => router.push(`/admin/courses/course/${course.id}`)}
+                  key={course.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
                   <TableCell>{course.title}</TableCell>
-                  <TableCell>{course.description}</TableCell>
+                  <TableCell
+                    style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                  >
+                    {course.description}
+                  </TableCell>
                   <TableCell>{course.tutor.firstName + ' ' + course.tutor.lastName}</TableCell>
                   <TableCell>{course.duration} дней</TableCell>
-                  <TableCell>{course.price} KGS</TableCell>
+                  <TableCell>{course.price} USD</TableCell>
                   <TableCell>{dayjs(course.startedAt.toString()).format('DD.MM.YYYY')} </TableCell>
                   <TableCell>{course.isGroup ? 'Групповой курс' : 'Индивидуальный курс'}</TableCell>
 
-                  <TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
                     <Button
                       variant="contained"
                       sx={{ background: '#EDA652' }}
@@ -106,7 +116,7 @@ const Courses = () => {
                     </Button>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
                     <Button variant="outlined" sx={{ borderColor: '#EDA652' }}>
                       <Link href={`/admin/editCourse/${course.id}`}>
                         <EditIcon sx={{ color: '#EDA652' }} />

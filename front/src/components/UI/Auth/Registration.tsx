@@ -175,7 +175,6 @@ const Registration = () => {
           <h5>Sign up with</h5>
           <div className="registration-footer_buttons">
             <FacebookLoginButton />
-            <button className="social_auth_btn auth_linkedin">Linkedin</button>
             <button className="social_auth_btn auth_google" onClick={() => googleLoginHandler()}></button>
           </div>
         </div>

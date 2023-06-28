@@ -63,7 +63,7 @@ const Categories = () => {
               <TableRow>
                 <TableCell>Название категории</TableCell>
                 <TableCell>Удалить</TableCell>
-                <TableCell>Редактировать</TableCell>
+                <TableCell align="center">Редактировать</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

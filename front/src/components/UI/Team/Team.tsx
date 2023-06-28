@@ -1,7 +1,7 @@
 import React from 'react';
 import TeamCard from '@/components/Cards/TeamCard';
-import {Navigation} from 'swiper';
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';

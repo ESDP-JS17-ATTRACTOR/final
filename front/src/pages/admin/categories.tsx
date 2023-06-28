@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {deleteCategory, fetchCategories} from '@/features/categories/categoriesThunks';
-import {useAppDispatch, useAppSelector} from '@/app/hooks';
+import React, { useEffect } from 'react';
+import { deleteCategory, fetchCategories } from '@/features/categories/categoriesThunks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import {
   selectCategories,
   selectCategoriesLoading,
@@ -22,7 +22,7 @@ import {
 import Link from 'next/link';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import IsAdmin from '@/components/UI/Auth/IsAdmin';
 
 const Categories = () => {
@@ -46,15 +46,15 @@ const Categories = () => {
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography>Ниже список всех категорий</Typography>
         <Button>
-          <Link href="/admin/addCategory" style={{textDecoration: 'none', color: '#EDA652FF'}}>
+          <Link href="/admin/addCategory" style={{ textDecoration: 'none', color: '#EDA652FF' }}>
             Добавить категорию
           </Link>
         </Button>
       </Box>
 
       {loading ? (
-        <Box sx={{display: 'flex'}}>
-          <CircularProgress/>
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress />
         </Box>
       ) : (
         <TableContainer component={Paper}>
@@ -68,29 +68,29 @@ const Categories = () => {
             </TableHead>
             <TableBody>
               {categories.map((category) => (
-                <TableRow key={category.id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                <TableRow key={category.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell>{category.title}</TableCell>
                   <TableCell>
                     <Button
                       variant="contained"
-                      sx={{background: '#EDA652'}}
+                      sx={{ background: '#EDA652' }}
                       onClick={() => handleDelete(category.id.toString())}
                       disabled={deleting}
                     >
                       {deleting ? (
-                        <Box sx={{display: 'flex'}}>
-                          <CircularProgress/>
+                        <Box sx={{ display: 'flex' }}>
+                          <CircularProgress />
                         </Box>
                       ) : (
-                        <DeleteIcon/>
+                        <DeleteIcon />
                       )}
                     </Button>
                   </TableCell>
 
                   <TableCell align="center">
-                    <Button variant="outlined" sx={{borderColor: '#EDA652'}}>
+                    <Button variant="outlined" sx={{ borderColor: '#EDA652' }}>
                       <Link href={`/admin/editCategory/${category.id}`}>
-                        <EditIcon sx={{color: '#EDA652'}}/>
+                        <EditIcon sx={{ color: '#EDA652' }} />
                       </Link>
                     </Button>
                   </TableCell>

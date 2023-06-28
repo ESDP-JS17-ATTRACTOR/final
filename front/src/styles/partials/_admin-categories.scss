@@ -1,9 +1,13 @@
-@use "../var/mixins" as *;
+@use '../var/mixins' as *;
 
 .admin-categories {
   @media (max-device-width: 859px) {
-
-    table, thead, tbody, th, td, tr {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
       display: block;
       text-align: center;
     }
@@ -39,13 +43,24 @@
       transform: translateY(-50%);
     }
 
-    td:nth-of-type(1):before {content: "Название";}
-    td:nth-of-type(2):before {content: "Удалить";}
-    td:nth-of-type(3):before {content: "Редактировать";}
+    td:nth-of-type(1):before {
+      content: 'Название';
+    }
+    td:nth-of-type(2):before {
+      content: 'Удалить';
+    }
+    td:nth-of-type(3):before {
+      content: 'Редактировать';
+    }
   }
 
   @include md {
-    table, thead, tbody, th, td, tr{
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
       padding: 5px;
       font-size: 0.75rem;
     }
@@ -59,11 +74,14 @@
     }
   }
   @include lg {
-    table, thead, tbody, th, td, tr{
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
       padding: 10px;
       font-size: 0.85rem;
     }
   }
-
-
 }

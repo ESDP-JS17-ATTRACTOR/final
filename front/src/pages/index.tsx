@@ -31,7 +31,7 @@ const Home: React.FC<PropsWithChildren> = ({ children }) => {
                   <span className="">{t.mainTitleBold}</span>
                   {t.mainTitle2}
                 </h1>
-                <p>{t.subTitle}: 4</p>
+                <p>{t.subTitle}: 21</p>
               </div>
               <div className="invitation-info_buttons">
                 <Link href="#myForm">
